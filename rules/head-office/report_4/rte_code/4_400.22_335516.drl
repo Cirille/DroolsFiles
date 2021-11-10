@@ -1,0 +1,4299 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335516'
+	when
+		$gda : GrlDetAmounts(( actCode in ( "A0017000" , "A0058000" , "A3331000" , "A3333000" , "A4412000" , "A4564000" , "A4565000" , "A8295000" , "A8349000" , "A8609000" , "A9018000" , "A9799000" , "L0237000" , "L0269000" ) || ( actCode == "A9260000" && hpePdtType in ( "STOCK BOND" , "STOCK CD AND CP" , "STOCK CONV BOND" , "STOCK FLOATING RATE NOTE" , "STOCK MEDIUM TERM NOTE" , "STOCK SAVING CERT" , "STOCK SHARE" , "STOCK TREASURY PAPER" ) ) || ( actCode == "A9260000" && hscAcctSubcl matches "11.*" ) ) && ( hreRelTypeIssuer in ( "ZABG" , "ZABS" , "ZAIN" , "ZCMB" , "ZCMG" , "ZMBG" , "ZMBS" , "ZMIN" , "ZRMB" , "ZSEC" ) || nvl(hreRelTypeIssuer, "") + nvl(custSeg, "") in ( "FAMTNBSEC" , "FAMTSECAM" , "FAMTSECAS" , "FAMTSECEU" , "FGVONBSEC" , "FGVOSECAM" , "FGVOSECAS" , "FGVOSECEU" ) ))
+	then
+        
+end
+
+
+
+
+
+rule '1709705' extends '335516' salience 4430
+
+    when
+        
+        GrlDetAmounts(this == $gda, htyTradCat == "03", icInd == "N", repAssetInd == "N")
+        
+    then
+        $gda.setRteCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709706' extends '335516' salience 4420
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, icInd == "Y", getCase0_1709706() == "INTERNAL")
+        
+    then
+        $gda.setRteCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709710' extends '335516' salience 4410
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, icInd == "Y", getCase0_1709706() == "NOT_INTERNAL")
+        
+    then
+        $gda.setRteCode("010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709762' extends '335516' salience 4400
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZSEC", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709766' extends '335516' salience 4390
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZSEC", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709801' extends '335516' salience 4380
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709807' extends '335516' salience 4370
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709817' extends '335516' salience 4360
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZABG", "ZABS"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709818' extends '335516' salience 4350
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZABG", "ZABS"), htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709720' extends '335516' salience 4340
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes == "US", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709721' extends '335516' salience 4330
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes == "US", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709735' extends '335516' salience 4320
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes != "US", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709736' extends '335516' salience 4310
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes != "US", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709745' extends '335516' salience 4300
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZSEC", hssSecuProdSubcl == "0260", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709753' extends '335516' salience 4290
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZSEC", hssSecuProdSubcl == "0285", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709758' extends '335516' salience 4280
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709761' extends '335516' salience 4270
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZSEC", hssSecuProdSubcl == "0280", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709764' extends '335516' salience 4260
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709765' extends '335516' salience 4250
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709770' extends '335516' salience 4240
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZSEC", hssSecuProdSubcl == "0220", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709774' extends '335516' salience 4230
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZSEC", hssSecuProdSubcl == "0230", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709782' extends '335516' salience 4220
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZSEC", hssSecuProdSubcl == "0240", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709790' extends '335516' salience 4210
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZSEC", hssSecuProdSubcl == "0250", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709793' extends '335516' salience 4200
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), ratingIng in ("1", "2", "3", "4"), htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709794' extends '335516' salience 4190
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), hssSecuProdSubcl == "0220", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709795' extends '335516' salience 4180
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), hssSecuProdSubcl == "0230", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709797' extends '335516' salience 4170
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), hssSecuProdSubcl == "0240", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709800' extends '335516' salience 4160
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), hssSecuProdSubcl == "0280", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709802' extends '335516' salience 4150
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), ratingIng in ("5", "6", "7"), htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709803' extends '335516' salience 4140
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), ratingIng in ("8", "9", "10"), htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709804' extends '335516' salience 4130
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), ratingIng in ("11", "12", "13"), htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709805' extends '335516' salience 4120
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), ratingIng in ("14", "15", "16", "17", "18", "19"), htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709806' extends '335516' salience 4110
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), ratingIng in ("20", "21", "22"), htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709809' extends '335516' salience 4100
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), hssSecuProdSubcl == "0250", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709811' extends '335516' salience 4090
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), hssSecuProdSubcl == "0260", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709813' extends '335516' salience 4080
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), hssSecuProdSubcl == "0285", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709816' extends '335516' salience 4070
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZABG", "ZABS"), hssSecuProdSubcl == "0280", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709819' extends '335516' salience 4060
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZABG", "ZABS"), hssSecuProdSubcl == "0220", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709820' extends '335516' salience 4050
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZABG", "ZABS"), hssSecuProdSubcl == "0230", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709822' extends '335516' salience 4040
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZABG", "ZABS"), hssSecuProdSubcl == "0240", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709824' extends '335516' salience 4030
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZABG", "ZABS"), hssSecuProdSubcl == "0250", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709826' extends '335516' salience 4020
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZABG", "ZABS"), hssSecuProdSubcl == "0260", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709828' extends '335516' salience 4010
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZABG", "ZABS"), hssSecuProdSubcl == "0285", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709836' extends '335516' salience 4000
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709981' extends '335516' salience 3990
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709988' extends '335516' salience 3980
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709992' extends '335516' salience 3970
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709994' extends '335516' salience 3960
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710084' extends '335516' salience 3950
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes == "US", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710085' extends '335516' salience 3940
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes == "US", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710099' extends '335516' salience 3930
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes != "US", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710100' extends '335516' salience 3920
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes != "US", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709703' extends '335516' salience 3910
+
+    when
+        
+        GrlDetAmounts(this == $gda, secuAssetCl in ("ABCP", "CBO", "CDO", "CLO", "CMBS", "CMO", "OTHER"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709704' extends '335516' salience 3900
+
+    when
+        
+        GrlDetAmounts(this == $gda, secuAssetCl in ("ABCP", "CBO", "CDO", "CLO", "CMBS", "CMO", "OTHER"), htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709712' extends '335516' salience 3890
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0250", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709714' extends '335516' salience 3880
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0260", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709716' extends '335516' salience 3870
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0285", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709719' extends '335516' salience 3860
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0280", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709722' extends '335516' salience 3850
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0220", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709723' extends '335516' salience 3840
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0230", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709725' extends '335516' salience 3830
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0240", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709727' extends '335516' salience 3820
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0250", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709729' extends '335516' salience 3810
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0260", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709731' extends '335516' salience 3800
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0285", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709734' extends '335516' salience 3790
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0280", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709737' extends '335516' salience 3780
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0220", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709738' extends '335516' salience 3770
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0230", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709740' extends '335516' salience 3760
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0240", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709741' extends '335516' salience 3750
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0260", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709743' extends '335516' salience 3740
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0260", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709744' extends '335516' salience 3730
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZSEC", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709749' extends '335516' salience 3720
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0285", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709751' extends '335516' salience 3710
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0285", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709752' extends '335516' salience 3700
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZSEC", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709757' extends '335516' salience 3690
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0280", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709759' extends '335516' salience 3680
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZSEC", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709760' extends '335516' salience 3670
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZSEC", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709768' extends '335516' salience 3660
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0220", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709769' extends '335516' salience 3650
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0220", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709772' extends '335516' salience 3640
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0230", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709773' extends '335516' salience 3630
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0230", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709778' extends '335516' salience 3620
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0240", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709780' extends '335516' salience 3610
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0240", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709781' extends '335516' salience 3600
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZSEC", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709786' extends '335516' salience 3590
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0250", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709788' extends '335516' salience 3580
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0250", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709789' extends '335516' salience 3570
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZSEC", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709796' extends '335516' salience 3560
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709798' extends '335516' salience 3550
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709799' extends '335516' salience 3540
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709808' extends '335516' salience 3530
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709810' extends '335516' salience 3520
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709812' extends '335516' salience 3510
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZCMB", "ZCMG"), ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709814' extends '335516' salience 3500
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZABG", "ZABS"), ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709815' extends '335516' salience 3490
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZABG", "ZABS"), ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709821' extends '335516' salience 3480
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZABG", "ZABS"), ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709823' extends '335516' salience 3470
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZABG", "ZABS"), ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709825' extends '335516' salience 3460
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZABG", "ZABS"), ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709827' extends '335516' salience 3450
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZABG", "ZABS"), ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709835' extends '335516' salience 3440
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0280", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709863' extends '335516' salience 3430
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "GB", secuAssetCl == "ALT-A", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709864' extends '335516' salience 3420
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "GB", secuAssetCl == "ALT-A", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709902' extends '335516' salience 3410
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0250", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709906' extends '335516' salience 3400
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0250", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709914' extends '335516' salience 3390
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0260", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709918' extends '335516' salience 3380
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0260", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709926' extends '335516' salience 3370
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0285", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709930' extends '335516' salience 3360
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0285", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709941' extends '335516' salience 3350
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", secuAssetCl == "SUBPRIME", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709942' extends '335516' salience 3340
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", secuAssetCl == "SUBPRIME", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709980' extends '335516' salience 3330
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0280", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709987' extends '335516' salience 3320
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0280", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709991' extends '335516' salience 3310
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", secuAssetCl == "ALT-A", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709993' extends '335516' salience 3300
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", secuAssetCl == "ALT-A", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709998' extends '335516' salience 3290
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0220", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710000' extends '335516' salience 3280
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0220", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710004' extends '335516' salience 3270
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0230", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710006' extends '335516' salience 3260
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0230", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710014' extends '335516' salience 3250
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0240", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710018' extends '335516' salience 3240
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0240", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710060' extends '335516' salience 3230
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", secuAssetCl == "PRIME", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710061' extends '335516' salience 3220
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", secuAssetCl == "PRIME", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710065' extends '335516' salience 3210
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", secuAssetCl == "PRIME", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710083' extends '335516' salience 3200
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0280", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710086' extends '335516' salience 3190
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0220", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710087' extends '335516' salience 3180
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0230", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710089' extends '335516' salience 3170
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0240", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710091' extends '335516' salience 3160
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0250", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710093' extends '335516' salience 3150
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0260", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710095' extends '335516' salience 3140
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0285", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710098' extends '335516' salience 3130
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0280", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710101' extends '335516' salience 3120
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0220", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710102' extends '335516' salience 3110
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0230", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710104' extends '335516' salience 3100
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0240", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710106' extends '335516' salience 3090
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0250", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710108' extends '335516' salience 3080
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0260", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710110' extends '335516' salience 3070
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0285", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710121' extends '335516' salience 3060
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", secuAssetCl == "PRIME", htyTradCat in ("01", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709696' extends '335516' salience 3050
+
+    when
+        
+        GrlDetAmounts(this == $gda, hssSecuProdSubcl == "0280", secuAssetCl in ("ABCP", "CBO", "CDO", "CLO", "CMBS", "CMO", "OTHER"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709697' extends '335516' salience 3040
+
+    when
+        
+        GrlDetAmounts(this == $gda, hssSecuProdSubcl == "0220", secuAssetCl in ("ABCP", "CBO", "CDO", "CLO", "CMBS", "CMO", "OTHER"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709698' extends '335516' salience 3030
+
+    when
+        
+        GrlDetAmounts(this == $gda, hssSecuProdSubcl == "0230", secuAssetCl in ("ABCP", "CBO", "CDO", "CLO", "CMBS", "CMO", "OTHER"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709699' extends '335516' salience 3020
+
+    when
+        
+        GrlDetAmounts(this == $gda, hssSecuProdSubcl == "0240", secuAssetCl in ("ABCP", "CBO", "CDO", "CLO", "CMBS", "CMO", "OTHER"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709700' extends '335516' salience 3010
+
+    when
+        
+        GrlDetAmounts(this == $gda, hssSecuProdSubcl == "0250", secuAssetCl in ("ABCP", "CBO", "CDO", "CLO", "CMBS", "CMO", "OTHER"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709701' extends '335516' salience 3000
+
+    when
+        
+        GrlDetAmounts(this == $gda, hssSecuProdSubcl == "0260", secuAssetCl in ("ABCP", "CBO", "CDO", "CLO", "CMBS", "CMO", "OTHER"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709702' extends '335516' salience 2990
+
+    when
+        
+        GrlDetAmounts(this == $gda, hssSecuProdSubcl == "0285", secuAssetCl in ("ABCP", "CBO", "CDO", "CLO", "CMBS", "CMO", "OTHER"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709711' extends '335516' salience 2980
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes != "US", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709713' extends '335516' salience 2970
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes != "US", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709715' extends '335516' salience 2960
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes != "US", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709717' extends '335516' salience 2950
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes == "US", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709718' extends '335516' salience 2940
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes == "US", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709724' extends '335516' salience 2930
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes == "US", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709726' extends '335516' salience 2920
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes == "US", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709728' extends '335516' salience 2910
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes == "US", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709730' extends '335516' salience 2900
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes == "US", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709732' extends '335516' salience 2890
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes != "US", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709733' extends '335516' salience 2880
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes != "US", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709739' extends '335516' salience 2870
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZAIN", "ZMIN"), hcyCtryCdIssuerRes != "US", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709742' extends '335516' salience 2860
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709747' extends '335516' salience 2850
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709750' extends '335516' salience 2840
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709754' extends '335516' salience 2830
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709755' extends '335516' salience 2820
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709756' extends '335516' salience 2810
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709777' extends '335516' salience 2800
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709779' extends '335516' salience 2790
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709785' extends '335516' salience 2780
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709787' extends '335516' salience 2770
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709833' extends '335516' salience 2760
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709834' extends '335516' salience 2750
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709838' extends '335516' salience 2740
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0250", secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709840' extends '335516' salience 2730
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0250", secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709844' extends '335516' salience 2720
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0260", secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709846' extends '335516' salience 2710
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0260", secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709850' extends '335516' salience 2700
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0285", secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709852' extends '335516' salience 2690
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0285", secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709858' extends '335516' salience 2680
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "GB", hssSecuProdSubcl == "0280", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709861' extends '335516' salience 2670
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "GB", hssSecuProdSubcl == "0280", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709866' extends '335516' salience 2660
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "GB", hssSecuProdSubcl == "0220", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709867' extends '335516' salience 2650
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "GB", hssSecuProdSubcl == "0220", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709869' extends '335516' salience 2640
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "GB", hssSecuProdSubcl == "0230", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709870' extends '335516' salience 2630
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "GB", hssSecuProdSubcl == "0230", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709874' extends '335516' salience 2620
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "GB", hssSecuProdSubcl == "0240", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709876' extends '335516' salience 2610
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "GB", hssSecuProdSubcl == "0240", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709880' extends '335516' salience 2600
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "GB", hssSecuProdSubcl == "0250", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709882' extends '335516' salience 2590
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "GB", hssSecuProdSubcl == "0250", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709886' extends '335516' salience 2580
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "GB", hssSecuProdSubcl == "0260", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709888' extends '335516' salience 2570
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "GB", hssSecuProdSubcl == "0260", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709892' extends '335516' salience 2560
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "GB", hssSecuProdSubcl == "0285", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709894' extends '335516' salience 2550
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "GB", hssSecuProdSubcl == "0285", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709900' extends '335516' salience 2540
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709901' extends '335516' salience 2530
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0250", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709904' extends '335516' salience 2520
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709905' extends '335516' salience 2510
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0250", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709912' extends '335516' salience 2500
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709913' extends '335516' salience 2490
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0260", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709916' extends '335516' salience 2480
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709917' extends '335516' salience 2470
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0260", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709924' extends '335516' salience 2460
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709925' extends '335516' salience 2450
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0285", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709928' extends '335516' salience 2440
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709929' extends '335516' salience 2430
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0285", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709936' extends '335516' salience 2420
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0280", secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709939' extends '335516' salience 2410
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0280", secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709944' extends '335516' salience 2400
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0220", secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709945' extends '335516' salience 2390
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0220", secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709947' extends '335516' salience 2380
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0230", secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709948' extends '335516' salience 2370
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0230", secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709952' extends '335516' salience 2360
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0240", secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709954' extends '335516' salience 2350
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0240", secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709959' extends '335516' salience 2340
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0260", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709961' extends '335516' salience 2330
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0260", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709965' extends '335516' salience 2320
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0285", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709967' extends '335516' salience 2310
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0285", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709976' extends '335516' salience 2300
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709978' extends '335516' salience 2290
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709979' extends '335516' salience 2280
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0280", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709983' extends '335516' salience 2270
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709985' extends '335516' salience 2260
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709986' extends '335516' salience 2250
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0280", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709997' extends '335516' salience 2240
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0220", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709999' extends '335516' salience 2230
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0220", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710003' extends '335516' salience 2220
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0230", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710005' extends '335516' salience 2210
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0230", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710012' extends '335516' salience 2200
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710013' extends '335516' salience 2190
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0240", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710016' extends '335516' salience 2180
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710017' extends '335516' salience 2170
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0240", secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710021' extends '335516' salience 2160
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0220", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710022' extends '335516' salience 2150
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0220", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710024' extends '335516' salience 2140
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0230", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710025' extends '335516' salience 2130
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0230", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710029' extends '335516' salience 2120
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0240", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710031' extends '335516' salience 2110
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0240", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710035' extends '335516' salience 2100
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0250", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710037' extends '335516' salience 2090
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0250", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710041' extends '335516' salience 2080
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0260", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710043' extends '335516' salience 2070
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0260", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710047' extends '335516' salience 2060
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0285", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710049' extends '335516' salience 2050
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0285", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710055' extends '335516' salience 2040
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0280", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710058' extends '335516' salience 2030
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0280", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710063' extends '335516' salience 2020
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0220", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710064' extends '335516' salience 2010
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0220", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710067' extends '335516' salience 2000
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0230", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710068' extends '335516' salience 1990
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0230", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710072' extends '335516' salience 1980
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0240", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710074' extends '335516' salience 1970
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0240", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710078' extends '335516' salience 1960
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0250", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710080' extends '335516' salience 1950
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", hssSecuProdSubcl == "0250", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710081' extends '335516' salience 1940
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes == "US", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710082' extends '335516' salience 1930
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes == "US", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710088' extends '335516' salience 1920
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes == "US", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710090' extends '335516' salience 1910
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes == "US", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710092' extends '335516' salience 1900
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes == "US", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710094' extends '335516' salience 1890
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes == "US", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710096' extends '335516' salience 1880
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes != "US", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710097' extends '335516' salience 1870
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes != "US", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710103' extends '335516' salience 1860
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes != "US", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710105' extends '335516' salience 1850
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes != "US", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710107' extends '335516' salience 1840
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes != "US", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710109' extends '335516' salience 1830
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FAMT", "FGVO", "GAMT"), hcyCtryCdIssuerRes != "US", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710116' extends '335516' salience 1820
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0280", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710119' extends '335516' salience 1810
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", hssSecuProdSubcl == "0280", secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709693' extends '335516' salience 1800
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl in ("ABCP", "CBO", "CDO", "CLO", "CMBS", "CMO", "OTHER"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709694' extends '335516' salience 1790
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl in ("ABCP", "CBO", "CDO", "CLO", "CMBS", "CMO", "OTHER"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709695' extends '335516' salience 1780
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl in ("ABCP", "CBO", "CDO", "CLO", "CMBS", "CMO", "OTHER"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709707' extends '335516' salience 1770
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl in ("ABCP", "CBO", "CDO", "CLO", "CMBS", "CMO", "OTHER"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709708' extends '335516' salience 1760
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl in ("ABCP", "CBO", "CDO", "CLO", "CMBS", "CMO", "OTHER"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709709' extends '335516' salience 1750
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl in ("ABCP", "CBO", "CDO", "CLO", "CMBS", "CMO", "OTHER"), htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709837' extends '335516' salience 1740
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709839' extends '335516' salience 1730
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709843' extends '335516' salience 1720
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709845' extends '335516' salience 1710
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709849' extends '335516' salience 1700
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709851' extends '335516' salience 1690
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709856' extends '335516' salience 1680
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "GB", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709857' extends '335516' salience 1670
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "GB", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709859' extends '335516' salience 1660
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "GB", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709860' extends '335516' salience 1650
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "GB", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709873' extends '335516' salience 1640
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "GB", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709875' extends '335516' salience 1630
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "GB", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709879' extends '335516' salience 1620
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "GB", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709881' extends '335516' salience 1610
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "GB", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709885' extends '335516' salience 1600
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "GB", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709887' extends '335516' salience 1590
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "GB", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709891' extends '335516' salience 1580
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "GB", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709893' extends '335516' salience 1570
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "GB", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709899' extends '335516' salience 1560
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709903' extends '335516' salience 1550
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709911' extends '335516' salience 1540
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709915' extends '335516' salience 1530
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709923' extends '335516' salience 1520
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709927' extends '335516' salience 1510
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709934' extends '335516' salience 1500
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709935' extends '335516' salience 1490
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709937' extends '335516' salience 1480
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709938' extends '335516' salience 1470
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709951' extends '335516' salience 1460
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709953' extends '335516' salience 1450
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "SUBPRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709958' extends '335516' salience 1440
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709960' extends '335516' salience 1430
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709964' extends '335516' salience 1420
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709966' extends '335516' salience 1410
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709975' extends '335516' salience 1400
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709977' extends '335516' salience 1390
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709982' extends '335516' salience 1380
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1709984' extends '335516' salience 1370
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710011' extends '335516' salience 1360
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710015' extends '335516' salience 1350
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "ALT-A", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710028' extends '335516' salience 1340
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710030' extends '335516' salience 1330
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710034' extends '335516' salience 1320
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710036' extends '335516' salience 1310
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710040' extends '335516' salience 1300
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710042' extends '335516' salience 1290
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("8", "9", "10"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710046' extends '335516' salience 1280
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710048' extends '335516' salience 1270
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("11", "12", "13"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710053' extends '335516' salience 1260
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710054' extends '335516' salience 1250
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710056' extends '335516' salience 1240
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710057' extends '335516' salience 1230
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710071' extends '335516' salience 1220
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710073' extends '335516' salience 1210
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", ratingIng in ("1", "2", "3", "4"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("112");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710077' extends '335516' salience 1200
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes != "US", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710079' extends '335516' salience 1190
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes != "US", ratingIng in ("5", "6", "7"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710114' extends '335516' salience 1180
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710115' extends '335516' salience 1170
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZMBG", "ZMBS"), hcyCtryCdIssuerRes == "US", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710117' extends '335516' salience 1160
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("14", "15", "16", "17", "18", "19"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+rule '1710118' extends '335516' salience 1150
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ZRMB", hcyCtryCdIssuerRes == "US", ratingIng in ("20", "21", "22"), hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"), secuAssetCl == "PRIME", htyTradCat == "03", icInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setRteCode("008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5892");
+        
+end
+
+

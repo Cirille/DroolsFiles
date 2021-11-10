@@ -1,0 +1,165 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335003'
+	when
+		$gda : GrlDetAmounts(ebaProduct in ( "Cash on hand" , "CB Deposits Placed" , "CB Minimum Reserves" , "CB Withdrawable Reserves" ) || ebaProduct matches ( "Loans and advances%" ) || ebaProduct matches ( "Deposits%" ) || ebaProduct matches ( "Debt securities%" ) || ( ebaProduct matches ( "Security legs%" ) && hacAmtCl in ( "11" , "19" ) ))
+	then
+        
+end
+
+
+
+
+
+rule '1688038' extends '335003' salience 3360
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setTreatment(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5649");
+        
+end
+
+rule '1688030' extends '335003' salience 3350
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct != "CB Minimum Reserves", ebaCtpyType in ("Central banks", "ECB"))
+        
+    then
+        $gda.setTreatment("PERMISSION_TO_WITHDRAW");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5649");
+        
+end
+
+rule '1688039' extends '335003' salience 3340
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "CB Minimum Reserves")
+        
+    then
+        $gda.setTreatment("NO_PERMISSION");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5649");
+        
+end
+
+rule '1688032' extends '335003' salience 3330
+
+    when
+        
+        GrlDetAmounts(this == $gda, eeaCtryCtpyInd == "Y")
+        
+    then
+        $gda.setTreatment("EXPOSURE_TO_CG_OF_MS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5649");
+        
+end
+
+rule '1688034' extends '335003' salience 3320
+
+    when
+        
+        GrlDetAmounts(this == $gda, eeaCtryCtpyInd != "Y")
+        
+    then
+        $gda.setTreatment("EXPOSURE_TO_CG_OF_3RD_CTRY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5649");
+        
+end
+
+rule '1688036' extends '335003' salience 3310
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "GPSC")
+        
+    then
+        $gda.setTreatment("EXPOSURE_TO_RGLA_AS_MS_3RD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5649");
+        
+end
+
+rule '1740218' extends '335003' salience 3300
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "FAMT")
+        
+    then
+        $gda.setTreatment("EXPOSURE_TO_GSE_AS_PSE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5649");
+        
+end
+
+rule '1688031' extends '335003' salience 3290
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaIssuerType in ("Central banks", "ECB"))
+        
+    then
+        $gda.setTreatment("PERMISSION_TO_WITHDRAW");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5649");
+        
+end
+
+rule '1688033' extends '335003' salience 3280
+
+    when
+        
+        GrlDetAmounts(this == $gda, eeaCtryIssInd == "Y")
+        
+    then
+        $gda.setTreatment("EXPOSURE_TO_CG_OF_MS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5649");
+        
+end
+
+rule '1688035' extends '335003' salience 3270
+
+    when
+        
+        GrlDetAmounts(this == $gda, eeaCtryIssInd != "Y")
+        
+    then
+        $gda.setTreatment("EXPOSURE_TO_CG_OF_3RD_CTRY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5649");
+        
+end
+
+rule '1688037' extends '335003' salience 3260
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "GPSC")
+        
+    then
+        $gda.setTreatment("EXPOSURE_TO_RGLA_AS_MS_3RD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5649");
+        
+end
+
+

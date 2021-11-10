@@ -1,0 +1,191 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '333931'
+	when
+		$gda : GrlDetAmounts(MANUALLY adjust this subselect: (HPE_PDT_TYPE in ('SPOT FX','CCY FORW','CCY SWAP')) and HAC_AMT_CL = '10' AND DELIVERED_IND = 'Y' and (contract_ref, lse_hly_rel_id) in (select dat.contract_ref , dat.lse_hly_rel_id from GRL_DET_AMOUNTS dat , GRL_DET_AMOUNTS dat2 where dat.buy_ind = 'N' and dat.hac_amt_cl = '10' and dat.lse_hly_rel_id = dat2.lse_hly_rel_id and dat.contract_ref = dat2.contract_ref and dat2.buy_ind = 'Y' and dat2.hac_amt_cl = '10' ) AND SMN_BEY_NUMBER <> NVL(CPY_BEY_NUMBER,'X') AND INT_IND = 'N')
+	then
+        
+end
+
+
+
+
+
+rule '1560515' extends '333931' salience 130
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setNsfrCd("99");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4690");
+        
+end
+
+rule '1560503' extends '333931' salience 120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1558960() == "less_than_30_days", repAssetInd == "Y")
+        
+    then
+        $gda.setNsfrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4690");
+        
+end
+
+rule '1560504' extends '333931' salience 110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1558960() == "between_30 days_and_three_months", repAssetInd == "Y")
+        
+    then
+        $gda.setNsfrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4690");
+        
+end
+
+rule '1560505' extends '333931' salience 100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1558960() == "between_three_and_six_months", repAssetInd == "Y")
+        
+    then
+        $gda.setNsfrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4690");
+        
+end
+
+rule '1560506' extends '333931' salience 90
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1558960() == "between_six_and_nine_months", repAssetInd == "Y")
+        
+    then
+        $gda.setNsfrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4690");
+        
+end
+
+rule '1560507' extends '333931' salience 80
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1558960() == "between_nine_and_twelve_months", repAssetInd == "Y")
+        
+    then
+        $gda.setNsfrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4690");
+        
+end
+
+rule '1560508' extends '333931' salience 70
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1558960() == "more_than_one_year", repAssetInd == "Y")
+        
+    then
+        $gda.setNsfrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4690");
+        
+end
+
+rule '1560509' extends '333931' salience 60
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1558960() == "less_than_30_days", repAssetInd == "N")
+        
+    then
+        $gda.setNsfrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4690");
+        
+end
+
+rule '1560510' extends '333931' salience 50
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1558960() == "between_30 days_and_three_months", repAssetInd == "N")
+        
+    then
+        $gda.setNsfrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4690");
+        
+end
+
+rule '1560511' extends '333931' salience 40
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1558960() == "between_three_and_six_months", repAssetInd == "N")
+        
+    then
+        $gda.setNsfrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4690");
+        
+end
+
+rule '1560512' extends '333931' salience 30
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1558960() == "between_six_and_nine_months", repAssetInd == "N")
+        
+    then
+        $gda.setNsfrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4690");
+        
+end
+
+rule '1560513' extends '333931' salience 20
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1558960() == "between_nine_and_twelve_months", repAssetInd == "N")
+        
+    then
+        $gda.setNsfrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4690");
+        
+end
+
+rule '1560514' extends '333931' salience 10
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1558960() == "more_than_one_year", repAssetInd == "N")
+        
+    then
+        $gda.setNsfrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4690");
+        
+end
+
+

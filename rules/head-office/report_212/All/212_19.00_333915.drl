@@ -1,0 +1,502 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '333915'
+	when
+		$gda : GrlDetAmounts(substr ( actCode , 1 , 1 ) in ( "A" , "L" ) && ( actCode in ( "A0017000" , "A0058000" , "A3291000" , "A3331000" , "A3333000" , "A4412000" , "A4564000" , "A4565000" , "A7985000" , "A7986000" , "A7987000" , "A7988000" , "A9018000" , "A9260000" , "A9458000" , "A9460000" , "A0080000" , "A0083000" , "A0092000" , "A0094000" , "A0095000" , "A0097000" , "A0101000" , "A0104000" ) || ( hpePdtType == "REPO" ) ) && hreRelTypeGuar != null && intInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1559355' extends '333915' salience 79680
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCredRiskWghtGuar("99");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559329' extends '333915' salience 79670
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType in ("Sovereign", "Central bank"), eval(nvl(this.geteeactryguarind(), 'n')) == "Y")
+        
+    then
+        $gda.setCredRiskWghtGuar("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559331' extends '333915' salience 79660
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType in ("Sovereign", "Central bank"), eval(nvl(this.geteeactryguarind(), 'n')) == "N")
+        
+    then
+        $gda.setCredRiskWghtGuar("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559332' extends '333915' salience 79650
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType in ("Sovereign", "Central bank"), eval(nvl(this.geteeactryguarind(), 'n')) == "N")
+        
+    then
+        $gda.setCredRiskWghtGuar("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559346' extends '333915' salience 79640
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType == "Local Government", eval(nvl(this.geteeactryguarind(), 'n')) == "N")
+        
+    then
+        $gda.setCredRiskWghtGuar("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559353' extends '333915' salience 79630
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrGuarType == "PSE", getCase0_1559348() == "3 months or more")
+        
+    then
+        $gda.setCredRiskWghtGuar("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559356' extends '333915' salience 79620
+
+    when
+        
+        GrlDetAmounts(this == $gda, lcrGuarType in ("IMF", "BIS", "ECB", "EU", "EFSF", "ESM"))
+        
+    then
+        $gda.setCredRiskWghtGuar("0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559323' extends '333915' salience 79610
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType in ("Sovereign", "Central bank"), eval(nvl(this.geteeactryguarind(), 'n')) == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setCredRiskWghtGuar("0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559324' extends '333915' salience 79600
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType in ("Sovereign", "Central bank"), eval(nvl(this.geteeactryguarind(), 'n')) == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setCredRiskWghtGuar("20");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559325' extends '333915' salience 79590
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType in ("Sovereign", "Central bank"), eval(nvl(this.geteeactryguarind(), 'n')) == "Y", credQualStepIss == "3")
+        
+    then
+        $gda.setCredRiskWghtGuar("50");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559326' extends '333915' salience 79580
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType in ("Sovereign", "Central bank"), eval(nvl(this.geteeactryguarind(), 'n')) == "Y", credQualStepIss == "4")
+        
+    then
+        $gda.setCredRiskWghtGuar("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559327' extends '333915' salience 79570
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType in ("Sovereign", "Central bank"), eval(nvl(this.geteeactryguarind(), 'n')) == "Y", credQualStepIss == "5")
+        
+    then
+        $gda.setCredRiskWghtGuar("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559328' extends '333915' salience 79560
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType in ("Sovereign", "Central bank"), eval(nvl(this.geteeactryguarind(), 'n')) == "Y", credQualStepIss == "6")
+        
+    then
+        $gda.setCredRiskWghtGuar("150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559330' extends '333915' salience 79550
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType in ("Sovereign", "Central bank"), eval(nvl(this.geteeactryguarind(), 'n')) == "Y")
+        
+    then
+        $gda.setCredRiskWghtGuar("0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559333' extends '333915' salience 79540
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType in ("Sovereign", "Central bank"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "1")
+        
+    then
+        $gda.setCredRiskWghtGuar("0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559334' extends '333915' salience 79530
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType in ("Sovereign", "Central bank"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "2")
+        
+    then
+        $gda.setCredRiskWghtGuar("20");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559335' extends '333915' salience 79520
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType in ("Sovereign", "Central bank"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "3")
+        
+    then
+        $gda.setCredRiskWghtGuar("50");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559336' extends '333915' salience 79510
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType in ("Sovereign", "Central bank"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "4")
+        
+    then
+        $gda.setCredRiskWghtGuar("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559337' extends '333915' salience 79500
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType in ("Sovereign", "Central bank"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "5")
+        
+    then
+        $gda.setCredRiskWghtGuar("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559338' extends '333915' salience 79490
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType in ("Sovereign", "Central bank"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "6")
+        
+    then
+        $gda.setCredRiskWghtGuar("150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559339' extends '333915' salience 79480
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType == "Local Government", eval(nvl(this.geteeactryguarind(), 'n')) == "Y")
+        
+    then
+        $gda.setCredRiskWghtGuar("20");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559340' extends '333915' salience 79470
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType == "Local Government", eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "1")
+        
+    then
+        $gda.setCredRiskWghtGuar("20");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559341' extends '333915' salience 79460
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType == "Local Government", eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "2")
+        
+    then
+        $gda.setCredRiskWghtGuar("50");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559342' extends '333915' salience 79450
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType == "Local Government", eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "3")
+        
+    then
+        $gda.setCredRiskWghtGuar("50");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559343' extends '333915' salience 79440
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType == "Local Government", eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "4")
+        
+    then
+        $gda.setCredRiskWghtGuar("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559344' extends '333915' salience 79430
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType == "Local Government", eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "5")
+        
+    then
+        $gda.setCredRiskWghtGuar("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559345' extends '333915' salience 79420
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType == "Local Government", eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "6")
+        
+    then
+        $gda.setCredRiskWghtGuar("150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559347' extends '333915' salience 79410
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrGuarType == "PSE", getCase0_1559348() == "3 months or more", credQualStepIss == "1")
+        
+    then
+        $gda.setCredRiskWghtGuar("20");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559348' extends '333915' salience 79400
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrGuarType == "PSE", getCase0_1559348() == "3 months or more", credQualStepIss == "2")
+        
+    then
+        $gda.setCredRiskWghtGuar("50");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559349' extends '333915' salience 79390
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrGuarType == "PSE", getCase0_1559348() == "3 months or more", credQualStepIss == "3")
+        
+    then
+        $gda.setCredRiskWghtGuar("50");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559350' extends '333915' salience 79380
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrGuarType == "PSE", getCase0_1559348() == "3 months or more", credQualStepIss == "4")
+        
+    then
+        $gda.setCredRiskWghtGuar("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559351' extends '333915' salience 79370
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrGuarType == "PSE", getCase0_1559348() == "3 months or more", credQualStepIss == "5")
+        
+    then
+        $gda.setCredRiskWghtGuar("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559352' extends '333915' salience 79360
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrGuarType == "PSE", getCase0_1559348() == "3 months or more", credQualStepIss == "6")
+        
+    then
+        $gda.setCredRiskWghtGuar("150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559354' extends '333915' salience 79350
+
+    when
+        
+        GrlDetAmounts(this == $gda, lcrGuarType == "MDB")
+        
+    then
+        $gda.setCredRiskWghtGuar("0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+rule '1559357' extends '333915' salience 79340
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrGuarType == "PSE", getCase0_1559348() == "OTHER_ORG_TERM", credQualStepIss == "ZERO")
+        
+    then
+        $gda.setCredRiskWghtGuar("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4674");
+        
+end
+
+

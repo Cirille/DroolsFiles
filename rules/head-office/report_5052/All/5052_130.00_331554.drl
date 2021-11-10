@@ -1,0 +1,165 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331554'
+	when
+		$gda : GrlDetAmounts(actCode != null && hpePdtType == "SPOT FX")
+	then
+        
+end
+
+
+
+
+
+rule '1102173' extends '331554' salience 460
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt01("NTBR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3034");
+        
+end
+
+rule '1102166' extends '331554' salience 450
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10"), repAssetInd == "Y", intInd == "Y")
+        
+    then
+        $gda.setCustomTxt01("5100_22");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3034");
+        
+end
+
+rule '1102169' extends '331554' salience 440
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10"), repAssetInd == "N", intInd == "Y")
+        
+    then
+        $gda.setCustomTxt01("1901_22");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3034");
+        
+end
+
+rule '1088583' extends '331554' salience 430
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "08", repAssetInd == "Y", ownUse20 == "NHOF", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("5102_21");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3034");
+        
+end
+
+rule '1092165' extends '331554' salience 420
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "08", repAssetInd == "N", ownUse20 == "NHOF", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1902_21");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3034");
+        
+end
+
+rule '1102150' extends '331554' salience 410
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "08", repAssetInd == "Y", ownUse20 == "CORP", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("5102_28");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3034");
+        
+end
+
+rule '1102162' extends '331554' salience 400
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "08", repAssetInd == "N", ownUse20 == "BANK", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1902_22");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3034");
+        
+end
+
+rule '1102170' extends '331554' salience 390
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "08", repAssetInd == "Y", residentInd == "Y", ownUse20 in ("BANK", "NHOF"), intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("5102_28");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3034");
+        
+end
+
+rule '1102171' extends '331554' salience 380
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "08", repAssetInd == "Y", residentInd == "Y", ownUse20 == "CORP", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("5102_28");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3034");
+        
+end
+
+rule '1102174' extends '331554' salience 370
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "08", repAssetInd == "Y", residentInd == "N", ownUse20 == "BANK", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("5102_23");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3034");
+        
+end
+
+rule '1102175' extends '331554' salience 360
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "08", repAssetInd == "Y", residentInd == "N", ownUse20 == "CORP", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("5102_29");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3034");
+        
+end
+
+

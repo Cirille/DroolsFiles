@@ -1,0 +1,78 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '337347'
+	when
+		$gda : GrlDetAmounts(( substr ( actCode , 1 , 1 ) in ( "A" , "L" , "Q" , "B" ) || ( hpePdtType == "REPO" ) ) && intInd == "N" && icInd == "Y")
+	then
+        
+end
+
+
+
+
+
+rule '1822937' extends '337347' salience 20750
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setEbaCtpyType("Non-financial customers");
+        $gda.setEbaCtpyTypeEup("Financial corporations other than credit instxx");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7374");
+        
+end
+
+rule '1822934' extends '337347' salience 20740
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table cho_tree_nodes does not have an entry within the refDataApi within the dbConfig file*/
+        
+    then
+        $gda.setEbaCtpyType("Credit institutions");
+        $gda.setEbaCtpyTypeEup("Financial corporations other than credit instxx");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7374");
+        
+end
+
+rule '1822935' extends '337347' salience 20730
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table cho_tree_nodes does not have an entry within the refDataApi within the dbConfig file*/
+        
+    then
+        $gda.setEbaCtpyType("Financial corporations other than credit instxx");
+        $gda.setEbaCtpyTypeEup("Financial corporations other than credit instxx");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7374");
+        
+end
+
+rule '1822936' extends '337347' salience 20720
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table cho_tree_nodes does not have an entry within the refDataApi within the dbConfig file*/
+        
+    then
+        $gda.setEbaCtpyType("Non-financial customers");
+        $gda.setEbaCtpyTypeEup("Financial corporations other than credit instxx");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7374");
+        
+end
+
+

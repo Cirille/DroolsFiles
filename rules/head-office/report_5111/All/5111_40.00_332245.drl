@@ -1,0 +1,87 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332245'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1148932' extends '332245' salience 50
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt04("TO BE DETERMINED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3538");
+        
+end
+
+rule '1148934' extends '332245' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse06 == "LADV", ownUse18 == "TROT", customTxt02 == "C")
+        
+    then
+        $gda.setCustomTxt04("-D");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3538");
+        
+end
+
+rule '1148935' extends '332245' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse06 == "LADV", ownUse18 == "TROT", hreRelTypeCtpy matches "B.*")
+        
+    then
+        $gda.setCustomTxt04("-6");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3538");
+        
+end
+
+rule '1148936' extends '332245' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse06 == "LADV", ownUse18 == "TROT", hreRelTypeCtpy not matches "B.*")
+        
+    then
+        $gda.setCustomTxt04("-2");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3538");
+        
+end
+
+rule '1148937' extends '332245' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse06 == "LADV", ownUse18 == "TROT", hreRelTypeCtpy matches "C.*", ownUse10 == "TA51")
+        
+    then
+        $gda.setCustomTxt04("-6");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3538");
+        
+end
+
+

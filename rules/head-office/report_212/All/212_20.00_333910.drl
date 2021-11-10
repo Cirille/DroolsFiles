@@ -1,0 +1,249 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '333910'
+	when
+		$gda : GrlDetAmounts(hreRelTypeIssuer != null)
+	then
+        
+end
+
+
+
+
+
+rule '1559262' extends '333910' salience 79330
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLiqCredQual("O");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4669");
+        
+end
+
+rule '1584547' extends '333910' salience 79320
+
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Other Equity Securities", lcrIssuerType in ("Other", "PSE", "SME"))
+        
+    then
+        $gda.setLiqCredQual("H");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4669");
+        
+end
+
+rule '1559258' extends '333910' salience 79310
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Covered Bond", getCase0_1559259() == "Y", credQualStepIss in ("1", "2", "3"))
+        
+    then
+        $gda.setLiqCredQual("H");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4669");
+        
+end
+
+rule '1559259' extends '333910' salience 79300
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "RMBS", getCase0_1559259() == "Y", credQualStepIss in ("1", "2", "3"))
+        
+    then
+        $gda.setLiqCredQual("H");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4669");
+        
+end
+
+rule '1559261' extends '333910' salience 79290
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "ABS", getCase0_1559259() == "Y", credQualStepIss in ("1", "2", "3"))
+        
+    then
+        $gda.setLiqCredQual("H");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4669");
+        
+end
+
+rule '1559257' extends '333910' salience 79280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Corporate Bond", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "PSE", "SME", "Credit Institution"), credQualStepIss in ("1", "2", "3"))
+        
+    then
+        $gda.setLiqCredQual("H");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4669");
+        
+end
+
+rule '1559263' extends '333910' salience 79270
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "RMBS", "ABS"), getCase0_1559259() == "Y", lcrIssuerType in ("Sovereign", "Local Government", "Central Bank", "PSE", "IMF", "BIS", "ECB", "MDB", "EU", "EFSF", "ESM"), credRiskWghtIss == "0")
+        
+    then
+        $gda.setLiqCredQual("E");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4669");
+        
+end
+
+rule '1559269' extends '333910' salience 79260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "RMBS", "ABS"), getCase0_1559259() == "Y", lcrIssuerType in ("PSE", "MDB"), credRiskWghtIss == "20")
+        
+    then
+        $gda.setLiqCredQual("H");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4669");
+        
+end
+
+rule '1559256' extends '333910' salience 79250
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "RMBS", "ABS"), getCase0_1559259() == "Y", lcrIssuerType in ("Other", "SME"), lcrGuarType in ("Local Government", "PSE", "MDB"), credRiskWghtGuar == "20")
+        
+    then
+        $gda.setLiqCredQual("H");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4669");
+        
+end
+
+rule '1559260' extends '333910' salience 79240
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "RMBS", "ABS"), getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "Y", credQualStepIss in ("1", "2", "3"))
+        
+    then
+        $gda.setLiqCredQual("H");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4669");
+        
+end
+
+rule '1559264' extends '333910' salience 79230
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "RMBS", "ABS"), getCase0_1559259() == "Y", lcrIssuerType in ("Other", "SME", "Credit Institution", "PSE", "Local Government"), lcrGuarType in ("Sovereign", "Local Government", "Central Bank", "IMF", "BIS", "ECB", "MDB", "EU", "EFSF", "ESM"), credRiskWghtGuar == "0")
+        
+    then
+        $gda.setLiqCredQual("E");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4669");
+        
+end
+
+rule '1559267' extends '333910' salience 79220
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "RMBS", "ABS"), getCase0_1559259() == "Y", lcrIssuerType in ("Sovereign", "Central Bank"), credRiskWghtIss == "20")
+        
+    then
+        $gda.setLiqCredQual("H");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4669");
+        
+end
+
+rule '1559265' extends '333910' salience 79210
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "RMBS", "ABS"), getCase0_1559259() == "Y", lcrIssuerType in ("Sovereign", "Central Bank"), credRiskWghtIss in ("20", "50", "100", "150"), incLiqRiskIssInd == "Y")
+        
+    then
+        $gda.setLiqCredQual("E");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4669");
+        
+end
+
+rule '1584545' extends '333910' salience 79200
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "RMBS", "ABS"), getCase0_1559259() == "Y", lcrIssuerType in ("Sovereign", "Central Bank"), credRiskWghtIss == "20", incLiqRiskIssInd == "N")
+        
+    then
+        $gda.setLiqCredQual("H");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4669");
+        
+end
+
+rule '1559266' extends '333910' salience 79190
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "RMBS", "ABS"), getCase0_1559259() == "Y", lcrIssuerType in ("Other", "SME", "Credit Institution", "PSE", "Local Government"), lcrGuarType in ("Sovereign", "Central Bank"), credRiskWghtGuar in ("20", "50", "100", "150"), incLiqRiskGuarInd == "Y")
+        
+    then
+        $gda.setLiqCredQual("E");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4669");
+        
+end
+
+rule '1559268' extends '333910' salience 79180
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "RMBS", "ABS"), getCase0_1559259() == "Y", lcrIssuerType in ("Other", "SME", "Credit Institution", "Local Government"), lcrGuarType in ("Sovereign", "Central Bank"), credRiskWghtGuar == "20")
+        
+    then
+        $gda.setLiqCredQual("H");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4669");
+        
+end
+
+rule '1584546' extends '333910' salience 79170
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "RMBS", "ABS"), getCase0_1559259() == "Y", lcrIssuerType in ("Other", "SME", "Credit Institution", "PSE", "Local Government"), lcrGuarType in ("Sovereign", "Central Bank"), credRiskWghtGuar == "20", incLiqRiskGuarInd == "Y")
+        
+    then
+        $gda.setLiqCredQual("H");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4669");
+        
+end
+
+

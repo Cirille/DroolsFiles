@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331230'
+	when
+		$gda : GrlDetAmounts(massLine != "99.999")
+	then
+        
+end
+
+
+
+
+
+rule '1035087' extends '331230' salience 30
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt02("99.999");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2810");
+        
+end
+
+rule '1035059' extends '331230' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A.*")
+        
+    then
+        $gda.setCustomTxt02("Total Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2810");
+        
+end
+
+rule '1035060' extends '331230' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "B.*")
+        
+    then
+        $gda.setCustomTxt02("Total Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2810");
+        
+end
+
+

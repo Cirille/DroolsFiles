@@ -1,0 +1,41 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+global com.ing.gfrs.logical.apis.GrlAdjustmentsLogicalApi grlAdjustmentsLogicalApi;
+
+dialect  "mvel"
+
+
+rule '335519'
+	when
+		$gda : GrlDetAmounts()
+	then
+end
+
+
+rule '1710336' extends '335519' salience 50950
+no-loop
+    when
+
+        GrlDetAmounts(this == $gda, nvl2(ajtId,'Y','N') == 'N')
+
+    then
+        $gda.setLdrCode("ACTUALS");
+
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5895");
+
+end
+
+rule '1710337' extends '335519' salience 50940
+no-loop
+    when
+
+        GrlDetAmounts(this == $gda, nvl2(ajtId,'Y','N') == 'Y')
+
+    then
+        $gda.setLdrCode(grlAdjustmentsLogicalApi.getLDRCode($gda.getAjtId(),"MAGAAP"));
+
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5895");
+
+end

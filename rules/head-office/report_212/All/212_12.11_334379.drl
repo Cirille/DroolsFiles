@@ -1,0 +1,74 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334379'
+	when
+		$gda : GrlDetAmounts(( substr ( actCode , 1 , 1 ) in ( "A" , "L" , "Q" , "B" ) || ( hpePdtType == "REPO" ) ) && intInd == "N" && icInd == "Y")
+	then
+        
+end
+
+
+
+
+
+rule '1615071' extends '334379' salience 93600
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLcrCtpyType("Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5064");
+        
+end
+
+rule '1615068' extends '334379' salience 93590
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table cho_tree_nodes does not have an entry within the refDataApi within the dbConfig file*/
+        
+    then
+        $gda.setLcrCtpyType("Credit Institution");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5064");
+        
+end
+
+rule '1615069' extends '334379' salience 93580
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table cho_tree_nodes does not have an entry within the refDataApi within the dbConfig file*/
+        
+    then
+        $gda.setLcrCtpyType("Financial Institution");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5064");
+        
+end
+
+rule '1615070' extends '334379' salience 93570
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table cho_tree_nodes does not have an entry within the refDataApi within the dbConfig file*/
+        
+    then
+        $gda.setLcrCtpyType("Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5064");
+        
+end
+
+

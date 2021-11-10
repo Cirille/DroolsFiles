@@ -1,0 +1,100 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334927'
+	when
+		$gda : GrlDetAmounts(ratingIngLongGuar != null)
+	then
+        
+end
+
+
+
+
+
+rule '1682921' extends '334927' salience 21510
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIngLongGuar in ("1", "2", "3", "4"))
+        
+    then
+        $gda.setEbaCredQualStepGuar("CQS 1");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5580");
+        
+end
+
+rule '1682922' extends '334927' salience 21500
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIngLongGuar in ("5", "6", "7"))
+        
+    then
+        $gda.setEbaCredQualStepGuar("CQS 2");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5580");
+        
+end
+
+rule '1682923' extends '334927' salience 21490
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIngLongGuar in ("8", "9", "10"))
+        
+    then
+        $gda.setEbaCredQualStepGuar("CQS 3");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5580");
+        
+end
+
+rule '1682924' extends '334927' salience 21480
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIngLongGuar in ("11", "12", "13"))
+        
+    then
+        $gda.setEbaCredQualStepGuar("CQS 4");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5580");
+        
+end
+
+rule '1682925' extends '334927' salience 21470
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIngLongGuar in ("14", "15", "16"))
+        
+    then
+        $gda.setEbaCredQualStepGuar("CQS 5");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5580");
+        
+end
+
+rule '1682926' extends '334927' salience 21460
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIngLongGuar not in ("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"))
+        
+    then
+        $gda.setEbaCredQualStepGuar("CQS 6");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5580");
+        
+end
+
+

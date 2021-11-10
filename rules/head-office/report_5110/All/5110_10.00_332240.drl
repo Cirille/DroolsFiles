@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332240'
+	when
+		$gda : GrlDetAmounts(ownUse04 == "10601" && ownUse03 == "1" && hcuCcyCdOrg == "JPY" && ownUse17 in ( "AGMT" , "PROM" ) && contractRef != null && contractRef not in ( "LD40442164" , "LD60502556" ))
+	then
+        
+end
+
+
+
+
+
+rule '1148864' extends '332240' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse17 == "AGMT")
+        
+    then
+        $gda.setCustomTxt01("LCY 112 02 02 00 LOANS AGAINST AGREEMENT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3533");
+        
+end
+
+rule '1148865' extends '332240' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse17 == "PROM")
+        
+    then
+        $gda.setCustomTxt01("LCY 112 02 01 00 LOANS AGAINST PROMISSORY NOTES");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3533");
+        
+end
+
+

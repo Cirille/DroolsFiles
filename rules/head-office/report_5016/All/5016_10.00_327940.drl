@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '327940'
+	when
+		$gda : GrlDetAmounts(actCode != null)
+	then
+        
+end
+
+
+
+
+
+rule '326741' extends '327940' salience 940
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode != null, hcyCtryCdRes in ("AT", "BE", "FI", "FR", "DE", "GR", "IE", "IT", "LU", "NL", "PT", "ES"))
+        
+    then
+        $gda.setCustomTxt01("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1627");
+        
+end
+
+rule '326743' extends '327940' salience 930
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode != null, hcyCtryCdRes not in ("AT", "BE", "FI", "FR", "DE", "GR", "IE", "IT", "LU", "NL", "PT", "ES"))
+        
+    then
+        $gda.setCustomTxt01("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1627");
+        
+end
+
+

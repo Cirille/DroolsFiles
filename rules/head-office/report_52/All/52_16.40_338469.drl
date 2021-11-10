@@ -1,0 +1,35 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '338469'
+	when
+		$gda : GrlDetAmounts(actCode in ( "A0027000" , "A8805000" , "A8806000" , "A8807000" , "A9457000" , "A9459000" , "A9260000" , "L0242000" , "A0081000" , "A0082000" , "A0090000" , "A0093000" , "A0102000" , "A0103000" , "A0104000" , "L0106000" , "L0110000" , "L0111000" , "L0113000" , "L0117000" , "L0118000" , "L0119000" ) && intInd == "N" && icInd == "N" && nettingType matches "CUST_GRID_NET.*" && nettingUpd == "UPD" && lseHlyRelId == "0557" && residentInd == "Y" && hcuCcyCdOrg != hcuCcyCdDom && substr ( actCode , 1 , 1 ) == "L")
+	then
+        
+end
+
+
+
+
+
+rule '2007908' extends '338469' salience 250
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxtHo23("9");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"8450");
+        
+end
+
+

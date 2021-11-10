@@ -1,0 +1,74 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331556'
+	when
+		$gda : GrlDetAmounts(actCode != null && hpePdtType == "REPO")
+	then
+        
+end
+
+
+
+
+
+rule '1088473' extends '331556' salience 350
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", hcuCcyCdOrg == "BGN", posGroupId == "21201", residentInd == "Y", hacAmtCl == "01")
+        
+    then
+        $gda.setCustomTxt01("1511_1_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3036");
+        
+end
+
+rule '1102139' extends '331556' salience 340
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hcuCcyCdOrg == "BGN", posGroupId == "11201", residentInd == "Y", hacAmtCl == "01")
+        
+    then
+        $gda.setCustomTxt01("5510_1_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3036");
+        
+end
+
+rule '1102177' extends '331556' salience 330
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hcuCcyCdOrg == "BGN", posGroupId == "11201", residentInd == "Y", hacAmtCl == "03")
+        
+    then
+        $gda.setCustomTxt01("4961_9_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3036");
+        
+end
+
+rule '1102178' extends '331556' salience 320
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", hcuCcyCdOrg == "BGN", posGroupId == "21201", residentInd == "Y", hacAmtCl == "03")
+        
+    then
+        $gda.setCustomTxt01("4963_27_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3036");
+        
+end
+
+

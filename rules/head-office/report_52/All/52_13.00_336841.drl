@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336841'
+	when
+		$gda : GrlDetAmounts(actCode in ( "L0105000" , "L0107000" , "L0115000" , "L0116000" , "L0237000" , "L0269000" , "L3345000" , "L3346000" , "L3934000" , "L8277000" ) && intInd == "N" && icInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1769753' extends '336841' salience 750
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setHb2Bis2CombiCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6951");
+        
+end
+
+rule '1769752' extends '336841' salience 740
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "LOCAL CCY", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("17");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6951");
+        
+end
+
+

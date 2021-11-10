@@ -1,0 +1,1145 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335700'
+	when
+		$gda : GrlDetAmounts(ebaProduct matches "Derivatives.*" && hacAmtCl == "10" && intInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1738910' extends '335700' salience 1030
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setSifi3Instrument(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738887' extends '335700' salience 1020
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. Intr-Rate-Swaps", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument(Warning: selecting from SIFI3: data will not be available in source topic.
+ full statement: EXCLUDED FROM SIFI3);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738889' extends '335700' salience 1010
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Forwards", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument(Warning: selecting from SIFI3: data will not be available in source topic.
+ full statement: EXCLUDED FROM SIFI3);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738891' extends '335700' salience 1000
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Swaps", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument(Warning: selecting from SIFI3: data will not be available in source topic.
+ full statement: EXCLUDED FROM SIFI3);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738895' extends '335700' salience 990
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Futures", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument(Warning: selecting from SIFI3: data will not be available in source topic.
+ full statement: EXCLUDED FROM SIFI3);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738899' extends '335700' salience 980
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Credit-Default-Swaps", "Derivatives. Total-Return-Swaps"), repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument(Warning: selecting from SIFI3: data will not be available in source topic.
+ full statement: EXCLUDED FROM SIFI3);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738907' extends '335700' salience 970
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. Commodity-Swaps", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument(Warning: selecting from SIFI3: data will not be available in source topic.
+ full statement: EXCLUDED FROM SIFI3);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738826' extends '335700' salience 960
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Equity-Forwards", "Derivatives. Equity-Futures", "Derivatives. Equity-Options", "Derivatives. Equity-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-EQUITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738827' extends '335700' salience 950
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Equity-Forwards", "Derivatives. Equity-Futures", "Derivatives. Equity-Options", "Derivatives. Equity-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-EQUITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738828' extends '335700' salience 940
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Intr-Rate-Forwards", "Derivatives. Intr-Rate-Futures", "Derivatives. Intr-Rate-Options"), eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-INTEREST RATE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738829' extends '335700' salience 930
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Intr-Rate-Forwards", "Derivatives. Intr-Rate-Futures", "Derivatives. Intr-Rate-Options"), eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-INTEREST RATE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738830' extends '335700' salience 920
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. Intr-Rate-Swaps", eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-INTEREST RATE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738831' extends '335700' salience 910
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. Intr-Rate-Swaps", eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument(Warning: selecting from SIFI3: data will not be available in source topic.
+ full statement: EXCLUDED FROM SIFI3);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738832' extends '335700' salience 900
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Forwards", eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-CCY FORWARDS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738833' extends '335700' salience 890
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Forwards", eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument(Warning: selecting from SIFI3: data will not be available in source topic.
+ full statement: EXCLUDED FROM SIFI3);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738834' extends '335700' salience 880
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Swaps", eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-CCY SWAPS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738835' extends '335700' salience 870
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Swaps", eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument(Warning: selecting from SIFI3: data will not be available in source topic.
+ full statement: EXCLUDED FROM SIFI3);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738836' extends '335700' salience 860
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Options", eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-CCY OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738837' extends '335700' salience 850
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Options", eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-CCY OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738838' extends '335700' salience 840
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Futures", eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-CCY OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738839' extends '335700' salience 830
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Futures", eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument(Warning: selecting from SIFI3: data will not be available in source topic.
+ full statement: EXCLUDED FROM SIFI3);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738840' extends '335700' salience 820
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Credit-Spread-Put-Options", "Derivatives. Other-Credit-Derivatives"), eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-CREDIT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738841' extends '335700' salience 810
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Credit-Spread-Put-Options", "Derivatives. Other-Credit-Derivatives"), eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-CREDIT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738842' extends '335700' salience 800
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Credit-Default-Swaps", "Derivatives. Total-Return-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-CREDIT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738843' extends '335700' salience 790
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Credit-Default-Swaps", "Derivatives. Total-Return-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument(Warning: selecting from SIFI3: data will not be available in source topic.
+ full statement: EXCLUDED FROM SIFI3);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738844' extends '335700' salience 780
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Gold-Forwards", "Derivatives. Gold-Futures", "Derivatives. Gold-Options", "Derivatives. Gold-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738845' extends '335700' salience 770
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Gold-Forwards", "Derivatives. Gold-Futures", "Derivatives. Gold-Options", "Derivatives. Gold-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738846' extends '335700' salience 760
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Precious-Metals-Forwards", "Derivatives. Precious-Metals-Futures", "Derivatives. Precious-Metals-Options", "Derivatives. Precious-Metals-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738847' extends '335700' salience 750
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Precious-Metals-Forwards", "Derivatives. Precious-Metals-Futures", "Derivatives. Precious-Metals-Options", "Derivatives. Precious-Metals-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738848' extends '335700' salience 740
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Commodity-Forwards", "Derivatives. Commodity-Futures", "Derivatives. Commodity-Options"), eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738849' extends '335700' salience 730
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Commodity-Forwards", "Derivatives. Commodity-Futures", "Derivatives. Commodity-Options"), eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738850' extends '335700' salience 720
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. Commodity-Swaps", eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738851' extends '335700' salience 710
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. Commodity-Swaps", eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument(Warning: selecting from SIFI3: data will not be available in source topic.
+ full statement: EXCLUDED FROM SIFI3);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738852' extends '335700' salience 700
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Other-Forwards", "Derivatives. Other-Futures", "Derivatives. Other-Options", "Derivatives. Other-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-OTHER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738853' extends '335700' salience 690
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Other-Forwards", "Derivatives. Other-Futures", "Derivatives. Other-Options", "Derivatives. Other-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-EXCHA-OTHER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738882' extends '335700' salience 680
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Equity-Forwards", "Derivatives. Equity-Futures", "Derivatives. Equity-Options", "Derivatives. Equity-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-EQUITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738883' extends '335700' salience 670
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Equity-Forwards", "Derivatives. Equity-Futures", "Derivatives. Equity-Options", "Derivatives. Equity-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-EQUITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738884' extends '335700' salience 660
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Intr-Rate-Forwards", "Derivatives. Intr-Rate-Futures", "Derivatives. Intr-Rate-Options"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-INTEREST RATE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738885' extends '335700' salience 650
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Intr-Rate-Forwards", "Derivatives. Intr-Rate-Futures", "Derivatives. Intr-Rate-Options"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-INTEREST RATE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738886' extends '335700' salience 640
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. Intr-Rate-Swaps", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-INTEREST RATE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738888' extends '335700' salience 630
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Forwards", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-CCY FORWARDS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738890' extends '335700' salience 620
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Swaps", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-CCY SWAPS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738892' extends '335700' salience 610
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Options", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-CCY OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738893' extends '335700' salience 600
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Options", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-CCY OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738894' extends '335700' salience 590
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Futures", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-CCY OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738896' extends '335700' salience 580
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Credit-Spread-Put-Options", "Derivatives. Other-Credit-Derivatives"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-CREDIT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738897' extends '335700' salience 570
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Credit-Spread-Put-Options", "Derivatives. Other-Credit-Derivatives"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-CREDIT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738898' extends '335700' salience 560
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Credit-Default-Swaps", "Derivatives. Total-Return-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-CREDIT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738900' extends '335700' salience 550
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Gold-Forwards", "Derivatives. Gold-Futures", "Derivatives. Gold-Options", "Derivatives. Gold-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738901' extends '335700' salience 540
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Gold-Forwards", "Derivatives. Gold-Futures", "Derivatives. Gold-Options", "Derivatives. Gold-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738902' extends '335700' salience 530
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Precious-Metals-Forwards", "Derivatives. Precious-Metals-Futures", "Derivatives. Precious-Metals-Options", "Derivatives. Precious-Metals-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738903' extends '335700' salience 520
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Precious-Metals-Forwards", "Derivatives. Precious-Metals-Futures", "Derivatives. Precious-Metals-Options", "Derivatives. Precious-Metals-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738904' extends '335700' salience 510
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Commodity-Forwards", "Derivatives. Commodity-Futures", "Derivatives. Commodity-Options"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738905' extends '335700' salience 500
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Commodity-Forwards", "Derivatives. Commodity-Futures", "Derivatives. Commodity-Options"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738906' extends '335700' salience 490
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. Commodity-Swaps", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738908' extends '335700' salience 480
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Other-Forwards", "Derivatives. Other-Futures", "Derivatives. Other-Options", "Derivatives. Other-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-OTHER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738909' extends '335700' salience 470
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Other-Forwards", "Derivatives. Other-Futures", "Derivatives. Other-Options", "Derivatives. Other-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-BILAT-OTHER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738854' extends '335700' salience 460
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Equity-Forwards", "Derivatives. Equity-Futures", "Derivatives. Equity-Options", "Derivatives. Equity-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-EQUITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738855' extends '335700' salience 450
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Equity-Forwards", "Derivatives. Equity-Futures", "Derivatives. Equity-Options", "Derivatives. Equity-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-EQUITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738856' extends '335700' salience 440
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Intr-Rate-Forwards", "Derivatives. Intr-Rate-Futures", "Derivatives. Intr-Rate-Options"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-INTEREST RATE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738857' extends '335700' salience 430
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Intr-Rate-Forwards", "Derivatives. Intr-Rate-Futures", "Derivatives. Intr-Rate-Options"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-INTEREST RATE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738858' extends '335700' salience 420
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. Intr-Rate-Swaps", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-INTEREST RATE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738859' extends '335700' salience 410
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. Intr-Rate-Swaps", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument(Warning: selecting from SIFI3: data will not be available in source topic.
+ full statement: EXCLUDED FROM SIFI3);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738860' extends '335700' salience 400
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Forwards", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-CCY FORWARDS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738861' extends '335700' salience 390
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Forwards", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument(Warning: selecting from SIFI3: data will not be available in source topic.
+ full statement: EXCLUDED FROM SIFI3);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738862' extends '335700' salience 380
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Swaps", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-CCY SWAPS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738863' extends '335700' salience 370
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Swaps", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument(Warning: selecting from SIFI3: data will not be available in source topic.
+ full statement: EXCLUDED FROM SIFI3);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738864' extends '335700' salience 360
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Options", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-CCY OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738865' extends '335700' salience 350
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Options", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-CCY OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738866' extends '335700' salience 340
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Futures", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-CCY OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738867' extends '335700' salience 330
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. FX-Futures", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument(Warning: selecting from SIFI3: data will not be available in source topic.
+ full statement: EXCLUDED FROM SIFI3);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738868' extends '335700' salience 320
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Credit-Spread-Put-Options", "Derivatives. Other-Credit-Derivatives"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-CREDIT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738869' extends '335700' salience 310
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Credit-Spread-Put-Options", "Derivatives. Other-Credit-Derivatives"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-CREDIT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738870' extends '335700' salience 300
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Credit-Default-Swaps", "Derivatives. Total-Return-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-CREDIT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738871' extends '335700' salience 290
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Credit-Default-Swaps", "Derivatives. Total-Return-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument(Warning: selecting from SIFI3: data will not be available in source topic.
+ full statement: EXCLUDED FROM SIFI3);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738872' extends '335700' salience 280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Gold-Forwards", "Derivatives. Gold-Futures", "Derivatives. Gold-Options", "Derivatives. Gold-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738873' extends '335700' salience 270
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Gold-Forwards", "Derivatives. Gold-Futures", "Derivatives. Gold-Options", "Derivatives. Gold-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738874' extends '335700' salience 260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Precious-Metals-Forwards", "Derivatives. Precious-Metals-Futures", "Derivatives. Precious-Metals-Options", "Derivatives. Precious-Metals-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738875' extends '335700' salience 250
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Precious-Metals-Forwards", "Derivatives. Precious-Metals-Futures", "Derivatives. Precious-Metals-Options", "Derivatives. Precious-Metals-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738876' extends '335700' salience 240
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Commodity-Forwards", "Derivatives. Commodity-Futures", "Derivatives. Commodity-Options"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738877' extends '335700' salience 230
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Commodity-Forwards", "Derivatives. Commodity-Futures", "Derivatives. Commodity-Options"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738878' extends '335700' salience 220
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. Commodity-Swaps", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738879' extends '335700' salience 210
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Derivatives. Commodity-Swaps", eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument(Warning: selecting from SIFI3: data will not be available in source topic.
+ full statement: EXCLUDED FROM SIFI3);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738880' extends '335700' salience 200
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Other-Forwards", "Derivatives. Other-Futures", "Derivatives. Other-Options", "Derivatives. Other-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "Y", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-OTHER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+rule '1738881' extends '335700' salience 190
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Derivatives. Other-Forwards", "Derivatives. Other-Futures", "Derivatives. Other-Options", "Derivatives. Other-Swaps"), eval(nvl(this.getquotedind(), 'n')) == "N", repAssetInd == "N", getCase0_1743270() == "Cleared")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-OTHER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6031");
+        
+end
+
+

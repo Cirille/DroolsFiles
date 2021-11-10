@@ -1,0 +1,1426 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '330419'
+	when
+		$gda : GrlDetAmounts(( hscAcctSubcl in ( "3001" , "3002" , "3003" , "3005" , "3006" , "3007" , "3009" , "3010" , "3011" , "3013" , "3014" , "3015" , "3017" , "3018" , "3019" ) && icInd == "N" && derivativesCombiCd != null && ( quotedInd == "N" || quotedInd == null ) ))
+	then
+        
+end
+
+
+
+
+
+rule '859243' extends '330419' salience 1080
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl in ("3001", "3002"), getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_H28_FRA&IRS_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859244' extends '330419' salience 1070
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl in ("3001", "3002"), getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_I28_FRA&IRS_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859245' extends '330419' salience 1060
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl in ("3001", "3002"), getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_J28_FRA&IRS_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859246' extends '330419' salience 1050
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl in ("3005", "3006"), getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_H20_CCYFORW&SWAP_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859247' extends '330419' salience 1040
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl in ("3005", "3006"), getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_J20_CCYFORW&SWAP_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859248' extends '330419' salience 1030
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl in ("3005", "3006"), getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_I20_CCYFORW&SWAP_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859249' extends '330419' salience 1020
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl in ("3017", "3018"), getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_J35_EQFORW&SWAPS_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859250' extends '330419' salience 1010
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl in ("3017", "3018"), getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_H35_EQFORW&SWAPS_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859251' extends '330419' salience 1000
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl in ("3017", "3018"), getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_I35_EQFORW&SWAPS_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858838' extends '330419' salience 990
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl in ("3005", "3006"), getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_I20_CCYFORW&SWAP_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858839' extends '330419' salience 980
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl in ("3001", "3002"), getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_I28_FRA&IRS_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858840' extends '330419' salience 970
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl in ("3017", "3018"), finInstInd == "N", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_I37_EQFORW&SWAPS_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858841' extends '330419' salience 960
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl in ("3017", "3018"), finInstInd == "Y", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_I36_EQFORW&SWAPS_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858842' extends '330419' salience 950
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl in ("3005", "3006"), finInstInd == "N", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_I22_CCYFORW&SWAP_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858843' extends '330419' salience 940
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl in ("3017", "3018"), getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_I35_EQFORW&SWAPS_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858844' extends '330419' salience 930
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl in ("3001", "3002"), finInstInd == "N", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_I30_FRA&IRS_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858863' extends '330419' salience 920
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl in ("3001", "3002"), getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_J28_FRA&IRS_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858865' extends '330419' salience 910
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl in ("3005", "3006"), finInstInd == "N", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_J22_CCYFORW&SWAP_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858866' extends '330419' salience 900
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl in ("3017", "3018"), finInstInd == "Y", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_J36_EQFORW&SWAPS_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858867' extends '330419' salience 890
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl in ("3005", "3006"), finInstInd == "Y", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_J21_CCYFORW&SWAP_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858868' extends '330419' salience 880
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl in ("3017", "3018"), getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_J35_EQFORW&SWAPS_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858869' extends '330419' salience 870
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl in ("3001", "3002"), finInstInd == "N", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_J30_FRA&IRS_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858870' extends '330419' salience 860
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl in ("3001", "3002"), finInstInd == "Y", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_J29_FRA&IRS_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858871' extends '330419' salience 850
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl in ("3017", "3018"), finInstInd == "N", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_J37_EQFORW&SWAPS_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858872' extends '330419' salience 840
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl in ("3005", "3006"), getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_J20_CCYFORW&SWAP_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858890' extends '330419' salience 830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl in ("3001", "3002"), finInstInd == "Y", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_H29_FRA&IRS_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858893' extends '330419' salience 820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl in ("3005", "3006"), finInstInd == "Y", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_H21_CCYFORW&SWAP_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858894' extends '330419' salience 810
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl in ("3005", "3006"), getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_H20_CCYFORW&SWAP_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858895' extends '330419' salience 800
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl in ("3001", "3002"), getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_H28_FRA&IRS_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858896' extends '330419' salience 790
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl in ("3017", "3018"), finInstInd == "N", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_H37_EQFORW&SWAPS_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858897' extends '330419' salience 780
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl in ("3017", "3018"), finInstInd == "Y", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_H36_EQFORW&SWAPS_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858898' extends '330419' salience 770
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl in ("3005", "3006"), finInstInd == "N", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_H22_CCYFORW&SWAP_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858899' extends '330419' salience 760
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl in ("3017", "3018"), getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_H35_EQFORW&SWAPS_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858900' extends '330419' salience 750
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl in ("3001", "3002"), finInstInd == "N", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_H30_FRA&IRS_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858919' extends '330419' salience 740
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl in ("3001", "3002"), finInstInd == "Y", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_I29_FRA&IRS_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858921' extends '330419' salience 730
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl in ("3005", "3006"), finInstInd == "Y", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_I21_CCYFORW&SWAP_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859252' extends '330419' salience 720
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", repAssetInd == "Y", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_S28_INTRRATEOPT_BOUGHT_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859253' extends '330419' salience 710
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", repAssetInd == "Y", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_T28_INTRRATEOPT_BOUGHT_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859254' extends '330419' salience 700
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", repAssetInd == "Y", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_R28_INTRRATEOPT_BOUGHT_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859255' extends '330419' salience 690
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3007", repAssetInd == "Y", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_R20_CCYOPT_BOUGHT_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859256' extends '330419' salience 680
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3007", repAssetInd == "Y", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_T20_CCYOPT_BOUGHT_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859257' extends '330419' salience 670
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3007", repAssetInd == "Y", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_S20_CCYOPT_BOUGHT_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859258' extends '330419' salience 660
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3019", repAssetInd == "Y", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_R35_EQOPT_BOUGHT_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859259' extends '330419' salience 650
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3019", repAssetInd == "Y", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_S35_EQOPT_BOUGHT_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859260' extends '330419' salience 640
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3019", repAssetInd == "Y", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_T35_EQOPT_BOUGHT_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859261' extends '330419' salience 630
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", repAssetInd == "N", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_N28_INTRRATEOPT_SOLD_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859262' extends '330419' salience 620
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", repAssetInd == "N", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_O28_INTRRATEOPT_SOLD_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859263' extends '330419' salience 610
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", repAssetInd == "N", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_M28_INTRRATEOPT_SOLD_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859264' extends '330419' salience 600
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3007", repAssetInd == "N", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_O20_CCYOPT_SOLD_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859265' extends '330419' salience 590
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3007", repAssetInd == "N", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_M20_CCYOPT_SOLD_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859266' extends '330419' salience 580
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3007", repAssetInd == "N", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_N20_CCYOPT_SOLD_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859267' extends '330419' salience 570
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3019", repAssetInd == "N", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_N35_EQOPT_SOLD_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859268' extends '330419' salience 560
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3019", repAssetInd == "N", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_M35_EQOPT_SOLD_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '859269' extends '330419' salience 550
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3019", repAssetInd == "N", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_O35_EQOPT_SOLD_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858845' extends '330419' salience 540
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", repAssetInd == "N", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_O28_INTRRATEOPT_SOLD_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858846' extends '330419' salience 530
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3007", repAssetInd == "Y", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_T20_CCYOPT_BOUGHT_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858847' extends '330419' salience 520
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3019", finInstInd == "N", repAssetInd == "N", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_O37_EQOPT_SOLD_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858848' extends '330419' salience 510
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3007", finInstInd == "Y", repAssetInd == "N", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_O21_CCYOPT_SOLD_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858849' extends '330419' salience 500
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3007", repAssetInd == "N", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_O20_CCYOPT_SOLD_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858850' extends '330419' salience 490
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", repAssetInd == "Y", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_T28_INTRRATEOPT_BOUGHT_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858851' extends '330419' salience 480
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", finInstInd == "Y", repAssetInd == "N", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_O29_INTRRATEOPT_SOLD_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858852' extends '330419' salience 470
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", finInstInd == "Y", repAssetInd == "Y", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_T29_INTRRATEOPT_BOUGHT_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858853' extends '330419' salience 460
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3019", finInstInd == "N", repAssetInd == "Y", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_T37_EQOPT_BOUGHT_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858854' extends '330419' salience 450
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3019", finInstInd == "Y", repAssetInd == "Y", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_T36_EQOPT_BOUGHT_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858855' extends '330419' salience 440
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3007", finInstInd == "N", repAssetInd == "Y", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_T22_CCYOPT_BOUGHT_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858856' extends '330419' salience 430
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3007", finInstInd == "N", repAssetInd == "N", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_O22_CCYOPT_SOLD_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858857' extends '330419' salience 420
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3007", finInstInd == "Y", repAssetInd == "Y", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_T21_CCYOPT_BOUGHT_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858858' extends '330419' salience 410
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3019", finInstInd == "Y", repAssetInd == "N", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_O36_EQOPT_SOLD_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858859' extends '330419' salience 400
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3019", repAssetInd == "Y", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_T35_EQOPT_BOUGHT_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858860' extends '330419' salience 390
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3019", repAssetInd == "N", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_O35_EQOPT_SOLD_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858861' extends '330419' salience 380
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", finInstInd == "N", repAssetInd == "Y", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_T30_INTRRATEOPT_BOUGHT_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858862' extends '330419' salience 370
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", finInstInd == "N", repAssetInd == "N", getCase0_857259() == "more_than_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_O30_INTRRATEOPT_SOLD_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858873' extends '330419' salience 360
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", repAssetInd == "Y", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_R28_INTRRATEOPT_BOUGHT_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858874' extends '330419' salience 350
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", finInstInd == "Y", repAssetInd == "Y", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_R29_INTRRATEOPT_BOUGHT_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858875' extends '330419' salience 340
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", finInstInd == "N", repAssetInd == "N", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_M30_INTRRATEOPT_SOLD_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858876' extends '330419' salience 330
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", finInstInd == "N", repAssetInd == "Y", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_R30_INTRRATEOPT_BOUGHT_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858877' extends '330419' salience 320
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3019", repAssetInd == "Y", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_R35_EQOPT_BOUGHT_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858878' extends '330419' salience 310
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3019", finInstInd == "Y", repAssetInd == "N", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_M36_EQOPT_SOLD_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858879' extends '330419' salience 300
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3007", finInstInd == "N", repAssetInd == "N", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_M22_CCYOPT_SOLD_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858880' extends '330419' salience 290
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3019", finInstInd == "N", repAssetInd == "N", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_M37_EQOPT_SOLD_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858881' extends '330419' salience 280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3007", finInstInd == "Y", repAssetInd == "Y", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_R21_CCYOPT_BOUGHT_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858882' extends '330419' salience 270
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3007", finInstInd == "Y", repAssetInd == "N", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_M21_CCYOPT_SOLD_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858883' extends '330419' salience 260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3007", repAssetInd == "Y", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_R20_CCYOPT_BOUGHT_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858884' extends '330419' salience 250
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3007", repAssetInd == "N", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_M20_CCYOPT_SOLD_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858885' extends '330419' salience 240
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", repAssetInd == "N", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_M28_INTRRATEOPT_SOLD_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858886' extends '330419' salience 230
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3019", finInstInd == "Y", repAssetInd == "Y", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_R36_EQOPT_BOUGHT_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858887' extends '330419' salience 220
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3007", finInstInd == "N", repAssetInd == "Y", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_R22_CCYOPT_BOUGHT_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858888' extends '330419' salience 210
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3019", repAssetInd == "N", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_M35_EQOPT_SOLD_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858889' extends '330419' salience 200
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", finInstInd == "Y", repAssetInd == "N", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_M29_INTRRATEOPT_SOLD_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858891' extends '330419' salience 190
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3019", finInstInd == "N", repAssetInd == "Y", getCase0_857259() == "one_year_or_less")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_R37_EQOPT_BOUGHT_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858901' extends '330419' salience 180
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", repAssetInd == "Y", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_S28_INTRRATEOPT_BOUGHT_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858902' extends '330419' salience 170
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", finInstInd == "Y", repAssetInd == "N", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_N29_INTRRATEOPT_SOLD_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858903' extends '330419' salience 160
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", finInstInd == "Y", repAssetInd == "Y", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_S29_INTRRATEOPT_BOUGHT_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858904' extends '330419' salience 150
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", finInstInd == "N", repAssetInd == "Y", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_S30_INTRRATEOPT_BOUGHT_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858905' extends '330419' salience 140
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3019", repAssetInd == "N", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_N35_EQOPT_SOLD_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858906' extends '330419' salience 130
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3019", repAssetInd == "Y", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_S35_EQOPT_BOUGHT_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858907' extends '330419' salience 120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3007", finInstInd == "Y", repAssetInd == "Y", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_S21_CCYOPT_BOUGHT_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858908' extends '330419' salience 110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3007", finInstInd == "N", repAssetInd == "N", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_N22_CCYOPT_SOLD_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858909' extends '330419' salience 100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3019", finInstInd == "N", repAssetInd == "Y", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_S37_EQOPT_BOUGHT_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858910' extends '330419' salience 90
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3019", finInstInd == "N", repAssetInd == "N", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_N37_EQOPT_SOLD_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858911' extends '330419' salience 80
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3007", finInstInd == "Y", repAssetInd == "N", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_N21_CCYOPT_SOLD_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858912' extends '330419' salience 70
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3007", repAssetInd == "Y", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_S20_CCYOPT_BOUGHT_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858913' extends '330419' salience 60
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3007", repAssetInd == "N", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_N20_CCYOPT_SOLD_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858914' extends '330419' salience 50
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", repAssetInd == "N", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_N28_INTRRATEOPT_SOLD_REPDEALER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858915' extends '330419' salience 40
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3019", finInstInd == "Y", repAssetInd == "Y", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_S36_EQOPT_BOUGHT_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858916' extends '330419' salience 30
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3007", finInstInd == "N", repAssetInd == "Y", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_S22_CCYOPT_BOUGHT_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858917' extends '330419' salience 20
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3019", finInstInd == "Y", repAssetInd == "N", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_N36_EQOPT_SOLD_OTHFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+rule '858918' extends '330419' salience 10
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", finInstInd == "N", repAssetInd == "N", getCase0_857259() == "between_one_and_five_years")
+        
+    then
+        $gda.setDvMarketstatRemCd("Table 4_N30_INTRRATEOPT_SOLD_NONFIN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2268");
+        
+end
+
+

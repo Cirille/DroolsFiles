@@ -1,0 +1,49 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332252'
+	when
+		$gda : GrlDetAmounts(cpyBeyNumber != null)
+	then
+        
+end
+
+
+
+
+
+rule '1149189' extends '332252' salience 20
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt01("TO BE DETERMINED 5118-10");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3545");
+        
+end
+
+rule '1149188' extends '332252' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y")
+        
+    then
+        $gda.setCustomTxt01(Warning: selecting from related: data will not be available in source topic.
+ full statement: Fund from related);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3545");
+        
+end
+
+

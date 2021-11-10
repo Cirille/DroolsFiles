@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331442'
+	when
+		$gda : GrlDetAmounts(actCode != null && hpePdtType == "CASH")
+	then
+        
+end
+
+
+
+
+
+rule '1071357' extends '331442' salience 2890
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "BGN", hacAmtCl == "01", posGroupId == "10101")
+        
+    then
+        $gda.setCustomTxt01("5011_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2928");
+        
+end
+
+rule '1071358' extends '331442' salience 2880
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg not in ("BGN", "EUR"), hacAmtCl == "01", posGroupId == "10101")
+        
+    then
+        $gda.setCustomTxt01("5021_0_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2928");
+        
+end
+
+rule '1082779' extends '331442' salience 2870
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", hacAmtCl == "01", posGroupId == "10101")
+        
+    then
+        $gda.setCustomTxt01("5021_0_ EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2928");
+        
+end
+
+

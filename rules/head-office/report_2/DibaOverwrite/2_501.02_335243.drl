@@ -1,0 +1,68 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '335243'
+	when
+		$gda : GrlDetAmounts(ownUse07 in ( "xxxA002300000470000011024" , "xxxA002300000470000010007" , "xxxA002300000470000015007" , "xxxA798700002900000015089" ) && lseHlyRelId in ( "0212" , "0212_RET" , "9661" , "9614" ))
+	then
+end
+
+
+rule '1699881' extends '335243' salience 190
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId in ("0212", "0212_RET", "9614", "9661"), ownUse07 == "A002300000470000011024")
+        
+    then
+        $gda.setScyCgpCode("00011");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5759");
+        
+end
+
+rule '1699884' extends '335243' salience 180
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId in ("0212", "0212_RET", "9614", "9661"), ownUse07 == "A798700002900000015089")
+        
+    then
+        $gda.setScyCgpCode("00015");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5759");
+        
+end
+
+rule '1699883' extends '335243' salience 170
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId in ("0212", "0212_RET", "9614", "9661"), ownUse07 == "A002300000470000015007")
+        
+    then
+        $gda.setScyCgpCode("00015");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5759");
+        
+end
+
+rule '1699882' extends '335243' salience 160
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId in ("0212", "0212_RET", "9614", "9661"), ownUse07 == "A002300000470000010007")
+        
+    then
+        $gda.setScyCgpCode("00010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5759");
+        
+end
+
+

@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332255'
+	when
+		$gda : GrlDetAmounts(ownUse06 == "CASH")
+	then
+        
+end
+
+
+
+
+
+rule '1149025' extends '332255' salience 30
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt02("TO BE DETERMINED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3549");
+        
+end
+
+rule '1149021' extends '332255' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse06 == "CASH", ownUse09 in ("MNMBR", "MNMTD"))
+        
+    then
+        $gda.setCustomTxt02("CASH ON HAND - LCY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3549");
+        
+end
+
+rule '1149022' extends '332255' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse06 == "CASH", ownUse09 in ("MNMNO", "MNMTO"))
+        
+    then
+        $gda.setCustomTxt02("CASH ON HAND - FCY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3549");
+        
+end
+
+

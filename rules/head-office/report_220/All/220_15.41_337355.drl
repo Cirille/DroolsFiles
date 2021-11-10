@@ -1,0 +1,594 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '337355'
+	when
+		$gda : GrlDetAmounts(intInd == "Y")
+	then
+        
+end
+
+
+
+
+
+rule '1823108' extends '337355' salience 5830
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setEbaProduct(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823123' extends '337355' salience 5820
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LOAN", repAssetInd == "Y")
+        
+    then
+        $gda.setEbaProduct("Loans and advances. Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823124' extends '337355' salience 5810
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LOAN", repAssetInd == "N")
+        
+    then
+        $gda.setEbaProduct("Deposits. Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823094' extends '337355' salience 5800
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hscAcctSubcl == "2202")
+        
+    then
+        $gda.setEbaProduct("Loans and advances. Term deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823095' extends '337355' salience 5790
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", hscAcctSubcl == "2202")
+        
+    then
+        $gda.setEbaProduct("Deposits. Term deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823096' extends '337355' salience 5780
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", hscAcctSubcl in ("1501", "1507"))
+        
+    then
+        $gda.setEbaProduct("Equity instruments issued. Capital");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823097' extends '337355' salience 5770
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hscAcctSubcl == "2310")
+        
+    then
+        $gda.setEbaProduct("Equity instruments");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823098' extends '337355' salience 5760
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY SWAP", hacAmtCl == "10")
+        
+    then
+        $gda.setEbaProduct("Derivatives. FX-Swaps");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823099' extends '337355' salience 5750
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY FORW", hacAmtCl == "10")
+        
+    then
+        $gda.setEbaProduct("Derivatives. FX-Forwards");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823100' extends '337355' salience 5740
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", hacAmtCl == "10")
+        
+    then
+        $gda.setEbaProduct("FX-Spots");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823101' extends '337355' salience 5730
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY FORW", hacAmtCl == "12", hsnSwapCl not in ("04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"))
+        
+    then
+        $gda.setEbaProduct("Derivatives. FX-Forwards");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823102' extends '337355' salience 5720
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY SWAP", hacAmtCl == "12", hsnSwapCl not in ("04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"))
+        
+    then
+        $gda.setEbaProduct("Derivatives. FX-Swaps");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823103' extends '337355' salience 5710
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "FRA", hacAmtCl == "12", hsnSwapCl not in ("04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"))
+        
+    then
+        $gda.setEbaProduct("Derivatives. Intr-Rate-Forwards");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823104' extends '337355' salience 5700
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "IRS", hacAmtCl == "12", hsnSwapCl not in ("04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"))
+        
+    then
+        $gda.setEbaProduct("Derivatives. Intr-Rate-Swaps");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823105' extends '337355' salience 5690
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType in ("INTR RATE OPT", "SWAPTION"), hacAmtCl == "12", hsnSwapCl not in ("04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"))
+        
+    then
+        $gda.setEbaProduct("Derivatives. Intr-Rate-Options");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823106' extends '337355' salience 5680
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "COMMODITY OPT", hacAmtCl == "12", hsnSwapCl not in ("04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"))
+        
+    then
+        $gda.setEbaProduct("Derivatives. Commodity-Options");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823107' extends '337355' salience 5670
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "GOLD OPT", hacAmtCl == "12", hsnSwapCl not in ("04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"))
+        
+    then
+        $gda.setEbaProduct("Derivatives. Gold-Options");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823115' extends '337355' salience 5660
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "REPO", repAssetInd == "N", eval(nvl(this.getsblsecvssecind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaProduct("Deposits. Repurchase agreements");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823116' extends '337355' salience 5650
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "REPO", repAssetInd == "Y", eval(nvl(this.getsblsecvssecind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaProduct("Loans and advances. Reverse repurchase loans");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823126' extends '337355' salience 5640
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hscAcctSubcl == "2321")
+        
+    then
+        $gda.setEbaProduct("Loans and advances. Bonds to be settled");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823127' extends '337355' salience 5630
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", hscAcctSubcl == "2321")
+        
+    then
+        $gda.setEbaProduct("Deposits. Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823128' extends '337355' salience 5620
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hscAcctSubcl in ("2702", "2708"))
+        
+    then
+        $gda.setEbaProduct("All assets other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823129' extends '337355' salience 5610
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", hscAcctSubcl in ("2702", "2708"))
+        
+    then
+        $gda.setEbaProduct("Other financial liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823130' extends '337355' salience 5600
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", hscAcctSubcl in ("1601", "1702"))
+        
+    then
+        $gda.setEbaProduct("Other reserves");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823132' extends '337355' salience 5590
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hscAcctSubcl == "2106")
+        
+    then
+        $gda.setEbaProduct("Loans and advances. Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823133' extends '337355' salience 5580
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", hscAcctSubcl == "2106")
+        
+    then
+        $gda.setEbaProduct("Deposits. Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823134' extends '337355' salience 5570
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hscAcctSubcl == "1102")
+        
+    then
+        $gda.setEbaProduct("Other reserves");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823135' extends '337355' salience 5560
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hscAcctSubcl in ("2501", "2503"))
+        
+    then
+        $gda.setEbaProduct("Loans and advances. On demand and short notice");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823137' extends '337355' salience 5550
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", hscAcctSubcl in ("2501", "2503"))
+        
+    then
+        $gda.setEbaProduct("Deposits. On demand and short notice");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823111' extends '337355' salience 5540
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "REPO", repAssetInd == "Y", eval(nvl(this.getsblsecvssecind(), 'n')) == "N", hacAmtCl in ("11", "19"))
+        
+    then
+        $gda.setEbaProduct("Security legs. Reverse Repo");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823112' extends '337355' salience 5530
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "REPO", repAssetInd == "Y", eval(nvl(this.getsblsecvssecind(), 'n')) == "Y", hacAmtCl in ("11", "19"))
+        
+    then
+        $gda.setEbaProduct("Security legs. SBL Stock Borrowing");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823113' extends '337355' salience 5520
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "REPO", repAssetInd == "N", eval(nvl(this.getsblsecvssecind(), 'n')) == "N", hacAmtCl in ("11", "19"))
+        
+    then
+        $gda.setEbaProduct("Security legs. Repo");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823114' extends '337355' salience 5510
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "REPO", repAssetInd == "N", eval(nvl(this.getsblsecvssecind(), 'n')) == "Y", hacAmtCl in ("11", "19"))
+        
+    then
+        $gda.setEbaProduct("Security legs. SBL Stock Lending");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823117' extends '337355' salience 5500
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "N", callInd == "Y", fixTermInd == "N")
+        
+    then
+        $gda.setEbaProduct("Deposits. On demand and short notice");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823119' extends '337355' salience 5490
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "N", callInd == "N", fixTermInd == "Y")
+        
+    then
+        $gda.setEbaProduct("Deposits. Term deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823120' extends '337355' salience 5480
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "Y", callInd == "Y", fixTermInd == "N")
+        
+    then
+        $gda.setEbaProduct("Loans and advances. On demand and short notice");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823122' extends '337355' salience 5470
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "Y", callInd == "N", fixTermInd == "Y")
+        
+    then
+        $gda.setEbaProduct("Loans and advances. Term deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823125' extends '337355' salience 5460
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hscAcctSubcl == "2321", hssSecuProdSubcl in ("0110", "0120", "0130"))
+        
+    then
+        $gda.setEbaProduct("Loans and advances. Equities to be settled");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823131' extends '337355' salience 5450
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", hscAcctSubcl in ("1601", "1702"), branchInd == "Y")
+        
+    then
+        $gda.setEbaProduct("Equity instruments issued other than capital");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823136' extends '337355' salience 5440
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hscAcctSubcl in ("2501", "2503"), hreRelTypeCtpy == "BCEN")
+        
+    then
+        $gda.setEbaProduct("CB Deposit Given");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823118' extends '337355' salience 5430
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "N", getCase0_1823121() == "overnight_deposit")
+        
+    then
+        $gda.setEbaProduct("Deposits. Overnight");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823121' extends '337355' salience 5420
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "Y", getCase0_1823121() == "overnight_deposit")
+        
+    then
+        $gda.setEbaProduct("Loans and advances. Overnight");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823109' extends '337355' salience 5410
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "REPO", repAssetInd == "N", eval(nvl(this.getsblsecvssecind(), 'n')) == "Y", ldeDeptCd != "3450", hacAmtCl in ("11", "19"), smnBeyNumber in ("U0242", "U0493", "U0618", "U2876"))
+        
+    then
+        $gda.setEbaProduct("Security legs. CLS Lending");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+rule '1823110' extends '337355' salience 5400
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "REPO", repAssetInd == "Y", eval(nvl(this.getsblsecvssecind(), 'n')) == "Y", ldeDeptCd != "3450", hacAmtCl in ("11", "19"), smnBeyNumber in ("U0242", "U0493", "U0618", "U2876"))
+        
+    then
+        $gda.setEbaProduct("Security legs. CLS Borrowing");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7382");
+        
+end
+
+

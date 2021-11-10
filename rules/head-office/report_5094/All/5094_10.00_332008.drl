@@ -1,0 +1,113 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332008'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1121372' extends '332008' salience 70
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0768")
+        
+    then
+        $gda.setRiskRecon(nvl(hcuCcyCdOrg, "")+ nvl(gridId, "")+ posId + cfyPosId );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3383");
+        
+end
+
+rule '1119943' extends '332008' salience 60
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0768", hpePdtType == "NOSTRO")
+        
+    then
+        $gda.setRiskRecon(nvl(hcuCcyCdOrg, "")+ nvl(gridId, ""));
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3383");
+        
+end
+
+rule '1119945' extends '332008' salience 50
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0768", hpePdtType == "DEPOSIT")
+        
+    then
+        $gda.setRiskRecon(nvl(hcuCcyCdOrg, "")+ nvl(gridId, ""));
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3383");
+        
+end
+
+rule '1119946' extends '332008' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0768", hpePdtType == "CUST ACCT")
+        
+    then
+        $gda.setRiskRecon(nvl(hcuCcyCdOrg, "")+ nvl(gridId, "")+ cfyPosId );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3383");
+        
+end
+
+rule '1119947' extends '332008' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0768", hpePdtType == "STOCK SHARE")
+        
+    then
+        $gda.setRiskRecon(nvl(hcuCcyCdOrg, "")+ nvl(isinCd, "")+ "%" );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3383");
+        
+end
+
+rule '1119948' extends '332008' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0768", hpePdtType == "STOCK BOND")
+        
+    then
+        $gda.setRiskRecon(nvl(hcuCcyCdOrg, "")+ nvl(isinCd, "")+ "%" );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3383");
+        
+end
+
+rule '1159957' extends '332008' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0768", hpePdtType == "STOCK TREASURY PAPER")
+        
+    then
+        $gda.setRiskRecon(nvl(hcuCcyCdOrg, "")+ nvl(isinCd, "")+ "%" );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3383");
+        
+end
+
+

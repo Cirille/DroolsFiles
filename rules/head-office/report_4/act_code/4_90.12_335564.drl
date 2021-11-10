@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335564'
+	when
+		$gda : GrlDetAmounts(hpePdtType in ( "STOCK BOND" , "STOCK CD AND CP" , "STOCK CONV BOND" , "STOCK FLOATING RATE NOTE" , "STOCK MEDIUM TERM NOTE" , "STOCK SAVING CERT" , "STOCK SHARE" , "STOCK TREASURY PAPER" ) && intInd == "N" && hacAmtCl in ( "21" ))
+	then
+        
+end
+
+
+
+
+
+rule '1711102' extends '335564' salience 40830
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y")
+        
+    then
+        $gda.setActCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5940");
+        
+end
+
+rule '1711100' extends '335564' salience 40820
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", branchInd == "N")
+        
+    then
+        $gda.setActCode("Q3335000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5940");
+        
+end
+
+rule '1711101' extends '335564' salience 40810
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", branchInd == "Y")
+        
+    then
+        $gda.setActCode("L3340000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5940");
+        
+end
+
+

@@ -1,0 +1,55 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '330030'
+	when
+		$gda : GrlDetAmounts(scyActCode in ( "A0027000" , "A0057000" , "A3329000" , "A3332000" , "A3931000" , "A8350000" ) && scyPdtCode in ( "027800" , "027900" ) && icInd == "N")
+	then
+end
+
+
+rule '776961' extends '330030' salience 5280
+
+    when
+        
+        GrlDetAmounts(this == $gda, scyActCode in ("A0027000", "A3329000", "A3332000", "A3931000", "A8350000"))
+        
+    then
+        $gda.setScyRteCode("062");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1913");
+        
+end
+
+rule '1032013' extends '330030' salience 5270
+
+    when
+        
+        GrlDetAmounts(this == $gda, scyActCode == "A0057000", htyTradCat == "01")
+        
+    then
+        $gda.setScyRteCode("170");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1913");
+        
+end
+
+rule '776962' extends '330030' salience 5260
+
+    when
+        
+        GrlDetAmounts(this == $gda, scyActCode == "A0057000", htyTradCat == "02")
+        
+    then
+        $gda.setScyRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1913");
+        
+end
+
+

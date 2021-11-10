@@ -1,0 +1,126 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '333916'
+	when
+		$gda : GrlDetAmounts(( substr ( actCode , 1 , 1 ) in ( "A" , "L" ) && actCode in ( "A0027000" , "A0057000" , "A3329000" , "A3332000" , "A8805000" , "A8806000" , "A8807000" , "A9260000" , "A9457000" , "A9459000" , "A9750000" , "L0242000" , "L1425000" , "L3343000" , "L3933000" , "L9751000" ) && pdtCode in ( "027800" , "027900" ) || ( hpePdtType == "REPO" ) && hacAmtCl in ( "11" , "19" ) ) && intInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1559362' extends '333916' salience 80180
+
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getissuedind(), 'n')) == "N")
+        
+    then
+        $gda.setLcrUnderlyingProduct("Corporate Bond");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4675");
+        
+end
+
+rule '1559365' extends '333916' salience 80170
+
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getissuedind(), 'n')) == "Y")
+        
+    then
+        $gda.setLcrUnderlyingProduct("Own Issued");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4675");
+        
+end
+
+rule '1559358' extends '333916' salience 80160
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1559360() == "Other Equity Securities", eval(nvl(this.getissuedind(), 'n')) == "N")
+        
+    then
+        $gda.setLcrUnderlyingProduct("Other Equity Securities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4675");
+        
+end
+
+rule '1559359' extends '333916' salience 80150
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1559360() == "Corporate Bond", eval(nvl(this.getissuedind(), 'n')) == "N")
+        
+    then
+        $gda.setLcrUnderlyingProduct("Corporate Bond");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4675");
+        
+end
+
+rule '1559360' extends '333916' salience 80140
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1559360() == "Commercial Paper", eval(nvl(this.getissuedind(), 'n')) == "N")
+        
+    then
+        $gda.setLcrUnderlyingProduct("Commercial Paper");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4675");
+        
+end
+
+rule '1559361' extends '333916' salience 80130
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1559360() == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N")
+        
+    then
+        $gda.setLcrUnderlyingProduct("Covered Bond");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4675");
+        
+end
+
+rule '1559363' extends '333916' salience 80120
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("ZABG", "ZABS"), eval(nvl(this.getissuedind(), 'n')) == "N")
+        
+    then
+        $gda.setLcrUnderlyingProduct("ABS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4675");
+        
+end
+
+rule '1559364' extends '333916' salience 80110
+
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getissuedind(), 'n')) == "N")
+        
+    then
+        $gda.setLcrUnderlyingProduct("RMBS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4675");
+        
+end
+
+

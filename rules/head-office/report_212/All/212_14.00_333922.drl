@@ -1,0 +1,374 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+global com.ing.gfrs.logical.apis.GreLrCustRefLogicalApi greLrCustRefLogicalApi;
+
+
+dialect  "mvel"
+
+
+rule '333922'
+	when
+		$gda : GrlDetAmounts(substr ( actCode , 1 , 1 ) in ( "A" ) && ( ( actCode in ( "A0017000" , "A0058000" , "A3291000" , "A3331000" , "A3333000" , "A4412000" , "A4564000" , "A4565000" , "A7985000" , "A7986000" , "A7987000" , "A7988000" , "A9018000" , "A9260000" , "A9458000" , "A9460000" , "A0080000" , "A0083000" , "A0092000" , "A0094000" , "A0095000" , "A0097000" , "A0101000" , "A0104000" ) || ( hpePdtType == "REPO" ) ) ) && hreRelTypeGuar != null && intInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1559901' extends '333922' salience 93270
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLcrGuarType("Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559890' extends '333922' salience 93260
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeGuar == "VING")
+        
+    then
+        $gda.setLcrGuarType("Insurance Undertaking");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559891' extends '333922' salience 93250
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeGuar == "VFIM")
+        
+    then
+        $gda.setLcrGuarType("Financial Institution");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559894' extends '333922' salience 93240
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeGuar matches "Z.*")
+        
+    then
+        $gda.setLcrGuarType("SSPE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559895' extends '333922' salience 93230
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeGuar == "BMLD")
+        
+    then
+        $gda.setLcrGuarType("MDB");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559897' extends '333922' salience 93220
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeGuar in ("GAMT", "GCEN", "GLOC", "GSNO", "GOSN"))
+        
+    then
+        $gda.setLcrGuarType("Sovereign");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559898' extends '333922' salience 93210
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeGuar == "BCEN")
+        
+    then
+        $gda.setLcrGuarType("Central Bank");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559911' extends '333922' salience 93200
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeGuar in ("BGOF", "GPSL", "GPSC", "GCFI", "GCPL", "GLFI", "GLPL", "GNFP", "GNFU", "GSOC", "CGOG"))
+        
+    then
+        $gda.setLcrGuarType("PSE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559913' extends '333922' salience 93190
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeGuar in ("VGRP", "VGRX"))
+        
+    then
+        $gda.setLcrGuarType("Mixed Holding");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559914' extends '333922' salience 93180
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeGuar in ("BDIP", "BLEV", "BLIM", "BSPM", "BSPV"))
+        
+    then
+        $gda.setLcrGuarType("Financial Institution");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559915' extends '333922' salience 93170
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeGuar in ("FFFM", "FCLF", "FETF", "FUND", "FOHF", "FOPF", "FPEF", "FUSB"))
+        
+    then
+        $gda.setLcrGuarType("Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559916' extends '333922' salience 93160
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeGuar in ("FINS", "FLIF"))
+        
+    then
+        $gda.setLcrGuarType("Insurance Undertaking");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559917' extends '333922' salience 93150
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeGuar == "FHOL")
+        
+    then
+        $gda.setLcrGuarType("Financial Holding");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559919' extends '333922' salience 93140
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeGuar in ("VAMB", "VABS", "VCMB", "VMBS", "VRMB"))
+        
+    then
+        $gda.setLcrGuarType("SSPE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559921' extends '333922' salience 93130
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeGuar matches "S.*")
+        
+    then
+        $gda.setLcrGuarType("SME");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559892' extends '333922' salience 93120
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeGuar matches "V.*", hreRelTypeGuar not in ("VGRP", "VGRX", "VAMB", "VABS", "VCMB", "VFIM", "VING", "VMBS", "VRMB"))
+        
+    then
+        $gda.setLcrGuarType("Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559899' extends '333922' salience 93110
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeGuar matches "B.*", hreRelTypeGuar not in ("BCEN", "BDIP", "BGOF", "BLEV", "BLIM", "BMLD", "BSPM", "BSPV"))
+        
+    then
+        $gda.setLcrGuarType("Credit Institution");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559900' extends '333922' salience 93100
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeGuar matches "C.*" || hreRelTypeGuar == "IPBC"), hreRelTypeGuar not in ("CGVO", "CGOG"))
+        
+    then
+        $gda.setLcrGuarType("Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559902' extends '333922' salience 93090
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeGuar == "IPBF" || hreRelTypeGuar matches "F.*"), hreRelTypeGuar not in ("FGVO", "FHOL", "FINS", "FLIF", "FFFM", "FCLF", "FETF", "FUND", "FOHF", "FOPF", "FPEF", "FUSB"))
+        
+    then
+        $gda.setLcrGuarType("Financial Institution");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559910' extends '333922' salience 93080
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeGuar matches "G.*", hreRelTypeGuar not in ("GAMT", "GCEN", "GLOC", "GPSL", "GPSC", "GSNO", "GOSN", "GCFI", "GCPL", "GLFI", "GLPL", "GNFP", "GNFU", "GSOC"))
+        
+    then
+        $gda.setLcrGuarType("Local Government");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559912' extends '333922' salience 93070
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeGuar matches "I.*", hreRelTypeGuar != "IPBC")
+        
+    then
+        $gda.setLcrGuarType("Retail");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559918' extends '333922' salience 93060
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeGuar matches "K.*" || hreRelTypeGuar matches "R.*"), hreRelTypeGuar not in ("KGVO", "RGVO"))
+        
+    then
+        $gda.setLcrGuarType("Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559905' extends '333922' salience 93050
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridIdGuar,lcr_hly_rel_id,"LCRNSFRREL","N") == "BIS")
+        
+    then
+        $gda.setLcrGuarType("BIS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559906' extends '333922' salience 93040
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridIdGuar,lcr_hly_rel_id,"LCRNSFRREL","N") == "EU")
+        
+    then
+        $gda.setLcrGuarType("EU");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559907' extends '333922' salience 93030
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridIdGuar,lcr_hly_rel_id,"LCRNSFRREL","N") == "ESM")
+        
+    then
+        $gda.setLcrGuarType("ESM");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559908' extends '333922' salience 93020
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridIdGuar,lcr_hly_rel_id,"LCRNSFRREL","N") == "IMF")
+        
+    then
+        $gda.setLcrGuarType("IMF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+rule '1559909' extends '333922' salience 93010
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridIdGuar,lcr_hly_rel_id,"LCRNSFRREL","N") == "EFSF")
+        
+    then
+        $gda.setLcrGuarType("EFSF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4681");
+        
+end
+
+

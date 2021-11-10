@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332249'
+	when
+		$gpy : GrlPlYtd(actCode matches "I.*" && ldeLbkBookCd in ( "LENDING" , "SF" , "CF" ))
+	then
+        
+end
+
+
+
+
+
+rule '1149011' extends '332249' salience 30
+
+    when
+        
+        GrlPlYtd(this == $gpy, ldeLbkBookCd == "LENDING")
+        
+    then
+        $gpy.setCustomTxt01("Lending Income");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3542");
+        
+end
+
+rule '1149012' extends '332249' salience 20
+
+    when
+        
+        GrlPlYtd(this == $gpy, ldeLbkBookCd == "SF")
+        
+    then
+        $gpy.setCustomTxt01("SF Income");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3542");
+        
+end
+
+rule '1149013' extends '332249' salience 10
+
+    when
+        
+        GrlPlYtd(this == $gpy, ldeLbkBookCd == "CF")
+        
+    then
+        $gpy.setCustomTxt01("CF Income");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3542");
+        
+end
+
+

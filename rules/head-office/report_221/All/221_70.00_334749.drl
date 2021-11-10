@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334749'
+	when
+		$gda : GrlDetAmounts(hacAmtCl == "19")
+	then
+        
+end
+
+
+
+
+
+rule '1701591' extends '334749' salience 50
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "19")
+        
+    then
+        $gda.setSignFlipCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5413");
+        
+end
+
+rule '1676214' extends '334749' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "19", ebaProduct in ("Security legs. Reverse Repo", "Security legs. SBL Stock Borrowing", "Security legs. CLS Borrowing"))
+        
+    then
+        $gda.setSignFlipCode("[MM]");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5413");
+        
+end
+
+rule '1691248' extends '334749' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "19", ebaProduct in ("Security legs. Repo", "Security legs. SBL Stock Lending", "Security legs. CLS Lending"))
+        
+    then
+        $gda.setSignFlipCode("[DA,MM]");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5413");
+        
+end
+
+

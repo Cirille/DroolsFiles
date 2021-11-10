@@ -1,0 +1,802 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '326499'
+	when
+		$gda : GrlDetAmounts(( ( hpePdtType in ( "COMMODITY OPT" , "EQUITY FORW" , "EQUITY OPT" , "EQUITY SWAP" , "PREC METAL OPT" ) && hacAmtCl == "10" && icInd == "N" && derivativesCombiCd != null && ( quotedInd == "N" || quotedInd == null ) ) || ( hpePdtType in ( "COMMODITY FORW" , "COMMODITY SWAP" , "PREC METAL FORW" , "PREC METAL SWAP" ) && hacAmtCl == "10" && buyInd == "Y" && icInd == "N" && derivativesCombiCd != null && ( quotedInd == "N" || quotedInd == null ) ) ))
+	then
+        
+end
+
+
+
+
+
+rule '98955' extends '326499' salience 5580
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hpePdtType in ("EQUITY FORW", "EQUITY SWAP"), hdyDerStatCtryRegionCat == "01")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_C15_EQFORW&SWAPS_REPDEALER_US");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98956' extends '326499' salience 5570
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hpePdtType in ("EQUITY FORW", "EQUITY SWAP"), hdyDerStatCtryRegionCat == "02")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_D15_EQFORW&SWAPS_REPDEALER_JAP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98957' extends '326499' salience 5560
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hpePdtType in ("EQUITY FORW", "EQUITY SWAP"), hdyDerStatCtryRegionCat == "03")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_E15_EQFORW&SWAPS_REPDEALER_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98958' extends '326499' salience 5550
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hpePdtType in ("EQUITY FORW", "EQUITY SWAP"), hdyDerStatCtryRegionCat == "04")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_F15_EQFORW&SWAPS_REPDEALER_LAT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98959' extends '326499' salience 5540
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hpePdtType in ("EQUITY FORW", "EQUITY SWAP"), hdyDerStatCtryRegionCat == "05")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_G15_EQFORW&SWAPS_REPDEALER_ASIAN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98960' extends '326499' salience 5530
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hpePdtType in ("EQUITY FORW", "EQUITY SWAP"), hdyDerStatCtryRegionCat == "06")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_H15_EQFORW&SWAPS_REPDEALER_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98961' extends '326499' salience 5520
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType in ("EQUITY FORW", "EQUITY SWAP"), hdyDerStatCtryRegionCat == "01", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_C16_EQFORW&SWAPS_OTHFIN_US");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98962' extends '326499' salience 5510
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType in ("EQUITY FORW", "EQUITY SWAP"), hdyDerStatCtryRegionCat == "02", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_D16_EQFORW&SWAPS_OTHFIN_JAP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98963' extends '326499' salience 5500
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType in ("EQUITY FORW", "EQUITY SWAP"), hdyDerStatCtryRegionCat == "03", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_E16_EQFORW&SWAPS_OTHFIN_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98964' extends '326499' salience 5490
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType in ("EQUITY FORW", "EQUITY SWAP"), hdyDerStatCtryRegionCat == "04", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_F16_EQFORW&SWAPS_OTHFIN_LAT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98965' extends '326499' salience 5480
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType in ("EQUITY FORW", "EQUITY SWAP"), hdyDerStatCtryRegionCat == "05", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_G16_EQFORW&SWAPS_OTHFIN_ASIAN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98966' extends '326499' salience 5470
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType in ("EQUITY FORW", "EQUITY SWAP"), hdyDerStatCtryRegionCat == "06", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_H16_EQFORW&SWAPS_OTHFIN_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98967' extends '326499' salience 5460
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType in ("EQUITY FORW", "EQUITY SWAP"), hdyDerStatCtryRegionCat == "01", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_C17_EQFORW&SWAPS_NONFIN_US");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98968' extends '326499' salience 5450
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType in ("EQUITY FORW", "EQUITY SWAP"), hdyDerStatCtryRegionCat == "02", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_D17_EQFORW&SWAPS_NONFIN_JAP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98969' extends '326499' salience 5440
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType in ("EQUITY FORW", "EQUITY SWAP"), hdyDerStatCtryRegionCat == "03", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_E17_EQFORW&SWAPS_NONFIN_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98970' extends '326499' salience 5430
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType in ("EQUITY FORW", "EQUITY SWAP"), hdyDerStatCtryRegionCat == "04", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_F17_EQFORW&SWAPS_NONFIN_LAT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98971' extends '326499' salience 5420
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType in ("EQUITY FORW", "EQUITY SWAP"), hdyDerStatCtryRegionCat == "05", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_G17_EQFORW&SWAPS_NONFIN_ASIAN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98972' extends '326499' salience 5410
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType in ("EQUITY FORW", "EQUITY SWAP"), hdyDerStatCtryRegionCat == "06", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_H17_EQFORW&SWAPS_NONFIN_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98973' extends '326499' salience 5400
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType in ("PREC METAL FORW", "PREC METAL SWAP"))
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_J18_PRECMETALS_FORW&SWAP_TOT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98974' extends '326499' salience 5390
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType in ("COMMODITY FORW", "COMMODITY SWAP"))
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_K18_COMMODITY_FORW&SWAP_TOT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98975' extends '326499' salience 5380
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "01", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_C22_EQOPT_SOLD_REPDEALER_US");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98976' extends '326499' salience 5370
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "02", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_D22_EQOPT_SOLD_REPDEALER_JAP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98977' extends '326499' salience 5360
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "03", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_E22_EQOPT_SOLD_REPDEALER_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98978' extends '326499' salience 5350
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "04", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_F22_EQOPT_SOLD_REPDEALER_LAT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98979' extends '326499' salience 5340
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "05", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_G22_EQOPT_SOLD_REPDEALER_ASIAN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98980' extends '326499' salience 5330
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "06", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_H22_EQOPT_SOLD_REPDEALER_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98981' extends '326499' salience 5320
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "01", finInstInd == "Y", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_C23_EQOPT_SOLD_OTHFIN_US");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98982' extends '326499' salience 5310
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "02", finInstInd == "Y", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_D23_EQOPT_SOLD_OTHFIN_JAP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98983' extends '326499' salience 5300
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "03", finInstInd == "Y", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_E23_EQOPT_SOLD_OTHFIN_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98984' extends '326499' salience 5290
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "04", finInstInd == "Y", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_F23_EQOPT_SOLD_OTHFIN_LAT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98985' extends '326499' salience 5280
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "05", finInstInd == "Y", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_G23_EQOPT_SOLD_OTHFIN_ASIAN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98986' extends '326499' salience 5270
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "06", finInstInd == "Y", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_H23_EQOPT_SOLD_OTHFIN_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98987' extends '326499' salience 5260
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "01", finInstInd == "N", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_C24_EQOPT_SOLD_NONFIN_US");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98988' extends '326499' salience 5250
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "02", finInstInd == "N", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_D24_EQOPT_SOLD_NONFIN_JAP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98989' extends '326499' salience 5240
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "03", finInstInd == "N", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_E24_EQOPT_SOLD_NONFIN_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98990' extends '326499' salience 5230
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "04", finInstInd == "N", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_F24_EQOPT_SOLD_NONFIN_LAT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98991' extends '326499' salience 5220
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "05", finInstInd == "N", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_G24_EQOPT_SOLD_NONFIN_ASIAN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98992' extends '326499' salience 5210
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "06", finInstInd == "N", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_H24_EQOPT_SOLD_NONFIN_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98993' extends '326499' salience 5200
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "PREC METAL OPT", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_J25_PRECMETALS_OPT_SOLD_TOT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98994' extends '326499' salience 5190
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "COMMODITY OPT", buyInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_K25_COMMODITY_OPT_SOLD_TOT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98995' extends '326499' salience 5180
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "01", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_C28_EQOPT_BOUGHT_REPDEALER_US");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98996' extends '326499' salience 5170
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "02", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_D28_EQOPT_BOUGHT_REPDEALER_JAP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98997' extends '326499' salience 5160
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "03", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_E28_EQOPT_BOUGHT_REPDEALER_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98998' extends '326499' salience 5150
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "04", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_F28_EQOPT_BOUGHT_REPDEALER_LAT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '98999' extends '326499' salience 5140
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "05", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_G28_EQOPT_BOUGHT_REPDEALER_ASIAN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '99000' extends '326499' salience 5130
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "06", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_H28_EQOPT_BOUGHT_REPDEALER_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '99001' extends '326499' salience 5120
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "01", finInstInd == "Y", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_C29_EQOPT_BOUGHT_OTHFIN_US");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '99002' extends '326499' salience 5110
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "02", finInstInd == "Y", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_D29_EQOPT_BOUGHT_OTHFIN_JAP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '99003' extends '326499' salience 5100
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "03", finInstInd == "Y", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_E29_EQOPT_BOUGHT_OTHFIN_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '99004' extends '326499' salience 5090
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "04", finInstInd == "Y", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_F29_EQOPT_BOUGHT_OTHFIN_LAT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '99005' extends '326499' salience 5080
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "05", finInstInd == "Y", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_G29_EQOPT_BOUGHT_OTHFIN_ASIAN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '99006' extends '326499' salience 5070
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "06", finInstInd == "Y", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_H29_EQOPT_BOUGHT_OTHFIN_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '99007' extends '326499' salience 5060
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "01", finInstInd == "N", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_C30_EQOPT_BOUGHT_NONFIN_US");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '99008' extends '326499' salience 5050
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "02", finInstInd == "N", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_D30_EQOPT_BOUGHT_NONFIN_JAP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '99009' extends '326499' salience 5040
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "03", finInstInd == "N", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_E30_EQOPT_BOUGHT_NONFIN_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '99010' extends '326499' salience 5030
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "04", finInstInd == "N", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_F30_EQOPT_BOUGHT_NONFIN_LAT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '99011' extends '326499' salience 5020
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "05", finInstInd == "N", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_G30_EQOPT_BOUGHT_NONFIN_ASIAN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '99012' extends '326499' salience 5010
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hpePdtType == "EQUITY OPT", hdyDerStatCtryRegionCat == "06", finInstInd == "N", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_H30_EQOPT_BOUGHT_NONFIN_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '99013' extends '326499' salience 5000
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "PREC METAL OPT", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_J31_PRECMETALS_OPT_BOUGHT_TOT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+rule '99014' extends '326499' salience 4990
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "COMMODITY OPT", buyInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 3A_K31_COMMODITY_OPT_BOUGHT_TOT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1478");
+        
+end
+
+

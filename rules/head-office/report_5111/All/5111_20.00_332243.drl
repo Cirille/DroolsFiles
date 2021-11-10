@@ -1,0 +1,126 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332243'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1149167' extends '332243' salience 190
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt02("TO BE DETERMINED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3536");
+        
+end
+
+rule '1149160' extends '332243' salience 180
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse03 == "1")
+        
+    then
+        $gda.setCustomTxt02("B");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3536");
+        
+end
+
+rule '1149162' extends '332243' salience 170
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse03 == "3")
+        
+    then
+        $gda.setCustomTxt02("C");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3536");
+        
+end
+
+rule '1149164' extends '332243' salience 160
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse03 == "2")
+        
+    then
+        $gda.setCustomTxt02("A");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3536");
+        
+end
+
+rule '1149166' extends '332243' salience 150
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse03 == "4")
+        
+    then
+        $gda.setCustomTxt02("X");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3536");
+        
+end
+
+rule '1149161' extends '332243' salience 140
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse03 == "2", ownUse06 in ("DCRI", "PRVD", "PRVG", "PRVN", "UPFX"))
+        
+    then
+        $gda.setCustomTxt02("B");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3536");
+        
+end
+
+rule '1149163' extends '332243' salience 130
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse03 == "4", ownUse06 == "TDPT")
+        
+    then
+        $gda.setCustomTxt02("C");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3536");
+        
+end
+
+rule '1149165' extends '332243' salience 120
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse03 == "1", ownUse06 == "CICC")
+        
+    then
+        $gda.setCustomTxt02("A");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3536");
+        
+end
+
+

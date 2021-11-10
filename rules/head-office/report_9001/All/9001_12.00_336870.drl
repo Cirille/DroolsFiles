@@ -1,0 +1,522 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336870'
+	when
+		$gda : GrlDetAmounts(( ( actCode matches "A.*" ) || ( actCode matches "L.*" ) || ( actCode matches "B.*" ) ) && actCode != null && actCode not in ( "A0009000" , "A0012000" , "A0017000" , "A0021000" , "L1605000" ) && seSectors3 matches ".*2201.*" && hpePdtType not matches "STOCK.*")
+	then
+        
+end
+
+
+
+
+
+rule '1770639' extends '336870' salience 13320
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setSeCode9(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770647' extends '336870' salience 13310
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "B.*", pdtCode == "014800")
+        
+    then
+        $gda.setSeCode9("9001-HK1_09.000-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770630' extends '336870' salience 13300
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0242000", "L1425000", "L3334000", "L3343000", "L3933000", "L9261000", "L9262000"), repAssetInd == "N", getCase0_1770652() == "N")
+        
+    then
+        $gda.setSeCode9("9001-HK1_28.000-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770637' extends '336870' salience 13290
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A3176000", "A3177000", "A3178000", "A3179000", "A3282000"), repAssetInd == "Y", getCase0_1770652() == "N")
+        
+    then
+        $gda.setSeCode9("9001-HK1_08.000-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770619' extends '336870' salience 13280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0003000", repAssetInd == "Y", getCase0_1770652() == "Y", hpePdtType not matches "STOCK.*")
+        
+    then
+        $gda.setSeCode9("9001-HK1_38.700-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770620' extends '336870' salience 13270
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), getCase0_1770466() == "between_one_and_five_years", repAssetInd == "Y", getCase0_1770652() == "Y")
+        
+    then
+        $gda.setSeCode9("9001-HK1_24.000-1.020.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770621' extends '336870' salience 13260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), getCase0_1770466() == "more_than_five_years", repAssetInd == "Y", getCase0_1770652() == "Y")
+        
+    then
+        $gda.setSeCode9("9001-HK1_24.000-1.020.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770622' extends '336870' salience 13250
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), getCase0_1770466() == "one_year_or_less", repAssetInd == "Y", getCase0_1770652() == "Y")
+        
+    then
+        $gda.setSeCode9("9001-HK1_24.000-1.010.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770623' extends '336870' salience 13240
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("L0242000", "L1425000", "L3334000", "L3343000", "L3933000", "L9261000", "L9262000"), getCase0_1770466() == "between_one_and_five_years", repAssetInd == "N", getCase0_1770652() == "Y")
+        
+    then
+        $gda.setSeCode9("9001-HK1_06.000-0.040.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770624' extends '336870' salience 13230
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0242000", "L1425000", "L3334000", "L3343000", "L3933000", "L9261000", "L9262000"), getCase0_1770466() == "between_one_and_five_years", repAssetInd == "N", getCase0_1770652() == "Y")
+        
+    then
+        $gda.setSeCode9("9001-HK1_06.000-0.040.0");
+        $gda.setSeCode10("9001-HK1_06.000-1.040.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770625' extends '336870' salience 13220
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("L0242000", "L1425000", "L3334000", "L3343000", "L3933000", "L9261000", "L9262000"), getCase0_1770466() == "more_than_five_years", repAssetInd == "N", getCase0_1770652() == "Y")
+        
+    then
+        $gda.setSeCode9("9001-HK1_06.000-0.070.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770626' extends '336870' salience 13210
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0242000", "L1425000", "L3334000", "L3343000", "L3933000", "L9261000", "L9262000"), getCase0_1770466() == "more_than_five_years", repAssetInd == "N", getCase0_1770652() == "Y")
+        
+    then
+        $gda.setSeCode9("9001-HK1_06.000-0.070.0");
+        $gda.setSeCode10("9001-HK1_06.000-1.070.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770627' extends '336870' salience 13200
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("L0242000", "L1425000", "L3334000", "L3343000", "L3933000", "L9261000", "L9262000"), getCase0_1770466() == "one_year_or_less", repAssetInd == "N", getCase0_1770652() == "Y")
+        
+    then
+        $gda.setSeCode9("9001-HK1_06.000-0.010.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770628' extends '336870' salience 13190
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0242000", "L1425000", "L3334000", "L3343000", "L3933000", "L9261000", "L9262000"), getCase0_1770466() == "one_year_or_less", repAssetInd == "N", getCase0_1770652() == "Y")
+        
+    then
+        $gda.setSeCode9("9001-HK1_06.000-0.010.0");
+        $gda.setSeCode10("9001-HK1_06.000-1.010.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770629' extends '336870' salience 13180
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0229000", "L2569000", "L3351000"), repAssetInd == "N", getCase0_1770652() == "N", hpePdtType not matches "STOCK.*")
+        
+    then
+        $gda.setSeCode9("9001-HK1_38.700-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770631' extends '336870' salience 13170
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0242000", "L1425000", "L3334000", "L3343000", "L3933000", "L9261000", "L9262000"), getCase0_1770466() == "between_one_and_five_years", repAssetInd == "N", getCase0_1770652() == "N")
+        
+    then
+        $gda.setSeCode9("9001-HK1_24.000-1.020.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770632' extends '336870' salience 13160
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0242000", "L1425000", "L3334000", "L3343000", "L3933000", "L9261000", "L9262000"), getCase0_1770466() == "more_than_five_years", repAssetInd == "N", getCase0_1770652() == "N")
+        
+    then
+        $gda.setSeCode9("9001-HK1_24.000-1.020.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770633' extends '336870' salience 13150
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0242000", "L1425000", "L3334000", "L3343000", "L3933000", "L9261000", "L9262000"), getCase0_1770466() == "one_year_or_less", repAssetInd == "N", getCase0_1770652() == "N")
+        
+    then
+        $gda.setSeCode9("9001-HK1_24.000-1.010.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770634' extends '336870' salience 13140
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), getCase0_1770466() == "one_year_or_less", repAssetInd == "Y", getCase0_1770652() == "N")
+        
+    then
+        $gda.setSeCode9("9001-HK1_06.000-0.010.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770635' extends '336870' salience 13130
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), getCase0_1770466() == "between_one_and_five_years", repAssetInd == "Y", getCase0_1770652() == "N")
+        
+    then
+        $gda.setSeCode9("9001-HK1_06.000-0.040.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770636' extends '336870' salience 13120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), getCase0_1770466() == "more_than_five_years", repAssetInd == "Y", getCase0_1770652() == "N")
+        
+    then
+        $gda.setSeCode9("9001-HK1_06.000-0.070.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770640' extends '336870' salience 13110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), getCase0_1770466() == "one_year_or_less", repAssetInd == "Y", getCase0_1770652() == "N")
+        
+    then
+        $gda.setSeCode9("9001-HK1_06.000-0.010.0");
+        $gda.setSeCode10("9001-HK1_06.000-1.010.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770641' extends '336870' salience 13100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), getCase0_1770466() == "between_one_and_five_years", repAssetInd == "Y", getCase0_1770652() == "N")
+        
+    then
+        $gda.setSeCode9("9001-HK1_06.000-0.040.0");
+        $gda.setSeCode10("9001-HK1_06.000-1.040.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770642' extends '336870' salience 13090
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), getCase0_1770466() == "more_than_five_years", repAssetInd == "Y", getCase0_1770652() == "N")
+        
+    then
+        $gda.setSeCode9("9001-HK1_06.000-0.070.0");
+        $gda.setSeCode10("9001-HK1_06.000-1.070.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770643' extends '336870' salience 13080
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0003000", repAssetInd == "Y", getCase0_1770652() == "N", hpePdtType not matches "STOCK.*")
+        
+    then
+        $gda.setSeCode9("9001-HK1_18.700-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770652' extends '336870' salience 13070
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0081000", "A0082000", "A0090000", "A0093000", "A0102000", "A0103000", "A0104000"), repAssetInd == "Y", getCase0_1770652() == "N", hpePdtType not matches "STOCK.*")
+        
+    then
+        $gda.setSeCode9("9001-HK1_18.700-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770654' extends '336870' salience 13060
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0081000", "A0082000", "A0090000", "A0093000", "A0102000", "A0103000", "A0104000"), repAssetInd == "Y", getCase0_1770652() == "Y", hpePdtType not matches "STOCK.*")
+        
+    then
+        $gda.setSeCode9("9001-HK1_38.700-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770655' extends '336870' salience 13050
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0107000", "L0111000", "L0113000", "L0117000", "L0118000", "L0119000"), repAssetInd == "N", getCase0_1770652() == "N", hpePdtType not matches "STOCK.*")
+        
+    then
+        $gda.setSeCode9("9001-HK1_38.700-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770618' extends '336870' salience 13040
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0229000", "L2569000", "L3351000"), repAssetInd == "N", getCase0_1770652() == "Y", hpePdtType matches "STOCK.*", hpePdtType != "STOCK DISC BILL PRM NOTE")
+        
+    then
+        $gda.setSeCode9("9001-HK1_18.600-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770638' extends '336870' salience 13030
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0003000", repAssetInd == "Y", getCase0_1770652() == "N", hpePdtType matches "STOCK.*", hpePdtType != "STOCK DISC BILL PRM NOTE")
+        
+    then
+        $gda.setSeCode9("9001-HK1_18.600-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770644' extends '336870' salience 13020
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0003000", repAssetInd == "Y", getCase0_1770652() == "Y", hpePdtType matches "STOCK.*", hpePdtType != "STOCK DISC BILL PRM NOTE")
+        
+    then
+        $gda.setSeCode9("9001-HK1_38.600-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770645' extends '336870' salience 13010
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0229000", "L2569000", "L3351000"), repAssetInd == "N", getCase0_1770652() == "Y", hpePdtType not matches "STOCK.*", hpePdtType == "STOCK DISC BILL PRM NOTE")
+        
+    then
+        $gda.setSeCode9("9001-HK1_18.700-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770646' extends '336870' salience 13000
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0229000", "L2569000", "L3351000"), repAssetInd == "N", getCase0_1770652() == "N", hpePdtType matches "STOCK.*", hpePdtType != "STOCK DISC BILL PRM NOTE")
+        
+    then
+        $gda.setSeCode9("9001-HK1_38.600-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770648' extends '336870' salience 12990
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0110000", "L0117000", "L0119000"), repAssetInd == "N", getCase0_1770652() == "Y", hpePdtType matches "STOCK.*", hpePdtType != "STOCK DISC BILL PRM NOTE")
+        
+    then
+        $gda.setSeCode9("9001-HK1_18.600-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770649' extends '336870' salience 12980
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0104000", repAssetInd == "Y", getCase0_1770652() == "N", hpePdtType matches "STOCK.*", hpePdtType != "STOCK DISC BILL PRM NOTE")
+        
+    then
+        $gda.setSeCode9("9001-HK1_18.600-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770650' extends '336870' salience 12970
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0104000", repAssetInd == "Y", getCase0_1770652() == "Y", hpePdtType matches "STOCK.*", hpePdtType != "STOCK DISC BILL PRM NOTE")
+        
+    then
+        $gda.setSeCode9("9001-HK1_38.600-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770651' extends '336870' salience 12960
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0110000", "L0117000", "L0119000"), repAssetInd == "N", getCase0_1770652() == "N", hpePdtType matches "STOCK.*", hpePdtType != "STOCK DISC BILL PRM NOTE")
+        
+    then
+        $gda.setSeCode9("9001-HK1_38.600-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+rule '1770653' extends '336870' salience 12950
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0107000", "L0111000", "L0113000", "L0117000", "L0118000", "L0119000"), repAssetInd == "N", getCase0_1770652() == "Y", hpePdtType not matches "STOCK.*", hpePdtType == "STOCK DISC BILL PRM NOTE")
+        
+    then
+        $gda.setSeCode9("9001-HK1_18.700-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6977");
+        
+end
+
+

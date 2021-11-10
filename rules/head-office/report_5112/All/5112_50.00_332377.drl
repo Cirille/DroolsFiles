@@ -1,0 +1,152 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332377'
+	when
+		$gda : GrlDetAmounts(MANUALLY adjust this subselect: ACT_CODE IN ('A0025000','L0251000') AND IC_IND = 'Y' and RLN_WW_CUST_ID in (select cr.custom_key from gre_lr_cust_ref cr where cr.lcr_hly_rel_id = lse_hly_rel_id and lcr_custom_ref_type = 'CTPYPOS'))
+	then
+        
+end
+
+
+
+
+
+rule '1160886' extends '332377' salience 180
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000")
+        
+    then
+        $gda.setLiquidityCd("5.32_P");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3627");
+        
+end
+
+rule '1160887' extends '332377' salience 170
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0251000")
+        
+    then
+        $gda.setLiquidityCd("13.31_P");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3627");
+        
+end
+
+rule '1160878' extends '332377' salience 160
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", rteCode in ("035", "036", "046", "049"))
+        
+    then
+        $gda.setLiquidityCd("5.12_P");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3627");
+        
+end
+
+rule '1160879' extends '332377' salience 150
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", rteCode in ("073", "173"))
+        
+    then
+        $gda.setLiquidityCd("5.12_P");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3627");
+        
+end
+
+rule '1160880' extends '332377' salience 140
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", rteCode in ("072", "172"))
+        
+    then
+        $gda.setLiquidityCd("5.22_P");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3627");
+        
+end
+
+rule '1160881' extends '332377' salience 130
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", rteCode == "041")
+        
+    then
+        $gda.setLiquidityCd("5.22_P");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3627");
+        
+end
+
+rule '1160882' extends '332377' salience 120
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", rteCode == "059")
+        
+    then
+        $gda.setLiquidityCd("5.32_P");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3627");
+        
+end
+
+rule '1160883' extends '332377' salience 110
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", rteCode in ("074", "174"))
+        
+    then
+        $gda.setLiquidityCd("5.32_P");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3627");
+        
+end
+
+rule '1160884' extends '332377' salience 100
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0251000", rteCode == "075")
+        
+    then
+        $gda.setLiquidityCd("13.11_P");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3627");
+        
+end
+
+rule '1160885' extends '332377' salience 90
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0251000", rteCode == "076")
+        
+    then
+        $gda.setLiquidityCd("13.31_P");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3627");
+        
+end
+
+

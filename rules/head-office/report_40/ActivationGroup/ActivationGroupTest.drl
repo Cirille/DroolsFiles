@@ -1,0 +1,78 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlMdnReportLines;
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336975'
+	when
+		$gda : GrlDetAmounts(hpePdtType == "LOAN")
+	then
+end
+
+
+rule 'GENERIC' extends '336975' salience 10
+activation-group "7050"
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        GrlMdnReportLines gmrl = new GrlMdnReportLines();
+        gmrl.setMneCode10("GENERIC");
+        gmrl.updateLdlIdTrail(kcontext.rule.name,"7050");
+        gmrl.setSourceTable('GRL_DET_AMOUNTS');
+        gmrl.setSourceId($gda.getId());
+        insert(gmrl);
+end
+
+rule '01' extends '336975' salience 90
+activation-group "7050"
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == '01')
+        
+    then
+        GrlMdnReportLines gmrl = new GrlMdnReportLines();
+        gmrl.updateLdlIdTrail(kcontext.rule.name,"7050");
+        gmrl.setMneCode10("01");
+        gmrl.setSourceTable('GRL_DET_AMOUNTS');
+        gmrl.setSourceId($gda.getId());
+        insert(gmrl);
+end
+
+rule '02' extends '336975' salience 80
+activation-group "7050"
+    when
+
+        GrlDetAmounts(this == $gda, hacAmtCl == '02')
+
+    then
+        GrlMdnReportLines gmrl = new GrlMdnReportLines();
+        gmrl.updateLdlIdTrail(kcontext.rule.name,"7050");
+        gmrl.setMneCode10("02");
+        gmrl.setSourceTable('GRL_DET_AMOUNTS');
+        gmrl.setSourceId($gda.getId());
+        insert(gmrl);
+end
+
+rule '04' extends '336975' salience 70
+activation-group "7050"
+    when
+
+        GrlDetAmounts(this == $gda, hacAmtCl == '04')
+
+    then
+        GrlMdnReportLines gmrl = new GrlMdnReportLines();
+        gmrl.updateLdlIdTrail(kcontext.rule.name,"7050");
+        gmrl.setMneCode10("04");
+        gmrl.setSourceTable('GRL_DET_AMOUNTS');
+        gmrl.setSourceId($gda.getId());
+        insert(gmrl);
+end
+

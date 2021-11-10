@@ -1,0 +1,6366 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335735'
+	when
+		$gpy : GrlPlYtd(hpnPlCl in ( "6000" , "7000" ) && nvl ( massLine , 0 ) not in ( "Corporate Tax Financial Accounting" , "IBNR Debtor Provisions" ))
+	then
+        
+end
+
+
+
+
+
+rule '1730856' extends '335735' salience 11310
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine(massLine );
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730517' extends '335735' salience 11300
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Intercompany Services Sold")
+        
+    then
+        $gpy.setLocMassLine("IC Services Sold");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730952' extends '335735' salience 11290
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Loss allowances", actCode == "E0085000")
+        
+    then
+        $gpy.setLocMassLine("ISFA");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730953' extends '335735' salience 11280
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Expenses", actCode == "E0180000")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730954' extends '335735' salience 11270
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine("Interest Internal Paid (Reference Rate)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730955' extends '335735' salience 11260
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine("Interest Internal Received (Reference Rate)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730956' extends '335735' salience 11250
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine("Interest (Rec)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730957' extends '335735' salience 11240
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine("Interest (Pay)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730467' extends '335735' salience 11230
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DBP-BONUS", ownUse06 == "SCBO")
+        
+    then
+        $gpy.setLocMassLine("Deferred cash bonus");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730468' extends '335735' salience 11220
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PREM-FR-DBU", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730469' extends '335735' salience 11210
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PREM-TO-OBU", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730470' extends '335735' salience 11200
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MTCEVOICE", ownUse06 == "GEEE")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Voice");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730471' extends '335735' salience 11190
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXP-FR-DBU", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730472' extends '335735' salience 11180
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXP-TO-OBU", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730473' extends '335735' salience 11170
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "HOC-FR-DBU", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730474' extends '335735' salience 11160
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "HOC-TO-OBU", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730475' extends '335735' salience 11150
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RMPINS-T", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Risk Management Programme Insurance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730476' extends '335735' salience 11140
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "GAINSALE-CAR", ownUse06 == "NOIN")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730477' extends '335735' salience 11130
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse06 == "PRAC")
+        
+    then
+        $gpy.setLocMassLine("IBNR");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730478' extends '335735' salience 11120
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ISFA-ADDN", ownUse06 == "PRDD")
+        
+    then
+        $gpy.setLocMassLine("ISFA");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730479' extends '335735' salience 11110
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ISFA-PRV-ADD", ownUse06 == "PRDD")
+        
+    then
+        $gpy.setLocMassLine("ISFA");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730480' extends '335735' salience 11100
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse06 == "PRRO")
+        
+    then
+        $gpy.setLocMassLine("IBNR");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730481' extends '335735' salience 11090
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse06 == "PRRS")
+        
+    then
+        $gpy.setLocMassLine("ISFA");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730482' extends '335735' salience 11080
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STF-FR-DBU", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730483' extends '335735' salience 11070
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STF-TO-OBU", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730484' extends '335735' salience 11060
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEWI-IMPAIR", ownUse06 == "IMOT")
+        
+    then
+        $gpy.setLocMassLine("Impairment");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730485' extends '335735' salience 11050
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TAXCONSULT", ownUse06 == "GEOC")
+        
+    then
+        $gpy.setLocMassLine("External Outsource Services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730486' extends '335735' salience 11040
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TAXCONSULT-T", ownUse06 == "GEOC")
+        
+    then
+        $gpy.setLocMassLine("External Outsource Services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730487' extends '335735' salience 11030
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LEGAL", ownUse06 == "GEOC")
+        
+    then
+        $gpy.setLocMassLine("Legal Professional Services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730488' extends '335735' salience 11020
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LEGAL-T", ownUse06 == "GEOC")
+        
+    then
+        $gpy.setLocMassLine("Legal Professional Services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730489' extends '335735' salience 11010
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BKCARMTCE-T", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Expenses - Bank Owned Cars");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730490' extends '335735' salience 11000
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LECARRENT", ownUse06 == "GETL")
+        
+    then
+        $gpy.setLocMassLine("Expenses for Leased Cars (own staff)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730491' extends '335735' salience 10990
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LECAROTH", ownUse06 == "GETL")
+        
+    then
+        $gpy.setLocMassLine("Expenses for Leased Cars (own staff)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730492' extends '335735' salience 10980
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LECAROTH-T", ownUse06 == "GETL")
+        
+    then
+        $gpy.setLocMassLine("Expenses for Leased Cars (own staff)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730493' extends '335735' salience 10970
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LECARPARK", ownUse06 == "GETL")
+        
+    then
+        $gpy.setLocMassLine("Expenses for Leased Cars (own staff)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730494' extends '335735' salience 10960
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LECARPARK-T", ownUse06 == "GETL")
+        
+    then
+        $gpy.setLocMassLine("Expenses for Leased Cars (own staff)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730495' extends '335735' salience 10950
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LECARPETROL", ownUse06 == "GETL")
+        
+    then
+        $gpy.setLocMassLine("Expenses for Leased Cars (own staff)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730496' extends '335735' salience 10940
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LECARPETRO-T", ownUse06 == "GETL")
+        
+    then
+        $gpy.setLocMassLine("Expenses for Leased Cars (own staff)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730497' extends '335735' salience 10930
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "FAX-T", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Data");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730498' extends '335735' salience 10920
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "AIRFARE-T", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Airfares");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730499' extends '335735' salience 10910
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BKCAROTH-T", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Expenses - Bank Owned Cars");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730500' extends '335735' salience 10900
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BKCARPARK-T", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Expenses - Bank Owned Cars");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730501' extends '335735' salience 10890
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BKCARPETRO-T", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Expenses - Bank Owned Cars");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730502' extends '335735' salience 10880
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MEALS-T", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730503' extends '335735' salience 10870
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TRVLPETROL-T", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730504' extends '335735' salience 10860
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "AIRFARE-T", ownUse06 == "SCEE")
+        
+    then
+        $gpy.setLocMassLine("EE - Travel Airfare");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730505' extends '335735' salience 10850
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OTTRANSPOR-T", ownUse06 == "SCOP")
+        
+    then
+        $gpy.setLocMassLine("Salaries & Wages");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730506' extends '335735' salience 10840
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXPHOMELEA-T", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Expats Home Leave");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730507' extends '335735' salience 10830
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXPRELOCAT-T", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Expats Relocation");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730508' extends '335735' salience 10820
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MEDICAL-T", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Medical & Dental Fees");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730509' extends '335735' salience 10810
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STFCLUBMEM-T", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Staff Social Club Membership/Subscription");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730510' extends '335735' salience 10800
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "HRCONSULT", ownUse06 == "GEOC")
+        
+    then
+        $gpy.setLocMassLine("External Outsource Services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730511' extends '335735' salience 10790
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "HRCONSULT-T", ownUse06 == "GEOC")
+        
+    then
+        $gpy.setLocMassLine("External Outsource Services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730512' extends '335735' salience 10780
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "FINCONSULT", ownUse06 == "GEOC")
+        
+    then
+        $gpy.setLocMassLine("External Outsource Services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730513' extends '335735' salience 10770
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "FINCONSULT-T", ownUse06 == "GEOC")
+        
+    then
+        $gpy.setLocMassLine("External Outsource Services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730514' extends '335735' salience 10760
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OTHCONSULT", ownUse06 == "GEOC")
+        
+    then
+        $gpy.setLocMassLine("External Outsource Services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730515' extends '335735' salience 10750
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OTHCONSULT-T", ownUse06 == "GEOC")
+        
+    then
+        $gpy.setLocMassLine("External Outsource Services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730516' extends '335735' salience 10740
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BUSCONSULT", ownUse06 == "GEMC")
+        
+    then
+        $gpy.setLocMassLine("Management Consultancy");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730518' extends '335735' salience 10730
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEP-CLUB", ownUse06 == "DPFA")
+        
+    then
+        $gpy.setLocMassLine("Amortisation of Club Membership");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730519' extends '335735' salience 10720
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEP-RESTATE", ownUse06 == "DPLI")
+        
+    then
+        $gpy.setLocMassLine("Depr - Leasehold Improvement");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730520' extends '335735' salience 10710
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "NONTAX", ownUse06 == "GETX")
+        
+    then
+        $gpy.setLocMassLine("Consumption Tax");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730521' extends '335735' salience 10700
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BANK-CHARGES", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730522' extends '335735' salience 10690
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MTCELAN", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Data");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730523' extends '335735' salience 10680
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MTCELAN-T", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Data");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730524' extends '335735' salience 10670
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MTCESWIFT", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730525' extends '335735' salience 10660
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MTCESWIFT-T", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730526' extends '335735' salience 10650
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MTCEVOICE", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Voice");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730527' extends '335735' salience 10640
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MTCEVOICE-T", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Voice");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730528' extends '335735' salience 10630
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ITCONHW", ownUse06 == "GEEE")
+        
+    then
+        $gpy.setLocMassLine("IT Purchases - Hardware");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730529' extends '335735' salience 10620
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ITCONSW", ownUse06 == "GEEE")
+        
+    then
+        $gpy.setLocMassLine("IT Purchases - Software");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730530' extends '335735' salience 10610
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ITCONSUM", ownUse06 == "GEEE")
+        
+    then
+        $gpy.setLocMassLine("IT Purchases - Hardware");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730531' extends '335735' salience 10600
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ITCONSUM-T", ownUse06 == "GEEE")
+        
+    then
+        $gpy.setLocMassLine("IT Purchases - Hardware");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730532' extends '335735' salience 10590
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ITCONHWSER", ownUse06 == "GEEE")
+        
+    then
+        $gpy.setLocMassLine("IT Purchases - Hardware (Server)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730533' extends '335735' salience 10580
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ITCONHWTEL", ownUse06 == "GEEE")
+        
+    then
+        $gpy.setLocMassLine("IT Purchases - Hardware");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730534' extends '335735' salience 10570
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ITCONHWUNI", ownUse06 == "GEEE")
+        
+    then
+        $gpy.setLocMassLine("IT Purchases - Hardware");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730535' extends '335735' salience 10560
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PROV-RESTRUC", ownUse06 == "PRCR")
+        
+    then
+        $gpy.setLocMassLine("Sundry Restructuring Expense");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730536' extends '335735' salience 10550
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PENSION", ownUse06 == "SCPS")
+        
+    then
+        $gpy.setLocMassLine("Pension Fund");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730537' extends '335735' salience 10540
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 matches "TAXES.*", ownUse06 == "GETX")
+        
+    then
+        $gpy.setLocMassLine("Other Tax");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730538' extends '335735' salience 10530
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEBT-TRADE", ownUse06 == "CINT")
+        
+    then
+        $gpy.setLocMassLine("Corporate Taxes");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730539' extends '335735' salience 10520
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "FINALTAX", ownUse06 == "CINT")
+        
+    then
+        $gpy.setLocMassLine("Corporate Taxes");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730540' extends '335735' salience 10510
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PROFTAX-DEF", ownUse06 == "CINT")
+        
+    then
+        $gpy.setLocMassLine("Corporate Taxes");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730541' extends '335735' salience 10500
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEFERRED-TAX", ownUse06 == "CINT")
+        
+    then
+        $gpy.setLocMassLine("Deferred Tax");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730542' extends '335735' salience 10490
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEF-TAX-EXP", ownUse06 == "CINT")
+        
+    then
+        $gpy.setLocMassLine("Deferred Tax");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730543' extends '335735' salience 10480
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse06 == "CTPY")
+        
+    then
+        $gpy.setLocMassLine("Deferred Tax");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730544' extends '335735' salience 10470
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEBT-TRADE", ownUse06 == "FCPD")
+        
+    then
+        $gpy.setLocMassLine("Corporate Taxes");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730545' extends '335735' salience 10460
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DONATIONS-T", ownUse06 == "GEAP")
+        
+    then
+        $gpy.setLocMassLine("Donations");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730546' extends '335735' salience 10450
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ITCONSW-T", ownUse06 == "GEEE")
+        
+    then
+        $gpy.setLocMassLine("IT Purchases - Software");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730547' extends '335735' salience 10440
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEP-HWPC", ownUse06 == "DPPC")
+        
+    then
+        $gpy.setLocMassLine("Depr - Mainframe and Personnel Computers (For CDC)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730548' extends '335735' salience 10430
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEP-HWPRINT", ownUse06 == "DPPC")
+        
+    then
+        $gpy.setLocMassLine("Depr - Mainframe and Personnel Computers (For CDC)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730549' extends '335735' salience 10420
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEP-HWSERVER", ownUse06 == "DPPC")
+        
+    then
+        $gpy.setLocMassLine("Depr - Mainframe and Personnel Computers (For CDC)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730550' extends '335735' salience 10410
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "AIRCON", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730551' extends '335735' salience 10400
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "AIRCON-T", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730552' extends '335735' salience 10390
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MISC-CHG", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730553' extends '335735' salience 10380
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MISC-CHG-T", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730554' extends '335735' salience 10370
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CLEANING", ownUse06 == "GECL")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730555' extends '335735' salience 10360
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CLEANING-T", ownUse06 == "GECL")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730556' extends '335735' salience 10350
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OFFICEINS", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730557' extends '335735' salience 10340
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OFFICEINS-T", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730558' extends '335735' salience 10330
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RELOCATION", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Relocation");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730559' extends '335735' salience 10320
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RELOCATION-T", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Relocation");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730560' extends '335735' salience 10310
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MTCE", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730561' extends '335735' salience 10300
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MTCE-T", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730562' extends '335735' salience 10290
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ALARM", ownUse06 == "GEES")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730563' extends '335735' salience 10280
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ALARM-T", ownUse06 == "GEES")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730564' extends '335735' salience 10270
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SVC-CHG", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730565' extends '335735' salience 10260
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SVC-CHG-T", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730566' extends '335735' salience 10250
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "UTILITIES", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730567' extends '335735' salience 10240
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "UTILITIES-T", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730568' extends '335735' salience 10230
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PROPERTYTAX", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Property Tax");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730569' extends '335735' salience 10220
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STORE-FURN", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730570' extends '335735' salience 10210
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STORE-FURN-T", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730571' extends '335735' salience 10200
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ADVERT", ownUse06 == "GEAP")
+        
+    then
+        $gpy.setLocMassLine("Advertising & Promotion");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730572' extends '335735' salience 10190
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ADVERT-T", ownUse06 == "GEAP")
+        
+    then
+        $gpy.setLocMassLine("Advertising & Promotion");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730573' extends '335735' salience 10180
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DONATION-CFC", ownUse06 == "GEAP")
+        
+    then
+        $gpy.setLocMassLine("Donations");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730574' extends '335735' salience 10170
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DONATIONS", ownUse06 == "GEAP")
+        
+    then
+        $gpy.setLocMassLine("Donations");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730575' extends '335735' salience 10160
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SPONSOR-GOLF", ownUse06 == "GEAP")
+        
+    then
+        $gpy.setLocMassLine("Sponsorship");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730576' extends '335735' salience 10150
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SPONSOR-GIFT", ownUse06 == "GEAP")
+        
+    then
+        $gpy.setLocMassLine("Sponsorship");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730577' extends '335735' salience 10140
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LEASE-LOCAL", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Local Leased Line Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730578' extends '335735' salience 10130
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SWIFT", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730579' extends '335735' salience 10120
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SWIFT-T", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730580' extends '335735' salience 10110
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "FAX", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Data");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730581' extends '335735' salience 10100
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LEASE-INTL", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - International Leased Line Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730582' extends '335735' salience 10090
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "INTERNET", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Internet Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730583' extends '335735' salience 10080
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "INTERNET-T", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Internet Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730584' extends '335735' salience 10070
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TELEX", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730585' extends '335735' salience 10060
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TELEX-T", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730586' extends '335735' salience 10050
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-TEL-SUB", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("CDC Telecom & Network Services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730587' extends '335735' salience 10040
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-TEL-USE", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("CDC Telecom & Network Services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730588' extends '335735' salience 10030
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-TEL-TLX", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("CDC Telecom & Network Services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730589' extends '335735' salience 10020
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-TEL-FAX", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("CDC Telecom & Network Services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730590' extends '335735' salience 10010
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MPHONE-SUB", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Mobile Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730591' extends '335735' salience 10000
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MPHONE-SUB-T", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Mobile Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730592' extends '335735' salience 9990
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MPHONE-USE", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Mobile Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730593' extends '335735' salience 9980
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MPHONE-USE-T", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Mobile Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730594' extends '335735' salience 9970
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TEL-SUB", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Voice");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730595' extends '335735' salience 9960
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TEL-SUB-T", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Voice");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730596' extends '335735' salience 9950
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STAAIRFARE", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730597' extends '335735' salience 9940
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STAAIRFARE-T", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730598' extends '335735' salience 9930
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STARENT", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730599' extends '335735' salience 9920
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STARENT-T", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730600' extends '335735' salience 9910
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730601' extends '335735' salience 9900
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730602' extends '335735' salience 9890
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STAUTILITY", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730603' extends '335735' salience 9880
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STAUTILITY-T", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730604' extends '335735' salience 9870
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STAPERDIEM", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730605' extends '335735' salience 9860
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STATPT", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730606' extends '335735' salience 9850
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STATPT-T", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730607' extends '335735' salience 9840
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STATAXCLEAR", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730608' extends '335735' salience 9830
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STAOTHERS", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730609' extends '335735' salience 9820
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STAOTHERS-T", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730610' extends '335735' salience 9810
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "REF-MISC", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730611' extends '335735' salience 9800
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "COMM-MISC", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730612' extends '335735' salience 9790
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ITCONSULT", ownUse06 == "GEOC")
+        
+    then
+        $gpy.setLocMassLine("Other Professional Svcs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730613' extends '335735' salience 9780
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ITCONSULT-T", ownUse06 == "GEOC")
+        
+    then
+        $gpy.setLocMassLine("Other Professional Svcs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730614' extends '335735' salience 9770
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SRM", ownUse06 == "GEBL")
+        
+    then
+        $gpy.setLocMassLine("Single Resolution Mechanism Local");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730615' extends '335735' salience 9760
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PERFSHCASH", ownUse06 == "PSCS")
+        
+    then
+        $gpy.setLocMassLine("Fair Value Performance Shares Equity Settled");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730616' extends '335735' salience 9750
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RENT-GUOCO", ownUse06 == "GEOR")
+        
+    then
+        $gpy.setLocMassLine("Office Rent");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730617' extends '335735' salience 9740
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "REUTER", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Reuters");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730618' extends '335735' salience 9730
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "REUTER-T", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Reuters");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730619' extends '335735' salience 9720
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SUPERD", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730620' extends '335735' salience 9710
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TELERATE", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730621' extends '335735' salience 9700
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "THOMSON", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730622' extends '335735' salience 9690
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "THOMSON-T", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730623' extends '335735' salience 9680
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TRANSP-REU", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730624' extends '335735' salience 9670
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TRANSP-REU-T", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730625' extends '335735' salience 9660
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TRANSP-EBS", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730626' extends '335735' salience 9650
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TRANSP-EBS-T", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730627' extends '335735' salience 9640
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "COMM-4CAST", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730628' extends '335735' salience 9630
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "COMM-4CAST-T", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730629' extends '335735' salience 9620
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "COMM-DOWJ", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730630' extends '335735' salience 9610
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "COMM-EURO", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730631' extends '335735' salience 9600
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "COMM-FACTIVA", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730632' extends '335735' salience 9590
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "COMM-IDEA", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730633' extends '335735' salience 9580
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "COMM-REU", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730634' extends '335735' salience 9570
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "COMM-REU-T", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730635' extends '335735' salience 9560
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "REF-BASIS", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730636' extends '335735' salience 9550
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "REF-CEIC", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730637' extends '335735' salience 9540
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "REF-IDC", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730638' extends '335735' salience 9530
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "REF-IDC-T", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730639' extends '335735' salience 9520
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730640' extends '335735' salience 9510
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-TRANSP", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730641' extends '335735' salience 9500
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-BCP", ownUse06 == "GEOR")
+        
+    then
+        $gpy.setLocMassLine("CDC BCP");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730642' extends '335735' salience 9490
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-BLOOM", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("CDC MDS-Bloomberg");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730643' extends '335735' salience 9480
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-INGTRADE", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("CDC MDS-Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730644' extends '335735' salience 9470
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-OTHMDS", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("CDC MDS-Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730645' extends '335735' salience 9460
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEP-CAR", ownUse06 == "DPBC")
+        
+    then
+        $gpy.setLocMassLine("Depr - Bank Owned Cars");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730646' extends '335735' salience 9450
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse06 == "DPCS")
+        
+    then
+        $gpy.setLocMassLine("Depr - Computer SW");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730647' extends '335735' salience 9440
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEP-COMM", ownUse06 == "DPTE")
+        
+    then
+        $gpy.setLocMassLine("Depr - Other EDP Equipment");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730648' extends '335735' salience 9430
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEP-FURN", ownUse06 == "DPFU")
+        
+    then
+        $gpy.setLocMassLine("Depr - Other Fixed Assets");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730649' extends '335735' salience 9420
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEP-OTHEQUIP", ownUse06 == "DPFA")
+        
+    then
+        $gpy.setLocMassLine("Depr - Office Equipment");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730650' extends '335735' salience 9410
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEP-LI", ownUse06 == "DPLI")
+        
+    then
+        $gpy.setLocMassLine("Depr - Leasehold Improvement");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730651' extends '335735' salience 9400
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEP-HWUNIX", ownUse06 == "DPMF")
+        
+    then
+        $gpy.setLocMassLine("Depr - Mainframe and Personnel Computers (For CDC)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730652' extends '335735' salience 9390
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEP-HWTANDEM", ownUse06 == "DPMF")
+        
+    then
+        $gpy.setLocMassLine("Depr - Mainframe and Personnel Computers (For CDC)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730653' extends '335735' salience 9380
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEP-BKCAR", ownUse06 == "DPBC")
+        
+    then
+        $gpy.setLocMassLine("Depr - Bank Cars");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730654' extends '335735' salience 9370
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-TEL-IPC", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("CDC Telecom & Network Services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730655' extends '335735' salience 9360
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-RENO", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730656' extends '335735' salience 9350
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-RENO-T", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730657' extends '335735' salience 9340
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EDU-TAXES", ownUse06 == "GETX")
+        
+    then
+        $gpy.setLocMassLine("Education Tax");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730658' extends '335735' salience 9330
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SBRCALLOCATE", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730659' extends '335735' salience 9320
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TERMINAT-ADD", ownUse06 == "PRCR")
+        
+    then
+        $gpy.setLocMassLine("Sundry Restructuring Expense");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730660' extends '335735' salience 9310
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OPPCOST", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730661' extends '335735' salience 9300
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CCY-ROUNDING", ownUse06 == "EXPN")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730662' extends '335735' salience 9290
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BANK-CHRGS", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730663' extends '335735' salience 9280
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "IMPAIR-CSOFT", ownUse06 == "IMOT")
+        
+    then
+        $gpy.setLocMassLine("Impairment");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730664' extends '335735' salience 9270
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BUSCONSULT-T", ownUse06 == "GEMC")
+        
+    then
+        $gpy.setLocMassLine("Management Consultancy");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730665' extends '335735' salience 9260
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "GIF-TINT", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730666' extends '335735' salience 9250
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "GIFT-INT-T", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730667' extends '335735' salience 9240
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BANKLEVY", ownUse06 == "GEBL")
+        
+    then
+        $gpy.setLocMassLine("Bank Levy");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730668' extends '335735' salience 9230
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEP-LAN", ownUse06 == "DPTE")
+        
+    then
+        $gpy.setLocMassLine("Depr - Other EDP Equipment");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730669' extends '335735' salience 9220
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEP-VOICE", ownUse06 == "DPTE")
+        
+    then
+        $gpy.setLocMassLine("Depr - Other EDP Equipment");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730670' extends '335735' salience 9210
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse06 == "CHPD")
+        
+    then
+        $gpy.setLocMassLine("IC Services Bought");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730671' extends '335735' salience 9200
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse06 == "CTCY")
+        
+    then
+        $gpy.setLocMassLine("Corporate Taxes");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730672' extends '335735' salience 9190
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RETPENSION", ownUse06 == "PRAP")
+        
+    then
+        $gpy.setLocMassLine("Retirement Allowance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730673' extends '335735' salience 9180
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "AIRFARE-PROJ", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Airfares");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730674' extends '335735' salience 9170
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXPRENT-T", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Expats Housing & Related Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730675' extends '335735' salience 9160
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXPUTILITY", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Expats Housing & Related Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730676' extends '335735' salience 9150
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXPMISC", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Expats Housing & Related Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730677' extends '335735' salience 9140
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXPMAID", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Expats Housing & Related Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730678' extends '335735' salience 9130
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXPRELOCATE", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Expats Relocation");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730679' extends '335735' salience 9120
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "GRPLIFEINS", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Staff Insurance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730680' extends '335735' salience 9110
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "GRPHEALTHINS", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Staff Insurance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730681' extends '335735' salience 9100
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STFINSU", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Staff Insurance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730682' extends '335735' salience 9090
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "GIFTINT", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730683' extends '335735' salience 9080
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "GIFTINT-T", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730684' extends '335735' salience 9070
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CARALLOW", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730685' extends '335735' salience 9060
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "FBT", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730686' extends '335735' salience 9050
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STFOTH", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730687' extends '335735' salience 9040
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STASSIGN", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730688' extends '335735' salience 9030
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STASSIGN-T", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730689' extends '335735' salience 9020
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STFALLOW", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730690' extends '335735' salience 9010
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "WELFARE-CONT", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730691' extends '335735' salience 9000
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STAFFCLUB", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730692' extends '335735' salience 8990
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STFYEDINNER", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730693' extends '335735' salience 8980
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STFHOMELOAN", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730694' extends '335735' salience 8970
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MEDICAL", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Medical & Dental Fees");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730695' extends '335735' salience 8960
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STFCLUBMEMB", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Staff Social Club Membership/Subscription");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730696' extends '335735' salience 8950
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STFPETROL", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730697' extends '335735' salience 8940
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SVC-AWARD", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Service Award");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730698' extends '335735' salience 8930
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "UNUSEDLEAVE", ownUse06 == "SCUH")
+        
+    then
+        $gpy.setLocMassLine("Unused Leave");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730699' extends '335735' salience 8920
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXPPENSION", ownUse06 == "SCPS")
+        
+    then
+        $gpy.setLocMassLine("Pension Fund");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730700' extends '335735' salience 8910
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LCLPENSION", ownUse06 == "SCPS")
+        
+    then
+        $gpy.setLocMassLine("Pension Fund");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730701' extends '335735' salience 8900
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PENSION-CUB", ownUse06 == "SCPS")
+        
+    then
+        $gpy.setLocMassLine("Pension Fund");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730702' extends '335735' salience 8890
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SPONS-GOLF-T", ownUse06 == "GEAP")
+        
+    then
+        $gpy.setLocMassLine("Sponsorship");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730703' extends '335735' salience 8880
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SPONS-GIFT-T", ownUse06 == "GEAP")
+        
+    then
+        $gpy.setLocMassLine("Sponsorship");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730704' extends '335735' salience 8870
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BLACKBERRY-T", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Mobile Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730705' extends '335735' salience 8860
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DBMTCE-T", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Data");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730706' extends '335735' salience 8850
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "VIDEOCONF-T", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Voice");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730707' extends '335735' salience 8840
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "VOICECONF-T", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Voice");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730708' extends '335735' salience 8830
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-COMM", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("CDC MDS-Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730709' extends '335735' salience 8820
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BANKCHARGE-T", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730710' extends '335735' salience 8810
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ANNUALFEE-T", ownUse06 == "GESM")
+        
+    then
+        $gpy.setLocMassLine("Subscriptions and membership fees");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730711' extends '335735' salience 8800
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LECARRENT-T", ownUse06 == "GETL")
+        
+    then
+        $gpy.setLocMassLine("Expenses for Leased Cars (own staff)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730712' extends '335735' salience 8790
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OTMEALS-T", ownUse06 == "SCOP")
+        
+    then
+        $gpy.setLocMassLine("Salaries & Wages");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730713' extends '335735' salience 8780
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXPUTILITY-T", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Expats Housing & Related Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730714' extends '335735' salience 8770
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXPMISC-T", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Expats Housing & Related Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730715' extends '335735' salience 8760
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "GIFT-INT", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730716' extends '335735' salience 8750
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ANNUALLEAVE", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Unused Leave");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730717' extends '335735' salience 8740
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ANNUALEAVE", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Unused Leave");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730718' extends '335735' salience 8730
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ANNUAL-LEAVE", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Unused Leave");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730719' extends '335735' salience 8720
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SBP-UPFSHEQ", ownUse06 == "EOPE")
+        
+    then
+        $gpy.setLocMassLine("Fair Value Upfront Shares Equity Settled");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730720' extends '335735' salience 8710
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DBP-BONUS", ownUse06 == "SCBD")
+        
+    then
+        $gpy.setLocMassLine("Deferred cash bonus");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730721' extends '335735' salience 8700
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Expats Housing & Related Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730722' extends '335735' salience 8690
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Expats Housing & Related Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730723' extends '335735' salience 8680
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ACTUAL-IAS19", ownUse06 == "PRAP")
+        
+    then
+        $gpy.setLocMassLine("Retirement Allowance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730724' extends '335735' salience 8670
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "COMM-EXT-T", ownUse06 == "GEAT")
+        
+    then
+        $gpy.setLocMassLine("Advertising & Promotion");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730725' extends '335735' salience 8660
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "COMM-EXT-T", ownUse06 == "GEAP")
+        
+    then
+        $gpy.setLocMassLine("Advertising & Promotion");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730726' extends '335735' salience 8650
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse06 == "SCEE")
+        
+    then
+        $gpy.setLocMassLine("EE - Seminar & Course Fee");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730727' extends '335735' salience 8640
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SBP-OPTIONS", ownUse06 == "EOPE")
+        
+    then
+        $gpy.setLocMassLine("Fair Value LT Sustainable Performance Plan");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730728' extends '335735' salience 8630
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SBP-SHARES", ownUse06 == "EOPE")
+        
+    then
+        $gpy.setLocMassLine("Fair Value Performance Shares Equity Settled");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730729' extends '335735' salience 8620
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SBP-PERFSH", ownUse06 == "EOPE")
+        
+    then
+        $gpy.setLocMassLine("Fair Value Performance Shares Equity Settled");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730730' extends '335735' salience 8610
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SBP-DEFBONUS", ownUse06 == "EOPE")
+        
+    then
+        $gpy.setLocMassLine("Fair value expenses deferred bonus");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730731' extends '335735' salience 8600
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SUPPENSION", ownUse06 == "SCPS")
+        
+    then
+        $gpy.setLocMassLine("Pension Fund");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730732' extends '335735' salience 8590
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RTLEDP", ownUse06 == "GEHL")
+        
+    then
+        $gpy.setLocMassLine("Rental - EDP Equipt");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730733' extends '335735' salience 8580
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RTLEDP-T", ownUse06 == "GEHL")
+        
+    then
+        $gpy.setLocMassLine("Rental - EDP Equipt");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730734' extends '335735' salience 8570
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "COMPSUPP", ownUse06 == "GEAU")
+        
+    then
+        $gpy.setLocMassLine("EDP Expenses Not Specified (OBS)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730735' extends '335735' salience 8560
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "COMPSUPP-T", ownUse06 == "GEAU")
+        
+    then
+        $gpy.setLocMassLine("EDP Expenses Not Specified (OBS)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730736' extends '335735' salience 8550
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PRINTING", ownUse06 == "GEPD")
+        
+    then
+        $gpy.setLocMassLine("Printing");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730737' extends '335735' salience 8540
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PRINTING-T", ownUse06 == "GEPD")
+        
+    then
+        $gpy.setLocMassLine("Printing");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730738' extends '335735' salience 8530
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STATIONERY", ownUse06 == "GESE")
+        
+    then
+        $gpy.setLocMassLine("Stationery & office supplies");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730739' extends '335735' salience 8520
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STATIONERY-T", ownUse06 == "GESE")
+        
+    then
+        $gpy.setLocMassLine("Stationery & office supplies");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730740' extends '335735' salience 8510
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PUBL", ownUse06 == "GESM")
+        
+    then
+        $gpy.setLocMassLine("Subscriptions and membership fees");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730741' extends '335735' salience 8500
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PUBL-T", ownUse06 == "GESM")
+        
+    then
+        $gpy.setLocMassLine("Subscriptions and membership fees");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730742' extends '335735' salience 8490
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ANNUALFEE", ownUse06 == "GESM")
+        
+    then
+        $gpy.setLocMassLine("Subscriptions and membership fees");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730743' extends '335735' salience 8480
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OFFMEMB", ownUse06 == "GESM")
+        
+    then
+        $gpy.setLocMassLine("Subscriptions and membership fees");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730744' extends '335735' salience 8470
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OFFMEMB-T", ownUse06 == "GESM")
+        
+    then
+        $gpy.setLocMassLine("Subscriptions and membership fees");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730745' extends '335735' salience 8460
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STFCLUBSUB", ownUse06 == "GESM")
+        
+    then
+        $gpy.setLocMassLine("Subscriptions and membership fees");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730746' extends '335735' salience 8450
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ENT-CUST-T", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Entertainment of Clients");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730747' extends '335735' salience 8440
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ENT-INT", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Entertainment Internal");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730748' extends '335735' salience 8430
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ENT-INT-T", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Entertainment Internal");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730749' extends '335735' salience 8420
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ENT-CUST", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Entertainment of Clients");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730750' extends '335735' salience 8410
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "GIFT-CUST", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Entertainment of Clients");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730751' extends '335735' salience 8400
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "GIFT-CUST-T", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Entertainment of Clients");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730752' extends '335735' salience 8390
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "HOTEL", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Hotel");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730753' extends '335735' salience 8380
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "HOTEL-T", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Hotel");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730754' extends '335735' salience 8370
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "AIRFARE", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Airfares");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730755' extends '335735' salience 8360
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MEALS", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730756' extends '335735' salience 8350
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "APTAXV", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730757' extends '335735' salience 8340
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "APTAXV-T", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730758' extends '335735' salience 8330
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TRVLOTHERS", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730759' extends '335735' salience 8320
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TRVLINS", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730763' extends '335735' salience 8310
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TRVLOTHERS-T", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730764' extends '335735' salience 8300
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STFCLUBSUB-T", ownUse06 == "GESM")
+        
+    then
+        $gpy.setLocMassLine("Subscriptions and membership fees");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730765' extends '335735' salience 8290
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEF-BONUS", ownUse06 == "SCBD")
+        
+    then
+        $gpy.setLocMassLine("Deferred cash bonus");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730766' extends '335735' salience 8280
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-LEASING", ownUse06 == "GEHL")
+        
+    then
+        $gpy.setLocMassLine("CDC-Leasing");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730767' extends '335735' salience 8270
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RD-REORG", ownUse06 == "PRCR")
+        
+    then
+        $gpy.setLocMassLine("Sundry Restructuring Expense");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730768' extends '335735' salience 8260
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-OCTG", ownUse06 == "GEOR")
+        
+    then
+        $gpy.setLocMassLine("CDC TG");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730769' extends '335735' salience 8250
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BKCAROTH", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Expenses - Bank Owned Cars");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730770' extends '335735' salience 8240
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BKCARPARK", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Expenses - Bank Owned Cars");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730771' extends '335735' salience 8230
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BKCARPETROL", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Expenses - Bank Owned Cars");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730772' extends '335735' salience 8220
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BKCARMTCE", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Expenses - Bank Owned Cars");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730773' extends '335735' salience 8210
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BKCARTAX", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Expenses - Bank Owned Cars");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730774' extends '335735' salience 8200
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BANKCHARGES", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730775' extends '335735' salience 8190
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PENALTY", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730776' extends '335735' salience 8180
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CUSTODIANFEE", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730777' extends '335735' salience 8170
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BANKACCTFEE", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730778' extends '335735' salience 8160
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEPTALLOCATE", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Charges between departments");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730779' extends '335735' salience 8150
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OTHINS", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730780' extends '335735' salience 8140
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEPOSITINS", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730781' extends '335735' salience 8130
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "REORG-EXP", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Sundry Restructuring Expense");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730782' extends '335735' salience 8120
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RMPINS", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Risk Management Programme Insurance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730783' extends '335735' salience 8110
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "JOBS-CREDIT", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730784' extends '335735' salience 8100
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PANTRY-EXP", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Outsourcing Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730785' extends '335735' salience 8090
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PANTRY-EXP-T", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Outsourcing Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730786' extends '335735' salience 8080
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STORE-DOC", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730787' extends '335735' salience 8070
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STORE-DOC-T", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730788' extends '335735' salience 8060
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "GENEXP", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730789' extends '335735' salience 8050
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "GENEXP-T", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730790' extends '335735' salience 8040
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PHOTOCOPY", ownUse06 == "GESE")
+        
+    then
+        $gpy.setLocMassLine("Stationery & office supplies");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730791' extends '335735' salience 8030
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PHOTOCOPY-T", ownUse06 == "GESE")
+        
+    then
+        $gpy.setLocMassLine("Stationery & office supplies");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730792' extends '335735' salience 8020
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "FA-NOT-CAP", ownUse06 == "GESE")
+        
+    then
+        $gpy.setLocMassLine("Stationery & office supplies");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730793' extends '335735' salience 8010
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "FA-NOT-CAP-T", ownUse06 == "GESE")
+        
+    then
+        $gpy.setLocMassLine("Stationery & office supplies");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730794' extends '335735' salience 8000
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TEL-USE", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Voice");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730795' extends '335735' salience 7990
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TEL-USE-T", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Voice");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730796' extends '335735' salience 7980
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "VIDEOCONF", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Voice");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730797' extends '335735' salience 7970
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "VOICECONF", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Voice");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730798' extends '335735' salience 7960
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DBMTCE", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Data");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730799' extends '335735' salience 7950
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "COURIER", ownUse06 == "GETP")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730800' extends '335735' salience 7940
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "COURIER-T", ownUse06 == "GETP")
+        
+    then
+        $gpy.setLocMassLine("Miscellaneous expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730801' extends '335735' salience 7930
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "POSTAGE", ownUse06 == "GEPS")
+        
+    then
+        $gpy.setLocMassLine("Postage charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730802' extends '335735' salience 7920
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "POSTAGE-T", ownUse06 == "GEPS")
+        
+    then
+        $gpy.setLocMassLine("Postage charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730803' extends '335735' salience 7910
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BLACKBERRY", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Mobile Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730804' extends '335735' salience 7900
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "REIMBURSE", ownUse06 == "GECP")
+        
+    then
+        $gpy.setLocMassLine("Charges passed to Non-WB entities");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730805' extends '335735' salience 7890
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "AUDIT", ownUse06 == "GEEA")
+        
+    then
+        $gpy.setLocMassLine("External Auditor Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730806' extends '335735' salience 7880
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "AUDIT-T", ownUse06 == "GEEA")
+        
+    then
+        $gpy.setLocMassLine("External Auditor Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730807' extends '335735' salience 7870
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "AUDIT-REG", ownUse06 == "GEEA")
+        
+    then
+        $gpy.setLocMassLine("External Auditor Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730808' extends '335735' salience 7860
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SOX", ownUse06 == "GEEA")
+        
+    then
+        $gpy.setLocMassLine("External Auditor Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730809' extends '335735' salience 7850
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MTCEEDP", ownUse06 == "GEEE")
+        
+    then
+        $gpy.setLocMassLine("IT Equipment - Hardware Maintenance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730810' extends '335735' salience 7840
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MTCEEDP-T", ownUse06 == "GEEE")
+        
+    then
+        $gpy.setLocMassLine("IT Equipment - Hardware Maintenance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730811' extends '335735' salience 7830
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MTCEHWPC", ownUse06 == "GEEE")
+        
+    then
+        $gpy.setLocMassLine("IT Equipment - Hardware Maintenance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730812' extends '335735' salience 7820
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MTCEHWUNIX", ownUse06 == "GEEE")
+        
+    then
+        $gpy.setLocMassLine("IT Equipment - Hardware Maintenance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730813' extends '335735' salience 7810
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MTCEHWTANDEM", ownUse06 == "GEEE")
+        
+    then
+        $gpy.setLocMassLine("IT Equipment - Hardware Maintenance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730814' extends '335735' salience 7800
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MTCESWSERV", ownUse06 == "GEEE")
+        
+    then
+        $gpy.setLocMassLine("IT Equipment - Software Maintenance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730815' extends '335735' salience 7790
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MTCESWPC", ownUse06 == "GEEE")
+        
+    then
+        $gpy.setLocMassLine("IT Equipment - Software Maintenance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730816' extends '335735' salience 7780
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MTCESWTANDEM", ownUse06 == "GEEE")
+        
+    then
+        $gpy.setLocMassLine("IT Equipment - Software Maintenance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730817' extends '335735' salience 7770
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MTCESWUNIX", ownUse06 == "GEEE")
+        
+    then
+        $gpy.setLocMassLine("IT Equipment - Software Maintenance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730818' extends '335735' salience 7760
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-DESKTOP", ownUse06 == "DPPC")
+        
+    then
+        $gpy.setLocMassLine("CDC Desktop Services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730819' extends '335735' salience 7750
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BLOOMBERG", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Bloomberg");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730820' extends '335735' salience 7740
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BLOOMBERG-T", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Bloomberg");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730821' extends '335735' salience 7730
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "INGTRADE", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730822' extends '335735' salience 7720
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OTHMDS", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730823' extends '335735' salience 7710
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "HOTEL-T", ownUse06 == "SCEE")
+        
+    then
+        $gpy.setLocMassLine("EE - Hotel");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730824' extends '335735' salience 7700
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "HOTEL", ownUse06 == "SCEE")
+        
+    then
+        $gpy.setLocMassLine("EE - Hotel");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730825' extends '335735' salience 7690
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DEP-FURN", ownUse06 == "DPFA")
+        
+    then
+        $gpy.setLocMassLine("Depr - Other Fixed Assets");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730826' extends '335735' salience 7680
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LEASE-LOC-T", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - Local Leased Line Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730827' extends '335735' salience 7670
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CARALLOW-T", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Other Welfare & Benefits");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730828' extends '335735' salience 7660
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EAFUND", ownUse06 == "SCPT")
+        
+    then
+        $gpy.setLocMassLine("Local Provident Fund & Social Securities");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730829' extends '335735' salience 7650
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OT-NIGHTDIFF", ownUse06 == "SCSW")
+        
+    then
+        $gpy.setLocMassLine("Salaries & Wages");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730830' extends '335735' salience 7640
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "FBT", ownUse06 == "GETX")
+        
+    then
+        $gpy.setLocMassLine("Other Tax");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730831' extends '335735' salience 7630
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "COMM-EXT", ownUse06 == "GEAP")
+        
+    then
+        $gpy.setLocMassLine("Advertising & Promotion");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730832' extends '335735' salience 7620
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "COMM-INT", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730833' extends '335735' salience 7610
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "COMM-INT-T", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730834' extends '335735' salience 7600
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TAXPFEE-T", ownUse06 == "GEOS")
+        
+    then
+        $gpy.setLocMassLine("Other Professional Svcs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730835' extends '335735' salience 7590
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LEGALPFEE", ownUse06 == "GEOS")
+        
+    then
+        $gpy.setLocMassLine("Legal Professional Services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730836' extends '335735' salience 7580
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TAXPFEE", ownUse06 == "GEOS")
+        
+    then
+        $gpy.setLocMassLine("Other Professional Svcs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730837' extends '335735' salience 7570
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LEGALPFEE-T", ownUse06 == "GEOS")
+        
+    then
+        $gpy.setLocMassLine("Legal Professional Services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730838' extends '335735' salience 7560
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OTHPFEE", ownUse06 == "GEOS")
+        
+    then
+        $gpy.setLocMassLine("Other Professional Svcs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730839' extends '335735' salience 7550
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OTHPFEE-T", ownUse06 == "GEOS")
+        
+    then
+        $gpy.setLocMassLine("Other Professional Svcs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730840' extends '335735' salience 7540
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OT-OSOURCE", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Outsourcing Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730841' extends '335735' salience 7530
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OT-OSOURCE-T", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Outsourcing Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730842' extends '335735' salience 7520
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "FI-OSOURCE", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Outsourcing Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730843' extends '335735' salience 7510
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "FI-OSOURCE-T", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Outsourcing Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730844' extends '335735' salience 7500
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "HR-OSOURCE", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Outsourcing Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730845' extends '335735' salience 7490
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "HR-OSOURCE-T", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Outsourcing Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730846' extends '335735' salience 7480
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "IT-OSOURCE-T", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Outsourcing Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730847' extends '335735' salience 7470
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "IT-OSOURCE", ownUse06 == "GEOT")
+        
+    then
+        $gpy.setLocMassLine("Outsourcing Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730848' extends '335735' salience 7460
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SBP-LSPP", ownUse06 == "EOPE")
+        
+    then
+        $gpy.setLocMassLine("Fair Value LT Sustainable Performance Plan");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730849' extends '335735' salience 7450
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "E0159000", ownUse05 == "LCLPENSION", ownUse06 == "PRAP")
+        
+    then
+        $gpy.setLocMassLine("Retirement Allowance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730850' extends '335735' salience 7440
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "E0159000", ownUse05 == "PENSION-BOT", ownUse06 == "PRAP")
+        
+    then
+        $gpy.setLocMassLine("Retirement Allowance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730851' extends '335735' salience 7430
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse06 == "CHRC")
+        
+    then
+        $gpy.setLocMassLine("IC Services Sold");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730852' extends '335735' salience 7420
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CHRGPASS", ownUse06 == "GECP")
+        
+    then
+        $gpy.setLocMassLine("Charges passed to Non-WB entities");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730853' extends '335735' salience 7410
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CHRGPASS-T", ownUse06 == "GECP")
+        
+    then
+        $gpy.setLocMassLine("Charges passed to Non-WB entities");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730854' extends '335735' salience 7400
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "NASD-HOCHGS", ownUse06 == "HOCH")
+        
+    then
+        $gpy.setLocMassLine("IC Services Bought");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730855' extends '335735' salience 7390
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "NASD-OIBRECH", ownUse06 == "HOCH")
+        
+    then
+        $gpy.setLocMassLine("IC Services Bought");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730857' extends '335735' salience 7380
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SECURITY", ownUse06 == "GEES")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730858' extends '335735' salience 7370
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SECURITY-T", ownUse06 == "GEES")
+        
+    then
+        $gpy.setLocMassLine("Office Running Costs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730859' extends '335735' salience 7360
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "NBRS-OIBRECH", ownUse06 == "HOCH")
+        
+    then
+        $gpy.setLocMassLine("IC Services Bought");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730860' extends '335735' salience 7350
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "REINSTATE", ownUse06 == "GEAC")
+        
+    then
+        $gpy.setLocMassLine("Office Relocation");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730861' extends '335735' salience 7340
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BKCARTAX-T", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Expenses - Bank Owned Cars");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730862' extends '335735' salience 7330
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LEASE-INTL-T", ownUse06 == "GECM")
+        
+    then
+        $gpy.setLocMassLine("Communication Expenses - International Leased Line Charges");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730863' extends '335735' salience 7320
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TRVLOSTPT", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730864' extends '335735' salience 7310
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TRVLLOCTPT", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730865' extends '335735' salience 7300
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TRVLLOCTPT-T", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730866' extends '335735' salience 7290
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TRVLPETROL", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730867' extends '335735' salience 7280
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TRVLOSTPT-T", ownUse06 == "GETR")
+        
+    then
+        $gpy.setLocMassLine("Travel - Others");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730868' extends '335735' salience 7270
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CONSUMTAX", ownUse06 == "GETX")
+        
+    then
+        $gpy.setLocMassLine("Consumption Tax");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730869' extends '335735' salience 7260
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STAMPDUTY", ownUse06 == "GETX")
+        
+    then
+        $gpy.setLocMassLine("Other Tax");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730870' extends '335735' salience 7250
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MISCTAX", ownUse06 == "GETX")
+        
+    then
+        $gpy.setLocMassLine("Other Tax");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730871' extends '335735' salience 7240
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BUSINESSTAX", ownUse06 == "GETX")
+        
+    then
+        $gpy.setLocMassLine("Other Tax");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730872' extends '335735' salience 7230
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "WHT-MY", ownUse06 == "GETX")
+        
+    then
+        $gpy.setLocMassLine("Withholding Tax");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730873' extends '335735' salience 7220
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "WHT", ownUse06 == "GETX")
+        
+    then
+        $gpy.setLocMassLine("Withholding Tax");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730874' extends '335735' salience 7210
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "GRT", ownUse06 == "GETX")
+        
+    then
+        $gpy.setLocMassLine("Other Tax");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730875' extends '335735' salience 7200
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CUSTOMDUTY", ownUse06 == "GETX")
+        
+    then
+        $gpy.setLocMassLine("Other Tax");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730876' extends '335735' salience 7190
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CCT-STAFF", ownUse06 == "SCEA")
+        
+    then
+        $gpy.setLocMassLine("Contracted staff");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730877' extends '335735' salience 7180
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CCT-STAFF-T", ownUse06 == "SCEA")
+        
+    then
+        $gpy.setLocMassLine("Contracted staff");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730878' extends '335735' salience 7170
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MEALS", ownUse06 == "SCEE")
+        
+    then
+        $gpy.setLocMassLine("EE - Other Course Related Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730879' extends '335735' salience 7160
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MEALS-T", ownUse06 == "SCEE")
+        
+    then
+        $gpy.setLocMassLine("EE - Other Course Related Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730880' extends '335735' salience 7150
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TRVLOSTPT-T", ownUse06 == "SCEE")
+        
+    then
+        $gpy.setLocMassLine("EE - Other Course Related Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730881' extends '335735' salience 7140
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TRVLLOCTPT", ownUse06 == "SCEE")
+        
+    then
+        $gpy.setLocMassLine("EE - Other Course Related Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730882' extends '335735' salience 7130
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TRVLLOCTPT-T", ownUse06 == "SCEE")
+        
+    then
+        $gpy.setLocMassLine("EE - Other Course Related Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730883' extends '335735' salience 7120
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TRVLOSTPT", ownUse06 == "SCEE")
+        
+    then
+        $gpy.setLocMassLine("EE - Other Course Related Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730884' extends '335735' salience 7110
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "AIRFARE", ownUse06 == "SCEE")
+        
+    then
+        $gpy.setLocMassLine("EE - Travel Airfare");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730885' extends '335735' salience 7100
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "APTAXV", ownUse06 == "SCEE")
+        
+    then
+        $gpy.setLocMassLine("EE - Travel Airfare");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730886' extends '335735' salience 7090
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TRVLOTHERS", ownUse06 == "SCEE")
+        
+    then
+        $gpy.setLocMassLine("EE - Other Course Related Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730887' extends '335735' salience 7080
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TD-MISC", ownUse06 == "SCEE")
+        
+    then
+        $gpy.setLocMassLine("EE - Other Course Related Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730888' extends '335735' salience 7070
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TD-MISC-T", ownUse06 == "SCEE")
+        
+    then
+        $gpy.setLocMassLine("EE - Other Course Related Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730889' extends '335735' salience 7060
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse06 == "SCEE")
+        
+    then
+        $gpy.setLocMassLine("EE - Seminar & Course Fee");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730890' extends '335735' salience 7050
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse06 == "SCEE")
+        
+    then
+        $gpy.setLocMassLine("EE - Seminar & Course Fee");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730891' extends '335735' salience 7040
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "GRATIFY", ownUse06 == "SCGF")
+        
+    then
+        $gpy.setLocMassLine("Gratifications");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730892' extends '335735' salience 7030
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXTRAMTHPAY", ownUse06 == "SCGF")
+        
+    then
+        $gpy.setLocMassLine("Gratifications");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730893' extends '335735' salience 7020
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OTMEALS", ownUse06 == "SCOP")
+        
+    then
+        $gpy.setLocMassLine("Salaries & Wages");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730894' extends '335735' salience 7010
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OTTRANSPORT", ownUse06 == "SCOP")
+        
+    then
+        $gpy.setLocMassLine("Salaries & Wages");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730895' extends '335735' salience 7000
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXPSCHOOL", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Expats Child Education");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730896' extends '335735' salience 6990
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXPHOMELEAVE", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Expats Home Leave");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730897' extends '335735' salience 6980
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXPRENT", ownUse06 == "SCOT")
+        
+    then
+        $gpy.setLocMassLine("Expats Housing & Related Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730898' extends '335735' salience 6970
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-REF", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("CDC MDS-Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730899' extends '335735' salience 6960
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-REUTERS", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("CDC MDS-Reuters");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730900' extends '335735' salience 6950
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-SUPERD", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("CDC MDS-Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730901' extends '335735' salience 6940
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-THOMSON", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("CDC MDS-Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730902' extends '335735' salience 6930
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PDEX", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730903' extends '335735' salience 6920
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "TECHNISTOCK", ownUse06 == "GEIS")
+        
+    then
+        $gpy.setLocMassLine("Other MDS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730904' extends '335735' salience 6910
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RENT", ownUse06 == "GEOR")
+        
+    then
+        $gpy.setLocMassLine("Office Rent");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730905' extends '335735' salience 6900
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RENT-T", ownUse06 == "GEOR")
+        
+    then
+        $gpy.setLocMassLine("Office Rent");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730906' extends '335735' salience 6890
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RENT-DRC", ownUse06 == "GEOR")
+        
+    then
+        $gpy.setLocMassLine("Office Rent - DRC");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730907' extends '335735' salience 6880
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RENT-DRC-T", ownUse06 == "GEOR")
+        
+    then
+        $gpy.setLocMassLine("Office Rent - DRC");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730908' extends '335735' salience 6870
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RENT-DC", ownUse06 == "GEOR")
+        
+    then
+        $gpy.setLocMassLine("Office Rent");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730909' extends '335735' salience 6860
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RENT-DC-T", ownUse06 == "GEOR")
+        
+    then
+        $gpy.setLocMassLine("Office Rent");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730910' extends '335735' salience 6850
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CDC-OCCU", ownUse06 == "GEOR")
+        
+    then
+        $gpy.setLocMassLine("CDC Occupancy");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730911' extends '335735' salience 6840
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXTSVS-IT", ownUse06 == "SCOI")
+        
+    then
+        $gpy.setLocMassLine("Outsource - IT");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730912' extends '335735' salience 6830
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXTSVS-IT-T", ownUse06 == "SCOI")
+        
+    then
+        $gpy.setLocMassLine("Outsource - IT");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730913' extends '335735' salience 6820
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXTSVS-RXM", ownUse06 == "GEOS")
+        
+    then
+        $gpy.setLocMassLine("Other Professional Svcs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730914' extends '335735' salience 6810
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "DIRECTOR-FEE", ownUse06 == "GEOS")
+        
+    then
+        $gpy.setLocMassLine("Other Professional Svcs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730915' extends '335735' salience 6800
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SEARCH", ownUse06 == "GEOS")
+        
+    then
+        $gpy.setLocMassLine("Other Professional Svcs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730916' extends '335735' salience 6790
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SEARCH-T", ownUse06 == "GEOS")
+        
+    then
+        $gpy.setLocMassLine("Other Professional Svcs");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730917' extends '335735' salience 6780
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SECFEES", ownUse06 == "GEOS")
+        
+    then
+        $gpy.setLocMassLine("Secretarial Fees");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730918' extends '335735' salience 6770
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SECFEES-T", ownUse06 == "GEOS")
+        
+    then
+        $gpy.setLocMassLine("Secretarial Fees");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730919' extends '335735' salience 6760
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PENSION-CTC", ownUse06 == "SCPS")
+        
+    then
+        $gpy.setLocMassLine("Pension Fund");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730920' extends '335735' salience 6750
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RETIRE-EXT", ownUse06 == "SCPS")
+        
+    then
+        $gpy.setLocMassLine("Retirement Allowance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730921' extends '335735' salience 6740
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RETIRE-INT", ownUse06 == "SCPS")
+        
+    then
+        $gpy.setLocMassLine("Retirement Allowance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730922' extends '335735' salience 6730
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PENSION-LPA", ownUse06 == "SCPS")
+        
+    then
+        $gpy.setLocMassLine("Pension Fund");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730923' extends '335735' salience 6720
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "CPF", ownUse06 == "SCPT")
+        
+    then
+        $gpy.setLocMassLine("Local Provident Fund & Social Securities");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730924' extends '335735' salience 6710
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SDF", ownUse06 == "SCPT")
+        
+    then
+        $gpy.setLocMassLine("Local Provident Fund & Social Securities");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730925' extends '335735' salience 6700
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EPF", ownUse06 == "SCPT")
+        
+    then
+        $gpy.setLocMassLine("Local Provident Fund & Social Securities");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730926' extends '335735' salience 6690
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SOCSO", ownUse06 == "SCPT")
+        
+    then
+        $gpy.setLocMassLine("Local Provident Fund & Social Securities");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730927' extends '335735' salience 6680
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ASTEK-STF", ownUse06 == "SCPT")
+        
+    then
+        $gpy.setLocMassLine("Local Provident Fund & Social Securities");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730928' extends '335735' salience 6670
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "ASTEK-COMP", ownUse06 == "SCPT")
+        
+    then
+        $gpy.setLocMassLine("Local Provident Fund & Social Securities");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730929' extends '335735' salience 6660
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SOCIALSEC", ownUse06 == "SCPT")
+        
+    then
+        $gpy.setLocMassLine("Local Provident Fund & Social Securities");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730930' extends '335735' salience 6650
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "INS", ownUse06 == "SCPT")
+        
+    then
+        $gpy.setLocMassLine("Local Provident Fund & Social Securities");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730931' extends '335735' salience 6640
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LABOURINS", ownUse06 == "SCPT")
+        
+    then
+        $gpy.setLocMassLine("Labour & Medical Insurance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730932' extends '335735' salience 6630
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MEDICALINS", ownUse06 == "SCPT")
+        
+    then
+        $gpy.setLocMassLine("Labour & Medical Insurance");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730933' extends '335735' salience 6620
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXPATINCTAX", ownUse06 == "SCPT")
+        
+    then
+        $gpy.setLocMassLine("Personal Income Tax");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730934' extends '335735' salience 6610
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RECRUIT", ownUse06 == "SCRC")
+        
+    then
+        $gpy.setLocMassLine("Recruitment cost");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730935' extends '335735' salience 6600
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RECRUIT-T", ownUse06 == "SCRC")
+        
+    then
+        $gpy.setLocMassLine("Recruitment cost");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730936' extends '335735' salience 6590
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "EXPATSSALARY", ownUse06 == "SCSW")
+        
+    then
+        $gpy.setLocMassLine("Salaries & Wages");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730937' extends '335735' salience 6580
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "MATERNITY", ownUse06 == "SCSW")
+        
+    then
+        $gpy.setLocMassLine("Salaries & Wages");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730938' extends '335735' salience 6570
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "LCLSTFSALARY", ownUse06 == "SCSW")
+        
+    then
+        $gpy.setLocMassLine("Salaries & Wages");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730939' extends '335735' salience 6560
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OVERTIME", ownUse06 == "SCSW")
+        
+    then
+        $gpy.setLocMassLine("Salaries & Wages");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730940' extends '335735' salience 6550
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OTHER-COMPEN", ownUse06 == "SCSW")
+        
+    then
+        $gpy.setLocMassLine("Salaries & Wages");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730941' extends '335735' salience 6540
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "STFMEALALLOW", ownUse06 == "SCSW")
+        
+    then
+        $gpy.setLocMassLine("Salaries & Wages");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730942' extends '335735' salience 6530
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "PAY-PROJECT", ownUse06 == "SCSW")
+        
+    then
+        $gpy.setLocMassLine("Staff costs allocated to projects");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730943' extends '335735' salience 6520
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "REFERRAL", ownUse06 == "SCSW")
+        
+    then
+        $gpy.setLocMassLine("Salaries & Wages");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730944' extends '335735' salience 6510
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "UNPAID-LEAVE", ownUse06 == "SCSW")
+        
+    then
+        $gpy.setLocMassLine("Voluntary Unpaid Leave");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730945' extends '335735' salience 6500
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "SEVERANCE", ownUse06 == "SEVC")
+        
+    then
+        $gpy.setLocMassLine("Severance cost");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730946' extends '335735' salience 6490
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "BONUS", ownUse06 == "SCBO")
+        
+    then
+        $gpy.setLocMassLine("Upfront Cash Bonus");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730947' extends '335735' salience 6480
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "NASD-GRPSTF", ownUse06 == "ACGS")
+        
+    then
+        $gpy.setLocMassLine("Group Staff Department Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730948' extends '335735' salience 6470
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "REORG-PROV", ownUse06 == "PRCR")
+        
+    then
+        $gpy.setLocMassLine("Sundry Restructuring Expense");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730949' extends '335735' salience 6460
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RENT-TG", ownUse06 == "GEOR")
+        
+    then
+        $gpy.setLocMassLine("Office Rent");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730950' extends '335735' salience 6450
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "RENT-TG-T", ownUse06 == "GEOR")
+        
+    then
+        $gpy.setLocMassLine("Office Rent");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+rule '1730951' extends '335735' salience 6440
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse05 == "OTHTAX", ownUse06 == "GETX")
+        
+    then
+        $gpy.setLocMassLine("Other Tax");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"6060");
+        
+end
+
+

@@ -1,0 +1,360 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331522'
+	when
+		$gda : GrlDetAmounts(actCode != null && hpePdtType == "OTHER RECEIVABLES")
+	then
+        
+end
+
+
+
+
+
+rule '1088140' extends '331522' salience 1280
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", prodSubTypeLoc == "EXPA")
+        
+    then
+        $gda.setCustomTxt01("6130_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1088149' extends '331522' salience 1270
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", prodSubTypeLoc == "SHAI")
+        
+    then
+        $gda.setCustomTxt01("2231_1_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1086480' extends '331522' salience 1260
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "BGN", posGroupId == "10711", prodSubTypeLoc == "OTHA")
+        
+    then
+        $gda.setCustomTxt01("3021_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1086482' extends '331522' salience 1250
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "EUR", posGroupId == "10711", prodSubTypeLoc == "SSPA")
+        
+    then
+        $gda.setCustomTxt01("4221_2_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1086483' extends '331522' salience 1240
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg not in ("EUR", "BGN"), posGroupId == "10711", prodSubTypeLoc == "SSPA")
+        
+    then
+        $gda.setCustomTxt01("4221_2_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1086492' extends '331522' salience 1230
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "EUR", posGroupId == "10704", prodSubTypeLoc == "AFCR")
+        
+    then
+        $gda.setCustomTxt01("4594_2_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1087939' extends '331522' salience 1220
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "EUR", posGroupId == "10711", prodSubTypeLoc == "ACRE")
+        
+    then
+        $gda.setCustomTxt01("4982_0_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1087940' extends '331522' salience 1210
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg not in ("EUR", "BGN"), posGroupId == "10711", prodSubTypeLoc == "ACRE")
+        
+    then
+        $gda.setCustomTxt01("4982_0_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1102133' extends '331522' salience 1200
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "BGN", posGroupId == "10711", prodSubTypeLoc == "ACRE")
+        
+    then
+        $gda.setCustomTxt01("4981_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1086481' extends '331522' salience 1190
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "BGN", posGroupId == "10711", prodSubTypeLoc == "SSPA", posId matches "TRAVAL.*")
+        
+    then
+        $gda.setCustomTxt01("4221_1_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1086484' extends '331522' salience 1180
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "BGN", posGroupId == "10711", prodSubTypeLoc == "ACRE", posId matches "GIM-FUNDLB.*")
+        
+    then
+        $gda.setCustomTxt01("4555_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1086488' extends '331522' salience 1170
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "BGN", posGroupId == "10711", prodSubTypeLoc == "SSPA", posId matches "OFFEXPENSE.*")
+        
+    then
+        $gda.setCustomTxt01("4221_1_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1086489' extends '331522' salience 1160
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "BGN", posGroupId == "10711", prodSubTypeLoc == "SSPA", posId matches "FC-SETTL.*")
+        
+    then
+        $gda.setCustomTxt01("4594_1_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1086491' extends '331522' salience 1150
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "BGN", posGroupId == "10706", prodSubTypeLoc == "FCPA", posId matches "CENTRAL-DEPO.*")
+        
+    then
+        $gda.setCustomTxt01("4594_1_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1087931' extends '331522' salience 1140
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "BGN", posGroupId == "10711", prodSubTypeLoc == "ACRE", posId matches "CUSTODY-FEE.*")
+        
+    then
+        $gda.setCustomTxt01("4981_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1087932' extends '331522' salience 1130
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "BGN", posGroupId == "10711", prodSubTypeLoc == "ACRE", posId matches "FRANKPRIVATE.*")
+        
+    then
+        $gda.setCustomTxt01("4981_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1087933' extends '331522' salience 1120
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "BGN", posGroupId == "10711", prodSubTypeLoc == "ACRE", posId matches "INGLIFEINSSA.*")
+        
+    then
+        $gda.setCustomTxt01("4981_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1087934' extends '331522' salience 1110
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "BGN", posGroupId == "10711", prodSubTypeLoc == "ACRE", posId matches "INGPENFUND.*")
+        
+    then
+        $gda.setCustomTxt01("4981_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1087935' extends '331522' salience 1100
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "BGN", posGroupId == "10711", prodSubTypeLoc == "ACRE", posId matches "JWOPRIVATE.*")
+        
+    then
+        $gda.setCustomTxt01("4981_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1087936' extends '331522' salience 1090
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "BGN", posGroupId == "10711", prodSubTypeLoc == "ACRE", posId matches "MANAGCONTFH.*")
+        
+    then
+        $gda.setCustomTxt01("4981_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1087937' extends '331522' salience 1080
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "BGN", posGroupId == "10711", prodSubTypeLoc == "ACRE", posId matches "PAYMENTS.*")
+        
+    then
+        $gda.setCustomTxt01("4981_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1087938' extends '331522' salience 1070
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "BGN", posGroupId == "10711", prodSubTypeLoc == "ACRE", posId matches "SECURITIES.*")
+        
+    then
+        $gda.setCustomTxt01("4981_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1087941' extends '331522' salience 1060
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "BGN", posGroupId == "10703", prodSubTypeLoc == "AINR", (posId matches "ACCT-CURR.*" || posId matches "ACCT-LORO.*"))
+        
+    then
+        $gda.setCustomTxt01("4961_2_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1087942' extends '331522' salience 1050
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "EUR", posGroupId == "10703", prodSubTypeLoc == "AINR", posId matches "ACCT-CURR.*")
+        
+    then
+        $gda.setCustomTxt01("4962_7_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1087943' extends '331522' salience 1040
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg not in ("EUR", "BGN"), posGroupId == "10703", prodSubTypeLoc == "AINR", posId matches "ACCT-CURR.*")
+        
+    then
+        $gda.setCustomTxt01("4962_7_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+rule '1088154' extends '331522' salience 1030
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "Y", hacAmtCl == "01", hcuCcyCdOrg == "BGN", posGroupId == "10711", prodSubTypeLoc == "ACRE", posId matches "VAT.*")
+        
+    then
+        $gda.setCustomTxt01("4981_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3003");
+        
+end
+
+

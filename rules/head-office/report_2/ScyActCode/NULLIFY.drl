@@ -1,0 +1,18 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+dialect  "mvel"
+
+rule 'REP_2_NULLIFY' salience 99999
+    when
+        $gda : GrlDetAmounts()
+    then
+        $gda.setScyActCode(null);
+        $gda.setScyPdtCode(null);
+        $gda.setScyCgpCode(null);
+        $gda.setScyRteCode(null);
+
+        $gda.setMemoText($gda.getLdlIdTrail());
+        $gda.setLdlIdTrail(kcontext.rule.name);
+end

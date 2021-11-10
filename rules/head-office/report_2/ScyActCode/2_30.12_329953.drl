@@ -1,0 +1,68 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '329953'
+	when
+		$gda : GrlDetAmounts(hpePdtType in ( "LOAN" , "MARGIN FINANCE" , "FACTORING" , "LEASING" ) && intInd == "N" && hacAmtCl in ( "02" , "03" ))
+	then
+end
+
+
+rule '775755' extends '329953' salience 27250
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setScyActCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1830");
+        
+end
+
+rule '772349' extends '329953' salience 27240
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", contingInd == "N")
+        
+    then
+        $gda.setScyActCode("A0003000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1830");
+        
+end
+
+rule '772350' extends '329953' salience 27230
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", contingInd == "N", htyTradCat == "03")
+        
+    then
+        $gda.setScyActCode("L0229000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1830");
+        
+end
+
+rule '775751' extends '329953' salience 27220
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", contingInd == "N", htyTradCat in ("01", "02"))
+        
+    then
+        $gda.setScyActCode("L3351000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1830");
+        
+end
+
+

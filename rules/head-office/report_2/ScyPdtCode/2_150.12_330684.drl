@@ -1,0 +1,81 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '330684'
+	when
+		$gda : GrlDetAmounts(hpePdtType in ( "CAPITAL AND RESERVE" , "CASH" , "CUST ACCT" , "FIXED ASSET" , "MINORITY INTEREST" , "NOSTRO" , "OTHER NON PROD PL ITEM" , "OTHER PAYABLES" , "OTHER RECEIVABLES" , "PART" , "PROV" , "TAXES" ) && hscAcctSubcl in ( "1111" , "2304" , "2305" , "2306" , "2307" , "2309" , "2311" , "2312" , "2314" , "2315" , "2316" , "2317" , "2318" , "2326" , "2333" , "2801" , "2802" ) && repAssetInd == "Y" && intInd == "N" && contingInd == "Y" && hacAmtCl == "01")
+	then
+end
+
+
+rule '918785' extends '330684' salience 15320
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setScyPdtCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2440");
+        
+end
+
+rule '1181697' extends '330684' salience 15310
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hscAcctSubcl == "2802")
+        
+    then
+        $gda.setScyPdtCode("014800");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2440");
+        
+end
+
+rule '1181698' extends '330684' salience 15300
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hscAcctSubcl == "2801", getCase0_1150623() == "within_one_year")
+        
+    then
+        $gda.setScyPdtCode("026900");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2440");
+        
+end
+
+rule '918784' extends '330684' salience 15290
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hscAcctSubcl in ("1111", "2304", "2305", "2306", "2307", "2309", "2311", "2312", "2314", "2315", "2316", "2317", "2318", "2326", "2333"), newIssueInd == "Y")
+        
+    then
+        $gda.setScyPdtCode("014600");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2440");
+        
+end
+
+rule '1181696' extends '330684' salience 15280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hscAcctSubcl == "2801", getCase0_1150623() == "more_then_a_year")
+        
+    then
+        $gda.setScyPdtCode("027000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2440");
+        
+end
+
+

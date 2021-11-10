@@ -1,0 +1,36 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332187'
+	when
+		$gpy : GrlPlYtd(nvl ( actCode , "X" ) != nvl ( customTxtHo01 , "X" ))
+	then
+        
+end
+
+
+
+
+
+rule '1144616' extends '332187' salience 10
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{/*GFRS ACT CODE*/ CUSTOM_TXT_HO_01}*/
+        GrlPlYtd(this == $gpy, actCode == "I2415000")
+        
+    then
+        $gpy.setCustomTxt20("I2415000 not in use in GFRS");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3491");
+        
+end
+
+

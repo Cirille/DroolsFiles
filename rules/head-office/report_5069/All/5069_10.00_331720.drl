@@ -1,0 +1,54 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331720'
+	when
+		$gda : GrlDetAmounts(massProduct != null)
+	then
+        
+end
+
+
+
+
+
+rule '1124022' extends '331720' salience 20
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setMisRarocProduct(Warning: selecting from gre_lr_cust_ref: data will not be available in source topic.
+ full statement: {nvl((select lce.custom_cd from gre_lr_cust_ref lce where lce.custom_key = upper(substr(mass_product,1,50)) and lce.lcr_hly_rel_id = 'STNDRD' and lce.lcr_custom_ref_type = 'MASS_MR_PR'), '99.999')});
+        $gda.setHvtVrProduct(Warning: selecting from gre_lr_cust_ref: data will not be available in source topic.
+ full statement: {nvl((select lce.custom_cd from gre_lr_cust_ref lce where lce.custom_key = upper(substr(mass_product,1,50)) and lce.lcr_hly_rel_id = 'STNDRD' and lce.lcr_custom_ref_type = 'MASS_VR_PR'), '99.999')});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3214");
+        
+end
+
+rule '1592567' extends '331720' salience 10
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{upper(substr(mass_product,1,50))}*/
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0720")
+        
+    then
+        $gda.setMisRarocProduct(Warning: selecting from gre_lr_cust_ref: data will not be available in source topic.
+ full statement: {nvl((select lce.custom_cd from gre_lr_cust_ref lce where lce.custom_key = upper(substr(mass_product,1,50)) and lce.lcr_hly_rel_id = 'STNDRD' and lce.lcr_custom_ref_type = 'MASS_MR_PR'), '99.999')});
+        $gda.setHvtVrProduct("INTB");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3214");
+        
+end
+
+

@@ -1,0 +1,74 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332637'
+	when
+		$gda : GrlDetAmounts(ownUse06 in ( "2102000000" , "4704000000" , "4704001000" ) && actCode matches "A.*")
+	then
+        
+end
+
+
+
+
+
+rule '1181639' extends '332637' salience 40
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setRteCode({this.getRteCode()});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3695");
+        
+end
+
+rule '1181638' extends '332637' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId in ("0799", "9699"), ownUse06 == "2102000000", ownUse03 == "109")
+        
+    then
+        $gda.setRteCode("109");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3695");
+        
+end
+
+rule '1181640' extends '332637' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId in ("0799", "9699"), ownUse06 == "4704000000", ownUse03 == "041")
+        
+    then
+        $gda.setRteCode("041");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3695");
+        
+end
+
+rule '1181641' extends '332637' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId in ("0799", "9699"), ownUse06 == "4704001000", ownUse03 == "041")
+        
+    then
+        $gda.setRteCode("041");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3695");
+        
+end
+
+

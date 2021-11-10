@@ -1,0 +1,152 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334210'
+	when
+		$gda : GrlDetAmounts(actCode in ( "A0017000" , "A0058000" ))
+	then
+        
+end
+
+
+
+
+
+rule '1605730' extends '334210' salience 100
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setSeSectors("9001-HK2_2241");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4923");
+        
+end
+
+rule '1605722' extends '334210' salience 90
+
+    when
+        
+        GrlDetAmounts(this == $gda, cgpCode == "00009")
+        
+    then
+        $gda.setSeSectors("9001-HK2_1110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4923");
+        
+end
+
+rule '1605723' extends '334210' salience 80
+
+    when
+        
+        GrlDetAmounts(this == $gda, cgpCode == "00017")
+        
+    then
+        $gda.setSeSectors("9001-HK2_1121");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4923");
+        
+end
+
+rule '1605724' extends '334210' salience 70
+
+    when
+        
+        GrlDetAmounts(this == $gda, cgpCode == "00010")
+        
+    then
+        $gda.setSeSectors("9001-HK2_1122");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4923");
+        
+end
+
+rule '1605728' extends '334210' salience 60
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FINS", "FLIF", "FPEF", "VFND", "VIFM", "VING"))
+        
+    then
+        $gda.setSeSectors("9001-HK2_2220");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4923");
+        
+end
+
+rule '1605729' extends '334210' salience 50
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("BSPV", "CSPV", "FSPV", "RSPV", "SSPV"))
+        
+    then
+        $gda.setSeSectors("9001-HK2_2212");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4923");
+        
+end
+
+rule '1605731' extends '334210' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("COMB", "KCMB", "SOMB"))
+        
+    then
+        $gda.setSeSectors("9001-HK2_2250");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4923");
+        
+end
+
+rule '1605725' extends '334210' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, cgpCode == "00015", (hreRelTypeIssuer not matches "C.*" && hreRelTypeIssuer not matches "Z.*" && hreRelTypeIssuer not matches "I.*" && hreRelTypeIssuer != "FINS" && hreRelTypeIssuer != "FLIF" && hreRelTypeIssuer != "FPEF" && hreRelTypeIssuer != "VFND" && hreRelTypeIssuer != "VIFM" && hreRelTypeIssuer != "VING"))
+        
+    then
+        $gda.setSeSectors("9001-HK2_1131");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4923");
+        
+end
+
+rule '1605726' extends '334210' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "GCEN")
+        
+    then
+        $gda.setSeSectors("9001-HK2_2110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4923");
+        
+end
+
+rule '1605727' extends '334210' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("GLOC", "GLOL", "GPSL"))
+        
+    then
+        $gda.setSeSectors("9001-HK2_2122");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4923");
+        
+end
+
+

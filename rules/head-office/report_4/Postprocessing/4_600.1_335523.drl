@@ -1,0 +1,28 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+global String dateFormat;
+
+dialect  "mvel"
+
+
+rule '335523'
+	when
+		$gda : GrlDetAmounts( repDate != null && nvl ( status , "X" ) not in ('RVD','RVL') )
+	then
+end
+
+
+rule '1710425' extends '335523' salience 7
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setPrdId($gda.formatDate($gda.getRepDate(),dateFormat));
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5899");
+        
+end

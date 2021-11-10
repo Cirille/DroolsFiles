@@ -1,0 +1,35 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332374'
+	when
+		$gda : GrlDetAmounts(MANUALLY adjust this subselect: ACT_CODE IN ('A0025000','L0251000') AND IC_IND = 'Y' and RLN_WW_CUST_ID in (select cr.custom_key from gre_lr_cust_ref cr where cr.lcr_hly_rel_id = lse_hly_rel_id and lcr_custom_ref_type = 'CTPYPOS'))
+	then
+        
+end
+
+
+
+
+
+rule '1160844' extends '332374' salience 430
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCpyReyCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3624");
+        
+end
+
+

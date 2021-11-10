@@ -1,0 +1,230 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331526'
+	when
+		$gda : GrlDetAmounts(actCode != null && hpePdtType == "OTHER PAYABLES")
+	then
+        
+end
+
+
+
+
+
+rule '1087416' extends '331526' salience 1020
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "BGN", posGroupId == "21901", hreRelTypeCtpy matches "B.*")
+        
+    then
+        $gda.setCustomTxt01("4591_3_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3007");
+        
+end
+
+rule '1087421' extends '331526' salience 1010
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "2708", hcuCcyCdOrg == "BGN", posGroupId == "20604")
+        
+    then
+        $gda.setCustomTxt01("4991_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3007");
+        
+end
+
+rule '1087424' extends '331526' salience 1000
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "2708", hcuCcyCdOrg == "BGN", posGroupId == "20609")
+        
+    then
+        $gda.setCustomTxt01("4991_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3007");
+        
+end
+
+rule '1087425' extends '331526' salience 990
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "2702", hcuCcyCdOrg != "BGN", posGroupId == "20609")
+        
+    then
+        $gda.setCustomTxt01("4594_2_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3007");
+        
+end
+
+rule '1087426' extends '331526' salience 980
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "2702", hcuCcyCdOrg == "BGN", posGroupId == "20609")
+        
+    then
+        $gda.setCustomTxt01("4594_1_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3007");
+        
+end
+
+rule '1087427' extends '331526' salience 970
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "1628", hcuCcyCdOrg == "BGN", posGroupId == "20609")
+        
+    then
+        $gda.setCustomTxt01("4211_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3007");
+        
+end
+
+rule '1087428' extends '331526' salience 960
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "1407", hcuCcyCdOrg == "BGN", posGroupId == "20609")
+        
+    then
+        $gda.setCustomTxt01("4211_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3007");
+        
+end
+
+rule '1087875' extends '331526' salience 950
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "2708", hcuCcyCdOrg != "BGN", posGroupId == "20609")
+        
+    then
+        $gda.setCustomTxt01("4992_0_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3007");
+        
+end
+
+rule '1087876' extends '331526' salience 940
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "1407", hcuCcyCdOrg != "BGN", posGroupId == "20609")
+        
+    then
+        $gda.setCustomTxt01("4211_0_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3007");
+        
+end
+
+rule '1087422' extends '331526' salience 930
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "2706", hcuCcyCdOrg == "BGN", posGroupId == "20601", hreRelTypeCtpy matches "B.*", residentInd == "Y")
+        
+    then
+        $gda.setCustomTxt01("4963_27_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3007");
+        
+end
+
+rule '1087423' extends '331526' salience 920
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "2706", hcuCcyCdOrg != "BGN", posGroupId == "20601", hreRelTypeCtpy matches "B.*", residentInd == "Y")
+        
+    then
+        $gda.setCustomTxt01("4964_23_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3007");
+        
+end
+
+rule '1087830' extends '331526' salience 910
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "N", hscAcctSubcl == "2706", hcuCcyCdOrg == "BGN", posGroupId == "20601", prodSubTypeLoc == "AINP", posId matches "ACCT-COVR.*")
+        
+    then
+        $gda.setCustomTxt01("4963_6_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3007");
+        
+end
+
+rule '1087831' extends '331526' salience 900
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "N", hscAcctSubcl == "2706", hcuCcyCdOrg == "EUR", posGroupId == "20601", prodSubTypeLoc == "AINP", (posId matches "ACCT-COVR.*" || posId matches "ACCT-LORO.*"))
+        
+    then
+        $gda.setCustomTxt01("4964_6_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3007");
+        
+end
+
+rule '1087832' extends '331526' salience 890
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "N", hscAcctSubcl == "2706", hcuCcyCdOrg not in ("EUR", "BGN"), posGroupId == "20601", prodSubTypeLoc == "AINP", posId matches "ACCT-COVR.*")
+        
+    then
+        $gda.setCustomTxt01("4964_6_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3007");
+        
+end
+
+rule '1087833' extends '331526' salience 880
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "N", hscAcctSubcl == "2706", hcuCcyCdOrg == "BGN", posGroupId == "20601", prodSubTypeLoc == "AINP", posId matches "ACCT-LORO.*")
+        
+    then
+        $gda.setCustomTxt01("4961_2_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3007");
+        
+end
+
+rule '1087834' extends '331526' salience 870
+
+    when
+        
+        GrlDetAmounts(this == $gda, assetInd == "N", hscAcctSubcl == "2706", hcuCcyCdOrg != "BGN", posGroupId == "20601", prodSubTypeLoc == "AINP", posId matches "ACCT-LORO.*")
+        
+    then
+        $gda.setCustomTxt01("4964_23_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3007");
+        
+end
+
+

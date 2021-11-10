@@ -1,0 +1,36 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332167'
+	when
+		$gda : GrlDetAmounts(massProduct != null)
+	then
+        
+end
+
+
+
+
+
+rule '1142622' extends '332167' salience 10
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt06(Warning: selecting from gre_lr_cust_ref: data will not be available in source topic.
+ full statement: {nvl((select lce.custom_cd from gre_lr_cust_ref lce where lce.custom_key = upper(mass_product) and lce.lcr_hly_rel_id = 'STNDRD' and lce.lcr_custom_ref_type = 'MASS_PR_GR'), '99.999')});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3471");
+        
+end
+
+

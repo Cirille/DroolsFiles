@@ -1,0 +1,87 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlStructuredDleLines;
+
+
+
+
+dialect  "mvel"
+
+
+rule '333137'
+	when
+		$gsdl : GrlStructuredDleLines(actCode in ( "A0017000" , "A0058000" , "A3291000" , "A3331000" , "A3333000" , "A4112000" , "A4412000" , "A4564000" , "A4565000" , "A7985000" , "A7986000" , "A7987000" , "A7988000" , "A8349000" , "A8609000" , "A9018000" , "A9260000" , "A9458000" , "A9460000" ) && pdtCode in ( "002900" , "005100" , "005900" , "006100" , "007300" , "029000" , "030000" , "030100" , "030200" , "030300" , "030400" , "030500" , "030600" , "030700" , "030800" , "030900" , "031000" , "031100" , "031200" ) && smnBeyNumber != nvl ( cpyBeyNumber , "X" ))
+	then
+        
+end
+
+
+
+
+
+rule '1389730' extends '333137' salience 140
+
+    when
+        
+        GrlStructuredDleLines(this == $gsdl, nvl2(isinCd,  'Y',  'N' ) == "N")
+        
+    then
+        $gsdl.setDnbSecurityCode("DEBT SECURITIES TO BE SPECIFIED");
+        
+        $gsdl.updateLdlIdTrail(kcontext.rule.name,"4011");
+        
+end
+
+rule '1389731' extends '333137' salience 130
+
+    when
+        
+        GrlStructuredDleLines(this == $gsdl, nvl2(isinCd,  'Y',  'N' ) == "Y")
+        
+    then
+        $gsdl.setDnbSecurityCode("DEBT SECURITIES ORIGINAL MATURITY MORE THAN TWO YEARS");
+        
+        $gsdl.updateLdlIdTrail(kcontext.rule.name,"4011");
+        
+end
+
+rule '1389732' extends '333137' salience 120
+no-loop
+    when
+        
+        GrlStructuredDleLines(this == $gsdl, getCase0_1389733() == "between_one_and_two_years")
+        
+    then
+        $gsdl.setDnbSecurityCode("DEBT SECURITIES ORIGINAL MATURITY BETWEEN ONE AND TWO YEARS");
+        
+        $gsdl.updateLdlIdTrail(kcontext.rule.name,"4011");
+        
+end
+
+rule '1389733' extends '333137' salience 110
+no-loop
+    when
+        
+        GrlStructuredDleLines(this == $gsdl, getCase0_1389733() == "more_than_two_years")
+        
+    then
+        $gsdl.setDnbSecurityCode("DEBT SECURITIES ORIGINAL MATURITY MORE THAN TWO YEARS");
+        
+        $gsdl.updateLdlIdTrail(kcontext.rule.name,"4011");
+        
+end
+
+rule '1389734' extends '333137' salience 100
+no-loop
+    when
+        
+        GrlStructuredDleLines(this == $gsdl, getCase0_1389733() == "one year or less")
+        
+    then
+        $gsdl.setDnbSecurityCode("DEBT SECURITIES ORIGINAL MATURITY 1 YEAR OR LESS");
+        
+        $gsdl.updateLdlIdTrail(kcontext.rule.name,"4011");
+        
+end
+
+

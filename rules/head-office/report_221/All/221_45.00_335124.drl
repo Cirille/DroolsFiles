@@ -1,0 +1,35 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335124'
+	when
+		$gda : GrlDetAmounts(( hpePdtType in ( "CCY SWAP" , "SPOT FX" , "CCY FORW" ) ) && hacAmtCl == "10" && deliveredInd == "Y" && intInd == "N" && repAssetInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1693435' extends '335124' salience 160
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setSignFlipCode("[DA,MM,OTC]");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5689");
+        
+end
+
+

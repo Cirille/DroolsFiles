@@ -1,0 +1,55 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '330020'
+	when
+		$gda : GrlDetAmounts(( ( scyActCode in ( "A0027000" , "A0034000" , "A0057000" , "A0624000" , "A3329000" , "A8350000" , "A8294000" , "L0272000" ) && icInd == "Y" ) || ( scyActCode == "L0242000" && scyPdtCode == "031500" && icInd == "Y" ) ))
+	then
+end
+
+
+rule '776581' extends '330020' salience 6250
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setScyRteCode("010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1902");
+        
+end
+
+rule '1621115' extends '330020' salience 6240
+
+    when
+        
+        GrlDetAmounts(this == $gda, scyActCode == "A0027000", scyPdtCode == "031500")
+        
+    then
+        $gda.setScyRteCode("010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1902");
+        
+end
+
+rule '1614262' extends '330020' salience 6230
+
+    when
+        
+        GrlDetAmounts(this == $gda, scyActCode != "A0027000", scyPdtCode == "031500")
+        
+    then
+        $gda.setScyRteCode("163");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1902");
+        
+end
+
+

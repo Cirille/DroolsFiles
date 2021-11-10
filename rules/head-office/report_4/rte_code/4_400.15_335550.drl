@@ -1,0 +1,87 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335550'
+	when
+		$gda : GrlDetAmounts(( actCode in ( "L3348000" , "L3935000" ) || ( actCode == "L0242000" && pdtCode == "031500" && icInd == "N" ) || ( actCode == "L0272000" && icInd == "N" ) || actCode in ( "L3334000" , "L3934000" ) ))
+	then
+        
+end
+
+
+
+
+
+rule '1710752' extends '335550' salience 6190
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L3334000", "L3934000"))
+        
+    then
+        $gda.setRteCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5926");
+        
+end
+
+rule '1710755' extends '335550' salience 6180
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setRteCode("012");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5926");
+        
+end
+
+rule '1710753' extends '335550' salience 6170
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L3334000", "L3934000"), hheHedgeCl in ("04", "05"))
+        
+    then
+        $gda.setRteCode("205");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5926");
+        
+end
+
+rule '1710754' extends '335550' salience 6160
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L3334000", "L3934000"), hheHedgeCl in ("01", "02"))
+        
+    then
+        $gda.setRteCode("206");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5926");
+        
+end
+
+rule '1710756' extends '335550' salience 6150
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "031500")
+        
+    then
+        $gda.setRteCode("163");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5926");
+        
+end
+
+

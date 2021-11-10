@@ -1,0 +1,373 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '327941'
+	when
+		$gda : GrlDetAmounts(actCode matches "L.*" || actCode matches "Q.*")
+	then
+        
+end
+
+
+
+
+
+rule '326774' extends '327941' salience 920
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt02("99.999");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326744' extends '327941' salience 910
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "Q0073000")
+        
+    then
+        $gda.setCustomTxt02("ORDSHC");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326745' extends '327941' salience 900
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "Q0076000")
+        
+    then
+        $gda.setCustomTxt02("SHPREM");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326746' extends '327941' salience 890
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode == "Q0065000" || actCode == "Q0066000" || actCode == "Q0068000" || actCode == "Q0069000" || actCode == "Q0070000" || actCode == "Q0071000" || actCode == "Q0076000" || actCode matches "L0258.*" || actCode matches "L2527.*"))
+        
+    then
+        $gda.setCustomTxt02("CAPREV");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326747' extends '327941' salience 880
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L2533000")
+        
+    then
+        $gda.setCustomTxt02("REVRES");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326748' extends '327941' salience 870
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1605000")
+        
+    then
+        $gda.setCustomTxt02("PRFLOS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326749' extends '327941' salience 860
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("Q0072000", "Q0074000", "Q0075000"))
+        
+    then
+        $gda.setCustomTxt02("PRESHR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326770' extends '327941' salience 850
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0234000", "L0245000"))
+        
+    then
+        $gda.setCustomTxt02("PROTAX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326771' extends '327941' salience 840
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0238000")
+        
+    then
+        $gda.setCustomTxt02("DEFTAX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326772' extends '327941' salience 830
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0239000")
+        
+    then
+        $gda.setCustomTxt02("PRODIV");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326773' extends '327941' salience 820
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "L0244.*" || actCode matches "L0245.*" || actCode matches "L0249.*" || actCode matches "L0250.*" || actCode matches "L0251.*" || actCode matches "L0252.*" || actCode matches "L0253.*" || actCode matches "L0254.*" || actCode matches "L0255.*" || actCode matches "L0256.*" || actCode matches "L0257.*" || actCode matches "L2571.*"))
+        
+    then
+        $gda.setCustomTxt02("OTLBSO");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326761' extends '327941' salience 810
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0229000", (hreRelTypeCtpy == "BCRI" || hreRelTypeCtpy matches "F.*"))
+        
+    then
+        $gda.setCustomTxt02("ACIMFI");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326762' extends '327941' salience 800
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0229000", hreRelTypeCtpy == "BCEN")
+        
+    then
+        $gda.setCustomTxt02("ACINCB");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326763' extends '327941' salience 790
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0229000", hreRelTypeCtpy == "GCEN")
+        
+    then
+        $gda.setCustomTxt02("ACINGV");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326764' extends '327941' salience 780
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0229000", hreRelTypeCtpy == "GLOL")
+        
+    then
+        $gda.setCustomTxt02("ACINGG");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326765' extends '327941' salience 770
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0229000", (hreRelTypeCtpy not matches "B.*" && hreRelTypeCtpy not matches "F.*" && hreRelTypeCtpy not matches "G.*"))
+        
+    then
+        $gda.setCustomTxt02("ACINNG");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326766' extends '327941' salience 760
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0230000", hacAmtCl in ("02", "03"))
+        
+    then
+        $gda.setCustomTxt02("ACIOBS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326789' extends '327941' salience 750
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0230000", hacAmtCl not in ("02", "03"))
+        
+    then
+        $gda.setCustomTxt02("OTLBSO");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326750' extends '327941' salience 740
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", cpyBeyNumber != null, cgpCode matches "B.*", pdtCode == "018200")
+        
+    then
+        $gda.setCustomTxt02("BRPACI");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326751' extends '327941' salience 730
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", cpyBeyNumber == null, cgpCode matches "B.*", pdtCode == "018200")
+        
+    then
+        $gda.setCustomTxt02("BORFRP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326752' extends '327941' salience 720
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", cpyBeyNumber != null, cgpCode matches "B.*", pdtCode != "018200")
+        
+    then
+        $gda.setCustomTxt02("BORCRA");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326753' extends '327941' salience 710
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", cpyBeyNumber == null, cgpCode matches "B.*", pdtCode != "018200")
+        
+    then
+        $gda.setCustomTxt02("BORCRO");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326754' extends '327941' salience 700
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", cpyBeyNumber == null, cgpCode not matches "B.*", pdtCode not in ("003600", "004600"))
+        
+    then
+        $gda.setCustomTxt02("BORAOM");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326755' extends '327941' salience 690
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", cgpCode not matches "B.*", pdtCode in ("003600", "004600"))
+        
+    then
+        $gda.setCustomTxt02("CURADJ");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326756' extends '327941' salience 680
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", cgpCode not matches "B.*", pdtCode in ("003400", "003500", "004300", "004400"), orgTerm < 366)
+        
+    then
+        $gda.setCustomTxt02("TDPUT1");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326757' extends '327941' salience 670
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", cpyBeyNumber != null, cgpCode not matches "B.*", pdtCode in ("003400", "003500", "004300", "004400"), (orgTerm >= 366 && orgTerm <= 730))
+        
+    then
+        $gda.setCustomTxt02("TDP1U2");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+rule '326758' extends '327941' salience 660
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", cpyBeyNumber != null, cgpCode not matches "B.*", pdtCode in ("003400", "003500", "004300", "004400"), orgTerm > 730)
+        
+    then
+        $gda.setCustomTxt02("TDPOV2");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1628");
+        
+end
+
+

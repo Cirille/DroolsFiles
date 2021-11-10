@@ -1,0 +1,35 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334354'
+	when
+		$gda : GrlDetAmounts(hpePdtType == "LOAN" && hacAmtCl == "01" && actCode == "B0596000" && contingInd == "Y")
+	then
+        
+end
+
+
+
+
+
+rule '1614333' extends '334354' salience 170
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setSignFlipCode("[MM,LRR]");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5039");
+        
+end
+
+

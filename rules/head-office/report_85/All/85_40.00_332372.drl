@@ -1,0 +1,74 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332372'
+	when
+		$gda : GrlDetAmounts(dgsCd != null)
+	then
+        
+end
+
+
+
+
+
+rule '1160912' extends '332372' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "I.*")
+        
+    then
+        $gda.setCustomTxtHo20("006_PRIVATE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3622");
+        
+end
+
+rule '1160913' extends '332372' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy not matches "I.*")
+        
+    then
+        $gda.setCustomTxtHo20("005_CORPORATE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3622");
+        
+end
+
+rule '1160841' extends '332372' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, cgpCode == "P0045")
+        
+    then
+        $gda.setCustomTxtHo20("005_CORPORATE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3622");
+        
+end
+
+rule '1160842' extends '332372' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, cgpCode == "P0049")
+        
+    then
+        $gda.setCustomTxtHo20("006_PRIVATE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3622");
+        
+end
+
+

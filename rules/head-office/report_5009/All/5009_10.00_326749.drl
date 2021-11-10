@@ -1,0 +1,1504 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '326749'
+	when
+		$gpy : GrlPlYtd(hpnPlCl in ( "1000" , "2000" , "3000" , "4000" , "5000" ))
+	then
+        
+end
+
+
+
+
+
+rule '96414' extends '326749' salience 2640
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setMassLine("99.999");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '96366' extends '326749' salience 2630
+
+    when
+        
+        GrlPlYtd(this == $gpy, intInd == "N", actCode in ("I1199000", "I1411000", "I1412000"))
+        
+    then
+        $gpy.setMassLine("Brokerage & Advisory Fees paid");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '96371' extends '326749' salience 2620
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I0997000", "I0998000", "I1410000", "I1414000", "I1417000", "I9809000", "I9830000"))
+        
+    then
+        $gpy.setMassLine("Funds Transfer Fees paid");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '96378' extends '326749' salience 2610
+
+    when
+        
+        GrlPlYtd(this == $gpy, intInd == "N", actCode in ("I0205000", "I0216000", "I0220000", "I0223000", "I0224000", "I0226000", "I0227000", "I2748000"))
+        
+    then
+        $gpy.setMassLine("Investment Income");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '96386' extends '326749' salience 2600
+
+    when
+        
+        GrlPlYtd(this == $gpy, intInd == "N", actCode in ("I0209000", "I0214000"))
+        
+    then
+        $gpy.setMassLine("Management Fees received");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '96390' extends '326749' salience 2590
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I0193000", "I1183000", "I1187000", "I1191000", "I6982000"))
+        
+    then
+        $gpy.setMassLine("Other Commissions/Fees received");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '96392' extends '326749' salience 2580
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("E3091000", "E3151000", "E3152000", "E3153000", "E3158000", "E3160000", "E3341000", "E3949000", "E4151000", "I0212000", "I0225000", "I3156000", "I3155000", "I3948000", "I4148000", "I0219000"))
+        
+    then
+        $gpy.setMassLine("Other (Income)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '96396' extends '326749' salience 2570
+
+    when
+        
+        GrlPlYtd(this == $gpy, intInd == "N", actCode in ("I1193000", "I1194000", "I1196000"))
+        
+    then
+        $gpy.setMassLine("Other Securities Commissions received");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '96403' extends '326749' salience 2560
+
+    when
+        
+        GrlPlYtd(this == $gpy, (actCode matches "I0194.*" || actCode matches "I0218.*" || actCode matches "I0415.*" || actCode matches "I1521.*" || actCode matches "I2410.*" || actCode matches "I2411.*" || actCode matches "I2412.*" || actCode matches "I2413.*" || actCode matches "I2414.*" || actCode matches "I2415.*" || actCode matches "I2520.*" || actCode matches "I2521.*" || actCode matches "I2522.*" || actCode matches "I2523.*" || actCode matches "I2599.*" || actCode matches "I2600.*" || actCode matches "I3253.*" || actCode matches "I3284.*" || actCode matches "I3894.*" || actCode matches "I3897.*" || actCode matches "I4226.*"))
+        
+    then
+        $gpy.setMassLine("Other Result of Trading Portfolio");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '772328' extends '326749' salience 2550
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I0191000")
+        
+    then
+        $gpy.setMassLine("Capital Charge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '776774' extends '326749' salience 2540
+
+    when
+        
+        GrlPlYtd(this == $gpy, (actCode matches "I3169.*" || actCode matches "I3170.*" || actCode matches "I3171.*" || actCode matches "I3172.*" || actCode matches "I3173.*" || actCode matches "I3337.*" || actCode matches "I3338.*" || actCode matches "I3344.*" || actCode matches "I3347.*" || actCode matches "I3349.*" || actCode matches "I3898.*" || actCode matches "I3937.*" || actCode matches "I3938.*" || actCode matches "I3939.*" || actCode matches "I3940.*" || actCode matches "I4225.*" || actCode matches "I4449.*" || actCode matches "I4468.*" || actCode matches "I4889.*" || actCode matches "I4891.*" || actCode matches "I5320.*" || actCode matches "I3941.*" || actCode matches "I3336.*" || actCode matches "I3251.*" || actCode matches "I8310.*" || actCode matches "I8351.*" || actCode matches "I8352.*" || actCode matches "I8655.*" || actCode matches "I8656.*" || actCode matches "I8657.*"))
+        
+    then
+        $gpy.setMassLine("Other Valuation Result Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1019041' extends '326749' salience 2530
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I0206000", "I0221000", "I0222000", "I3174000", "I3175000", "I3252000", "I4027000", "I5198000", "I5199000", "I5200000", "I5201000", "I5202000"))
+        
+    then
+        $gpy.setMassLine("Realised gains and FV changes on investments (excl. IoS)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1148827' extends '326749' salience 2520
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I0189000")
+        
+    then
+        $gpy.setMassLine("Income Allocated BIS Capital");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1149864' extends '326749' salience 2510
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I3154000", "I3155000", "I3156000", "E3151000", "E3152000", "E3153000", "E3341000"))
+        
+    then
+        $gpy.setMassLine("Other Operational Lease Income");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1150688' extends '326749' salience 2500
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I8271000", "I8272000", "I8273000", "I8274000", "I8275000"))
+        
+    then
+        $gpy.setMassLine("CVA+DVA Adjustments Trading Portfolio");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1150689' extends '326749' salience 2490
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I4892000", "I4893000", "I4894000"))
+        
+    then
+        $gpy.setMassLine("CVA+DVA Adjustments Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1159221' extends '326749' salience 2480
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I8284000", "I8285000", "I8286000"))
+        
+    then
+        $gpy.setMassLine("Other (Income)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1182295' extends '326749' salience 2470
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I1198000")
+        
+    then
+        $gpy.setMassLine("Off Balance Fees paid");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1197115' extends '326749' salience 2460
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I8341000", "I8342000", "I8343000", "I8344000", "I8345000", "I8346000"))
+        
+    then
+        $gpy.setMassLine("Other Result of Trading Portfolio");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1197129' extends '326749' salience 2450
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I8347000", "I8348000"))
+        
+    then
+        $gpy.setMassLine("Other (Income)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1197132' extends '326749' salience 2440
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I8390000", "I8391000", "I8392000", "I8393000"))
+        
+    then
+        $gpy.setMassLine("Other (Income)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1468396' extends '326749' salience 2430
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I8547000", "I8550000", "I8551000", "I8554000", "I8555000", "I8556000", "I9805000", "I9808000", "I9825000", "I9827000"))
+        
+    then
+        $gpy.setMassLine("Other Commissions/Fees received");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1472295' extends '326749' salience 2420
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I8557000", "I8558000"))
+        
+    then
+        $gpy.setMassLine("Other Securities Commissions paid");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1472296' extends '326749' salience 2410
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I8548000", "I8549000"))
+        
+    then
+        $gpy.setMassLine("Management Fees received");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1487043' extends '326749' salience 2400
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I8338000")
+        
+    then
+        $gpy.setMassLine("CVA+DVA Adjustments Trading Portfolio");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1487044' extends '326749' salience 2390
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I3942000")
+        
+    then
+        $gpy.setMassLine("Other Valuation Result Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1530523' extends '326749' salience 2380
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I8573000", "I8574000", "I8575000", "I8576000", "I8577000", "I8578000"))
+        
+    then
+        $gpy.setMassLine("Other Result of Trading Portfolio");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1530524' extends '326749' salience 2370
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I8579000", "I8580000", "I8581000"))
+        
+    then
+        $gpy.setMassLine("CVA+DVA Adjustments Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1530525' extends '326749' salience 2360
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I8582000", "I8583000", "I8584000"))
+        
+    then
+        $gpy.setMassLine("CVA+DVA Adjustments Trading Portfolio");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1617340' extends '326749' salience 2350
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I8633000")
+        
+    then
+        $gpy.setMassLine("99.999");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1620386' extends '326749' salience 2340
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("E3161000", "E3905000", "E8242000", "E4032000", "I0372000"))
+        
+    then
+        $gpy.setMassLine("Impairments on Securities");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1655751' extends '326749' salience 2330
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I8665000")
+        
+    then
+        $gpy.setMassLine("Other Result of Trading Portfolio");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1655752' extends '326749' salience 2320
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I8666000")
+        
+    then
+        $gpy.setMassLine("Other Valuation Result Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1678542' extends '326749' salience 2310
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I8937000", "I8938000"))
+        
+    then
+        $gpy.setMassLine("Other (Income)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1690869' extends '326749' salience 2300
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I8952000")
+        
+    then
+        $gpy.setMassLine("Other (Income)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699829' extends '326749' salience 2290
+
+    when
+        
+        GrlPlYtd(this == $gpy, intInd == "N", actCode in ("I1185000", "I1189000", "I1190000", "I9803000", "I9804000"))
+        
+    then
+        $gpy.setMassLine("Brokerage & Advisory Fees received");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699832' extends '326749' salience 2280
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I1182000", "I1186000", "I1188000", "I1192000", "I1195000", "I9806000", "I9807000", "I9820000", "I9829000"))
+        
+    then
+        $gpy.setMassLine("Funds Transfer Fees received");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699833' extends '326749' salience 2270
+
+    when
+        
+        GrlPlYtd(this == $gpy, intInd == "N", actCode in ("I0208000", "I0213000"))
+        
+    then
+        $gpy.setMassLine("Management Fees paid");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699834' extends '326749' salience 2260
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I1184000")
+        
+    then
+        $gpy.setMassLine("Off Balance Fees received");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699835' extends '326749' salience 2250
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I8559000", "I8560000", "I9826000", "I9828000"))
+        
+    then
+        $gpy.setMassLine("Other Commissions/Fees paid");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699836' extends '326749' salience 2240
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I0192000", "I1197000", "I1409000", "I1413000", "I6981000"))
+        
+    then
+        $gpy.setMassLine("Other Commissions/Fees paid");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699837' extends '326749' salience 2230
+
+    when
+        
+        GrlPlYtd(this == $gpy, intInd == "N", actCode in ("I1415000", "I1416000", "I1418000"))
+        
+    then
+        $gpy.setMassLine("Other Securities Commissions paid");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699838' extends '326749' salience 2220
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I8552000", "I8553000"))
+        
+    then
+        $gpy.setMassLine("Trailer Fees received");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1703525' extends '326749' salience 2210
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9017000")
+        
+    then
+        $gpy.setMassLine("Other Result of Trading Portfolio");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1703526' extends '326749' salience 2200
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9015000")
+        
+    then
+        $gpy.setMassLine("Other Valuation Result Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1706502' extends '326749' salience 2190
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "E8636000")
+        
+    then
+        $gpy.setMassLine("Other Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1708049' extends '326749' salience 2180
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I6357000")
+        
+    then
+        $gpy.setMassLine("Other Valuation Result Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1749028' extends '326749' salience 2170
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I0043000")
+        
+    then
+        $gpy.setMassLine("Other Result of Trading Portfolio");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1749029' extends '326749' salience 2160
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I0623000")
+        
+    then
+        $gpy.setMassLine("Other Result of Trading Portfolio");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1749030' extends '326749' salience 2150
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I0048000")
+        
+    then
+        $gpy.setMassLine("Other Valuation Result Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1749031' extends '326749' salience 2140
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I1111000")
+        
+    then
+        $gpy.setMassLine("Other Valuation Result Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1769901' extends '326749' salience 2130
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I7611000")
+        
+    then
+        $gpy.setMassLine("Other Valuation Result Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1769902' extends '326749' salience 2120
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I7671000")
+        
+    then
+        $gpy.setMassLine("Interest External Received (Core)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1769903' extends '326749' salience 2110
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I7989000")
+        
+    then
+        $gpy.setMassLine("Investment Income");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1772607' extends '326749' salience 2100
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9752000")
+        
+    then
+        $gpy.setMassLine("ATM Fees received");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1772608' extends '326749' salience 2090
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9753000")
+        
+    then
+        $gpy.setMassLine("ATM Fees paid");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1772609' extends '326749' salience 2080
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9754000")
+        
+    then
+        $gpy.setMassLine("Interchange Fees received");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1772610' extends '326749' salience 2070
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9755000")
+        
+    then
+        $gpy.setMassLine("Interchange Fees paid");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1772611' extends '326749' salience 2060
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9756000")
+        
+    then
+        $gpy.setMassLine("Transactions/Payments Fees received");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1772612' extends '326749' salience 2050
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9757000")
+        
+    then
+        $gpy.setMassLine("Transactions/Payments Fees paid");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1772870' extends '326749' salience 2040
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I7612000")
+        
+    then
+        $gpy.setMassLine("Other Valuation Result Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1776198' extends '326749' salience 2030
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I9760000", "I9761000", "I9762000"))
+        
+    then
+        $gpy.setMassLine("Other Valuation Result Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1781425' extends '326749' salience 2020
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9767000")
+        
+    then
+        $gpy.setMassLine("Other Valuation Result Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1781429' extends '326749' salience 2010
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9793000")
+        
+    then
+        $gpy.setMassLine("Interest External Received (Core)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1781446' extends '326749' salience 2000
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I4270000")
+        
+    then
+        $gpy.setMassLine("Net Result Derecognition of Financial Assets at Amortised Cost");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1781448' extends '326749' salience 1990
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I4395000")
+        
+    then
+        $gpy.setMassLine("Net Result Derecognition of Financial Assets at Amortised Cost");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1802274' extends '326749' salience 1980
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9800000")
+        
+    then
+        $gpy.setMassLine("Other Result of Trading Portfolio");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1806044' extends '326749' salience 1970
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I9787000", "I9788000"))
+        
+    then
+        $gpy.setMassLine("Other Operational Lease Income");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1893582' extends '326749' salience 1960
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9801000")
+        
+    then
+        $gpy.setMassLine("Other Valuation Result Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1893583' extends '326749' salience 1950
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9816000")
+        
+    then
+        $gpy.setMassLine("Other Operational Lease Income");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1893584' extends '326749' salience 1940
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I9821000", "I9831000"))
+        
+    then
+        $gpy.setMassLine("Interest External Received (Core)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1893585' extends '326749' salience 1930
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9822000")
+        
+    then
+        $gpy.setMassLine("Other (Income)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1916347' extends '326749' salience 1920
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9823000")
+        
+    then
+        $gpy.setMassLine("Other Result of Trading Portfolio");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '96368' extends '326749' salience 1910
+
+    when
+        
+        GrlPlYtd(this == $gpy, intInd == "N", hsoPlSubcl == "2203", actCode == "I1415000")
+        
+    then
+        $gpy.setMassLine("Custody Fees paid");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '96377' extends '326749' salience 1900
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I0202000", "I2747000", "I3928000", "I3946000", "I3947000"), cpyBeyNumber == null)
+        
+    then
+        $gpy.setMassLine("Interest External Received (Non-performing)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1148639' extends '326749' salience 1890
+
+    when
+        
+        GrlPlYtd(this == $gpy, intInd == "N", hsoPlSubcl == "6709", actCode == "I0372000")
+        
+    then
+        $gpy.setMassLine("Impairments on Securities");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699831' extends '326749' salience 1880
+
+    when
+        
+        GrlPlYtd(this == $gpy, intInd == "N", hsoPlSubcl == "2203", actCode == "I1193000")
+        
+    then
+        $gpy.setMassLine("Custody Fees received");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699843' extends '326749' salience 1870
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I0143000", "I0195000", "I0196000", "I0197000", "I1332000", "I3919000", "I4224000", "I4406000", "I4407000", "I4408000", "I8234000", "I8630000", "I8632000"), cpyBeyNumber == null)
+        
+    then
+        $gpy.setMassLine("Interest External Paid (Core)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699844' extends '326749' salience 1860
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I0198000", "I0199000", "I0201000", "I1331000", "I3918000", "I4143000", "I4168000", "I4223000", "I4404000", "I4405000", "I7467000", "I7468000", "I7469000", "I8235000", "I8297000", "I8298000", "I8311000", "I8631000", "I8659000", "I8660000", "I9462000", "I9758000"), cpyBeyNumber == null)
+        
+    then
+        $gpy.setMassLine("Interest External Received (Core)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699845' extends '326749' salience 1850
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I0198000", "I0199000", "I0201000", "I3918000", "I3928000", "I3946000", "I3947000", "I4143000", "I4168000", "I4223000", "I4404000", "I4405000", "I7467000", "I7468000", "I7469000", "I8235000", "I8297000", "I8298000", "I8311000", "I8631000", "I8659000", "I8660000", "I9758000"), cpyBeyNumber != null)
+        
+    then
+        $gpy.setMassLine("Interest Internal Received (Reference Rate)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699846' extends '326749' salience 1840
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I0143000", "I0195000", "I0196000", "I0197000", "I3919000", "I4224000", "I4406000", "I4407000", "I4408000", "I8234000", "I8630000", "I8632000", "I9759000"), cpyBeyNumber != null)
+        
+    then
+        $gpy.setMassLine("Interest Internal Paid (Reference Rate)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699847' extends '326749' salience 1830
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I4875000", cpyBeyNumber == null)
+        
+    then
+        $gpy.setMassLine("Interest External Paid (Core)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699848' extends '326749' salience 1820
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I4875000", cpyBeyNumber != null)
+        
+    then
+        $gpy.setMassLine("Interest Internal Paid (Reference Rate)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1731044' extends '326749' salience 1810
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I0200000", "I3924000"), cpyBeyNumber == null)
+        
+    then
+        $gpy.setMassLine("Interest Income on Trading Portfolio (excl. Derivatives)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1731045' extends '326749' salience 1800
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I0200000", "I3924000"), cpyBeyNumber != null)
+        
+    then
+        $gpy.setMassLine("Interest Income on Trading Portfolio (excl. Derivatives)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1731046' extends '326749' salience 1790
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I3922000", "I3923000"), cpyBeyNumber == null)
+        
+    then
+        $gpy.setMassLine("Interest Expense on Trading Liabilities (excl. Derivatives)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1731047' extends '326749' salience 1780
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I3922000", "I3923000"), cpyBeyNumber != null)
+        
+    then
+        $gpy.setMassLine("Interest Expense on Trading Liabilities (excl. Derivatives)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1737203' extends '326749' salience 1770
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I0211000")
+        
+    then
+        $gpy.setMassLine("Interest Income on Other Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1737204' extends '326749' salience 1760
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I0210000")
+        
+    then
+        $gpy.setMassLine("Interest Expense on Other Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1746384' extends '326749' salience 1750
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I3920000", cpyBeyNumber != null)
+        
+    then
+        $gpy.setMassLine("Interest Income on Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1746385' extends '326749' salience 1740
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I3920000", cpyBeyNumber == null)
+        
+    then
+        $gpy.setMassLine("Interest Income on Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1746386' extends '326749' salience 1730
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I3921000", cpyBeyNumber == null)
+        
+    then
+        $gpy.setMassLine("Interest Expense on Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1746387' extends '326749' salience 1720
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I3921000", cpyBeyNumber != null)
+        
+    then
+        $gpy.setMassLine("Interest Expense on Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1773529' extends '326749' salience 1710
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I7671000", cpyBeyNumber != null)
+        
+    then
+        $gpy.setMassLine("Interest Internal Received (Reference Rate)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1776197' extends '326749' salience 1700
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9759000", cpyBeyNumber == null)
+        
+    then
+        $gpy.setMassLine("Interest External Paid (Core)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1781426' extends '326749' salience 1690
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9792000", cpyBeyNumber == null)
+        
+    then
+        $gpy.setMassLine("Interest External Paid (Core)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1781427' extends '326749' salience 1680
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9792000", cpyBeyNumber != null)
+        
+    then
+        $gpy.setMassLine("Interest Internal Paid (Reference Rate)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1781428' extends '326749' salience 1670
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9793000", cpyBeyNumber != null)
+        
+    then
+        $gpy.setMassLine("Interest Internal Received (Reference Rate)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1806043' extends '326749' salience 1660
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9774000", cpyBeyNumber == null)
+        
+    then
+        $gpy.setMassLine("Interest External Paid (Core)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '96429' extends '326749' salience 1650
+
+    when
+        
+        GrlPlYtd(this == $gpy, intInd == "Y", hsoPlSubcl in ("1102", "1106", "1109", "1111", "1114", "1126", "1128", "1130", "1135", "1707", "1201"), actCode == "x")
+        
+    then
+        $gpy.setMassLine("Interest Internal Paid (Reference Rate)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '98807' extends '326749' salience 1640
+
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "N", (hsoPlSubcl != "1999" && hsoPlSubcl not matches "2.*" && hsoPlSubcl not matches "3.*" && hsoPlSubcl not matches "4.*" && hsoPlSubcl not matches "5.*"), actCode == null)
+        
+    then
+        $gpy.setMassLine("Interest Internal Paid (Reference Rate)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1103137' extends '326749' salience 1630
+
+    when
+        
+        GrlPlYtd(this == $gpy, intInd == "Y", hsoPlSubcl in ("4304", "4305", "4318"), actCode == null, htyTradCat in ("01", "02"))
+        
+    then
+        $gpy.setMassLine("Other Result of Trading Portfolio");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1103138' extends '326749' salience 1620
+
+    when
+        
+        GrlPlYtd(this == $gpy, intInd == "Y", hsoPlSubcl in ("4304", "4305", "4318"), actCode == null, htyTradCat == "03")
+        
+    then
+        $gpy.setMassLine("Other Valuation Result Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1103158' extends '326749' salience 1610
+
+    when
+        
+        GrlPlYtd(this == $gpy, intInd == "Y", hsoPlSubcl in ("4331", "4337", "4338"), actCode == null)
+        
+    then
+        $gpy.setMassLine("Other Result of Trading Portfolio");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1122797' extends '326749' salience 1600
+
+    when
+        
+        GrlPlYtd(this == $gpy, intInd == "Y", hsoPlSubcl == "4202", actCode == null)
+        
+    then
+        $gpy.setMassLine("Other Result of Trading Portfolio");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699840' extends '326749' salience 1590
+
+    when
+        
+        GrlPlYtd(this == $gpy, hsoPlSubcl == "1305", actCode == "I0199000", cpyBeyNumber != null)
+        
+    then
+        $gpy.setMassLine("Interest Internal Received (Reference Rate)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699841' extends '326749' salience 1580
+
+    when
+        
+        GrlPlYtd(this == $gpy, hsoPlSubcl == "1305", actCode == "I0197000", cpyBeyNumber == null)
+        
+    then
+        $gpy.setMassLine("Interest External Paid (Core)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699842' extends '326749' salience 1570
+
+    when
+        
+        GrlPlYtd(this == $gpy, hsoPlSubcl == "1305", actCode == "I0197000", cpyBeyNumber != null)
+        
+    then
+        $gpy.setMassLine("Interest Internal Paid (Reference Rate)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1699851' extends '326749' salience 1560
+
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "Y", (hsoPlSubcl != "1999" && hsoPlSubcl not matches "2.*" && hsoPlSubcl not matches "3.*" && hsoPlSubcl not matches "4.*" && hsoPlSubcl not matches "5.*"), actCode == null)
+        
+    then
+        $gpy.setMassLine("Interest Internal Received (Reference Rate)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '2008062' extends '326749' salience 1550
+
+    when
+        
+        GrlPlYtd(this == $gpy, hsoPlSubcl == "4204", htyTradCat == "03")
+        
+    then
+        $gpy.setMassLine("Other Valuation Result Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1172562' extends '326749' salience 1540
+
+    when
+        
+        GrlPlYtd(this == $gpy, hsoPlSubcl == "1305", actCode == "I0199000", lseHlyRelId == "9120", cpyBeyNumber == null)
+        
+    then
+        $gpy.setMassLine("Interest External Received (Core)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1231720' extends '326749' salience 1530
+
+    when
+        
+        GrlPlYtd(this == $gpy, intInd == "Y", hsoPlSubcl in ("1140", "1141"), actCode == null, lseHlyRelId == "0204")
+        
+    then
+        $gpy.setMassLine("Other Result of Trading Portfolio");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '1707932' extends '326749' salience 1520
+
+    when
+        
+        GrlPlYtd(this == $gpy, lseHlyRelId in ("0231", "0231_LEND", "0231_TIPL", "9727", "9747"), ownUse14 == "FTP")
+        
+    then
+        $gpy.setMassLine("Interest Internal Received (FTP)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+rule '2007963' extends '326749' salience 1510
+
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "Y", hsoPlSubcl == "1404", actCode == "I9834000", cpyBeyNumber == null)
+        
+    then
+        $gpy.setMassLine("Interest External Received (Core)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1522");
+        
+end
+
+

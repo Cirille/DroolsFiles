@@ -1,0 +1,232 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332654'
+	when
+		$gda : GrlDetAmounts(( encumberedInd == "Y" || ( rteCode == "163" && actCode matches "A.*" ) || ( actCode == "A0027000" && cgpCode == "B0034" && ( pdtCode in ( "004200" , "014000" ) && rteCode in ( "138" , "139" , "140" , "141" ) ) ) ))
+		not GrlDetAmounts(this == $gda, ( hpePdtType == "REPO" && hacAmtCl != null && hacAmtCl not in ( "11" , "19" ) ));
+	then
+        
+end
+
+
+
+
+
+rule '1182312' extends '332654' salience 370
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setIlaapEncumbranceType("7.0");
+        $gda.setEncumberedInd({this.getEncumberedInd()});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3705");
+        
+end
+
+rule '1182047' extends '332654' salience 360
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "029000")
+        
+    then
+        $gda.setIlaapEncumbranceType("7.2");
+        $gda.setEncumberedInd({this.getEncumberedInd()});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3705");
+        
+end
+
+rule '1182048' extends '332654' salience 350
+
+    when
+        
+        GrlDetAmounts(this == $gda, encumberedInd == "Y", pdtCode matches "03.*")
+        
+    then
+        $gda.setIlaapEncumbranceType("7.3");
+        $gda.setEncumberedInd({this.getEncumberedInd()});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3705");
+        
+end
+
+rule '1184146' extends '332654' salience 340
+
+    when
+        
+        GrlDetAmounts(this == $gda, encumberedInd == "Y", pdtCode == "DUMMY5")
+        
+    then
+        $gda.setIlaapEncumbranceType("7.3.1");
+        $gda.setEncumberedInd({this.getEncumberedInd()});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3705");
+        
+end
+
+rule '1184147' extends '332654' salience 330
+
+    when
+        
+        GrlDetAmounts(this == $gda, encumberedInd == "Y", pdtCode == "DUMMY6")
+        
+    then
+        $gda.setIlaapEncumbranceType("7.3.2");
+        $gda.setEncumberedInd({this.getEncumberedInd()});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3705");
+        
+end
+
+rule '1184148' extends '332654' salience 320
+
+    when
+        
+        GrlDetAmounts(this == $gda, encumberedInd == "Y", pdtCode == "DUMMY7")
+        
+    then
+        $gda.setIlaapEncumbranceType("7.3.3");
+        $gda.setEncumberedInd({this.getEncumberedInd()});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3705");
+        
+end
+
+rule '1184154' extends '332654' salience 310
+
+    when
+        
+        GrlDetAmounts(this == $gda, encumberedInd == "Y", pdtCode == "DUMMY11")
+        
+    then
+        $gda.setIlaapEncumbranceType("7.6");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3705");
+        
+end
+
+rule '1182046' extends '332654' salience 300
+
+    when
+        
+        GrlDetAmounts(this == $gda, encumberedInd == "Y", cgpCode == "B0034")
+        
+    then
+        $gda.setIlaapEncumbranceType("7.1");
+        $gda.setEncumberedInd({this.getEncumberedInd()});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3705");
+        
+end
+
+rule '1184150' extends '332654' salience 290
+
+    when
+        
+        GrlDetAmounts(this == $gda, encumberedInd == "Y", pdtCode in ("027800", "027900"), cgpCode == "B0034", icInd != "Y")
+        
+    then
+        $gda.setIlaapEncumbranceType("7.4.1");
+        $gda.setEncumberedInd({this.getEncumberedInd()});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3705");
+        
+end
+
+rule '1184151' extends '332654' salience 280
+
+    when
+        
+        GrlDetAmounts(this == $gda, encumberedInd == "Y", pdtCode in ("027800", "027900"), cgpCode != "B0034", icInd != "Y")
+        
+    then
+        $gda.setIlaapEncumbranceType("7.4.2");
+        $gda.setEncumberedInd({this.getEncumberedInd()});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3705");
+        
+end
+
+rule '1184152' extends '332654' salience 270
+
+    when
+        
+        GrlDetAmounts(this == $gda, encumberedInd == "Y", pdtCode in ("027800", "027900"), cgpCode != "B0034", icInd == "Y")
+        
+    then
+        $gda.setIlaapEncumbranceType("7.4.3");
+        $gda.setEncumberedInd({this.getEncumberedInd()});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3705");
+        
+end
+
+rule '1184153' extends '332654' salience 260
+
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", actCode matches "A.*")
+        
+    then
+        $gda.setIlaapEncumbranceType("7.5");
+        $gda.setEncumberedInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3705");
+        
+end
+
+rule '1184203' extends '332654' salience 250
+
+    when
+        
+        GrlDetAmounts(this == $gda, encumberedInd == "Y", icInd != "Y", hacAmtCl in ("11", "19"), hpePdtType == "REPO")
+        
+    then
+        $gda.setIlaapEncumbranceType("7.4");
+        $gda.setEncumberedInd({this.getEncumberedInd()});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3705");
+        
+end
+
+rule '1264943' extends '332654' salience 240
+
+    when
+        
+        GrlDetAmounts(this == $gda, encumberedInd == "Y", icInd == "Y", hacAmtCl in ("11", "19"), hpePdtType == "REPO")
+        
+    then
+        $gda.setIlaapEncumbranceType("7.4.3");
+        $gda.setEncumberedInd({this.getEncumberedInd()});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3705");
+        
+end
+
+rule '1486934' extends '332654' salience 230
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("004200", "014000"), cgpCode == "B0034", rteCode in ("138", "139", "140", "141"), actCode == "A0027000")
+        
+    then
+        $gda.setIlaapEncumbranceType("7.6");
+        $gda.setEncumberedInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3705");
+        
+end
+
+

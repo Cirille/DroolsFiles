@@ -1,0 +1,1036 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '326458'
+	when
+		$gda : GrlDetAmounts(( hacAmtCl in ( "02" , "03" , "04" , "05" ) && ( lseId != null && lseId != null && lseId not in ( "9349" , "19165" , "19230" , "20684" , "20695" , "20698" ) ) ) || ( posGroupId in ( "10703" , "20601" , "20606" ) && hacAmtCl == "01" && lseId != null ))
+	then
+        
+end
+
+
+
+
+
+rule '92231' extends '326458' salience 1350
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt11("NOT FOUND seq 30");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '92230' extends '326458' salience 1340
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId in ("20301", "21201"))
+        
+    then
+        $gda.setCustomTxt11("20601");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '92233' extends '326458' salience 1330
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10703")
+        
+    then
+        $gda.setCustomTxt11("10703 ACCR INT RECEIVABLE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '92234' extends '326458' salience 1320
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "20601")
+        
+    then
+        $gda.setCustomTxt11("20601");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99029' extends '326458' salience 1310
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "FRNP")
+        
+    then
+        $gda.setCustomTxt11("10703");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '324146' extends '326458' salience 1300
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId in ("CDCP", "TRPP"))
+        
+    then
+        $gda.setCustomTxt11("10703 ACCR INT REC INT BOOKED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '781167' extends '326458' salience 1290
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "20606")
+        
+    then
+        $gda.setCustomTxt11("20606");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '92229' extends '326458' salience 1280
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId in ("10301", "10311", "10401", "10502", "10601", "10605", "11201"), nonPerfInd != "Y")
+        
+    then
+        $gda.setCustomTxt11("10703 ACCR INT RECEIVABLE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '92232' extends '326458' salience 1270
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId in ("10301", "10311", "10401", "10502", "10601", "10605", "11201"), nonPerfInd == "Y")
+        
+    then
+        $gda.setCustomTxt11("10703 ACCR INT NON-PERF LN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '92237' extends '326458' salience 1260
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId in ("20201", "20301", "20401", "20801", "20802", "21201"), hacAmtCl == "02")
+        
+    then
+        $gda.setCustomTxt11("20601 INTEREST SETTLED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '92238' extends '326458' salience 1250
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId in ("20201", "20301", "20401", "20801", "20802", "21201"), hacAmtCl == "03")
+        
+    then
+        $gda.setCustomTxt11("20601 INTEREST ACCRUED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '92239' extends '326458' salience 1240
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10703", prodSubTypeLoc == "AINN")
+        
+    then
+        $gda.setCustomTxt11("10703 ACCR INT NON-PERF LN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '92369' extends '326458' salience 1230
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10000", prodSubSubTypeLoc in ("DGI", "DGIX"))
+        
+    then
+        $gda.setCustomTxt11("DGI/DGIX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '92370' extends '326458' salience 1220
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10000", prodSubSubTypeLoc in ("DTI", "DTIX"))
+        
+    then
+        $gda.setCustomTxt11("DTI/DTIX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '92398' extends '326458' salience 1210
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10401", hacAmtCl == "05")
+        
+    then
+        $gda.setCustomTxt11("20606");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '96255' extends '326458' salience 1200
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "20010", prodSubSubTypeLoc in ("DTI", "DTIX"))
+        
+    then
+        $gda.setCustomTxt11("DTI/DTIX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99149' extends '326458' salience 1190
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "20301", prodSubSubTypeLoc in ("DTS", "DTSX"))
+        
+    then
+        $gda.setCustomTxt11("20601 DTSX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99270' extends '326458' salience 1180
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "BNDP", prodSubTypeLoc == "BNDP")
+        
+    then
+        $gda.setCustomTxt11("10703 ACCR INT REC INT BOOKED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99271' extends '326458' salience 1170
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "BNDP", prodSubTypeLoc == "TRPP")
+        
+    then
+        $gda.setCustomTxt11("CM BOND BNDP ACCR INT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '824587' extends '326458' salience 1160
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "20606", prodSubTypeLoc == "OPBS")
+        
+    then
+        $gda.setCustomTxt11("20606 E.M. OPT SLD BONDS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '826354' extends '326458' salience 1150
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY SWAP", hacAmtCl == "03", prodSubSubTypeLoc == "IRSG")
+        
+    then
+        $gda.setCustomTxt11("INTEREST CCYSWAPG NET");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '826355' extends '326458' salience 1140
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY SWAP", hacAmtCl == "03", prodSubSubTypeLoc == "IRST")
+        
+    then
+        $gda.setCustomTxt11("INTEREST CCYSWAPT NET");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '92235' extends '326458' salience 1130
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId in ("10301", "10302", "10311", "10502", "10601", "10605", "11201"), nonPerfInd != "Y", hacAmtCl == "02")
+        
+    then
+        $gda.setCustomTxt11("10703 INTEREST SETTLED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '92236' extends '326458' salience 1120
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId in ("10301", "10302", "10303", "10311", "10502", "10601", "10605", "11201"), nonPerfInd != "Y", hacAmtCl == "03")
+        
+    then
+        $gda.setCustomTxt11("10703 INTEREST ACCRUED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '92240' extends '326458' salience 1110
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId in ("10301", "10302", "10311", "10502", "10601", "10605", "11201"), nonPerfInd == "Y", hacAmtCl == "02")
+        
+    then
+        $gda.setCustomTxt11("10703 INT SETTLED NON-PERF LN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '92241' extends '326458' salience 1100
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId in ("10301", "10302", "10311", "10502", "10601", "10605", "11201"), nonPerfInd == "Y", hacAmtCl == "03")
+        
+    then
+        $gda.setCustomTxt11("10703 ACCR INT NON-PERF LN ACC");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '96249' extends '326458' salience 1090
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10211", hacAmtCl == "05", prodSubSubTypeLoc == "TRNT")
+        
+    then
+        $gda.setCustomTxt11("10211 TREAS PAPER TRADE DISC");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '96250' extends '326458' salience 1080
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10511", hacAmtCl == "05", prodSubSubTypeLoc in ("BONT", "FRNT"))
+        
+    then
+        $gda.setCustomTxt11("10511 BONDS TRADING");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '96251' extends '326458' salience 1070
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10511", hacAmtCl == "04", prodSubSubTypeLoc in ("BONT", "FRNT"))
+        
+    then
+        $gda.setCustomTxt11("10511 BONDS TRADING");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '96252' extends '326458' salience 1060
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10511", hacAmtCl == "03", prodSubSubTypeLoc in ("BONT", "FRNT"))
+        
+    then
+        $gda.setCustomTxt11("10511 BONDS TRADING");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '96253' extends '326458' salience 1050
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10511", hacAmtCl == "02", prodSubSubTypeLoc in ("BONT", "FRNT"))
+        
+    then
+        $gda.setCustomTxt11("10511 BONDS TRADING");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99042' extends '326458' salience 1040
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10211", hacAmtCl == "04", prodSubSubTypeLoc == "TRNT")
+        
+    then
+        $gda.setCustomTxt11("10211 TREAS PAPER TRADE PREM");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99043' extends '326458' salience 1030
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10211", hacAmtCl == "03", prodSubSubTypeLoc == "TRNT")
+        
+    then
+        $gda.setCustomTxt11("10211 TREAS PAPER TR INT ACCR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99044' extends '326458' salience 1020
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10211", hacAmtCl == "02", prodSubSubTypeLoc == "TRNT")
+        
+    then
+        $gda.setCustomTxt11("10211 TREAS PAPER TR INT SETT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99150' extends '326458' salience 1010
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "20301", hacAmtCl == "02", prodSubSubTypeLoc in ("DTS", "DTSX"))
+        
+    then
+        $gda.setCustomTxt11("20601 INTEREST SETTLED DTSX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99151' extends '326458' salience 1000
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "20301", hacAmtCl == "03", prodSubSubTypeLoc in ("DTS", "DTSX"))
+        
+    then
+        $gda.setCustomTxt11("20601 INTEREST ACCRUED DTSX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99152' extends '326458' salience 990
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10301", nonPerfInd != "Y", prodSubSubTypeLoc in ("DGS", "DGSX"))
+        
+    then
+        $gda.setCustomTxt11("10703 ACCR INT RECEIVABLE DGSX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99183' extends '326458' salience 980
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10401", hacAmtCl == "05", prodSubSubTypeLoc == "PRNT")
+        
+    then
+        $gda.setCustomTxt11("20606 DISCOUNT RCV OTHER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99213' extends '326458' salience 970
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10401", hacAmtCl == "05", prodSubSubTypeLoc == "CPP")
+        
+    then
+        $gda.setCustomTxt11("20605 DISCOUNT RCV INV CPP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99214' extends '326458' salience 960
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10302", hacAmtCl == "05", prodSubSubTypeLoc == "CDSI")
+        
+    then
+        $gda.setCustomTxt11("20605 DISCOUNT RCV INV CDSI");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99215' extends '326458' salience 950
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10502", hacAmtCl == "05", prodSubSubTypeLoc == "FRNI")
+        
+    then
+        $gda.setCustomTxt11("20605 DISCOUNT RCV INV FRNI");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99217' extends '326458' salience 940
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10401", hacAmtCl == "05", prodSubSubTypeLoc == "ACCP")
+        
+    then
+        $gda.setCustomTxt11("20606 DISCOUNT RCV OTHER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99218' extends '326458' salience 930
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10401", hacAmtCl == "05", prodSubSubTypeLoc in ("BILL", "BILLD"))
+        
+    then
+        $gda.setCustomTxt11("20606 DISCOUNT RCV OTHER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99219' extends '326458' salience 920
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "42201", hacAmtCl == "04", prodSubSubTypeLoc == "ICFG")
+        
+    then
+        $gda.setCustomTxt11("OFF BAL 42201 PREMIUM");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99220' extends '326458' salience 910
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "32201", hacAmtCl == "04", prodSubSubTypeLoc == "ICFT")
+        
+    then
+        $gda.setCustomTxt11("OFF BAL 32201");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '324012' extends '326458' salience 900
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "20401", hacAmtCl == "05", prodSubSubTypeLoc == "CPI")
+        
+    then
+        $gda.setCustomTxt11("10703 DISCOUNT GIVEN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '324148' extends '326458' salience 890
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10502", hacAmtCl == "05", prodSubSubTypeLoc == "TRBI")
+        
+    then
+        $gda.setCustomTxt11("20605 DISCOUNT RCV INVESTMENT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '326927' extends '326458' salience 880
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10401", hacAmtCl == "05", prodSubSubTypeLoc == "OWNA")
+        
+    then
+        $gda.setCustomTxt11("20606 DISCOUNT RCV OTHER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '777417' extends '326458' salience 870
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10502", hacAmtCl == "04", prodSubSubTypeLoc == "TRNI")
+        
+    then
+        $gda.setCustomTxt11("10707 PREM PAID INV PORTF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '824748' extends '326458' salience 860
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "19000", hacAmtCl == "03", prodSubSubTypeLoc == "UCA")
+        
+    then
+        $gda.setCustomTxt11("10703 INTEREST ACCRUED UCA");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '824749' extends '326458' salience 850
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "19000", hacAmtCl == "02", prodSubSubTypeLoc == "UCA")
+        
+    then
+        $gda.setCustomTxt11("10703 INTEREST SETTLED UCA");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '824750' extends '326458' salience 840
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "19000", hacAmtCl == "05", prodSubSubTypeLoc == "UCA")
+        
+    then
+        $gda.setCustomTxt11("20605 DISCOUNT RCV INVESTM UCA");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '824751' extends '326458' salience 830
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "29000", hacAmtCl == "02", prodSubSubTypeLoc == "UCL")
+        
+    then
+        $gda.setCustomTxt11("20601 INTEREST SETTLED UCL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '824752' extends '326458' salience 820
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "29000", hacAmtCl == "03", prodSubSubTypeLoc == "UCL")
+        
+    then
+        $gda.setCustomTxt11("20601 INTEREST ACCRUED UCL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '824753' extends '326458' salience 810
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "29000", hacAmtCl == "05", prodSubSubTypeLoc == "UCL")
+        
+    then
+        $gda.setCustomTxt11("10703 DISCOUNT GIVEN UCL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '824937' extends '326458' salience 800
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "BNDP", hacAmtCl == "04", prodSubTypeLoc == "BNDP")
+        
+    then
+        $gda.setCustomTxt11("CM BOND BNDP PREMIUM");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '824938' extends '326458' salience 790
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "BNDP", hacAmtCl == "05", prodSubTypeLoc == "BNDP")
+        
+    then
+        $gda.setCustomTxt11("CM BOND BNDP DISCOUNT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '826352' extends '326458' salience 780
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "40102", hacAmtCl == "04", prodSubSubTypeLoc == "FXOT")
+        
+    then
+        $gda.setCustomTxt11("OFF BAL 40102 PREMIUM");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '826353' extends '326458' salience 770
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "30102", hacAmtCl == "04", prodSubSubTypeLoc == "FXOG")
+        
+    then
+        $gda.setCustomTxt11("OFF BAL 30102 PREMIUM");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '1108784' extends '326458' salience 760
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY OPT", hacAmtCl == "04", prodSubSubTypeLoc in ("FXOB", "FXOS"))
+        
+    then
+        $gda.setCustomTxt11("NTBR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '92366' extends '326458' salience 750
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType in ("IRS", "CCY SWAP"), hacAmtCl == "03", prodSubSubTypeLoc == "IRST")
+        
+    then
+        $gda.setCustomTxt11("10703 INTEREST IRST NET");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '97675' extends '326458' salience 740
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "21101", hacAmtCl == "04", prodSubTypeLoc == "SESS", prodSubSubTypeLoc == "SECS")
+        
+    then
+        $gda.setCustomTxt11("20606 PREMIUM RECEIVED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '97676' extends '326458' salience 730
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "21101", hacAmtCl == "05", prodSubTypeLoc == "SESS", prodSubSubTypeLoc == "SECS")
+        
+    then
+        $gda.setCustomTxt11("20605 DISCOUNT RCV INVESTM");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '97677' extends '326458' salience 720
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "21101", hacAmtCl == "02", prodSubTypeLoc == "SESS", prodSubSubTypeLoc == "SECS")
+        
+    then
+        $gda.setCustomTxt11("20601 INTEREST SETTLED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '97678' extends '326458' salience 710
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "21101", hacAmtCl == "03", prodSubTypeLoc == "SESS", prodSubSubTypeLoc == "SECS")
+        
+    then
+        $gda.setCustomTxt11("20601 INTEREST ACCRUED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '98060' extends '326458' salience 700
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10502", hacAmtCl == "04", prodSubTypeLoc == "BOSI", prodSubSubTypeLoc == "BONI")
+        
+    then
+        $gda.setCustomTxt11("10707 PREM PAID INV PORTF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '98061' extends '326458' salience 690
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10502", hacAmtCl == "05", prodSubTypeLoc == "BOSI", prodSubSubTypeLoc == "BONI")
+        
+    then
+        $gda.setCustomTxt11("10703 DISCOUNT GIVEN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99153' extends '326458' salience 680
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10301", nonPerfInd != "Y", hacAmtCl == "02", prodSubSubTypeLoc in ("DGS", "DGSX"))
+        
+    then
+        $gda.setCustomTxt11("10703 INTEREST SETTLED DGSX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99154' extends '326458' salience 670
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10301", nonPerfInd != "Y", hacAmtCl == "03", prodSubSubTypeLoc in ("DGS", "DGSX"))
+        
+    then
+        $gda.setCustomTxt11("10703 INTEREST ACCRUED DGSX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '99228' extends '326458' salience 660
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType in ("IRS", "CCY SWAP"), hacAmtCl == "03", prodSubSubTypeLoc == "IRSG")
+        
+    then
+        $gda.setCustomTxt11("10703 INTEREST IRSG NET");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '777869' extends '326458' salience 650
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10502", hacAmtCl == "03", prodSubSubTypeLoc == "TRNI", lseHlyRelId in ("0768", "9117"))
+        
+    then
+        $gda.setCustomTxt11("10502 TREAS PAPER INV INT ACCR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '777870' extends '326458' salience 640
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10502", hacAmtCl == "02", prodSubSubTypeLoc == "TRNI", lseHlyRelId in ("0768", "9117"))
+        
+    then
+        $gda.setCustomTxt11("10502 TREAS PAPER INV INT SETT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '824595' extends '326458' salience 630
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10502", hacAmtCl == "03", prodSubSubTypeLoc == "TRPI", lseHlyRelId == "9120")
+        
+    then
+        $gda.setCustomTxt11("10502 TREAS PAPER INV INT ACCR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '824596' extends '326458' salience 620
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10502", hacAmtCl == "02", prodSubSubTypeLoc == "TRPI", lseHlyRelId == "9120")
+        
+    then
+        $gda.setCustomTxt11("10502 TREAS PAPER INV INT SETT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '826351' extends '326458' salience 610
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "IRS", hacAmtCl == "03", prodSubSubTypeLoc == "IRSGX")
+        
+    then
+        $gda.setCustomTxt11("10703 ACCR INT REC IRSGX AMT CL 03");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '1032017' extends '326458' salience 600
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "IRS", hacAmtCl == "03", prodSubSubTypeLoc == "IRSTX")
+        
+    then
+        $gda.setCustomTxt11("10703 ACCR INT REC IRSTX AMT CL 03");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '1119632' extends '326458' salience 590
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10201", nonPerfInd != "Y", hacAmtCl == "03", prodSubSubTypeLoc == "DGC")
+        
+    then
+        $gda.setCustomTxt11("10703 INTEREST ACCRUED DGC");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+rule '324147' extends '326458' salience 580
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10502", hacAmtCl == "05", prodSubTypeLoc == "BOSI", prodSubSubTypeLoc == "BONI", lseHlyRelId == "0281")
+        
+    then
+        $gda.setCustomTxt11("20605 DISCOUNT RCV INVESTMENT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1468");
+        
+end
+
+

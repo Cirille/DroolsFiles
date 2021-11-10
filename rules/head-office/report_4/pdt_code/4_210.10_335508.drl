@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335508'
+	when
+		$gda : GrlDetAmounts(hpePdtType == "REPO" && hacAmtCl in ( "01" , "02" , "03" , "12" , "16" ) && intInd == "N" && contingInd == "N" && actCode != null)
+	then
+        
+end
+
+
+
+
+
+rule '1708298' extends '335508' salience 33310
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setPdtCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5884");
+        
+end
+
+rule '1708297' extends '335508' salience 33300
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "REPO", repoInd == "N")
+        
+    then
+        $gda.setPdtCode("027900");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5884");
+        
+end
+
+rule '1708299' extends '335508' salience 33290
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "REPO", repoInd == "Y")
+        
+    then
+        $gda.setPdtCode("027800");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5884");
+        
+end
+
+

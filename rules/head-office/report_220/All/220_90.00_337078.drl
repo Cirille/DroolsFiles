@@ -1,0 +1,40 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '337078'
+	when
+		$gda : GrlDetAmounts(ebaProduct in ( "Deposits. Repurchase agreements" , "Loans and advances. Reverse repurchase loans" , "Security legs. Repo" , "Security legs. Reverse Repo" , "Security legs. CLS Lending" , "Security legs. SBL Stock Lending" , "Security legs. SBL Stock Borrowing" , "Security legs. CLS Borrowing" ))
+	then
+        
+end
+
+
+
+
+
+rule '1781486' extends '337078' salience 10
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxtHo51(Warning: selecting from goe_v_isin_isin_vw: data will not be available in source topic.
+ full statement: {((case when sel_tab.eba_product in ('Deposits. Repurchase agreements','Loans and advances. Reverse repurchase loans','Security legs. Repo','Security legs. Reverse Repo','Security legs. CLS Lending','Security legs. SBL Stock Lending','Security legs. SBL Stock Borrowing','Security legs. CLS Borrowing') and sel_tab.isin_cd is not null
+   then  (ceil(days_between((select max(fir.end_date)
+                          from goe_v_isin_isin_vw  fir where fir.isin_cd = sel_tab.isin_cd)
+                              ,sel_tab.issue_date)))
+                end   ))});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7135");
+        
+end
+
+

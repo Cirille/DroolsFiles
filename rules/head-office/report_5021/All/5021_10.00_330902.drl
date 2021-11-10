@@ -1,0 +1,74 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '330902'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1655765' extends '330902' salience 40
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLocMassLine("99.999");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2588");
+        
+end
+
+rule '1655766' extends '330902' salience 30
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLocMassLine(massLine );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2588");
+        
+end
+
+rule '1678661' extends '330902' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == null, repAssetInd == "Y")
+        
+    then
+        $gda.setLocMassLine("Assets Intracompany");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2588");
+        
+end
+
+rule '1678662' extends '330902' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == null, repAssetInd == "N")
+        
+    then
+        $gda.setLocMassLine("Liabilities Intracompany");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2588");
+        
+end
+
+

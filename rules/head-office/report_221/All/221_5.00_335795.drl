@@ -1,0 +1,35 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335795'
+	when
+		$gda : GrlDetAmounts(actCode in ( "A8808000" , "A8809000" , "A8810000" , "A9222000" , "A9223000" , "A9224000" , "A9225000" , "A9226000" , "A9227000" , "A9228000" , "A9229000" , "A9230000" , "A9231000" , "A9232000" , "A9233000" , "A9234000" ) && cgpCode not matches "B.*")
+	then
+        
+end
+
+
+
+
+
+rule '1740230' extends '335795' salience 200
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setSignFlipCode("[SF3]");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6099");
+        
+end
+
+

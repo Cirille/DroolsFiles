@@ -1,0 +1,282 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331719'
+	when
+		$gda : GrlDetAmounts(massLine != "99.999")
+	then
+        
+end
+
+
+
+
+
+rule '1111116' extends '331719' salience 200
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setMisRarocLine(substr (massLine , 1 , 50 ) );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148731' extends '331719' salience 190
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Trading Securities")
+        
+    then
+        $gda.setMisRarocLine("Trading Securities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148732' extends '331719' salience 180
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Trading Derivatives")
+        
+    then
+        $gda.setMisRarocLine("Trading Derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148741' extends '331719' salience 170
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Non-trading derivatives")
+        
+    then
+        $gda.setMisRarocLine("Non-trading derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148743' extends '331719' salience 160
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Assets held for sale")
+        
+    then
+        $gda.setMisRarocLine("Assets held for sale");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148745' extends '331719' salience 150
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine in ("Total Assets Intercompany excl Intra", "Total Assets Intracompany"))
+        
+    then
+        $gda.setMisRarocLine("Total Assets Intercompany");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148760' extends '331719' salience 140
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setMisRarocLine("Trading derivatives (liabilities)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148761' extends '331719' salience 130
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setMisRarocLine("Non-trading derivatives (liabilities)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148763' extends '331719' salience 120
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Liabilities held for sale")
+        
+    then
+        $gda.setMisRarocLine("Liabilities held for sale");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148765' extends '331719' salience 110
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine in ("Total Liabilities Intercompany excl Intra", "Total Liabilities Intracompany"))
+        
+    then
+        $gda.setMisRarocLine("Total Liabilities Intercompany");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148766' extends '331719' salience 100
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine in ("Average Outstandings (incl Intercompany)", "Average Outstandings (External)", "Average Outstandings"))
+        
+    then
+        $gda.setMisRarocLine("Average Outstandings Bank (incl Intercompany)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148767' extends '331719' salience 90
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Discounted Bills")
+        
+    then
+        $gda.setMisRarocLine("Discounted Bills");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148768' extends '331719' salience 80
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Guarantees")
+        
+    then
+        $gda.setMisRarocLine("Guarantees");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148769' extends '331719' salience 70
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Irrevocable Letters of Credit")
+        
+    then
+        $gda.setMisRarocLine("Irrevocable Letters of Credit");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148776' extends '331719' salience 60
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine in ("Lending Assests", "Lending Assets Netting Effect"))
+        
+    then
+        $gda.setMisRarocLine("Lending Assets Netting Effect");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148778' extends '331719' salience 50
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine in ("Funds Entrusted", "Funds Entrusted Netting Effect"))
+        
+    then
+        $gda.setMisRarocLine("Funds Entrusted Netting Effect");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148781' extends '331719' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine in ("Permanent Headcount", "Temporary Headcount", "FTEs Internal - before Allocations"))
+        
+    then
+        $gda.setMisRarocLine("FTEs Internal - before Allocations");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148782' extends '331719' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "FTEs Internal - Allocations")
+        
+    then
+        $gda.setMisRarocLine("FTEs Internal - Allocations");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148783' extends '331719' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "FTEs External - before Allocations")
+        
+    then
+        $gda.setMisRarocLine("FTEs External - before Allocations");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+rule '1148784' extends '331719' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "FTEs External - Allocations")
+        
+    then
+        $gda.setMisRarocLine("FTEs External - Allocations");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3213");
+        
+end
+
+

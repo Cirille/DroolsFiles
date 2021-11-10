@@ -1,0 +1,45 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+global com.ing.gfrs.logical.apis.GreVPleBeyReyDrlLogicalApi greVPleBeyReyDrlLogicalApi;
+
+dialect  "mvel"
+
+
+rule '335601'
+	when
+		$gpy : GrlPlYtd( ldeDeptCd != null && nvl ( status , "X" ) not in ('RVD','RVL') )
+	then
+end
+
+
+rule '1714389-1' extends '335601' salience 26440
+
+    when
+
+        /*WARNING: this rule will always be called, since it has no conditions*/
+
+    then
+        $gpy.setErrorInd("Y");
+
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5960");
+
+end
+
+
+rule '1714389-2' extends '335601' salience 26430
+
+    when
+
+        eval(greVPleBeyReyDrlLogicalApi.existsRecord($gpy.getLdeDeptCd(),$gpy.getLseHlyRelId()) == true)
+
+    then
+        $gpy.setSmnBeyNumber(greVPleBeyReyDrlLogicalApi.getBeyNumber($gpy.getLdeDeptCd(),$gpy.getLseHlyRelId()));
+        $gpy.setSmnReyCode(greVPleBeyReyDrlLogicalApi.getReyCode($gpy.getLdeDeptCd(),$gpy.getLseHlyRelId()));
+
+        $gpy.setErrorInd("N");
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5960");
+
+end
+

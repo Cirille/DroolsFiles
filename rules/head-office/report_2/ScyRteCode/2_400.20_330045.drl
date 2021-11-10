@@ -1,0 +1,68 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '330045'
+	when
+		$gda : GrlDetAmounts(scyActCode == "B0610000" && icInd == "N")
+	then
+end
+
+
+rule '777602' extends '330045' salience 4190
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy not matches "B.*")
+        
+    then
+        $gda.setScyRteCode("018");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1930");
+        
+end
+
+rule '777603' extends '330045' salience 4180
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "B.*")
+        
+    then
+        $gda.setScyRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1930");
+        
+end
+
+rule '1231769' extends '330045' salience 4170
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1004740() == "one_year_or_less", hzeZoneCtryCov == "B", hceCovType in ("2005", "2008", "2011", "2021"))
+        
+    then
+        $gda.setScyRteCode("048");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1930");
+        
+end
+
+rule '1231768' extends '330045' salience 4160
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1004740() == "one_year_or_less", hzeZoneCtryCov == "B", covRelType in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BMOR", "BSPV"), hceCovType in ("2024", "2030"))
+        
+    then
+        $gda.setScyRteCode("048");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1930");
+        
+end
+
+

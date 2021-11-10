@@ -1,0 +1,36 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332721'
+	when
+		$gda : GrlDetAmounts(isinCd != null)
+	then
+        
+end
+
+
+
+
+
+rule '1186638' extends '332721' salience 450
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomNumHo30(Warning: selecting from cia_owner.goe_isin_isin_gmdb_acm: data will not be available in source topic.
+ full statement: {(select max(to_number(best_price)) keep (dense_rank last order by snap_date asc) from cia_owner.goe_isin_isin_gmdb_acm gv where isin_cd = gv.isin and best_price <> 'N/A')});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3729");
+        
+end
+
+

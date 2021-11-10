@@ -1,0 +1,37 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+global com.ing.gfrs.logical.apis.ChoCleCapiPackageLogicalApi choCleCapiPackageLogicalApi;
+global com.ing.gfrs.logical.apis.ChoEreCapiPackageLogicalApi choEreCapiPackageLogicalApi;
+
+dialect  "mvel"
+
+
+
+rule '1714387' salience 60
+no-loop
+    when
+        
+        $gpy : GrlPlYtd( getCase0_1714388() == "NULL", !isNaN(choEreCapiPackageLogicalApi.getMidtermRate ($gpy.getPrdId() , $gpy.getHcuCcyCdRep() , "EUR" , $gpy.getLdrCode())))
+        
+    then
+        $gpy.setDetAmtEuro(choEreCapiPackageLogicalApi.getMidtermRate ($gpy.getPrdId() , $gpy.getHcuCcyCdRep() , "EUR" , $gpy.getLdrCode() ) * $gpy.getDetAmtRepCcy());
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5959");
+        
+end
+
+rule '1714388' salience 50
+no-loop
+    when
+        $gpy : GrlPlYtd(getCase0_1714388() == "NOT_NULL", !isNaN(choCleCapiPackageLogicalApi.getDefRepEuro($gpy.getSmnBeyNumber(),$gpy.getActCode(),1.0,$gpy.getHcuCcyCdRep() ,$gpy.getPrdId(),"N", $gpy.getLdrCode())))
+        
+    then
+        $gpy.setDetAmtEuro(choCleCapiPackageLogicalApi.getDefRepEuro($gpy.getSmnBeyNumber() ,  $gpy.getActCode() , 1.0,$gpy.getHcuCcyCdRep() ,$gpy.getPrdId()  , "N", $gpy.getLdrCode() ) * $gpy.getDetAmtRepCcy() );
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5959");
+        
+end
+
+

@@ -1,0 +1,191 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336677'
+	when
+		$gda : GrlDetAmounts(hpePdtType in ( "LOAN" , "MARGIN FINANCE" , "FACTORING" , "LEASING" ) && intInd == "N" && hacAmtCl in ( "02" , "03" ))
+	then
+        
+end
+
+
+
+
+
+rule '1767128' extends '336677' salience 50470
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setActCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6862");
+        
+end
+
+rule '1767121' extends '336677' salience 50460
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", contingInd == "N", htyTradCat == "03")
+        
+    then
+        $gda.setActCode("L0106000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6862");
+        
+end
+
+rule '1767127' extends '336677' salience 50450
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", contingInd == "N", htyTradCat in ("01", "02"))
+        
+    then
+        $gda.setActCode("L0111000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6862");
+        
+end
+
+rule '1767115' extends '336677' salience 50440
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", contingInd == "N", htyTradCat == "03", volTradeInd == "N", hedgeInd == "N")
+        
+    then
+        $gda.setActCode("A0081000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6862");
+        
+end
+
+rule '1767116' extends '336677' salience 50430
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", contingInd == "N", htyTradCat == "03", himIfrs9MeasCl == "FVPL", volTradeInd == "N", hedgeInd == "N")
+        
+    then
+        $gda.setActCode("A0104000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6862");
+        
+end
+
+rule '1767118' extends '336677' salience 50420
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", contingInd == "N", htyTradCat in ("01", "02"), volTradeInd == "N", hedgeInd == "N")
+        
+    then
+        $gda.setActCode("A0082000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6862");
+        
+end
+
+rule '1767119' extends '336677' salience 50410
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", contingInd == "N", htyTradCat == "03", volTradeInd == "Y", hedgeInd == "N")
+        
+    then
+        $gda.setActCode("A0090000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6862");
+        
+end
+
+rule '1767120' extends '336677' salience 50400
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", contingInd == "N", htyTradCat == "03", volTradeInd == "N", hedgeInd == "Y")
+        
+    then
+        $gda.setActCode("A0093000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6862");
+        
+end
+
+rule '1767125' extends '336677' salience 50390
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", contingInd == "N", htyTradCat == "03", volTradeInd == "N", hedgeInd == "Y")
+        
+    then
+        $gda.setActCode("L0118000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6862");
+        
+end
+
+rule '1767122' extends '336677' salience 50380
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", contingInd == "N", htyTradCat == "03", volTradeInd == "N", hedgeInd == "N", suborInd == "Y")
+        
+    then
+        $gda.setActCode("L0110000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6862");
+        
+end
+
+rule '1767123' extends '336677' salience 50370
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", contingInd == "N", htyTradCat == "03", volTradeInd == "Y", hedgeInd == "N", suborInd == "N")
+        
+    then
+        $gda.setActCode("L0113000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6862");
+        
+end
+
+rule '1767124' extends '336677' salience 50360
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", contingInd == "N", htyTradCat == "03", volTradeInd == "Y", hedgeInd == "N", suborInd == "Y")
+        
+    then
+        $gda.setActCode("L0117000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6862");
+        
+end
+
+rule '1767126' extends '336677' salience 50350
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", contingInd == "N", htyTradCat == "03", volTradeInd == "N", hedgeInd == "Y", suborInd == "Y")
+        
+    then
+        $gda.setActCode("L0119000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6862");
+        
+end
+
+

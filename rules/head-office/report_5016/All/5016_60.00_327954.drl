@@ -1,0 +1,152 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '327954'
+	when
+		$gda : GrlDetAmounts(actCode matches "A.*")
+	then
+        
+end
+
+
+
+
+
+rule '327232' extends '327954' salience 100
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt04("99.999");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1644");
+        
+end
+
+rule '327228' extends '327954' salience 90
+
+    when
+        
+        GrlDetAmounts(this == $gda, customTxt02 == "GCRINV", hcuCcyCdOrg == "EUR")
+        
+    then
+        $gda.setCustomTxt04("GIAXEU");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1644");
+        
+end
+
+rule '327229' extends '327954' salience 80
+
+    when
+        
+        GrlDetAmounts(this == $gda, customTxt02 == "GCRINV", hcuCcyCdOrg == "USD")
+        
+    then
+        $gda.setCustomTxt04("GIAUSD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1644");
+        
+end
+
+rule '327230' extends '327954' salience 70
+
+    when
+        
+        GrlDetAmounts(this == $gda, customTxt02 == "GCRINV", hcuCcyCdOrg == "GBP")
+        
+    then
+        $gda.setCustomTxt04("GIAGBP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1644");
+        
+end
+
+rule '327231' extends '327954' salience 60
+
+    when
+        
+        GrlDetAmounts(this == $gda, customTxt02 == "GCRINV", hcuCcyCdOrg not in ("EUR", "USD", "GBP"))
+        
+    then
+        $gda.setCustomTxt04("GIAOTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1644");
+        
+end
+
+rule '327224' extends '327954' salience 50
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0057000"), hreRelTypeCtpy in ("FINS", "FLIF"), cpyBeyNumber == null)
+        
+    then
+        $gda.setCustomTxt04("LENIAC");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1644");
+        
+end
+
+rule '327225' extends '327954' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0057000"), hreRelTypeCtpy in ("FLEA", "CLEA"), cpyBeyNumber == null)
+        
+    then
+        $gda.setCustomTxt04("LENLEC");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1644");
+        
+end
+
+rule '327226' extends '327954' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0057000"), cpyBeyNumber != null)
+        
+    then
+        $gda.setCustomTxt04("LENNBA");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1644");
+        
+end
+
+rule '327234' extends '327954' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0003000", (hreRelTypeCtpy not matches "B.*" && hreRelTypeCtpy not matches "F.*" && hreRelTypeCtpy not matches "G.*"), cpyBeyNumber == null, hpePdtType != "IRS")
+        
+    then
+        $gda.setCustomTxt04("AIRONG");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1644");
+        
+end
+
+rule '327233' extends '327954' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0003000", hreRelTypeCtpy == "BCEN", cpyBeyNumber == null, hpePdtType == "DEPOSIT")
+        
+    then
+        $gda.setCustomTxt04("AIRREM");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1644");
+        
+end
+
+

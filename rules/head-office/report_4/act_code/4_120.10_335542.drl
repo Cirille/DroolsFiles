@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335542'
+	when
+		$gda : GrlDetAmounts(hpePdtType == "POS MOV" && hacAmtCl == "01" && intInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1710693' extends '335542' salience 39580
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setActCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5918");
+        
+end
+
+rule '1710691' extends '335542' salience 39570
+
+    when
+        
+        GrlDetAmounts(this == $gda, buyInd == "N")
+        
+    then
+        $gda.setActCode("A0025000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5918");
+        
+end
+
+rule '1710692' extends '335542' salience 39560
+
+    when
+        
+        GrlDetAmounts(this == $gda, buyInd == "Y")
+        
+    then
+        $gda.setActCode("L0251000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5918");
+        
+end
+
+

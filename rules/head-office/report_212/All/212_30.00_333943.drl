@@ -1,0 +1,3231 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '333943'
+	when
+		$gda : GrlDetAmounts(( substr ( actCode , 1 , 1 ) in ( "A" , "L" ) && actCode in ( "A0027000" , "A0057000" , "A3329000" , "A3332000" , "A8805000" , "A8806000" , "A8807000" , "A9260000" , "A9457000" , "A9459000" , "A9750000" , "L0242000" , "L1425000" , "L3343000" , "L3933000" , "L9261000" , "L9751000" ) && pdtCode in ( "027800" , "027900" ) || ( hpePdtType == "REPO" ) && hacAmtCl in ( "11" , "19" ) ) && intInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1567563' extends '333943' salience 78990
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setUnderlExp("99");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567618' extends '333943' salience 78980
+
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N")
+        
+    then
+        $gda.setUnderlExp("3.318");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567562' extends '333943' salience 78970
+
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrIssuerType not in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"))
+        
+    then
+        $gda.setUnderlExp("3.333");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567567' extends '333943' salience 78960
+
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "RMBS", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E")
+        
+    then
+        $gda.setUnderlExp("3.337");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567568' extends '333943' salience 78950
+
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "ABS", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E")
+        
+    then
+        $gda.setUnderlExp("3.338");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567569' extends '333943' salience 78940
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Other Equity Securities", lcrIssuerType not in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"), getCase0_1567570() == "Y")
+        
+    then
+        $gda.setUnderlExp("3.339");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567570' extends '333943' salience 78930
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Other Equity Securities", lcrIssuerType in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"), getCase0_1567570() in ("N", "Y"))
+        
+    then
+        $gda.setUnderlExp("3.340");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567571' extends '333943' salience 78920
+
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E")
+        
+    then
+        $gda.setUnderlExp("3.341");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567793' extends '333943' salience 78910
+
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS", "Covered Bond"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H")
+        
+    then
+        $gda.setUnderlExp("3.348");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567794' extends '333943' salience 78900
+
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS", "Covered Bond"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O")
+        
+    then
+        $gda.setUnderlExp("3.349");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1592807' extends '333943' salience 78890
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Other Equity Securities", lcrIssuerType not in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"), getCase0_1567570() == "N")
+        
+    then
+        $gda.setUnderlExp("3.351");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567795' extends '333943' salience 78880
+
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Own Issued", eval(nvl(this.getissuedind(), 'n')) == "Y", liqCredQual == "O")
+        
+    then
+        $gda.setUnderlExp("3.350");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567560' extends '333943' salience 78870
+
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O", lcrIssuerType not in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"), credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.331");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567561' extends '333943' salience 78860
+
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O", lcrIssuerType not in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"), credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.332");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567564' extends '333943' salience 78850
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "RMBS", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O", getCase0_1559259() == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.334");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567565' extends '333943' salience 78840
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "RMBS", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O", getCase0_1559259() == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.335");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567566' extends '333943' salience 78830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "RMBS", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O", getCase0_1559259() == "Y", credQualStepIss == "3")
+        
+    then
+        $gda.setUnderlExp("3.336");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567592' extends '333943' salience 78820
+
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Own Issued", eval(nvl(this.getissuedind(), 'n')) == "Y", liqCredQual == "O", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.287");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567593' extends '333943' salience 78810
+
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Own Issued", eval(nvl(this.getissuedind(), 'n')) == "Y", liqCredQual == "O", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.288");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567594' extends '333943' salience 78800
+
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Own Issued", eval(nvl(this.getissuedind(), 'n')) == "Y", liqCredQual == "O", credQualStepIss == "3")
+        
+    then
+        $gda.setUnderlExp("3.289");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567595' extends '333943' salience 78790
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "ABS", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.290");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567596' extends '333943' salience 78780
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "ABS", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.291");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567597' extends '333943' salience 78770
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "ABS", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O", getCase0_1559259() == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.292");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567598' extends '333943' salience 78760
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "ABS", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.293");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567599' extends '333943' salience 78750
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "ABS", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.294");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567600' extends '333943' salience 78740
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "ABS", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O", getCase0_1559259() == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.295");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567601' extends '333943' salience 78730
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "ABS", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "Y", credQualStepIss == "3")
+        
+    then
+        $gda.setUnderlExp("3.296");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567602' extends '333943' salience 78720
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "ABS", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "Y", credQualStepIss == "3")
+        
+    then
+        $gda.setUnderlExp("3.297");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567603' extends '333943' salience 78710
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "ABS", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O", getCase0_1559259() == "Y", credQualStepIss == "3")
+        
+    then
+        $gda.setUnderlExp("3.298");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567617' extends '333943' salience 78700
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "SSPE")
+        
+    then
+        $gda.setUnderlExp("3.312");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567787' extends '333943' salience 78690
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Commercial Paper", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType not in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"))
+        
+    then
+        $gda.setUnderlExp("3.342");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567788' extends '333943' salience 78680
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Commercial Paper", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType not in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"))
+        
+    then
+        $gda.setUnderlExp("3.343");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567789' extends '333943' salience 78670
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Commercial Paper", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O", getCase0_1559259() == "Y", lcrIssuerType not in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"))
+        
+    then
+        $gda.setUnderlExp("3.344");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567790' extends '333943' salience 78660
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Commercial Paper", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType not in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"))
+        
+    then
+        $gda.setUnderlExp("3.345");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567791' extends '333943' salience 78650
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Commercial Paper", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType not in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"))
+        
+    then
+        $gda.setUnderlExp("3.346");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567792' extends '333943' salience 78640
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Commercial Paper", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O", getCase0_1559259() == "N", lcrIssuerType not in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"))
+        
+    then
+        $gda.setUnderlExp("3.347");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567590' extends '333943' salience 78630
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType != "SSPE", credRiskWghtIss in ("20", "50"))
+        
+    then
+        $gda.setUnderlExp("3.281");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567591' extends '333943' salience 78620
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType != "SSPE", credRiskWghtIss in ("20", "50"))
+        
+    then
+        $gda.setUnderlExp("3.282");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567607' extends '333943' salience 78610
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "SSPE", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.302");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567611' extends '333943' salience 78600
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "SSPE", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.306");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567615' extends '333943' salience 78590
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "SSPE", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.310");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567616' extends '333943' salience 78580
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType != "SSPE", credRiskWghtIss in ("50", "100", "150"))
+        
+    then
+        $gda.setUnderlExp("3.311");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567764' extends '333943' salience 78570
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Sovereign", credRiskWghtIss == "0")
+        
+    then
+        $gda.setUnderlExp("3.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567765' extends '333943' salience 78560
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Sovereign", credRiskWghtIss == "0")
+        
+    then
+        $gda.setUnderlExp("3.111");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567553' extends '333943' salience 78550
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "N", credQualStepIss in ("3", "4", "5", "6"))
+        
+    then
+        $gda.setUnderlExp("3.324");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567555' extends '333943' salience 78540
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "N", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.326");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567557' extends '333943' salience 78530
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "N", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.328");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567559' extends '333943' salience 78520
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "N", credQualStepIss in ("3", "4", "5", "6"))
+        
+    then
+        $gda.setUnderlExp("3.330");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567572' extends '333943' salience 78510
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "MDB", credRiskWghtIss == "20", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.254");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567574' extends '333943' salience 78500
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "MDB", credRiskWghtIss == "20", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.256");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567576' extends '333943' salience 78490
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "MDB", credRiskWghtIss == "20", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.258");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567578' extends '333943' salience 78480
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "MDB", credRiskWghtIss == "20", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.260");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567580' extends '333943' salience 78470
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "MDB", credRiskWghtIss == "20", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.262");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567582' extends '333943' salience 78460
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "MDB", credRiskWghtIss == "20", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.264");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567584' extends '333943' salience 78450
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType != "SSPE", credRiskWghtIss in ("0", "20"), credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.272");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567585' extends '333943' salience 78440
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType != "SSPE", credRiskWghtIss in ("0", "20"), credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.273");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567586' extends '333943' salience 78430
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType != "SSPE", credRiskWghtIss in ("0", "20"), credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.274");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567587' extends '333943' salience 78420
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType != "SSPE", credRiskWghtIss in ("0", "20"), credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.275");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567588' extends '333943' salience 78410
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType != "SSPE", credRiskWghtIss in ("0", "20"), credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.276");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567589' extends '333943' salience 78400
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType != "SSPE", credRiskWghtIss in ("0", "20"), credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.277");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567606' extends '333943' salience 78390
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType != "SSPE", credRiskWghtIss in ("50", "100", "150"), credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.301");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567610' extends '333943' salience 78380
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType != "SSPE", credRiskWghtIss in ("50", "100", "150"), credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.305");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567614' extends '333943' salience 78370
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType != "SSPE", credRiskWghtIss in ("50", "100", "150"), credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.309");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567620' extends '333943' salience 78360
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "N", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.320");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567622' extends '333943' salience 78350
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "N", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.322");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567625' extends '333943' salience 78340
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Sovereign", credRiskWghtIss == "20", incLiqRiskIssInd == "N")
+        
+    then
+        $gda.setUnderlExp("3.206");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567626' extends '333943' salience 78330
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Sovereign", credRiskWghtIss == "20", incLiqRiskIssInd == "N")
+        
+    then
+        $gda.setUnderlExp("3.207");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567645' extends '333943' salience 78320
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType in ("PSE", "Local Government"), credRiskWghtIss == "20", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.236");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567647' extends '333943' salience 78310
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType in ("PSE", "Local Government"), credRiskWghtIss == "20", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.238");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567649' extends '333943' salience 78300
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType in ("PSE", "Local Government"), credRiskWghtIss == "20", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.240");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567651' extends '333943' salience 78290
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType in ("PSE", "Local Government"), credRiskWghtIss == "20", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.242");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567653' extends '333943' salience 78280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType in ("PSE", "Local Government"), credRiskWghtIss == "20", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.244");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567655' extends '333943' salience 78270
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType in ("PSE", "Local Government"), credRiskWghtIss == "20", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.246");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567658' extends '333943' salience 78260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType in ("BIS", "IMF", "EU", "EFSF", "ESM", "MDB"), credRiskWghtIss == "0", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.154");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567660' extends '333943' salience 78250
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType in ("BIS", "IMF", "EU", "EFSF", "ESM", "MDB"), credRiskWghtIss == "0", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.156");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567662' extends '333943' salience 78240
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType in ("BIS", "IMF", "EU", "EFSF", "ESM", "MDB"), credRiskWghtIss == "0", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.158");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567664' extends '333943' salience 78230
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType in ("BIS", "IMF", "EU", "EFSF", "ESM", "MDB"), credRiskWghtIss == "0", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.160");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567666' extends '333943' salience 78220
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType in ("BIS", "IMF", "EU", "EFSF", "ESM", "MDB"), credRiskWghtIss == "0", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.162");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567696' extends '333943' salience 78210
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Central Bank", credRiskWghtIss == "0", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.122");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567697' extends '333943' salience 78200
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Central Bank", credRiskWghtIss == "0", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.123");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567698' extends '333943' salience 78190
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Central Bank", credRiskWghtIss == "0", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.124");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567699' extends '333943' salience 78180
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Central Bank", credRiskWghtIss == "0", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.125");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567700' extends '333943' salience 78170
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Central Bank", credRiskWghtIss == "0", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.126");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567701' extends '333943' salience 78160
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Central Bank", credRiskWghtIss == "0", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.127");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567702' extends '333943' salience 78150
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O", getCase0_1559259() == "N", lcrIssuerType == "Central Bank", credRiskWghtIss == "0", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.128");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567703' extends '333943' salience 78140
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O", getCase0_1559259() == "N", lcrIssuerType == "Central Bank", credRiskWghtIss == "0", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.129");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567704' extends '333943' salience 78130
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O", getCase0_1559259() == "N", lcrIssuerType == "Central Bank", credRiskWghtIss == "0", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567705' extends '333943' salience 78120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Central Bank", credRiskWghtGuar == "0")
+        
+    then
+        $gda.setUnderlExp("3.131");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567706' extends '333943' salience 78110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Central Bank", credRiskWghtGuar == "0")
+        
+    then
+        $gda.setUnderlExp("3.132");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567707' extends '333943' salience 78100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Central Bank", credRiskWghtGuar == "0")
+        
+    then
+        $gda.setUnderlExp("3.133");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567708' extends '333943' salience 78090
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType in ("PSE", "Local Government"), credRiskWghtIss == "0", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.134");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567710' extends '333943' salience 78080
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType in ("PSE", "Local Government"), credRiskWghtIss == "0", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.136");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567712' extends '333943' salience 78070
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType in ("PSE", "Local Government"), credRiskWghtIss == "0", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.138");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567714' extends '333943' salience 78060
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType in ("PSE", "Local Government"), credRiskWghtIss == "0", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567716' extends '333943' salience 78050
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType in ("PSE", "Local Government"), credRiskWghtIss == "0", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.142");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567718' extends '333943' salience 78040
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType in ("PSE", "Local Government"), credRiskWghtIss == "0", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.144");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567720' extends '333943' salience 78030
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O", getCase0_1559259() == "N", lcrIssuerType in ("PSE", "Local Government"), credRiskWghtIss == "0", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.146");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567722' extends '333943' salience 78020
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O", getCase0_1559259() == "N", lcrIssuerType in ("PSE", "Local Government"), credRiskWghtIss == "0", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567723' extends '333943' salience 78010
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("PSE", "Local Government"), credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.151");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567724' extends '333943' salience 78000
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType in ("BIS", "IMF", "EU", "EFSF", "ESM", "MDB"), credRiskWghtIss == "0", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.152");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567573' extends '333943' salience 77990
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "MDB", credRiskWghtGuar == "20", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.255");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567575' extends '333943' salience 77980
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "MDB", credRiskWghtGuar == "20", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.257");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567577' extends '333943' salience 77970
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "MDB", credRiskWghtGuar == "20", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.259");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567579' extends '333943' salience 77960
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "MDB", credRiskWghtGuar == "20", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.261");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567581' extends '333943' salience 77950
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "MDB", credRiskWghtGuar == "20", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.263");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567583' extends '333943' salience 77940
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "MDB", credRiskWghtGuar == "20", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.265");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567633' extends '333943' salience 77930
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Central Bank", credRiskWghtIss == "20", incLiqRiskIssInd == "N", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.218");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567635' extends '333943' salience 77920
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Central Bank", credRiskWghtIss == "20", incLiqRiskIssInd == "N", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.220");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567637' extends '333943' salience 77910
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Central Bank", credRiskWghtIss == "20", incLiqRiskIssInd == "N", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.222");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567639' extends '333943' salience 77900
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Central Bank", credRiskWghtIss == "20", incLiqRiskIssInd == "N", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.224");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567641' extends '333943' salience 77890
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Central Bank", credRiskWghtIss == "20", incLiqRiskIssInd == "N", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.226");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567643' extends '333943' salience 77880
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Central Bank", credRiskWghtIss == "20", incLiqRiskIssInd == "N", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.228");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567646' extends '333943' salience 77870
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("PSE", "Local Government"), credRiskWghtGuar == "20", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.237");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567648' extends '333943' salience 77860
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("PSE", "Local Government"), credRiskWghtGuar == "20", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.239");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567650' extends '333943' salience 77850
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("PSE", "Local Government"), credRiskWghtGuar == "20", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.241");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567652' extends '333943' salience 77840
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("PSE", "Local Government"), credRiskWghtGuar == "20", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.243");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567654' extends '333943' salience 77830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("PSE", "Local Government"), credRiskWghtGuar == "20", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.245");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567656' extends '333943' salience 77820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("PSE", "Local Government"), credRiskWghtGuar == "20", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.247");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567657' extends '333943' salience 77810
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("BIS", "IMF", "EU", "EFSF", "ESM", "MDB"), credRiskWghtGuar == "0", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.153");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567659' extends '333943' salience 77800
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("BIS", "IMF", "EU", "EFSF", "ESM", "MDB"), credRiskWghtGuar == "0", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.155");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567661' extends '333943' salience 77790
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("BIS", "IMF", "EU", "EFSF", "ESM", "MDB"), credRiskWghtGuar == "0", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.157");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567663' extends '333943' salience 77780
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("BIS", "IMF", "EU", "EFSF", "ESM", "MDB"), credRiskWghtGuar == "0", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.159");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567665' extends '333943' salience 77770
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("BIS", "IMF", "EU", "EFSF", "ESM", "MDB"), credRiskWghtGuar == "0", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.161");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567667' extends '333943' salience 77760
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("BIS", "IMF", "EU", "EFSF", "ESM", "MDB"), credRiskWghtGuar == "0", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.163");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567690' extends '333943' salience 77750
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Sovereign", credRiskWghtGuar == "0", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.113");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567691' extends '333943' salience 77740
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Sovereign", credRiskWghtGuar == "0", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.114");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567692' extends '333943' salience 77730
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Sovereign", credRiskWghtGuar == "0", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.115");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567693' extends '333943' salience 77720
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Sovereign", credRiskWghtGuar == "0", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.116");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567694' extends '333943' salience 77710
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Sovereign", credRiskWghtGuar == "0", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.117");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567695' extends '333943' salience 77700
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Sovereign", credRiskWghtGuar == "0", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.118");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567709' extends '333943' salience 77690
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("PSE", "Local Government"), credRiskWghtGuar == "0", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.135");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567711' extends '333943' salience 77680
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("PSE", "Local Government"), credRiskWghtGuar == "0", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.137");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567713' extends '333943' salience 77670
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("PSE", "Local Government"), credRiskWghtGuar == "0", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.139");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567715' extends '333943' salience 77660
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("PSE", "Local Government"), credRiskWghtGuar == "0", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.141");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567717' extends '333943' salience 77650
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("PSE", "Local Government"), credRiskWghtGuar == "0", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.143");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567719' extends '333943' salience 77640
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("PSE", "Local Government"), credRiskWghtGuar == "0", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.145");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567721' extends '333943' salience 77630
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "O", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("PSE", "Local Government"), credRiskWghtGuar == "0", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.147");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567552' extends '333943' salience 77620
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "Y", lcrGuarType in ("Sovereign", "Local Government"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss in ("3", "4", "5", "6"))
+        
+    then
+        $gda.setUnderlExp("3.323");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567554' extends '333943' salience 77610
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "Y", lcrGuarType in ("Sovereign", "Local Government"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.325");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567556' extends '333943' salience 77600
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "Y", lcrGuarType in ("Sovereign", "Local Government"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.327");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567558' extends '333943' salience 77590
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "Y", lcrGuarType in ("Sovereign", "Local Government"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss in ("3", "4", "5", "6"))
+        
+    then
+        $gda.setUnderlExp("3.329");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567605' extends '333943' salience 77580
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Funding for promotional loans", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "N", lcrGuarType in ("Sovereign", "Local Government"), credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.300");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567609' extends '333943' salience 77570
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Funding for promotional loans", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "N", lcrGuarType in ("Sovereign", "Local Government"), credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.304");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567613' extends '333943' salience 77560
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Funding for promotional loans", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "N", lcrGuarType in ("Sovereign", "Local Government"), credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.308");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567619' extends '333943' salience 77550
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Corporate Bond", eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "Y", lcrGuarType in ("Sovereign", "Local Government"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.319");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567621' extends '333943' salience 77540
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "Y", lcrGuarType in ("Sovereign", "Local Government"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.321");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567627' extends '333943' salience 77530
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Sovereign", credRiskWghtGuar == "20", incLiqRiskGuarInd == "N", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.209");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567628' extends '333943' salience 77520
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Sovereign", credRiskWghtGuar == "20", incLiqRiskGuarInd == "N", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.210");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567629' extends '333943' salience 77510
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Sovereign", credRiskWghtGuar == "20", incLiqRiskGuarInd == "N", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.211");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567630' extends '333943' salience 77500
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Sovereign", credRiskWghtGuar == "20", incLiqRiskGuarInd == "N", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.212");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567631' extends '333943' salience 77490
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Sovereign", credRiskWghtGuar == "20", incLiqRiskGuarInd == "N", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.213");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567632' extends '333943' salience 77480
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Sovereign", credRiskWghtGuar == "20", incLiqRiskGuarInd == "N", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.214");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567634' extends '333943' salience 77470
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Central Bank", credRiskWghtGuar == "20", incLiqRiskGuarInd == "N", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.219");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567636' extends '333943' salience 77460
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Central Bank", credRiskWghtGuar == "20", incLiqRiskGuarInd == "N", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.221");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567638' extends '333943' salience 77450
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Central Bank", credRiskWghtGuar == "20", incLiqRiskGuarInd == "N", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.223");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567640' extends '333943' salience 77440
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Central Bank", credRiskWghtGuar == "20", incLiqRiskGuarInd == "N", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.225");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567642' extends '333943' salience 77430
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Central Bank", credRiskWghtGuar == "20", incLiqRiskGuarInd == "N", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.227");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567644' extends '333943' salience 77420
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType == "Central Bank", credRiskWghtGuar == "20", incLiqRiskGuarInd == "N", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.229");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567668' extends '333943' salience 77410
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType in ("Sovereign", "Central Bank"), credRiskWghtIss in ("20", "50", "100", "150"), incLiqRiskIssInd == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.170");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567669' extends '333943' salience 77400
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType in ("Sovereign", "Central Bank"), credRiskWghtIss in ("20", "50", "100", "150"), incLiqRiskIssInd == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.171");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567672' extends '333943' salience 77390
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType in ("Sovereign", "Central Bank"), credRiskWghtIss in ("20", "50", "100", "150"), incLiqRiskIssInd == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.174");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567673' extends '333943' salience 77380
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType in ("Sovereign", "Central Bank"), credRiskWghtIss in ("20", "50", "100", "150"), incLiqRiskIssInd == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.175");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567676' extends '333943' salience 77370
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType in ("Sovereign", "Central Bank"), credRiskWghtIss in ("20", "50", "100", "150"), incLiqRiskIssInd == "Y", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.178");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567677' extends '333943' salience 77360
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType in ("Sovereign", "Central Bank"), credRiskWghtIss in ("20", "50", "100", "150"), incLiqRiskIssInd == "Y", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.179");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567680' extends '333943' salience 77350
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType in ("Sovereign", "Central Bank"), credRiskWghtIss in ("20", "50", "100", "150"), incLiqRiskIssInd == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.182");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567681' extends '333943' salience 77340
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType in ("Sovereign", "Central Bank"), credRiskWghtIss in ("20", "50", "100", "150"), incLiqRiskIssInd == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.183");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567684' extends '333943' salience 77330
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType in ("Sovereign", "Central Bank"), credRiskWghtIss in ("20", "50", "100", "150"), incLiqRiskIssInd == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.186");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567685' extends '333943' salience 77320
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType in ("Sovereign", "Central Bank"), credRiskWghtIss in ("20", "50", "100", "150"), incLiqRiskIssInd == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.187");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567688' extends '333943' salience 77310
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType in ("Sovereign", "Central Bank"), credRiskWghtIss in ("20", "50", "100", "150"), incLiqRiskIssInd == "Y", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.190");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567689' extends '333943' salience 77300
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType in ("Sovereign", "Central Bank"), credRiskWghtIss in ("20", "50", "100", "150"), incLiqRiskIssInd == "Y", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.191");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567604' extends '333943' salience 77290
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Funding for promotional loans", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "Y", lcrGuarType in ("Sovereign", "Local Government"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.299");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567608' extends '333943' salience 77280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Funding for promotional loans", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "Y", lcrGuarType in ("Sovereign", "Local Government"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.303");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567612' extends '333943' salience 77270
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Funding for promotional loans", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", issSetUpByGovInd == "Y", lcrGuarType in ("Sovereign", "Local Government"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.307");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567623' extends '333943' salience 77260
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("Sovereign", "Central Bank"), credRiskWghtGuar in ("20", "50", "100", "150"), incLiqRiskGuarInd == "Y", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.192");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567624' extends '333943' salience 77250
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("Sovereign", "Central Bank"), credRiskWghtGuar in ("20", "50", "100", "150"), incLiqRiskGuarInd == "Y", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.193");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567670' extends '333943' salience 77240
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("Sovereign", "Central Bank"), credRiskWghtGuar in ("20", "50", "100", "150"), incLiqRiskGuarInd == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.172");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567671' extends '333943' salience 77230
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("Sovereign", "Central Bank"), credRiskWghtGuar in ("20", "50", "100", "150"), incLiqRiskGuarInd == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.173");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567674' extends '333943' salience 77220
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("Sovereign", "Central Bank"), credRiskWghtGuar in ("20", "50", "100", "150"), incLiqRiskGuarInd == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.176");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567675' extends '333943' salience 77210
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("Sovereign", "Central Bank"), credRiskWghtGuar in ("20", "50", "100", "150"), incLiqRiskGuarInd == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.177");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567678' extends '333943' salience 77200
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("Sovereign", "Central Bank"), credRiskWghtGuar in ("20", "50", "100", "150"), incLiqRiskGuarInd == "Y", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.180");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567679' extends '333943' salience 77190
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("Sovereign", "Central Bank"), credRiskWghtGuar in ("20", "50", "100", "150"), incLiqRiskGuarInd == "Y", credQualStepIss in ("3", "4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.181");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567682' extends '333943' salience 77180
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("Sovereign", "Central Bank"), credRiskWghtGuar in ("20", "50", "100", "150"), incLiqRiskGuarInd == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.184");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567683' extends '333943' salience 77170
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("Sovereign", "Central Bank"), credRiskWghtGuar in ("20", "50", "100", "150"), incLiqRiskGuarInd == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.185");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567686' extends '333943' salience 77160
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("Sovereign", "Central Bank"), credRiskWghtGuar in ("20", "50", "100", "150"), incLiqRiskGuarInd == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.188");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567687' extends '333943' salience 77150
+no-loop
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "N", lcrIssuerType == "Other", lcrGuarType in ("Sovereign", "Central Bank"), credRiskWghtGuar in ("20", "50", "100", "150"), incLiqRiskGuarInd == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.189");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567725' extends '333943' salience 77140
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.038");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567726' extends '333943' salience 77130
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.040");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567727' extends '333943' salience 77120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "O", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.042");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567728' extends '333943' salience 77110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), credQualStepIss == "3")
+        
+    then
+        $gda.setUnderlExp("3.044");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567729' extends '333943' salience 77100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), credQualStepIss in ("4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.046");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567730' extends '333943' salience 77090
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), credQualStepIss == "3")
+        
+    then
+        $gda.setUnderlExp("3.048");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567731' extends '333943' salience 77080
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), credQualStepIss in ("4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.050");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567732' extends '333943' salience 77070
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "O", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), credQualStepIss == "3")
+        
+    then
+        $gda.setUnderlExp("3.052");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567733' extends '333943' salience 77060
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "O", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), credQualStepIss in ("4", "5", "6", "NA"))
+        
+    then
+        $gda.setUnderlExp("3.054");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567734' extends '333943' salience 77050
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.056");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567735' extends '333943' salience 77040
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.057");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567736' extends '333943' salience 77030
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.059");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567737' extends '333943' salience 77020
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.060");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567738' extends '333943' salience 77010
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", credQualStepIss == "3")
+        
+    then
+        $gda.setUnderlExp("3.062");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567739' extends '333943' salience 77000
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", credQualStepIss == "3")
+        
+    then
+        $gda.setUnderlExp("3.064");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567740' extends '333943' salience 76990
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "ABS", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.068");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567741' extends '333943' salience 76980
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "ABS", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.069");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567742' extends '333943' salience 76970
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "ABS", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.071");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567743' extends '333943' salience 76960
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "ABS", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.072");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567744' extends '333943' salience 76950
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "ABS", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", credQualStepIss == "3")
+        
+    then
+        $gda.setUnderlExp("3.074");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567745' extends '333943' salience 76940
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "ABS", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", credQualStepIss == "3")
+        
+    then
+        $gda.setUnderlExp("3.076");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567746' extends '333943' salience 76930
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "RMBS", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.080");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567747' extends '333943' salience 76920
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "RMBS", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.081");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567748' extends '333943' salience 76910
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "RMBS", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.083");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567749' extends '333943' salience 76900
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "RMBS", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.084");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567750' extends '333943' salience 76890
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "RMBS", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", credQualStepIss == "3")
+        
+    then
+        $gda.setUnderlExp("3.086");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567751' extends '333943' salience 76880
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct == "RMBS", eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", credQualStepIss == "3")
+        
+    then
+        $gda.setUnderlExp("3.088");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567752' extends '333943' salience 76870
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", lcrGuarType in ("Sovereign", "Local Government"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.092");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567753' extends '333943' salience 76860
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", lcrGuarType not in ("Sovereign", "Local Government"), credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.093");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567754' extends '333943' salience 76850
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", lcrGuarType in ("Sovereign", "Local Government"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.095");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567755' extends '333943' salience 76840
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", lcrGuarType not in ("Sovereign", "Local Government"), credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.096");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567756' extends '333943' salience 76830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", lcrGuarType in ("Sovereign", "Local Government"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "3")
+        
+    then
+        $gda.setUnderlExp("3.098");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567757' extends '333943' salience 76820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", lcrGuarType not in ("Sovereign", "Local Government"), credQualStepIss == "3")
+        
+    then
+        $gda.setUnderlExp("3.099");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567758' extends '333943' salience 76810
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", lcrGuarType in ("Sovereign", "Local Government"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.101");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567759' extends '333943' salience 76800
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", lcrGuarType not in ("Sovereign", "Local Government"), credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.102");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567760' extends '333943' salience 76790
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", lcrGuarType in ("Sovereign", "Local Government"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.104");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567761' extends '333943' salience 76780
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", lcrGuarType not in ("Sovereign", "Local Government"), credQualStepIss == "2")
+        
+    then
+        $gda.setUnderlExp("3.105");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567762' extends '333943' salience 76770
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", lcrGuarType in ("Sovereign", "Local Government"), eval(nvl(this.geteeactryguarind(), 'n')) == "N", credQualStepIss == "3")
+        
+    then
+        $gda.setUnderlExp("3.107");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567763' extends '333943' salience 76760
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", lcrGuarType not in ("Sovereign", "Local Government"), credQualStepIss == "3")
+        
+    then
+        $gda.setUnderlExp("3.108");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567784' extends '333943' salience 76750
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.032");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567785' extends '333943' salience 76740
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.034");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567786' extends '333943' salience 76730
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "O", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), credQualStepIss == "1")
+        
+    then
+        $gda.setUnderlExp("3.036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567766' extends '333943' salience 76720
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Sovereign")
+        
+    then
+        $gda.setUnderlExp("3.001");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567767' extends '333943' salience 76710
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType == "Sovereign")
+        
+    then
+        $gda.setUnderlExp("3.003");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567770' extends '333943' salience 76700
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType in ("Central Bank", "PSE"))
+        
+    then
+        $gda.setUnderlExp("3.013");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567771' extends '333943' salience 76690
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType in ("Central Bank", "PSE"))
+        
+    then
+        $gda.setUnderlExp("3.014");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567774' extends '333943' salience 76680
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType in ("BIS", "EU", "IMF", "MDB"))
+        
+    then
+        $gda.setUnderlExp("3.019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567775' extends '333943' salience 76670
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType in ("BIS", "EU", "IMF", "MDB"))
+        
+    then
+        $gda.setUnderlExp("3.020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567778' extends '333943' salience 76660
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType in ("ESM", "EFSF"))
+        
+    then
+        $gda.setUnderlExp("3.025");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567779' extends '333943' salience 76650
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType in ("ESM", "EFSF"))
+        
+    then
+        $gda.setUnderlExp("3.026");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567768' extends '333943' salience 76640
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), lcrGuarType == "Sovereign")
+        
+    then
+        $gda.setUnderlExp("3.005");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567769' extends '333943' salience 76630
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), lcrGuarType == "Sovereign")
+        
+    then
+        $gda.setUnderlExp("3.009");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567772' extends '333943' salience 76620
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), lcrGuarType in ("Central Bank", "PSE"))
+        
+    then
+        $gda.setUnderlExp("3.015");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567773' extends '333943' salience 76610
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), lcrGuarType in ("Central Bank", "PSE"))
+        
+    then
+        $gda.setUnderlExp("3.017");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567776' extends '333943' salience 76600
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), lcrGuarType in ("BIS", "EU", "IMF", "MDB"))
+        
+    then
+        $gda.setUnderlExp("3.021");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567777' extends '333943' salience 76590
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), lcrGuarType in ("BIS", "EU", "IMF", "MDB"))
+        
+    then
+        $gda.setUnderlExp("3.023");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567780' extends '333943' salience 76580
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), lcrGuarType in ("ESM", "EFSF"))
+        
+    then
+        $gda.setUnderlExp("3.027");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567781' extends '333943' salience 76570
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", lcrFundingPurpose == "Other funding purpose", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType in ("Other", "Local Government", "SME"), lcrGuarType in ("ESM", "EFSF"))
+        
+    then
+        $gda.setUnderlExp("3.028");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567782' extends '333943' salience 76560
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "E", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", lcrGuarType in ("Sovereign", "Local Government"), eval(nvl(this.geteeactryguarind(), 'n')) == "Y")
+        
+    then
+        $gda.setUnderlExp("3.029");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+rule '1567783' extends '333943' salience 76550
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrUnderlyingProduct in ("Corporate Bond", "Commercial Paper", "Covered Bond", "ABS", "RMBS"), eval(nvl(this.getissuedind(), 'n')) == "N", liqCredQual == "H", getCase0_1559259() == "Y", lcrIssuerType == "Credit Institution", lcrGuarType in ("Sovereign", "Local Government"), eval(nvl(this.geteeactryguarind(), 'n')) == "Y")
+        
+    then
+        $gda.setUnderlExp("3.030");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4702");
+        
+end
+
+

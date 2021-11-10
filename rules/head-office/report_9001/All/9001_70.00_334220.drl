@@ -1,0 +1,113 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334220'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1615047' extends '334220' salience 140
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setSeCcyCd("CUR_ZZA");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4934");
+        
+end
+
+rule '1606586' extends '334220' salience 130
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "USD")
+        
+    then
+        $gda.setSeCcyCd("CUR_USD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4934");
+        
+end
+
+rule '1606624' extends '334220' salience 120
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR")
+        
+    then
+        $gda.setSeCcyCd("CUR_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4934");
+        
+end
+
+rule '1606625' extends '334220' salience 110
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "GBP")
+        
+    then
+        $gda.setSeCcyCd("CUR_GBP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4934");
+        
+end
+
+rule '1606636' extends '334220' salience 100
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "JPY")
+        
+    then
+        $gda.setSeCcyCd("CUR_JPY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4934");
+        
+end
+
+rule '1615045' extends '334220' salience 90
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "CHF")
+        
+    then
+        $gda.setSeCcyCd("CUR_CHF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4934");
+        
+end
+
+rule '1615046' extends '334220' salience 80
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg in ("BGN", "CZK", "DKK", "HRK", "HUF", "LTL", "PLN", "RON", "SEK"))
+        
+    then
+        $gda.setSeCcyCd("CUR_ZZB");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4934");
+        
+end
+
+

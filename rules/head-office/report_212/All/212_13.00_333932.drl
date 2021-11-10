@@ -1,0 +1,400 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+global com.ing.gfrs.logical.apis.GreLrCustRefLogicalApi greLrCustRefLogicalApi;
+
+
+dialect  "mvel"
+
+
+rule '333932'
+	when
+		$gda : GrlDetAmounts(hreRelTypeIssuer != null)
+	then
+        
+end
+
+
+
+
+
+rule '1560534' extends '333932' salience 93560
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLcrIssuerType("Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560516' extends '333932' salience 93550
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "VING")
+        
+    then
+        $gda.setLcrIssuerType("Insurance Undertaking");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560517' extends '333932' salience 93540
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "VFIM")
+        
+    then
+        $gda.setLcrIssuerType("Financial Institution");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560519' extends '333932' salience 93530
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "Z.*")
+        
+    then
+        $gda.setLcrIssuerType("SSPE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560526' extends '333932' salience 93520
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("BGOF", "GPSL", "GPSC", "GCFI", "GCPL", "GLFI", "GLPL", "GNFP", "GNFU", "GSOC", "CGOG"))
+        
+    then
+        $gda.setLcrIssuerType("PSE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560528' extends '333932' salience 93510
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "S.*")
+        
+    then
+        $gda.setLcrIssuerType("SME");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560529' extends '333932' salience 93500
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "BMLD")
+        
+    then
+        $gda.setLcrIssuerType("MDB");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560530' extends '333932' salience 93490
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("GAMT", "GCEN", "GLOC", "GSNO", "GOSN"))
+        
+    then
+        $gda.setLcrIssuerType("Sovereign");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560531' extends '333932' salience 93480
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "BCEN")
+        
+    then
+        $gda.setLcrIssuerType("Central Bank");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560536' extends '333932' salience 93470
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("VGRP", "VGRX"))
+        
+    then
+        $gda.setLcrIssuerType("Mixed Holding");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560539' extends '333932' salience 93460
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("BDIP", "BLEV", "BLIM", "BSPM", "BSPV"))
+        
+    then
+        $gda.setLcrIssuerType("Financial Institution");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560540' extends '333932' salience 93450
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "FHOL")
+        
+    then
+        $gda.setLcrIssuerType("Financial Holding");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560541' extends '333932' salience 93440
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FINS", "FLIF"))
+        
+    then
+        $gda.setLcrIssuerType("Insurance Undertaking");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560542' extends '333932' salience 93430
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FFFM", "FCLF", "FETF", "FUND", "FOHF", "FOPF", "FPEF", "FUSB"))
+        
+    then
+        $gda.setLcrIssuerType("Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560544' extends '333932' salience 93420
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("VAMB", "VABS", "VCMB", "VMBS", "VRMB"))
+        
+    then
+        $gda.setLcrIssuerType("SSPE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560520' extends '333932' salience 93410
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridIdIssuer,lcr_hly_rel_id,"LCRNSFRREL","N") == "BIS")
+        
+    then
+        $gda.setLcrIssuerType("BIS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560521' extends '333932' salience 93400
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridIdIssuer,lcr_hly_rel_id,"LCRNSFRREL","N") == "EU")
+        
+    then
+        $gda.setLcrIssuerType("EU");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560522' extends '333932' salience 93390
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridIdIssuer,lcr_hly_rel_id,"LCRNSFRREL","N") == "ESM")
+        
+    then
+        $gda.setLcrIssuerType("ESM");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560523' extends '333932' salience 93380
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridIdIssuer,lcr_hly_rel_id,"LCRNSFRREL","N") == "IMF")
+        
+    then
+        $gda.setLcrIssuerType("IMF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560524' extends '333932' salience 93370
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridIdIssuer,lcr_hly_rel_id,"LCRNSFRREL","N") == "EFSF")
+        
+    then
+        $gda.setLcrIssuerType("EFSF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560525' extends '333932' salience 93360
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "G.*", hreRelTypeIssuer not in ("GAMT", "GCEN", "GLOC", "GPSL", "GPSC", "GSNO", "GOSN", "GCFI", "GCPL", "GLFI", "GLPL", "GNFP", "GNFU", "GSOC"))
+        
+    then
+        $gda.setLcrIssuerType("Local Government");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560527' extends '333932' salience 93350
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "I.*", hreRelTypeIssuer != "IPBF")
+        
+    then
+        $gda.setLcrIssuerType("Retail");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560532' extends '333932' salience 93340
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "B.*", hreRelTypeIssuer not in ("BCEN", "BDIP", "BGOF", "BLEV", "BLIM", "BMLD", "BSPM", "BSPV"))
+        
+    then
+        $gda.setLcrIssuerType("Credit Institution");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560533' extends '333932' salience 93330
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeIssuer matches "C.*" || hreRelTypeIssuer == "IPBC"), hreRelTypeIssuer not in ("CGVO", "CGOG"))
+        
+    then
+        $gda.setLcrIssuerType("Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560535' extends '333932' salience 93320
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeIssuer == "IPBF" || hreRelTypeIssuer matches "F.*"), hreRelTypeIssuer not in ("FGVO", "FHOL", "FINS", "FLIF", "FFFM", "FCLF", "FETF", "FUND", "FOHF", "FOPF", "FPEF", "FUSB"))
+        
+    then
+        $gda.setLcrIssuerType("Financial Institution");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560537' extends '333932' salience 93310
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "V.*", hreRelTypeIssuer not in ("VGRP", "VGRX", "VAMB", "VABS", "VCMB", "VFIM", "VING", "VMBS", "VRMB"))
+        
+    then
+        $gda.setLcrIssuerType("Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560538' extends '333932' salience 93300
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "F.*", hreRelTypeIssuer not in ("FGVO", "FHOL", "FINS", "FLIF", "FFFM", "FCLF", "FETF", "FUND", "FOHF", "FOPF", "FPEF", "FUSB"))
+        
+    then
+        $gda.setLcrIssuerType("Financial Institution");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560543' extends '333932' salience 93290
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeIssuer matches "K.*" || hreRelTypeIssuer matches "R.*"), hreRelTypeIssuer not in ("KGVO", "RGVO"))
+        
+    then
+        $gda.setLcrIssuerType("Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+rule '1560545' extends '333932' salience 93280
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "I.*", hreRelTypeIssuer != "IPBC")
+        
+    then
+        $gda.setLcrIssuerType("Retail");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4691");
+        
+end
+
+

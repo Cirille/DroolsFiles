@@ -1,0 +1,42 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '329968'
+	when
+		$gda : GrlDetAmounts(hpePdtType in ( "NIF AND RUF" , "UNUSED FAC AMT" , "CFY" ) && intInd == "N" && hacAmtCl == "09" && drawAllowedInd == "Y" && credFacInd == "Y" && rootFacInd == "Y")
+	then
+end
+
+
+rule '772775' extends '329968' salience 16990
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setScyActCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1845");
+        
+end
+
+rule '772774' extends '329968' salience 16980
+
+    when
+        
+        GrlDetAmounts(this == $gda, hfeFacType not in ("072", "230", "340", "450", "516", "518"))
+        
+    then
+        $gda.setScyActCode("B0596000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1845");
+        
+end
+
+

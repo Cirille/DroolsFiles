@@ -1,0 +1,139 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '333924'
+	when
+		$gda : GrlDetAmounts(lcrProduct in ( "Other Equity Securities" , "Preferred Shares" ) && cgpCode != "00017" && intInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1559939' extends '333924' salience 39170
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setNsfrCd("99");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4683");
+        
+end
+
+rule '1559936' extends '333924' salience 39160
+
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", lcrIssuerType in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"))
+        
+    then
+        $gda.setNsfrCd("C60.0720.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4683");
+        
+end
+
+rule '1559938' extends '333924' salience 39150
+
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "Y", lcrIssuerType in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"))
+        
+    then
+        $gda.setNsfrCd("C60.0770.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4683");
+        
+end
+
+rule '1559937' extends '333924' salience 39140
+
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "Y", lcrIssuerType not in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"), majorStockIndexInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0710.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4683");
+        
+end
+
+rule '1968844' extends '333924' salience 39130
+
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "Y", lcrIssuerType not in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"), majorStockIndexInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.0770.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4683");
+        
+end
+
+rule '1559940' extends '333924' salience 39120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", lcrIssuerType not in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"), getCase0_1567570() == "Y", majorStockIndexInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0660.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4683");
+        
+end
+
+rule '1592808' extends '333924' salience 39110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", lcrIssuerType not in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"), getCase0_1567570() == "N", majorStockIndexInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0660.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4683");
+        
+end
+
+rule '1968842' extends '333924' salience 39100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", lcrIssuerType not in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"), getCase0_1567570() == "Y", majorStockIndexInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.0720.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4683");
+        
+end
+
+rule '1968843' extends '333924' salience 39090
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", lcrIssuerType not in ("Credit Institution", "Financial Institution", "Insurance Undertaking", "Financial Holding", "Mixed Holding", "SSPE"), getCase0_1567570() == "N", majorStockIndexInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.0720.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4683");
+        
+end
+
+

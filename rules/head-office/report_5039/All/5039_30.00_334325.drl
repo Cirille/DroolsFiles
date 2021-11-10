@@ -1,0 +1,546 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334325'
+	when
+		$gpy : GrlPlYtd()
+	then
+        
+end
+
+
+
+
+
+rule '1614199' extends '334325' salience 400
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine(massLine );
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1982304' extends '334325' salience 390
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Capitalisation Own Developed Software")
+        
+    then
+        $gpy.setLocMassLine("Other Software expenses (Other)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1982305' extends '334325' salience 380
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Memberships")
+        
+    then
+        $gpy.setLocMassLine("Membership");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1614198' extends '334325' salience 370
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode matches "E.*", ldeAcctUnit == "EXACT")
+        
+    then
+        $gpy.setLocMassLine(Warning: selecting from gre_lr_cust_ref: data will not be available in source topic.
+ full statement: {(coalesce((select custom_cd from gre_lr_cust_ref where  lcr_custom_ref_type = 'MASSEXACT' and custom_key =  pos_id||own_use_08 and lcr_hly_rel_id= lse_hly_rel_id)
+  ,mass_line)
+)});
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732796' extends '334325' salience 360
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Leasing/Renting/Licensing Software", "Software Expenses not Capitalised"))
+        
+    then
+        $gpy.setLocMassLine("Leasing/Renting Locally Selected Software");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732797' extends '334325' salience 350
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Depreciation Software")
+        
+    then
+        $gpy.setLocMassLine("Depreciation Locally Selected Software");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732798' extends '334325' salience 340
+
+    when
+        
+        GrlPlYtd(this == $gpy, hsoPlSubcl == "6104")
+        
+    then
+        $gpy.setLocMassLine("Overtime payments");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732799' extends '334325' salience 330
+
+    when
+        
+        GrlPlYtd(this == $gpy, hsoPlSubcl == "6405")
+        
+    then
+        $gpy.setLocMassLine("Unused holidays provision");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732801' extends '334325' salience 320
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Personnel Related Costs")
+        
+    then
+        $gpy.setLocMassLine("Other personnel expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732802' extends '334325' salience 310
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Leasing/Renting Hardware", "Hardware Expenses not Capitalised"))
+        
+    then
+        $gpy.setLocMassLine("Leasing/Renting Locally Selected Hardware");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732803' extends '334325' salience 300
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Depreciation Hardware")
+        
+    then
+        $gpy.setLocMassLine("Depreciation Locally Selected Hardware");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732804' extends '334325' salience 290
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine("Other Locally Selected Hardware expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732811' extends '334325' salience 280
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Subscriptions")
+        
+    then
+        $gpy.setLocMassLine("Subscription");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732814' extends '334325' salience 270
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Professional Services")
+        
+    then
+        $gpy.setLocMassLine("Professional Services Other");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732817' extends '334325' salience 260
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Taxes")
+        
+    then
+        $gpy.setLocMassLine("All Other Taxes");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732820' extends '334325' salience 250
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Outsourcing")
+        
+    then
+        $gpy.setLocMassLine(Warning: selecting from Locally: data will not be available in source topic.
+ full statement: IT Outsourcing from Locally Selected Suppliers);
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732827' extends '334325' salience 240
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Intercompany Services Sold")
+        
+    then
+        $gpy.setLocMassLine("IC Services Sold Other");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732828' extends '334325' salience 230
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine("Interest paid (external)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732829' extends '334325' salience 220
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine("Interest received (external)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732794' extends '334325' salience 210
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("I8573000", "I8574000"), massLine == "Other Result of Trading Portfolio")
+        
+    then
+        $gpy.setLocMassLine("Revaluation of FX position");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732795' extends '334325' salience 200
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode in ("II2410000", "I2411000", "I3284000"), massLine == "Other Result of Trading Portfolio")
+        
+    then
+        $gpy.setLocMassLine("Trading results");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732800' extends '334325' salience 190
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Salaries and Wages", hsoPlSubcl not in ("6104", "6405"))
+        
+    then
+        $gpy.setLocMassLine("Salaries & Wages");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732806' extends '334325' salience 180
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Accommodation Expenses", hsoPlSubcl == "6548")
+        
+    then
+        $gpy.setLocMassLine("Cleaning services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732807' extends '334325' salience 170
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Other Accommodation Expenses", "Maintenance Costs"), hsoPlSubcl == "6546")
+        
+    then
+        $gpy.setLocMassLine("Security services");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732808' extends '334325' salience 160
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Accommodation Expenses", hsoPlSubcl not in ("6546", "6548"))
+        
+    then
+        $gpy.setLocMassLine("Other Accommodation");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732809' extends '334325' salience 150
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Postal Charges", hsoPlSubcl == "6539")
+        
+    then
+        $gpy.setLocMassLine("Bulk Printing/Scanning");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732810' extends '334325' salience 140
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Postal Charges", hsoPlSubcl == "6527")
+        
+    then
+        $gpy.setLocMassLine("Office and Other Printing/Scanning");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732812' extends '334325' salience 130
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Travel related Costs", hsoPlSubcl == "6609")
+        
+    then
+        $gpy.setLocMassLine("Depreciation cars");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732813' extends '334325' salience 120
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Travel related Costs", hsoPlSubcl != "6609")
+        
+    then
+        $gpy.setLocMassLine("Travel expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732815' extends '334325' salience 110
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Office Supplies and Equipment", hsoPlSubcl == "6613")
+        
+    then
+        $gpy.setLocMassLine("Office Equipment Depreciation");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732816' extends '334325' salience 100
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Office Supplies and Equipment", hsoPlSubcl != "6613")
+        
+    then
+        $gpy.setLocMassLine("Other Office Supplies and Equipment");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732818' extends '334325' salience 90
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Other Expenses", "Other Sundry"), hsoPlSubcl == "6610")
+        
+    then
+        $gpy.setLocMassLine("Other Depreciation");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732819' extends '334325' salience 80
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Other Expenses", "Other Sundry"), hsoPlSubcl not in ("6608", "6610"))
+        
+    then
+        $gpy.setLocMassLine("Other Expenses - Other");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732821' extends '334325' salience 70
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "IC Services Bought Regional", cpyReyCode == "9761")
+        
+    then
+        $gpy.setLocMassLine("IC Services Bought GSO Bratislava");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732822' extends '334325' salience 60
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "IC Services Bought Regional", cpyReyCode == "0421")
+        
+    then
+        $gpy.setLocMassLine("IC Services Bought HUB Romania");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732823' extends '334325' salience 50
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "IC Services Bought Regional", cpyReyCode not in ("9761", "0421"))
+        
+    then
+        $gpy.setLocMassLine("IC Services Bought Regional - Other");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732824' extends '334325' salience 40
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "IC Services Bought Other", cpyReyCode matches "0701.*")
+        
+    then
+        $gpy.setLocMassLine("IC Services Bought ING Slaski");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732825' extends '334325' salience 30
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "IC Services Bought Other", cpyReyCode == "9048")
+        
+    then
+        $gpy.setLocMassLine("IC Services Bought ING Services Polska");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1732826' extends '334325' salience 20
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "IC Services Bought Other", (cpyReyCode not matches "0701.*" && cpyReyCode != "9048"))
+        
+    then
+        $gpy.setLocMassLine("IC Services Bought Other - Other");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+rule '1742686' extends '334325' salience 10
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Other Expenses", "Depreciation Tangible Fixed Assets"), hsoPlSubcl == "6608")
+        
+    then
+        $gpy.setLocMassLine("Other Depreciation");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5019");
+        
+end
+
+

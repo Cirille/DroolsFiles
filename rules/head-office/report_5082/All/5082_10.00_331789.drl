@@ -1,0 +1,347 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331789'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1104826' extends '331789' salience 250
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLocMassLine("99.999");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1104802' extends '331789' salience 240
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other Client Assets", actCode == "A0003000")
+        
+    then
+        $gda.setLocMassLine("Other accrued income receivable & prepayments");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1104807' extends '331789' salience 230
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Total Liabilities Intercompany")
+        
+    then
+        $gda.setLocMassLine("Intercompany Liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1104812' extends '331789' salience 220
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse06 == "SPOS")
+        
+    then
+        $gda.setLocMassLine("99.999");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1104817' extends '331789' salience 210
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Net Profit")
+        
+    then
+        $gda.setLocMassLine("Result of current year");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1105277' extends '331789' salience 200
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "Q0066000")
+        
+    then
+        $gda.setLocMassLine("result carried forward previous years");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1105278' extends '331789' salience 190
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "Q0073000")
+        
+    then
+        $gda.setLocMassLine("Share Capital");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1105279' extends '331789' salience 180
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Total Assets Intercompany")
+        
+    then
+        $gda.setLocMassLine("Intercompany Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1159235' extends '331789' salience 170
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Provision Loan Losses")
+        
+    then
+        $gda.setLocMassLine("Provision Loan Losses");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1104804' extends '331789' salience 160
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0255000", "L0252000"), cpyBeyNumber == null)
+        
+    then
+        $gda.setLocMassLine("Other received unearned / accrued amount payable");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1104809' extends '331789' salience 150
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other Client Assets", ownUse01 == "GWILL-INGMUT")
+        
+    then
+        $gda.setLocMassLine("Goodwill");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1104819' extends '331789' salience 140
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other Client Assets", actCode == "A0009000", ownUse06 == "INCH")
+        
+    then
+        $gda.setLocMassLine("Internal Nostro");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1105272' extends '331789' salience 130
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other Client Assets", actCode == "A0009000", ownUse06 == "CASH")
+        
+    then
+        $gda.setLocMassLine("Cash and Coin");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1105273' extends '331789' salience 120
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other Client Assets", actCode == "A0011000", cpyBeyNumber == null)
+        
+    then
+        $gda.setLocMassLine("Corporate tax prepayments");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1105274' extends '331789' salience 110
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other Client Assets", ownUse01 == "INGMUTFUNBGK")
+        
+    then
+        $gda.setLocMassLine("Investment in MFT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1105275' extends '331789' salience 100
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other Client Assets", actCode == "A0031000", cpyBeyNumber == null)
+        
+    then
+        $gda.setLocMassLine("Sundry debtors");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1105276' extends '331789' salience 90
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0273000", cpyBeyNumber == null)
+        
+    then
+        $gda.setLocMassLine("Corporate tax payable");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1105280' extends '331789' salience 80
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0234000", "L0238000"), cpyBeyNumber == null)
+        
+    then
+        $gda.setLocMassLine("Corporate tax payable");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1178605' extends '331789' salience 70
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Overnight Deposits", actCode == "L0273000", cpyBeyNumber == null)
+        
+    then
+        $gda.setLocMassLine("Corporate tax payable");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1178606' extends '331789' salience 60
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Overnight Deposits", actCode in ("L0234000", "L0238000"), cpyBeyNumber == null)
+        
+    then
+        $gda.setLocMassLine("Corporate tax payable");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1178607' extends '331789' salience 50
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Overnight Deposits", actCode in ("L0255000", "L0252000"), cpyBeyNumber == null)
+        
+    then
+        $gda.setLocMassLine("Other received unearned / accrued amount payable");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1104805' extends '331789' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Bank Deposits Given", actCode == "A0027000", pdtCode == "004400", cgpCode == "B0036")
+        
+    then
+        $gda.setLocMassLine("Term deposits given credit institutions");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1104806' extends '331789' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "004200", cpyBeyNumber == null)
+        
+    then
+        $gda.setLocMassLine("Call Money - Corporate");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1178608' extends '331789' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Overnight Deposits", pdtCode == "004200", cpyBeyNumber == null)
+        
+    then
+        $gda.setLocMassLine("Call Money - Corporate");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+rule '1104810' extends '331789' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other Client Assets", actCode == "A0027000", pdtCode == "014000", cgpCode == "B0036", ownUse06 == "NOST")
+        
+    then
+        $gda.setLocMassLine("Nostro accounts");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3240");
+        
+end
+
+

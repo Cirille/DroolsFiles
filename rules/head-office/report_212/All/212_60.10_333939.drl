@@ -1,0 +1,425 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '333939'
+	when
+		$gda : GrlDetAmounts(substr ( actCode , 1 , 1 ) in ( "A" , "L" ) && lcrProduct == "Reverse Repo" && intInd == "N" && hacAmtCl in ( "01" , "02" , "03" , "12" , "20" ))
+	then
+        
+end
+
+
+
+
+
+rule '1566810' extends '333939' salience 38980
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setNsfrCd("99");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566780' extends '333939' salience 38970
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType in ("BIS", "Central Bank", "Sovereign", "Local Government", "PSE", "EFSF", "ESM", "EU", "IMF"), getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1020.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566781' extends '333939' salience 38960
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType in ("BIS", "Central Bank", "Sovereign", "Local Government", "PSE", "EFSF", "ESM", "EU", "IMF"), getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566782' extends '333939' salience 38950
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType in ("BIS", "Central Bank", "Sovereign", "Local Government", "PSE", "EFSF", "ESM", "EU", "IMF"), getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566783' extends '333939' salience 38940
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType in ("BIS", "Central Bank", "Sovereign", "Local Government", "PSE", "EFSF", "ESM", "EU", "IMF"), getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566784' extends '333939' salience 38930
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType in ("BIS", "Central Bank", "Sovereign", "Local Government", "PSE", "EFSF", "ESM", "EU", "IMF"), getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566785' extends '333939' salience 38920
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType in ("BIS", "Central Bank", "Sovereign", "Local Government", "PSE", "EFSF", "ESM", "EU", "IMF"), getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1020.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566786' extends '333939' salience 38910
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType in ("MDB", "Other"), getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1080.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566787' extends '333939' salience 38900
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType in ("MDB", "Other"), getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1080.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566788' extends '333939' salience 38890
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType in ("MDB", "Other"), getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1080.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566789' extends '333939' salience 38880
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType in ("MDB", "Other"), getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1080.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566790' extends '333939' salience 38870
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType in ("MDB", "Other"), getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1080.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566791' extends '333939' salience 38860
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType in ("MDB", "Other"), getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1080.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566792' extends '333939' salience 38850
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType == "Credit Institution", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1140.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566793' extends '333939' salience 38840
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType == "Credit Institution", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1140.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566794' extends '333939' salience 38830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType == "Credit Institution", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1140.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566795' extends '333939' salience 38820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType == "Credit Institution", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1140.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566796' extends '333939' salience 38810
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType == "Credit Institution", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1140.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566797' extends '333939' salience 38800
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType == "Credit Institution", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1140.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566798' extends '333939' salience 38790
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType in ("Financial Holding", "Financial Institution", "Insurance Undertaking", "Investment Firm", "Mixed Holding", "SSPE"), getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1200.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566799' extends '333939' salience 38780
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType in ("Financial Holding", "Financial Institution", "Insurance Undertaking", "Investment Firm", "Mixed Holding", "SSPE"), getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1200.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566800' extends '333939' salience 38770
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType in ("Financial Holding", "Financial Institution", "Insurance Undertaking", "Investment Firm", "Mixed Holding", "SSPE"), getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1200.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566801' extends '333939' salience 38760
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType in ("Financial Holding", "Financial Institution", "Insurance Undertaking", "Investment Firm", "Mixed Holding", "SSPE"), getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1200.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566802' extends '333939' salience 38750
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType in ("Financial Holding", "Financial Institution", "Insurance Undertaking", "Investment Firm", "Mixed Holding", "SSPE"), getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1200.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566803' extends '333939' salience 38740
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType in ("Financial Holding", "Financial Institution", "Insurance Undertaking", "Investment Firm", "Mixed Holding", "SSPE"), getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1200.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566804' extends '333939' salience 38730
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType == "SME", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.0960.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566805' extends '333939' salience 38720
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType == "SME", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.0960.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566806' extends '333939' salience 38710
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType == "SME", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.0960.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566807' extends '333939' salience 38700
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType == "SME", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.0960.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566808' extends '333939' salience 38690
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType == "SME", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.0960.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+rule '1566809' extends '333939' salience 38680
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrCtpyType == "SME", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.0960.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4698");
+        
+end
+
+

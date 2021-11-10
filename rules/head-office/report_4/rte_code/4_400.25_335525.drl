@@ -1,0 +1,35 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335525'
+	when
+		$gda : GrlDetAmounts(actCode in ( "L0250000" , "L2527000" , "L2528000" , "L2529000" , "L2530000" , "L2531000" , "L2532000" , "L2533000" , "Q0063000" , "Q0065000" , "Q0066000" , "Q0069000" , "Q0070000" , "Q0071000" , "Q0073000" , "Q0076000" , "Q0077000" ))
+	then
+        
+end
+
+
+
+
+
+rule '1710428' extends '335525' salience 760
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "D.*" || actCode matches "E.*" || actCode matches "I.*" || actCode matches "L.*" || actCode matches "R.*" || actCode matches "Y.*" || actCode matches "Z.*" || actCode == "A0025000" || actCode == "A0032000" || actCode == "A2549000" || actCode == "B0595000" || actCode == "B0607000" || actCode == "B0608000" || actCode == "L2527000" || actCode == "L2528000" || actCode == "L2529000" || actCode == "L2530000" || actCode == "L2531000" || actCode == "L2532000" || actCode == "L2533000" || actCode == "Q0063000" || actCode == "Q0065000" || actCode == "Q0066000" || actCode == "Q0069000" || actCode == "Q0070000" || actCode == "Q0071000" || actCode == "Q0073000" || actCode == "Q0076000" || actCode == "Q0077000"))
+        
+    then
+        $gda.setRteCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5901");
+        
+end
+
+

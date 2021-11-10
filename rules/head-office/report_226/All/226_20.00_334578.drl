@@ -1,0 +1,55 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334578'
+	when
+		$gda : GrlDetAmounts(monthsBetween ( matDate , startDate ) <= 12)
+	then
+        
+end
+
+
+
+
+
+rule '1655307' extends '334578' salience 10
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setEbaRefRate(Warning: selecting from goe_v_isin_ir_vw: data will not be available in source topic.
+ full statement: {
+(SELECT MAX ( IR.BEST_PRICE )
+FROM goe_v_isin_ir_vw IR ,
+  gre_lr_cust_ref LCE
+WHERE IR.TENOR              = '1D'
+AND IR.ISOCUR               = HCU_CCY_CD_ORG
+AND LCE.LCR_HLY_REL_ID      = 'STNDRD'
+AND LCE.LCR_CUSTOM_REF_TYPE = 'IR1D_RATES'
+AND LCE.CUSTOM_KEY          = HCU_CCY_CD_ORG
+AND LCE.CUSTOM_CD           = IR.CURVE_ID
+  /* AND to_date (IR.SNAP_DATE,'YYYYMMDD') = case when reprice_date between trunc(rep_date, 'MM') and rep_date then reprice_date when DEAL_DATE between trunc(rep_date, 'MM') and rep_date then DEAL_DATE else null end */
+AND TO_CHAR(
+  CASE
+    WHEN reprice_date BETWEEN TRUNC(rep_date, 'MM') AND rep_date
+    THEN reprice_date
+    WHEN DEAL_DATE BETWEEN TRUNC(rep_date, 'MM') AND rep_date
+    THEN DEAL_DATE
+    ELSE NULL
+  END ,'YYYYMMDD') BETWEEN IR.SNAP_DATE AND IR.VALID_TO_DATE
+) });
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5248");
+        
+end
+
+

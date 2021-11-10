@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '337821'
+	when
+		$gda : GrlDetAmounts(hacAmtCl != null && hacAmtCl not in ( "11" , "19" ) && hpePdtType == "REPO" && intInd == "N" && contingInd == "Y" && sblSecVsSecInd == "N" && ebaProduct == null)
+	then
+        
+end
+
+
+
+
+
+rule '1907649' extends '337821' salience 5850
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y")
+        
+    then
+        $gda.setEbaProduct("Loans and advances. Reverse repurchase loans");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7851");
+        
+end
+
+rule '1907650' extends '337821' salience 5840
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N")
+        
+    then
+        $gda.setEbaProduct("Deposits. Repurchase agreements");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7851");
+        
+end
+
+

@@ -1,0 +1,74 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '330052'
+	when
+		$gda : GrlDetAmounts(nvl ( prodSubTypeLoc , 0 ) == "WASH")
+	then
+        
+end
+
+
+
+
+
+rule '823610' extends '330052' salience 1900
+
+    when
+        
+        GrlDetAmounts(this == $gda, prodSubTypeLoc == "WASH")
+        
+    then
+        $gda.setCustomTxt11("NOT FOUND seq 12");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1941");
+        
+end
+
+rule '778851' extends '330052' salience 1890
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "00001", prodSubTypeLoc == "WASH")
+        
+    then
+        $gda.setCustomTxt11("00001 WASH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1941");
+        
+end
+
+rule '778852' extends '330052' salience 1880
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "10000", prodSubTypeLoc == "WASH")
+        
+    then
+        $gda.setCustomTxt11("10000 WASH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1941");
+        
+end
+
+rule '778853' extends '330052' salience 1870
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId in ("00001", "10000"), posId matches "FUNDING.*", prodSubTypeLoc == "WASH")
+        
+    then
+        $gda.setCustomTxt11("FUNDINGWASH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1941");
+        
+end
+
+

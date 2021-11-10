@@ -1,0 +1,3272 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '333918'
+	when
+		$gda : GrlDetAmounts(substr ( actCode , 1 , 1 ) in ( "A" ) && lcrProduct in ( "Deposit Given" , "Other Monies Due From Contractual Inflows" , "Derivatives Excluding Credit Derivatives" , "Credit Derivatives" , "Trade Financing" , "Call Money Given" , "Current Account Given" ) && intInd == "N" && hacAmtCl != "03")
+	then
+        
+end
+
+
+
+
+
+rule '1580653' extends '333918' salience 38660
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setNsfrCd("99199");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580611' extends '333918' salience 38650
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "SME", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1010.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580612' extends '333918' salience 38640
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "SME", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1010.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580613' extends '333918' salience 38630
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "SME", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1010.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580614' extends '333918' salience 38620
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "SME", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1010.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580615' extends '333918' salience 38610
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType in ("PSE", "Sovereign", "Local Government", "EU", "EFSF", "ESM", "Central Bank", "MDB"), getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1030.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580616' extends '333918' salience 38600
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType in ("PSE", "Sovereign", "Local Government", "EU", "EFSF", "ESM", "Central Bank", "MDB"), getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1030.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580617' extends '333918' salience 38590
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType in ("PSE", "Sovereign", "Local Government", "EU", "EFSF", "ESM", "Central Bank", "MDB"), getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1030.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580618' extends '333918' salience 38580
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType in ("PSE", "Sovereign", "Local Government", "EU", "EFSF", "ESM", "Central Bank", "MDB"), getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1030.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580619' extends '333918' salience 38570
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType in ("PSE", "Sovereign", "Local Government", "EU", "EFSF", "ESM", "Central Bank", "MDB"), getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1030.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580620' extends '333918' salience 38560
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType in ("PSE", "Sovereign", "Local Government", "EU", "EFSF", "ESM", "Central Bank", "MDB"), getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1030.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580621' extends '333918' salience 38550
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "Other", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1130.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580622' extends '333918' salience 38540
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "Other", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1130.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580623' extends '333918' salience 38530
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "Other", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1130.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580624' extends '333918' salience 38520
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "Other", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1130.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580625' extends '333918' salience 38510
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "Other", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1130.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580626' extends '333918' salience 38500
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "Other", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1130.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580627' extends '333918' salience 38490
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType in ("Financial Institution", "SSPE", "Insurance Undertaking", "Financial Holding", "Mixed Holding"), getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1250.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580628' extends '333918' salience 38480
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType in ("Financial Institution", "SSPE", "Insurance Undertaking", "Financial Holding", "Mixed Holding"), getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1250.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580629' extends '333918' salience 38470
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType in ("Financial Institution", "SSPE", "Insurance Undertaking", "Financial Holding", "Mixed Holding"), getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1250.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580630' extends '333918' salience 38460
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType in ("Financial Institution", "SSPE", "Insurance Undertaking", "Financial Holding", "Mixed Holding"), getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1250.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580631' extends '333918' salience 38450
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType in ("Financial Institution", "SSPE", "Insurance Undertaking", "Financial Holding", "Mixed Holding"), getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1250.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580632' extends '333918' salience 38440
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType in ("Financial Institution", "SSPE", "Insurance Undertaking", "Financial Holding", "Mixed Holding"), getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1250.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580633' extends '333918' salience 38430
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("PSE", "Sovereign", "Local Government", "EU", "EFSF", "ESM", "Central Bank", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1020.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580634' extends '333918' salience 38420
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("PSE", "Sovereign", "Local Government", "EU", "EFSF", "ESM", "Central Bank", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580635' extends '333918' salience 38410
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("PSE", "Sovereign", "Local Government", "EU", "EFSF", "ESM", "Central Bank", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580636' extends '333918' salience 38400
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("PSE", "Sovereign", "Local Government", "EU", "EFSF", "ESM", "Central Bank", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580637' extends '333918' salience 38390
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("PSE", "Sovereign", "Local Government", "EU", "EFSF", "ESM", "Central Bank", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580638' extends '333918' salience 38380
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("PSE", "Sovereign", "Local Government", "EU", "EFSF", "ESM", "Central Bank", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1020.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580639' extends '333918' salience 38370
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Other", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1080.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580640' extends '333918' salience 38360
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Other", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1080.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580641' extends '333918' salience 38350
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Other", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1080.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580642' extends '333918' salience 38340
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Other", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1080.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580643' extends '333918' salience 38330
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Other", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1080.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580644' extends '333918' salience 38320
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Other", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1080.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580645' extends '333918' salience 38310
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("Financial Institution", "SSPE", "Insurance Undertaking", "Financial Holding", "Mixed Holding"), eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1200.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580646' extends '333918' salience 38300
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("Financial Institution", "SSPE", "Insurance Undertaking", "Financial Holding", "Mixed Holding"), eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1200.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580647' extends '333918' salience 38290
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("Financial Institution", "SSPE", "Insurance Undertaking", "Financial Holding", "Mixed Holding"), eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1200.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580648' extends '333918' salience 38280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("Financial Institution", "SSPE", "Insurance Undertaking", "Financial Holding", "Mixed Holding"), eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1200.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580649' extends '333918' salience 38270
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("Financial Institution", "SSPE", "Insurance Undertaking", "Financial Holding", "Mixed Holding"), eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1200.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580650' extends '333918' salience 38260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("Financial Institution", "SSPE", "Insurance Undertaking", "Financial Holding", "Mixed Holding"), eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1200.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580651' extends '333918' salience 38250
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "SME", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1010.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580652' extends '333918' salience 38240
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "SME", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1010.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580654' extends '333918' salience 38230
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "less_than_30_days", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0900.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580655' extends '333918' salience 38220
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_30 days_and_three_months", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0900.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580656' extends '333918' salience 38210
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_three_and_six_months", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0900.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580657' extends '333918' salience 38200
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_six_and_nine_months", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0900.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580658' extends '333918' salience 38190
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_nine_and_twelve_months", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0900.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580659' extends '333918' salience 38180
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "more_than_one_year", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0900.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580660' extends '333918' salience 38170
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "less_than_30_days", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1080.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580661' extends '333918' salience 38160
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_30 days_and_three_months", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1080.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580662' extends '333918' salience 38150
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_three_and_six_months", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1080.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580663' extends '333918' salience 38140
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_six_and_nine_months", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1080.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580664' extends '333918' salience 38130
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_nine_and_twelve_months", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1080.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580665' extends '333918' salience 38120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "more_than_one_year", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1080.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580666' extends '333918' salience 38110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "less_than_30_days", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0960.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580667' extends '333918' salience 38100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_30 days_and_three_months", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0960.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580668' extends '333918' salience 38090
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_three_and_six_months", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0960.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580669' extends '333918' salience 38080
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_six_and_nine_months", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0960.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580670' extends '333918' salience 38070
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_nine_and_twelve_months", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0960.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580671' extends '333918' salience 38060
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "more_than_one_year", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0960.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580672' extends '333918' salience 38050
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "less_than_30_days", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1080.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580673' extends '333918' salience 38040
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_30 days_and_three_months", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1080.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580674' extends '333918' salience 38030
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_three_and_six_months", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1080.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580675' extends '333918' salience 38020
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_six_and_nine_months", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1080.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580676' extends '333918' salience 38010
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_nine_and_twelve_months", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1080.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580677' extends '333918' salience 38000
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "more_than_one_year", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1080.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580678' extends '333918' salience 37990
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1080.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580679' extends '333918' salience 37980
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1080.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580680' extends '333918' salience 37970
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1080.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580681' extends '333918' salience 37960
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1080.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580682' extends '333918' salience 37950
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1080.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580683' extends '333918' salience 37940
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1080.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580684' extends '333918' salience 37930
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType in ("PSE", "BIS", "EU", "ESM", "IMF", "EFSF", "Sovereign", "Local Government", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1020.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580685' extends '333918' salience 37920
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType in ("PSE", "BIS", "EU", "ESM", "IMF", "EFSF", "Sovereign", "Local Government", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580686' extends '333918' salience 37910
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType in ("PSE", "BIS", "EU", "ESM", "IMF", "EFSF", "Sovereign", "Local Government", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580687' extends '333918' salience 37900
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType in ("PSE", "BIS", "EU", "ESM", "IMF", "EFSF", "Sovereign", "Local Government", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580688' extends '333918' salience 37890
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType in ("PSE", "BIS", "EU", "ESM", "IMF", "EFSF", "Sovereign", "Local Government", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580689' extends '333918' salience 37880
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType in ("PSE", "BIS", "EU", "ESM", "IMF", "EFSF", "Sovereign", "Local Government", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1020.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580690' extends '333918' salience 37870
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1080.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580691' extends '333918' salience 37860
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1080.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580692' extends '333918' salience 37850
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1080.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580693' extends '333918' salience 37840
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1080.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580694' extends '333918' salience 37830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1080.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580695' extends '333918' salience 37820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1080.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580696' extends '333918' salience 37810
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1020.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580697' extends '333918' salience 37800
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580698' extends '333918' salience 37790
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580699' extends '333918' salience 37780
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580700' extends '333918' salience 37770
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580701' extends '333918' salience 37760
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1020.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580702' extends '333918' salience 37750
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1020.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580703' extends '333918' salience 37740
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580704' extends '333918' salience 37730
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580705' extends '333918' salience 37720
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580706' extends '333918' salience 37710
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1020.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580707' extends '333918' salience 37700
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1020.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580708' extends '333918' salience 37690
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1200.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580709' extends '333918' salience 37680
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1200.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580710' extends '333918' salience 37670
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1200.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580711' extends '333918' salience 37660
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1200.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580712' extends '333918' salience 37650
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1200.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580713' extends '333918' salience 37640
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1200.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580714' extends '333918' salience 37630
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1140.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580715' extends '333918' salience 37620
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1140.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580716' extends '333918' salience 37610
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1140.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580717' extends '333918' salience 37600
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1140.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580718' extends '333918' salience 37590
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1140.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580719' extends '333918' salience 37580
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1140.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580720' extends '333918' salience 37570
+
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Call Money Given", "Current Account Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "N", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0900.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580721' extends '333918' salience 37560
+
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Call Money Given", "Current Account Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "N", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1080.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580722' extends '333918' salience 37550
+
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Call Money Given", "Current Account Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0960.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580723' extends '333918' salience 37540
+
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Call Money Given", "Current Account Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1080.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580724' extends '333918' salience 37530
+
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Call Money Given", "Current Account Given"), lcrCtpyType == "Other", eval(nvl(this.getencumberedind(), 'n')) == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1080.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580725' extends '333918' salience 37520
+
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Call Money Given", "Current Account Given"), lcrCtpyType in ("PSE", "BIS", "EU", "ESM", "IMF", "EFSF", "Sovereign", "Local Government", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1020.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580726' extends '333918' salience 37510
+
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Call Money Given", "Current Account Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getencumberedind(), 'n')) == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1020.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580727' extends '333918' salience 37500
+
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Call Money Given", "Current Account Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1140.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580728' extends '333918' salience 37490
+
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Call Money Given", "Current Account Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getencumberedind(), 'n')) == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1200.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580729' extends '333918' salience 37480
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.0960.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580730' extends '333918' salience 37470
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.0960.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580731' extends '333918' salience 37460
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.0960.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580732' extends '333918' salience 37450
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.0960.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580733' extends '333918' salience 37440
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.0960.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580734' extends '333918' salience 37430
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.0960.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580735' extends '333918' salience 37420
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "Credit Institution", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1190.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580736' extends '333918' salience 37410
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "Credit Institution", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1190.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580737' extends '333918' salience 37400
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "Credit Institution", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1190.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580738' extends '333918' salience 37390
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "Credit Institution", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1190.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580739' extends '333918' salience 37380
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "Credit Institution", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1190.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580740' extends '333918' salience 37370
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "Credit Institution", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1190.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580741' extends '333918' salience 37360
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1140.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580742' extends '333918' salience 37350
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1140.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580743' extends '333918' salience 37340
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1140.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580744' extends '333918' salience 37330
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1140.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580745' extends '333918' salience 37320
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1140.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580746' extends '333918' salience 37310
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1140.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580747' extends '333918' salience 37300
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1200.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580748' extends '333918' salience 37290
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1200.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580749' extends '333918' salience 37280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1200.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580750' extends '333918' salience 37270
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1200.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580751' extends '333918' salience 37260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1200.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580752' extends '333918' salience 37250
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1200.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580753' extends '333918' salience 37240
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1140.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580754' extends '333918' salience 37230
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1140.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580755' extends '333918' salience 37220
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1140.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580756' extends '333918' salience 37210
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1140.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580757' extends '333918' salience 37200
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1140.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580758' extends '333918' salience 37190
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "N", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1140.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580759' extends '333918' salience 37180
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("PSE", "Sovereign", "Local Government", "EU", "EFSF", "ESM", "Central Bank", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1030.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580760' extends '333918' salience 37170
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("PSE", "Sovereign", "Local Government", "EU", "EFSF", "ESM", "Central Bank", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1030.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580761' extends '333918' salience 37160
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("PSE", "Sovereign", "Local Government", "EU", "EFSF", "ESM", "Central Bank", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1040.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580762' extends '333918' salience 37150
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("PSE", "Sovereign", "Local Government", "EU", "EFSF", "ESM", "Central Bank", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1050.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580763' extends '333918' salience 37140
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("PSE", "Sovereign", "Local Government", "EU", "EFSF", "ESM", "Central Bank", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1060.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580764' extends '333918' salience 37130
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("PSE", "Sovereign", "Local Government", "EU", "EFSF", "ESM", "Central Bank", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1070.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580765' extends '333918' salience 37120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Other", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1090.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580766' extends '333918' salience 37110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Other", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1090.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580767' extends '333918' salience 37100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Other", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1100.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580768' extends '333918' salience 37090
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Other", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1110.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580769' extends '333918' salience 37080
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Other", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1120.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580770' extends '333918' salience 37070
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Other", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1130.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580771' extends '333918' salience 37060
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("Financial Institution", "SSPE", "Insurance Undertaking", "Financial Holding", "Mixed Holding"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1210.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580772' extends '333918' salience 37050
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("Financial Institution", "SSPE", "Insurance Undertaking", "Financial Holding", "Mixed Holding"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1210.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580773' extends '333918' salience 37040
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("Financial Institution", "SSPE", "Insurance Undertaking", "Financial Holding", "Mixed Holding"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1220.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580774' extends '333918' salience 37030
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("Financial Institution", "SSPE", "Insurance Undertaking", "Financial Holding", "Mixed Holding"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1230.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580775' extends '333918' salience 37020
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("Financial Institution", "SSPE", "Insurance Undertaking", "Financial Holding", "Mixed Holding"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1240.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580776' extends '333918' salience 37010
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType in ("Financial Institution", "SSPE", "Insurance Undertaking", "Financial Holding", "Mixed Holding"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1250.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580777' extends '333918' salience 37000
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "less_than_30_days", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0910.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580778' extends '333918' salience 36990
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_30 days_and_three_months", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0910.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580779' extends '333918' salience 36980
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_three_and_six_months", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0920.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580780' extends '333918' salience 36970
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_six_and_nine_months", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0930.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580781' extends '333918' salience 36960
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_nine_and_twelve_months", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0940.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580782' extends '333918' salience 36950
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "more_than_one_year", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0950.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580783' extends '333918' salience 36940
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "less_than_30_days", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1090.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580784' extends '333918' salience 36930
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_30 days_and_three_months", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1090.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580785' extends '333918' salience 36920
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_three_and_six_months", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1100.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580786' extends '333918' salience 36910
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_six_and_nine_months", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1110.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580787' extends '333918' salience 36900
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_nine_and_twelve_months", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1120.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580788' extends '333918' salience 36890
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Retail", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "more_than_one_year", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1130.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580789' extends '333918' salience 36880
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "less_than_30_days", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0970.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580790' extends '333918' salience 36870
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_30 days_and_three_months", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0970.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580791' extends '333918' salience 36860
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_three_and_six_months", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0980.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580792' extends '333918' salience 36850
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_six_and_nine_months", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.0990.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580793' extends '333918' salience 36840
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_nine_and_twelve_months", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.1000.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580794' extends '333918' salience 36830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "more_than_one_year", retailInd == "Y")
+        
+    then
+        $gda.setNsfrCd("C60.1010.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580795' extends '333918' salience 36820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "less_than_30_days", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1090.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580796' extends '333918' salience 36810
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_30 days_and_three_months", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1090.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580797' extends '333918' salience 36800
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_three_and_six_months", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1100.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580798' extends '333918' salience 36790
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_six_and_nine_months", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1110.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580799' extends '333918' salience 36780
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_nine_and_twelve_months", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1120.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580800' extends '333918' salience 36770
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "more_than_one_year", retailInd == "N")
+        
+    then
+        $gda.setNsfrCd("C60.1130.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580801' extends '333918' salience 36760
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1090.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580802' extends '333918' salience 36750
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1090.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580803' extends '333918' salience 36740
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1100.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580804' extends '333918' salience 36730
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1110.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580805' extends '333918' salience 36720
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1120.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580806' extends '333918' salience 36710
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1130.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580807' extends '333918' salience 36700
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType in ("PSE", "BIS", "EU", "ESM", "IMF", "EFSF", "Sovereign", "Local Government", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1030.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580808' extends '333918' salience 36690
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType in ("PSE", "BIS", "EU", "ESM", "IMF", "EFSF", "Sovereign", "Local Government", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1030.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580809' extends '333918' salience 36680
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType in ("PSE", "BIS", "EU", "ESM", "IMF", "EFSF", "Sovereign", "Local Government", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1040.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580810' extends '333918' salience 36670
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType in ("PSE", "BIS", "EU", "ESM", "IMF", "EFSF", "Sovereign", "Local Government", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1050.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580811' extends '333918' salience 36660
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType in ("PSE", "BIS", "EU", "ESM", "IMF", "EFSF", "Sovereign", "Local Government", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1060.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580812' extends '333918' salience 36650
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType in ("PSE", "BIS", "EU", "ESM", "IMF", "EFSF", "Sovereign", "Local Government", "MDB"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1070.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580813' extends '333918' salience 36640
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1090.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580814' extends '333918' salience 36630
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1090.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580815' extends '333918' salience 36620
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1100.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580816' extends '333918' salience 36610
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1110.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580817' extends '333918' salience 36600
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1120.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580818' extends '333918' salience 36590
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Other", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1130.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580819' extends '333918' salience 36580
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1030.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580820' extends '333918' salience 36570
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1030.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580821' extends '333918' salience 36560
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1040.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580822' extends '333918' salience 36550
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1050.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580823' extends '333918' salience 36540
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1060.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580824' extends '333918' salience 36530
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "N", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1070.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580825' extends '333918' salience 36520
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1030.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580826' extends '333918' salience 36510
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1030.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580827' extends '333918' salience 36500
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1040.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580828' extends '333918' salience 36490
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1050.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580829' extends '333918' salience 36480
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1060.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580830' extends '333918' salience 36470
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Central Bank", eval(nvl(this.getoperationalind(), 'n')) == "Y", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1070.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580831' extends '333918' salience 36460
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1210.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580832' extends '333918' salience 36450
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1210.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580833' extends '333918' salience 36440
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1220.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580834' extends '333918' salience 36430
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1230.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580835' extends '333918' salience 36420
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1240.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580836' extends '333918' salience 36410
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType in ("Financial Institution", "Insurance Undertaking", "Mixed Holding", "SSPE", "Financial Holding"), eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1250.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580837' extends '333918' salience 36400
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1150.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580838' extends '333918' salience 36390
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1150.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580839' extends '333918' salience 36380
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1160.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580840' extends '333918' salience 36370
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1170.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580841' extends '333918' salience 36360
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1180.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580842' extends '333918' salience 36350
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode != "163", lcrProduct in ("Other Monies Due From Contractual Inflows", "Deposit Given", "Call Money Given", "Current Account Given"), lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1190.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580843' extends '333918' salience 36340
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.0970.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580844' extends '333918' salience 36330
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.0970.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580845' extends '333918' salience 36320
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.0980.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580846' extends '333918' salience 36310
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.0990.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580847' extends '333918' salience 36300
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1000.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580848' extends '333918' salience 36290
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "SME", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1010.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580849' extends '333918' salience 36280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.1150.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580850' extends '333918' salience 36270
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.1150.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580851' extends '333918' salience 36260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.1160.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580852' extends '333918' salience 36250
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.1170.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580853' extends '333918' salience 36240
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.1180.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580854' extends '333918' salience 36230
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lcrProduct == "Trade Financing", lcrCtpyType == "Credit Institution", eval(nvl(this.getencumberedind(), 'n')) == "Y", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.1190.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580855' extends '333918' salience 36220
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "Retail", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setNsfrCd("C60.0950.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580856' extends '333918' salience 36210
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "Retail", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setNsfrCd("C60.0950.110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580857' extends '333918' salience 36200
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "Retail", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setNsfrCd("C60.0950.120");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580858' extends '333918' salience 36190
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "Retail", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setNsfrCd("C60.0950.130");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580859' extends '333918' salience 36180
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "Retail", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setNsfrCd("C60.0950.140");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+rule '1580860' extends '333918' salience 36170
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, rteCode == "163", lcrProduct in ("Deposit Given", "Call Money Given", "Other Monies Due From Contractual Inflows"), lcrCtpyType == "Retail", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setNsfrCd("C60.0950.150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4677");
+        
+end
+
+

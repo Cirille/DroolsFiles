@@ -1,0 +1,88 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334216'
+	when
+		$gda : GrlDetAmounts(( actCode matches "Q.*" || ( actCode in ( "A0009000" , "A0012000" , "A0021000" , "L1605000" ) ) ))
+	then
+        
+end
+
+
+
+
+
+rule '1605977' extends '334216' salience 190
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1605000")
+        
+    then
+        $gda.setSeCode1("9001-HK6_20.000-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4930");
+        
+end
+
+rule '1605978' extends '334216' salience 180
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0012000", "A0021000"))
+        
+    then
+        $gda.setSeCode1("9001-HK6_07.000-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4930");
+        
+end
+
+rule '1605979' extends '334216' salience 170
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "Q.*")
+        
+    then
+        $gda.setSeCode1("9001-HK6_20.000-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4930");
+        
+end
+
+rule '1605980' extends '334216' salience 160
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0009000", hcuCcyCdOrg == "EUR")
+        
+    then
+        $gda.setSeCode1("9001-HK6_01.000-0.000.0");
+        $gda.setSeCode2("9001-HK6_01.000-1.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4930");
+        
+end
+
+rule '1605981' extends '334216' salience 150
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0009000", hcuCcyCdOrg != "EUR")
+        
+    then
+        $gda.setSeCode1("9001-HK6_01.000-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4930");
+        
+end
+
+

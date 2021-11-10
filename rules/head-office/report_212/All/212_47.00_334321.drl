@@ -1,0 +1,100 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334321'
+	when
+		$gda : GrlDetAmounts(( actCode matches "L.*" && ( retailInd == "Y" || smeInd == "Y" ) ) || dgsCd != null)
+	then
+        
+end
+
+
+
+
+
+rule '1614119' extends '334321' salience 76540
+
+    when
+        
+        GrlDetAmounts(this == $gda, dgsCd != null)
+        
+    then
+        $gda.setDgsCd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5015");
+        
+end
+
+rule '1614120' extends '334321' salience 76530
+
+    when
+        
+        GrlDetAmounts(this == $gda, dgsCd == null)
+        
+    then
+        $gda.setDgsCd("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5015");
+        
+end
+
+rule '1614117' extends '334321' salience 76520
+
+    when
+        
+        GrlDetAmounts(this == $gda, dgsCd == "N")
+        
+    then
+        $gda.setDgsCd("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5015");
+        
+end
+
+rule '1614118' extends '334321' salience 76510
+
+    when
+        
+        GrlDetAmounts(this == $gda, dgsCd == "NL")
+        
+    then
+        $gda.setDgsCd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5015");
+        
+end
+
+rule '1614121' extends '334321' salience 76500
+
+    when
+        
+        GrlDetAmounts(this == $gda, dgsCd == "Y")
+        
+    then
+        $gda.setDgsCd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5015");
+        
+end
+
+rule '1614116' extends '334321' salience 76490
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "BCEN")
+        
+    then
+        $gda.setDgsCd("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5015");
+        
+end
+
+

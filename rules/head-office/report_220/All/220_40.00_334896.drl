@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334896'
+	when
+		$gda : GrlDetAmounts(ebaProduct in ( "Debt securities. Covered bonds" , "Debt securities issued. Covered bonds" ) || ( ebaUnderlyingProduct in ( "Debt securities. Covered bonds" , "Debt securities issued. Covered bonds" ) ))
+	then
+        
+end
+
+
+
+
+
+rule '1681617' extends '334896' salience 3570
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCovRatio(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5556");
+        
+end
+
+rule '1681638' extends '334896' salience 3560
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaCredQualStepIss in ("CQS 1", "CQS 2"))
+        
+    then
+        $gda.setCovRatio("107");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5556");
+        
+end
+
+

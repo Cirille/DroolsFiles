@@ -1,0 +1,159 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '329963'
+	when
+		$gda : GrlDetAmounts(hpePdtType in ( "COMM DISC BILL" , "GUAR ISSUED" , "LC ISSUED" , "LETTER OF INTENT" , "OWN ACCEPTANCE" ))
+	then
+end
+
+
+rule '772742' extends '329963' salience 18140
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setScyActCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1840");
+        
+end
+
+rule '772743' extends '329963' salience 18130
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "COMM DISC BILL", issuedInd == "Y", intInd == "N")
+        
+    then
+        $gda.setScyActCode("B0610000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1840");
+        
+end
+
+rule '772741' extends '329963' salience 18120
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "OWN ACCEPTANCE", issuedInd == "Y", intInd == "N")
+        
+    then
+        $gda.setScyActCode("B0596000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1840");
+        
+end
+
+rule '772740' extends '329963' salience 18110
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LETTER OF INTENT", issuedInd == "Y", intInd == "N")
+        
+    then
+        $gda.setScyActCode("B0596000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1840");
+        
+end
+
+rule '772744' extends '329963' salience 18100
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "GUAR ISSUED", issuedInd == "Y", intInd == "N")
+        
+    then
+        $gda.setScyActCode("B0596000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1840");
+        
+end
+
+rule '1615969' extends '329963' salience 18090
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "GUAR ISSUED", issuedInd == "N", intInd == "N", lseHlyRelId in ("0768", "9675", "0212", "9679", "9117", "9120"))
+        
+    then
+        $gda.setScyActCode("B0595000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1840");
+        
+end
+
+rule '772745' extends '329963' salience 18080
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", issuedInd == "Y", intInd == "N", standbyInd == "Y")
+        
+    then
+        $gda.setScyActCode("B0596000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1840");
+        
+end
+
+rule '772746' extends '329963' salience 18070
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", issuedInd == "Y", intInd == "N", standbyInd == "N")
+        
+    then
+        $gda.setScyActCode("B0596000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1840");
+        
+end
+
+rule '772739' extends '329963' salience 18060
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", intInd == "N", standbyInd == "N", confInd == "Y")
+        
+    then
+        $gda.setScyActCode("B0596000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1840");
+        
+end
+
+rule '1741154' extends '329963' salience 18050
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", issuedInd == "Y", intInd == "N", acceptedInd == "Y")
+        
+    then
+        $gda.setScyActCode("A0027000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1840");
+        
+end
+
+rule '1749032' extends '329963' salience 18040
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", issuedInd == "N", intInd == "N", acceptedInd == "Y")
+        
+    then
+        $gda.setScyActCode("L0242000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1840");
+        
+end
+
+

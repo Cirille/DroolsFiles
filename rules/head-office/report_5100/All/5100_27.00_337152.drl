@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '337152'
+	when
+		$gda : GrlDetAmounts(hpePdtType in ( "CCY SWAP" , "CCY FORW" , "LOAN" , "FACTORING" , "DEPOSIT" , "REPO" , "STOCK CD AND CP" , "STOCK BOND" , "STOCK TREASURY PAPER" , "STOCK DISC BILL PRM NOTE" ) && contingInd == "Y" && intInd == "N" && hacAmtCl in ( "01" , "10" , "11" , "19" ) && smnBeyNumber != nvl ( cpyBeyNumber , "X" ) && intInd == "N" && ( actCode matches "B.*" || actCode == null ))
+	then
+        
+end
+
+
+
+
+
+rule '1783525' extends '337152' salience 220
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table grl_cashflows does not have an entry within the refDataApi within the dbConfig file*/
+        
+    then
+        $gda.setConvCd("UM");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7191");
+        
+end
+
+rule '1783526' extends '337152' salience 210
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table grl_cashflows does not have an entry within the refDataApi within the dbConfig file*/
+        
+    then
+        $gda.setConvCd("04");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7191");
+        
+end
+
+rule '1783527' extends '337152' salience 200
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table grl_cashflows does not have an entry within the refDataApi within the dbConfig file*/
+        
+    then
+        $gda.setConvCd("UM");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7191");
+        
+end
+
+

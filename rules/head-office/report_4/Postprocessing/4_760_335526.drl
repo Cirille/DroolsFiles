@@ -1,0 +1,42 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+global com.ing.gfrs.logical.apis.GplVExchRatesDrlLogicalApi gplVExchRatesDrlLogicalApi;
+global com.ing.gfrs.logical.apis.GreHrCcyTransLogicalApi greHrCcyTransLogicalApi;
+
+dialect  "mvel"
+
+
+rule '335526'
+	when
+		$gda : GrlDetAmounts( nvl ( status , "X" ) not in ('RVD','RVL') )
+		eval(greHrCcyTransLogicalApi.existsRecord( $gda.getLseHlyRelId(), $gda.getHcuCcyCdOrg()) == true)
+	then
+end
+
+rule '1710429-1' extends '335526' salience -3
+
+    when
+        /*WARNING: this rule will always be called, since it has no conditions*/
+    then
+
+	    $gda.setHcuCcyCdChoDetTan(greHrCcyTransLogicalApi.getHcuCcyCdCcyTranslation($gda.getLseHlyRelId(), $gda.getHcuCcyCdOrg()));
+
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5902");
+end
+
+rule '1710429-2' extends '335526' salience -4
+
+    when
+        eval(gplVExchRatesDrlLogicalApi.existsRecord($gda.getHcuCcyCdOrg(),$gda.getLseHlyRelId()) == true)
+
+    then
+        $gda.setChoDetAmtTan($gda.getChoDetAmtTan() * gplVExchRatesDrlLogicalApi.getExchangeRate($gda.getHcuCcyCdOrg(),$gda.getLseHlyRelId()));
+
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5902");
+
+end
+
+
+

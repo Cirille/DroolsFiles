@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332656'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1182049' extends '332656' salience 1470
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "S.*")
+        
+    then
+        $gda.setSmeInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3706");
+        
+end
+
+rule '1182050' extends '332656' salience 1460
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy not matches "S.*")
+        
+    then
+        $gda.setSmeInd("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3706");
+        
+end
+
+rule '1182051' extends '332656' salience 1450
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy not matches "S.*", smeInd == "Y")
+        
+    then
+        $gda.setSmeInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3706");
+        
+end
+
+

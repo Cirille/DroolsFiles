@@ -1,0 +1,204 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '330093'
+	when
+		$gda : GrlDetAmounts(( contingInd == "N" || contingInd == null ) && ( hacAmtCl == "01" ) && ( lseId != null && lseId != null && lseId not in ( "9349" , "19165" , "19230" , "20684" , "20695" , "20698" ) ) && ( posGroupId != null && posGroupId not in ( "10703" , "20601" , "20606" , "APB" , "BAIL" , "CPGT" , "CSGT" , "FALL" , "GEN" , "OTHR" , "PART" , "PERF" , "STBY" , "USRE" ) ) && ( nvl ( prodSubTypeLoc , 0 ) != "WASH" ) && ( hpePdtType != "POS MOV" ) && ( substr ( posGroupId , 1 , 1 ) in ( "B" , "C" , "E" , "F" , "R" , "T" ) ))
+	then
+        
+end
+
+
+
+
+
+rule '823628' extends '330093' salience 1830
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt11("NOT FOUND seq 14");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1979");
+        
+end
+
+rule '823627' extends '330093' salience 1820
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "FRNP")
+        
+    then
+        $gda.setCustomTxt11("10512 FLOATING RATE PAPERS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1979");
+        
+end
+
+rule '823629' extends '330093' salience 1810
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "TBLP")
+        
+    then
+        $gda.setCustomTxt11("10211 TREAS PAPER TRADE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1979");
+        
+end
+
+rule '823621' extends '330093' salience 1800
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "BNDP", prodSubTypeLoc == "TRPP")
+        
+    then
+        $gda.setCustomTxt11("CM BOND BNDP TRPP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1979");
+        
+end
+
+rule '823622' extends '330093' salience 1790
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "BNDP", prodSubTypeLoc == "BNDP")
+        
+    then
+        $gda.setCustomTxt11("10511 BONDS TRADING");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1979");
+        
+end
+
+rule '823623' extends '330093' salience 1780
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "CDCP", prodSubTypeLoc == "CDCP")
+        
+    then
+        $gda.setCustomTxt11("CM BOND CDCP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1979");
+        
+end
+
+rule '823624' extends '330093' salience 1770
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "CDDP", prodSubTypeLoc == "CDDP")
+        
+    then
+        $gda.setCustomTxt11("CM CDDP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1979");
+        
+end
+
+rule '823625' extends '330093' salience 1760
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "CPDP", prodSubTypeLoc == "CPDP")
+        
+    then
+        $gda.setCustomTxt11("CM BILL CPDP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1979");
+        
+end
+
+rule '823626' extends '330093' salience 1750
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "EQCO", prodSubTypeLoc == "EQCO")
+        
+    then
+        $gda.setCustomTxt11("CM EQTY EQCO");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1979");
+        
+end
+
+rule '823630' extends '330093' salience 1740
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "TRPP", repAssetInd == "Y")
+        
+    then
+        $gda.setCustomTxt11("10211 TREAS PAPER TRADE LONG");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1979");
+        
+end
+
+rule '1042423' extends '330093' salience 1730
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "TRPP", repAssetInd == "N")
+        
+    then
+        $gda.setCustomTxt11("10211 TREAS PAPER TRADE SHORT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1979");
+        
+end
+
+rule '1142589' extends '330093' salience 1720
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId in ("REPS", "RVRS"), repAssetInd == "Y")
+        
+    then
+        $gda.setCustomTxt11("11201 REVERSE REPO");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1979");
+        
+end
+
+rule '1142590' extends '330093' salience 1710
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId in ("REPS", "RVRS"), repAssetInd == "N")
+        
+    then
+        $gda.setCustomTxt11("21201 REPO");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1979");
+        
+end
+
+rule '825132' extends '330093' salience 1700
+
+    when
+        
+        GrlDetAmounts(this == $gda, posGroupId == "CDDP", prodSubTypeLoc == "CDDP", lseHlyRelId == "0204")
+        
+    then
+        $gda.setCustomTxt11("10311 CD'S PURCH, TRAD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1979");
+        
+end
+
+

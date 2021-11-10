@@ -1,0 +1,14 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+dialect  "mvel"
+
+rule 'REP_NULLIFY' salience 99999
+    when
+        $gpy : GrlPlYtd()
+    then
+
+        $gpy.setMemoText($gpy.getLdlIdTrail());
+        $gpy.setLdlIdTrail(kcontext.rule.name);
+end

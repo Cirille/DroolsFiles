@@ -1,0 +1,29 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '329982'
+	when
+		$gda : GrlDetAmounts(hpePdtType == "POS MOV" && scyActCode != null)
+	then
+end
+
+
+rule '773077' extends '329982' salience 10950
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "POS MOV")
+        
+    then
+        $gda.setScyPdtCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1859");
+        
+end
+
+

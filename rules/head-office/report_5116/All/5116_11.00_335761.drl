@@ -1,0 +1,204 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335761'
+	when
+		$gda : GrlDetAmounts(hpePdtType == "OTHER RECEIVABLES" && intInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1735885' extends '335761' salience 1050
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt01("not defined yet");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6080");
+        
+end
+
+rule '1736135' extends '335761' salience 1040
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", repAssetInd == "Y", posId matches "ENTRUST.*")
+        
+    then
+        $gda.setCustomTxt01("9017010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6080");
+        
+end
+
+rule '1735882' extends '335761' salience 1030
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", hscAcctSubcl == "2708", repAssetInd == "Y", acctType == "ACRE")
+        
+    then
+        $gda.setCustomTxt01("1402040");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6080");
+        
+end
+
+rule '1735883' extends '335761' salience 1020
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", hscAcctSubcl == "2702", repAssetInd == "Y", acctType in ("OTHA", "SSPA"))
+        
+    then
+        $gda.setCustomTxt01("1402040");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6080");
+        
+end
+
+rule '1735884' extends '335761' salience 1010
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", hscAcctSubcl == "2708", repAssetInd == "Y", acctType == "EXPA")
+        
+    then
+        $gda.setCustomTxt01("1990023");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6080");
+        
+end
+
+rule '1735886' extends '335761' salience 1000
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", hscAcctSubcl == "2706", repAssetInd == "Y", posId matches "FUNDING.*")
+        
+    then
+        $gda.setCustomTxt01("2302900");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6080");
+        
+end
+
+rule '1735887' extends '335761' salience 990
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", hscAcctSubcl == "2706", repAssetInd == "Y", posId matches "MARGIN.*")
+        
+    then
+        $gda.setCustomTxt01("2302900");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6080");
+        
+end
+
+rule '1735875' extends '335761' salience 980
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", hscAcctSubcl == "2106", posId matches "HLMBENZ.*", repAssetInd == "Y", icInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1003030");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6080");
+        
+end
+
+rule '1735876' extends '335761' salience 970
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", hscAcctSubcl == "2106", posId matches "VWFINANCE.*", repAssetInd == "Y", icInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1003030");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6080");
+        
+end
+
+rule '1735877' extends '335761' salience 960
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", hscAcctSubcl == "2106", posId matches "HLMTOYOTA.*", repAssetInd == "Y", icInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1003030");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6080");
+        
+end
+
+rule '1735878' extends '335761' salience 950
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", hscAcctSubcl == "2106", posId matches "HLMBMW.*", repAssetInd == "Y", icInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1003030");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6080");
+        
+end
+
+rule '1735879' extends '335761' salience 940
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", hscAcctSubcl == "2106", posId not matches "HLM.*", repAssetInd == "Y", icInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1302010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6080");
+        
+end
+
+rule '1735880' extends '335761' salience 930
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", hscAcctSubcl == "2106", posId not matches "VWFINANCE.*", repAssetInd == "Y", icInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1302010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6080");
+        
+end
+
+rule '1735881' extends '335761' salience 920
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", hscAcctSubcl == "2106", posId matches "HLM.*", repAssetInd == "Y", icInd == "N", (posId not matches "HLMBMW.*" && posId not matches "HLMTOYOTA.*" && posId not matches "HLMBENZ.*"))
+        
+    then
+        $gda.setCustomTxt01("1302010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6080");
+        
+end
+
+

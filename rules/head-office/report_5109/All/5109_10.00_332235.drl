@@ -1,0 +1,100 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332235'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1148416' extends '332235' salience 560
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLocMassLine(massLine );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3530");
+        
+end
+
+rule '1148372' extends '332235' salience 550
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Trading Securities")
+        
+    then
+        $gda.setLocMassLine("Trading Securities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3530");
+        
+end
+
+rule '1148373' extends '332235' salience 540
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Trading Derivatives")
+        
+    then
+        $gda.setLocMassLine("Trading Derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3530");
+        
+end
+
+rule '1148409' extends '332235' salience 530
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Discounted Bills")
+        
+    then
+        $gda.setLocMassLine("Discounted Bills");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3530");
+        
+end
+
+rule '1148410' extends '332235' salience 520
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Guarantees")
+        
+    then
+        $gda.setLocMassLine("Guarantees");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3530");
+        
+end
+
+rule '1148411' extends '332235' salience 510
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Irrevocable Letters of Credit")
+        
+    then
+        $gda.setLocMassLine("Irrevocable Letters of Credit");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3530");
+        
+end
+
+

@@ -1,0 +1,108 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '335518'
+	when
+		$gda : GrlDetAmounts( nvl ( status , "X" ) not in ('RVD','RVL') )
+	then
+end
+
+
+
+rule '1710335-1' extends '335518' salience 5
+
+    when
+
+        /*WARNING: this rule will always be called, since it has no conditions*/
+
+    then
+        $gda.setChoDetAmtRepCcy($gda.getDetAmtRepCcy());
+		$gda.setHcuCcyCdChoDetRepCcy($gda.getHcuRepCcyCd());
+		$gda.setChoDetAmtEur($gda.getDetAmtEuro());
+		$gda.setChoDetAmtTanEur($gda.getDetAmtEuro());
+		$gda.setChoDetAmtTan($gda.getOrgAmt());
+		$gda.setHcuCcyCdChoDetTan($gda.getHcuCcyCdOrg());
+
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5894");
+
+end
+
+
+
+rule '1710335-2' extends '335518' salience 4
+
+    when
+
+        GrlDetAmounts(this == $gda, actCode matches "B.*", repAssetInd == "Y")
+
+    then
+        $gda.setChoDetAmtRepCcy(-$gda.getDetAmtRepCcy());
+		$gda.setHcuCcyCdChoDetRepCcy($gda.getHcuRepCcyCd());
+		$gda.setChoDetAmtEur(-$gda.getDetAmtEuro());
+		$gda.setChoDetAmtTanEur(-$gda.getDetAmtEuro() );
+		$gda.setChoDetAmtTan(-$gda.getOrgAmt());
+		$gda.setHcuCcyCdChoDetTan($gda.getHcuCcyCdOrg());
+
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5894");
+
+end
+
+rule '1710335-3' extends '335518' salience 3
+
+    when
+
+        GrlDetAmounts(this == $gda, actCode matches "D.*", repAssetInd == "Y")
+
+    then
+        $gda.setChoDetAmtRepCcy(-$gda.getDetAmtRepCcy());
+		$gda.setHcuCcyCdChoDetRepCcy($gda.getHcuRepCcyCd());
+		$gda.setChoDetAmtEur(-$gda.getDetAmtEuro());
+		$gda.setChoDetAmtTanEur(-$gda.getDetAmtEuro() );
+		$gda.setChoDetAmtTan(-$gda.getOrgAmt());
+		$gda.setHcuCcyCdChoDetTan($gda.getHcuCcyCdOrg());
+
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5894");
+
+end
+
+rule '1710335-4' extends '335518' salience 2
+
+    when
+
+        GrlDetAmounts(this == $gda, nvl ( actCode , "X" ) not matches "B.*",nvl ( actCode , "X" ) not matches "D.*", repAssetInd == "N")
+
+    then
+        $gda.setChoDetAmtRepCcy(-$gda.getDetAmtRepCcy());
+		$gda.setHcuCcyCdChoDetRepCcy($gda.getHcuRepCcyCd());
+		$gda.setChoDetAmtEur(-$gda.getDetAmtEuro());
+		$gda.setChoDetAmtTanEur(-$gda.getDetAmtEuro() );
+		$gda.setChoDetAmtTan(-$gda.getOrgAmt());
+		$gda.setHcuCcyCdChoDetTan($gda.getHcuCcyCdOrg());
+
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5894");
+
+end
+
+rule '1710335-5' extends '335518' salience 1
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType =="FRA", hacAmtCl == "10")
+        
+    then
+        $gda.setChoDetAmtRepCcy(-$gda.getDetAmtRepCcy());
+		$gda.setHcuCcyCdChoDetRepCcy($gda.getHcuRepCcyCd());
+		$gda.setChoDetAmtEur(-$gda.getDetAmtEuro());
+		$gda.setChoDetAmtTanEur(-$gda.getDetAmtEuro() );
+		$gda.setChoDetAmtTan(-$gda.getOrgAmt());
+		$gda.setHcuCcyCdChoDetTan($gda.getHcuCcyCdOrg());
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5894");
+        
+end
+

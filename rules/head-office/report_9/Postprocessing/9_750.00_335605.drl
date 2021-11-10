@@ -1,0 +1,110 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+dialect  "mvel"
+
+
+rule '335605'
+	when
+		$gpy : GrlPlYtd( nvl ( status , "X" ) not in ('RVD','RVL') )
+	then
+end
+
+
+
+rule '1714393-1' extends '335605' salience 20
+
+    when
+
+        /*WARNING: this rule will always be called, since it has no conditions*/
+
+    then
+        $gpy.setChoDetAmtRepCcy(-$gpy.getDetAmtRepCcy());
+		$gpy.setHcuCcyCdChoDetRepCcy($gpy.getHcuCcyCdRep());
+		$gpy.setChoDetAmtEur(-$gpy.getDetAmtEuro());
+		$gpy.setChoDetAmtTanEur(-$gpy.getDetAmtEuro());
+		$gpy.setChoDetAmtTan(-$gpy.getOrgAmt());
+		$gpy.setHcuCcyCdChoDetTan($gpy.getHcuCcyCdOrg());
+
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5964");
+
+end
+
+
+
+rule '1714393-2' extends '335605' salience 10
+
+    when
+
+        GrlPlYtd(this == $gpy, actCode matches "B.*", repRecInd == "Y")
+
+    then
+        $gpy.setChoDetAmtRepCcy($gpy.getDetAmtRepCcy());
+		$gpy.setHcuCcyCdChoDetRepCcy($gpy.getHcuCcyCdRep());
+		$gpy.setChoDetAmtEur($gpy.getDetAmtEuro());
+		$gpy.setChoDetAmtTanEur($gpy.getDetAmtEuro() );
+		$gpy.setChoDetAmtTan($gpy.getOrgAmt());
+		$gpy.setHcuCcyCdChoDetTan($gpy.getHcuCcyCdOrg());
+
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5964");
+
+end
+
+rule '1714393-3' extends '335605' salience 9
+
+    when
+
+        GrlPlYtd(this == $gpy, actCode matches "D.*", repRecInd == "Y")
+
+    then
+        $gpy.setChoDetAmtRepCcy($gpy.getDetAmtRepCcy());
+		$gpy.setHcuCcyCdChoDetRepCcy($gpy.getHcuCcyCdRep());
+		$gpy.setChoDetAmtEur($gpy.getDetAmtEuro());
+		$gpy.setChoDetAmtTanEur($gpy.getDetAmtEuro() );
+		$gpy.setChoDetAmtTan($gpy.getOrgAmt());
+		$gpy.setHcuCcyCdChoDetTan($gpy.getHcuCcyCdOrg());
+
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5964");
+
+end
+
+rule '1714393-4' extends '335605' salience 8
+
+    when
+
+        GrlPlYtd(this == $gpy, nvl ( actCode , "X" ) not matches "B.*",nvl ( actCode , "X" ) not matches "D.*", repRecInd == "N")
+
+    then
+        $gpy.setChoDetAmtRepCcy($gpy.getDetAmtRepCcy());
+		$gpy.setHcuCcyCdChoDetRepCcy($gpy.getHcuCcyCdRep());
+		$gpy.setChoDetAmtEur($gpy.getDetAmtEuro());
+		$gpy.setChoDetAmtTanEur($gpy.getDetAmtEuro() );
+		$gpy.setChoDetAmtTan($gpy.getOrgAmt());
+		$gpy.setHcuCcyCdChoDetTan($gpy.getHcuCcyCdOrg());
+
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5964");
+
+end
+
+rule '1714393-5' extends '335605' salience 7
+
+    when
+        
+        GrlPlYtd(this == $gpy, hpePdtType =="FRA")
+        
+    then
+        $gpy.setChoDetAmtRepCcy(-$gpy.getDetAmtRepCcy());
+		$gpy.setHcuCcyCdChoDetRepCcy($gpy.getHcuCcyCdRep());
+		$gpy.setChoDetAmtEur(-$gpy.getDetAmtEuro());
+		$gpy.setChoDetAmtTanEur(-$gpy.getDetAmtEuro() );
+		$gpy.setChoDetAmtTan(-$gpy.getOrgAmt());
+		$gpy.setHcuCcyCdChoDetTan($gpy.getHcuCcyCdOrg());
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5964");
+        
+end
+
+
+
+

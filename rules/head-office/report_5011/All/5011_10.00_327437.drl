@@ -1,0 +1,156 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '327437'
+	when
+		$gpy : GrlPlYtd(hpnPlCl in ( "1000" , "2000" , "3000" , "4000" , "5000" ))
+	then
+        
+end
+
+
+
+
+
+rule '1152744' extends '327437' salience 100
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine((coalesce (goe_pck_tfn . goe_get_lce_cust_cd (lse_hly_rel_id , "MASSPLDET3" , pos_id ) , goe_pck_tfn . goe_get_lce_cust_cd (lse_hly_rel_id , "MASSPLDET" , loc_ref ) , goe_pck_tfn . goe_get_lce_cust_cd (lse_hly_rel_id , "MASSPLDET1" , hso_pl_subcl ) , goe_pck_tfn . goe_get_lce_cust_cd (lse_hly_rel_id , "MASSPLDET4" , int_ind + lde_dept_cd + trim (upper (mass_line ) ) ) , goe_pck_tfn . goe_get_lce_cust_cd (lse_hly_rel_id , "MASSPLDET2" , trim (upper (mass_line ) ) ) , massLine ) ) );
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1563");
+        
+end
+
+rule '1152746' extends '327437' salience 90
+
+    when
+        
+        /*MANUAL adjustment here, because of error: At based indexing on an non-integer index can only have non-integer indexers*/
+        
+    then
+        $gpy.setLocMassLine("Interest received (external)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1563");
+        
+end
+
+rule '1152747' extends '327437' salience 80
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == null)
+        
+    then
+        $gpy.setLocMassLine(Warning: selecting from Internal: data will not be available in source topic.
+ full statement: Interest from Internal Funding (excl PCM));
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1563");
+        
+end
+
+rule '1175760' extends '327437' salience 70
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == null)
+        
+    then
+        $gpy.setLocMassLine("99.999");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1563");
+        
+end
+
+rule '1152748' extends '327437' salience 60
+
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "N", actCode != null)
+        
+    then
+        $gpy.setLocMassLine("Interest paid (external)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1563");
+        
+end
+
+rule '1152749' extends '327437' salience 50
+
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "Y", actCode != null)
+        
+    then
+        $gpy.setLocMassLine("Interest received (external)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1563");
+        
+end
+
+rule '1152765' extends '327437' salience 40
+
+    when
+        
+        /*MANUAL adjustment here, because of error: At based indexing on an non-integer index can only have non-integer indexers*/
+        GrlPlYtd(this == $gpy, massLine == "Other Result of Trading Portfolio")
+        
+    then
+        $gpy.setLocMassLine("MTM of Int Funding");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1563");
+        
+end
+
+rule '1182222' extends '327437' salience 30
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Result of Trading Portfolio", actCode != null)
+        
+    then
+        $gpy.setLocMassLine("Trading results");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1563");
+        
+end
+
+rule '1182223' extends '327437' salience 20
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Result of Trading Portfolio", actCode == null)
+        
+    then
+        $gpy.setLocMassLine("MTM of Int Funding");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1563");
+        
+end
+
+rule '1152767' extends '327437' salience 10
+
+    when
+        
+        /*MANUAL adjustment here, because of error: At based indexing on an non-integer index can only have non-integer indexers*/
+        /*MANUAL adjustment here, because of error: At based indexing on an non-integer index can only have non-integer indexers*/
+        GrlPlYtd(this == $gpy, massLine == "Other Result of Trading Portfolio")
+        
+    then
+        $gpy.setLocMassLine("Revaluation of FX position");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1563");
+        
+end
+
+

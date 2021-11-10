@@ -1,0 +1,191 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334415'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1617350' extends '334415' salience 130
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLocMassLine(massLine );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5097");
+        
+end
+
+rule '1617351' extends '334415' salience 120
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0596000", pdtCode == "014200", rteCode == "010", cgpCode in ("B0036", "P0039"))
+        
+    then
+        $gda.setLocMassLine("Guarantees");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5097");
+        
+end
+
+rule '1617352' extends '334415' salience 110
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0596000", pdtCode == "014800", rteCode == "010", cgpCode in ("B0036", "P0039"))
+        
+    then
+        $gda.setLocMassLine("Revocable Credit and Pre-Settlement Facilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5097");
+        
+end
+
+rule '1617353' extends '334415' salience 100
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0596000", pdtCode in ("025600", "027000"), rteCode == "010", cgpCode in ("B0036", "P0039"))
+        
+    then
+        $gda.setLocMassLine("Other Contingent Irrevocable Facilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5097");
+        
+end
+
+rule '1617354' extends '334415' salience 90
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0611000", pdtCode == "014200", rteCode == "010", cgpCode in ("B0036", "P0039"))
+        
+    then
+        $gda.setLocMassLine("Guarantees");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5097");
+        
+end
+
+rule '1617355' extends '334415' salience 80
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0611000", pdtCode == "014800", rteCode == "010", cgpCode in ("B0036", "P0039"))
+        
+    then
+        $gda.setLocMassLine("Revocable Credit and Pre-Settlement Facilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5097");
+        
+end
+
+rule '1617356' extends '334415' salience 70
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0611000", pdtCode in ("025600", "027000"), rteCode == "010", cgpCode in ("B0036", "P0039"))
+        
+    then
+        $gda.setLocMassLine("Other Contingent Irrevocable Facilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5097");
+        
+end
+
+rule '1617357' extends '334415' salience 60
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0595000", cpyBeyNumber == null, pdtCode in ("014100", "014200"), rteCode != "010")
+        
+    then
+        $gda.setLocMassLine("Guarantees");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5097");
+        
+end
+
+rule '1617358' extends '334415' salience 50
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0595000", cpyBeyNumber == null, pdtCode in ("014900", "015000"), rteCode != "010")
+        
+    then
+        $gda.setLocMassLine("Irrevocable Letters of Credit");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5097");
+        
+end
+
+rule '1617359' extends '334415' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0595000", cpyBeyNumber == null, pdtCode == "014800", rteCode == "016")
+        
+    then
+        $gda.setLocMassLine("Revocable Credit and Pre-Settlement Facilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5097");
+        
+end
+
+rule '1617360' extends '334415' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0595000", cpyBeyNumber == null, pdtCode in ("026900", "027000"), rteCode not in ("013", "014"))
+        
+    then
+        $gda.setLocMassLine("Other Contingent Irrevocable Facilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5097");
+        
+end
+
+rule '1617361' extends '334415' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0595000", cpyBeyNumber == null, pdtCode in ("026900", "027000"), rteCode in ("013", "014"))
+        
+    then
+        $gda.setLocMassLine("Contingent Irrevocable Facilities related to Mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5097");
+        
+end
+
+rule '1617362' extends '334415' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0595000", cpyBeyNumber == null, pdtCode in ("014300", "014400", "014500", "014700", "015100", "015500"), rteCode == "010")
+        
+    then
+        $gda.setLocMassLine("Other Contingent Irrevocable Facilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5097");
+        
+end
+
+

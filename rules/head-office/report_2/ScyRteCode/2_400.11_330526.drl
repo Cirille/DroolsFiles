@@ -1,0 +1,133 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '330526'
+	when
+		$gda : GrlDetAmounts(scyActCode in ( "A0001000" , "A0002000" , "A0003000" , "A0005000" , "A0006000" , "A0007000" , "A0008000" , "A0009000" , "A0010000" , "A0011000" , "A0012000" , "A0014000" , "A0016000" , "A0019000" , "A0020000" , "A0021000" , "A0022000" , "A0023000" , "A0024000" , "A0025000" , "A0028000" , "A0029000" , "A0031000" , "A0033000" , "A0035000" , "A0036000" , "A0037000" , "A0038000" , "A0039000" , "A0040000" , "A0044000" , "A0045000" , "A0046000" , "A0050000" , "A0051000" , "A0052000" , "A0053000" , "A0054000" , "A0055000" , "A0056000" , "A0061000" , "A1614000" , "A2342000" , "A2535000" , "A2536000" , "A2537000" , "A2538000" , "A2539000" , "A2540000" , "A2541000" , "A2581000" , "A2698000" , "A3145000" , "A3146000" , "A3147000" , "A3176000" , "A3177000" , "A3178000" , "A3179000" , "A3282000" , "A3914000" , "A3916000" , "A8008000" , "A8294000" , "A8295000" , "L0230000" , "L0251000" ) && icInd == "Y" && scyActCode != null)
+	then
+end
+
+
+rule '890982' extends '330526' salience 6860
+
+    when
+        
+        GrlDetAmounts(this == $gda, scyActCode == "A3178000", intInd == "Y")
+        
+    then
+        $gda.setScyRteCode("102");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2342");
+        
+end
+
+rule '890988' extends '330526' salience 6850
+
+    when
+        
+        GrlDetAmounts(this == $gda, scyActCode in ("A0007000", "L0230000"), intInd == "Y")
+        
+    then
+        $gda.setScyRteCode("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2342");
+        
+end
+
+rule '890985' extends '330526' salience 6840
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N")
+        
+    then
+        $gda.setScyRteCode("010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2342");
+        
+end
+
+rule '890986' extends '330526' salience 6830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, scyActCode in ("A0007000", "L0230000"), intInd == "Y", getCase0_890986() == "BANKS")
+        
+    then
+        $gda.setScyRteCode("098");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2342");
+        
+end
+
+rule '890987' extends '330526' salience 6820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, scyActCode in ("A0007000", "L0230000"), intInd == "Y", getCase0_890986() == "GOVERNMENTS")
+        
+    then
+        $gda.setScyRteCode("099");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2342");
+        
+end
+
+rule '1487030' extends '330526' salience 6810
+
+    when
+        
+        GrlDetAmounts(this == $gda, scyActCode == "A3282000", intInd == "Y", htyTradCat == "01")
+        
+    then
+        $gda.setScyRteCode("170");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2342");
+        
+end
+
+rule '1487029' extends '330526' salience 6800
+
+    when
+        
+        GrlDetAmounts(this == $gda, scyActCode == "A3282000", intInd == "Y", htyTradCat == "02")
+        
+    then
+        $gda.setScyRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2342");
+        
+end
+
+rule '890983' extends '330526' salience 6790
+
+    when
+        
+        GrlDetAmounts(this == $gda, scyActCode == "A0003000", intInd == "Y", hpePdtType matches "STOCK.*", htyTradCat == "02")
+        
+    then
+        $gda.setScyRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2342");
+        
+end
+
+rule '1029470' extends '330526' salience 6780
+
+    when
+        
+        GrlDetAmounts(this == $gda, scyActCode == "A0003000", intInd == "Y", hpePdtType matches "STOCK.*", htyTradCat == "01")
+        
+    then
+        $gda.setScyRteCode("170");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2342");
+        
+end
+
+

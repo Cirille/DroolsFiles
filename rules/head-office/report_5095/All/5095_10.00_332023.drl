@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332023'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1122467' extends '332023' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0759")
+        
+    then
+        $gda.setRiskRecon(posId );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3394");
+        
+end
+
+rule '1122462' extends '332023' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0759", hpePdtType == "LOAN")
+        
+    then
+        $gda.setRiskRecon(substr (replace (posId , "-" , MANUALLY adjust: NULL ) , 1 , 10 ) );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3394");
+        
+end
+
+

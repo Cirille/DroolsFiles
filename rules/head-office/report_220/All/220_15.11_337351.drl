@@ -1,0 +1,464 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '337351'
+	when
+		$gda : GrlDetAmounts(( hpePdtType in ( "SPOT FX" , "CCY FORW" , "CCY FUT" , "CCY OPT" , "CCY SWAP" , "COMMODITY FORW" , "COMMODITY FUT" , "COMMODITY OPT" , "COMMODITY SWAP" , "EQUITY FORW" , "EQUITY FUT" , "EQUITY OPT" , "EQUITY SWAP" , "GOLD FORW" , "GOLD FUT" , "GOLD OPT" , "GOLD SWAP" , "FRA" , "INTR RATE FUT" , "INTR RATE OPT" , "IRS" , "OTHER UNDERL FORW" , "OTHER UNDERL FUT" , "OTHER UNDERL OPT" , "OTHER UNDERL SWAP" , "PREC METAL FORW" , "PREC METAL FUT" , "PREC METAL OPT" , "PREC METAL SWAP" , "BOND OPTION" , "SWAPTION" , "CFD" , "EM DEBT FORW" , "EM DEPT FUT" , "EM DEBT OPT" , "EM DEBT SWQP" ) ) && hacAmtCl == "10" && intInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1823073' extends '337351' salience 6380
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setEbaProduct(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823044' extends '337351' salience 6370
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY FORW")
+        
+    then
+        $gda.setEbaProduct("Derivatives. FX-Forwards");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823045' extends '337351' salience 6360
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY FUT")
+        
+    then
+        $gda.setEbaProduct("Derivatives. FX-Futures");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823046' extends '337351' salience 6350
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY OPT")
+        
+    then
+        $gda.setEbaProduct("Derivatives. FX-Options");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823047' extends '337351' salience 6340
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY SWAP")
+        
+    then
+        $gda.setEbaProduct("Derivatives. FX-Swaps");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823048' extends '337351' salience 6330
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "COMMODITY FORW")
+        
+    then
+        $gda.setEbaProduct("Derivatives. Commodity-Forwards");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823049' extends '337351' salience 6320
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "COMMODITY FUT")
+        
+    then
+        $gda.setEbaProduct("Derivatives. Commodity-Futures");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823050' extends '337351' salience 6310
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "COMMODITY OPT")
+        
+    then
+        $gda.setEbaProduct("Derivatives. Commodity-Options");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823051' extends '337351' salience 6300
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "COMMODITY SWAP")
+        
+    then
+        $gda.setEbaProduct("Derivatives. Commodity-Swaps");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823052' extends '337351' salience 6290
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "EQUITY FORW")
+        
+    then
+        $gda.setEbaProduct("Derivatives. Equity-Forwards");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823053' extends '337351' salience 6280
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "EQUITY FUT")
+        
+    then
+        $gda.setEbaProduct("Derivatives. Equity-Futures");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823054' extends '337351' salience 6270
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "EQUITY OPT")
+        
+    then
+        $gda.setEbaProduct("Derivatives. Equity-Options");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823055' extends '337351' salience 6260
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType in ("EQUITY SWAP", "CFD"))
+        
+    then
+        $gda.setEbaProduct("Derivatives. Equity-Swaps");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823056' extends '337351' salience 6250
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "FRA")
+        
+    then
+        $gda.setEbaProduct("Derivatives. Intr-Rate-Forwards");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823057' extends '337351' salience 6240
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "GOLD FORW")
+        
+    then
+        $gda.setEbaProduct("Derivatives. Gold-Forwards");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823058' extends '337351' salience 6230
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "GOLD FUT")
+        
+    then
+        $gda.setEbaProduct("Derivatives. Gold-Futures");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823059' extends '337351' salience 6220
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "GOLD OPT")
+        
+    then
+        $gda.setEbaProduct("Derivatives. Gold-Options");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823060' extends '337351' salience 6210
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "GOLD SWAP")
+        
+    then
+        $gda.setEbaProduct("Derivatives. Gold-Swaps");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823061' extends '337351' salience 6200
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "INTR RATE FUT")
+        
+    then
+        $gda.setEbaProduct("Derivatives. Intr-Rate-Futures");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823062' extends '337351' salience 6190
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType in ("INTR RATE OPT", "BOND OPTION", "SWAPTION"))
+        
+    then
+        $gda.setEbaProduct("Derivatives. Intr-Rate-Options");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823063' extends '337351' salience 6180
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "IRS")
+        
+    then
+        $gda.setEbaProduct("Derivatives. Intr-Rate-Swaps");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823064' extends '337351' salience 6170
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType in ("OTHER UNDERL FORW", "EM DEBT FORW"))
+        
+    then
+        $gda.setEbaProduct("Derivatives. Other-Forwards");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823065' extends '337351' salience 6160
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType in ("OTHER UNDERL FUT", "EM DEPT FUT"))
+        
+    then
+        $gda.setEbaProduct("Derivatives. Other-Futures");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823066' extends '337351' salience 6150
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType in ("OTHER UNDERL OPT", "EM DEBT OPT"))
+        
+    then
+        $gda.setEbaProduct("Derivatives. Other-Options");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823067' extends '337351' salience 6140
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType in ("OTHER UNDERL SWAP", "EM DEBT SWQP"))
+        
+    then
+        $gda.setEbaProduct("Derivatives. Other-Swaps");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823068' extends '337351' salience 6130
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "PREC METAL FORW")
+        
+    then
+        $gda.setEbaProduct("Derivatives. Precious-Metals-Forwards");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823069' extends '337351' salience 6120
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "PREC METAL FUT")
+        
+    then
+        $gda.setEbaProduct("Derivatives. Precious-Metals-Futures");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823070' extends '337351' salience 6110
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "PREC METAL OPT")
+        
+    then
+        $gda.setEbaProduct("Derivatives. Precious-Metals-Options");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823071' extends '337351' salience 6100
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "PREC METAL SWAP")
+        
+    then
+        $gda.setEbaProduct("Derivatives. Precious-Metals-Swaps");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823072' extends '337351' salience 6090
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX")
+        
+    then
+        $gda.setEbaProduct("FX-Spots");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823041' extends '337351' salience 6080
+
+    when
+        
+        GrlDetAmounts(this == $gda, hsnSwapCl in ("08", "09", "10", "11"))
+        
+    then
+        $gda.setEbaProduct("Derivatives. Total-Return-Swaps");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823042' extends '337351' salience 6070
+
+    when
+        
+        GrlDetAmounts(this == $gda, hsnSwapCl in ("12", "13", "14", "15"))
+        
+    then
+        $gda.setEbaProduct("Derivatives. Credit-Spread-Put-Options");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823043' extends '337351' salience 6060
+
+    when
+        
+        GrlDetAmounts(this == $gda, hsnSwapCl in ("16", "17", "18", "19"))
+        
+    then
+        $gda.setEbaProduct("Derivatives. Other-Credit-Derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+rule '1823074' extends '337351' salience 6050
+
+    when
+        
+        GrlDetAmounts(this == $gda, hsnSwapCl in ("04", "05", "06", "07"))
+        
+    then
+        $gda.setEbaProduct("Derivatives. Credit-Default-Swaps");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7378");
+        
+end
+
+

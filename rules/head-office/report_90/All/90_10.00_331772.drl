@@ -1,0 +1,373 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331772'
+	when
+		$gda : GrlDetAmounts(hpePdtType in ( "STOCK BOND" , "STOCK CD AND CP" , "STOCK CONV BOND" , "STOCK FLOATING RATE NOTE" , "STOCK MEDIUM TERM NOTE" , "STOCK SAVING CERT" , "STOCK SHARE" , "STOCK TREASURY PAPER" ) && hacAmtCl in ( "01" , "02" , "03" , "04" , "05" , "12" , "18" ) && htyTradCat == "01")
+	then
+        
+end
+
+
+
+
+
+rule '1104115' extends '331772' salience 270
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxtHo06(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104089' extends '331772' salience 260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("BCEN", "GCEN"), getCase0_1104089() == "01 to 04", getCase1_1104089() == "<1_month")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q16");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104090' extends '331772' salience 250
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("BCEN", "GCEN"), getCase0_1104089() == "01 to 04", getCase1_1104089() == "1-<3_months")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q17");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104091' extends '331772' salience 240
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("BCEN", "GCEN"), getCase0_1104089() == "01 to 04", getCase1_1104089() == "3-<6_months")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q18");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104092' extends '331772' salience 230
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("BCEN", "GCEN"), getCase0_1104089() == "01 to 04", getCase1_1104089() == "6-<12_months")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q19");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104093' extends '331772' salience 220
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("BCEN", "GCEN"), getCase0_1104089() == "01 to 04", getCase1_1104089() == "1-<2_years")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q21");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104094' extends '331772' salience 210
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("BCEN", "GCEN"), getCase0_1104089() == "01 to 04", getCase1_1104089() == "2-<3_years")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q22");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104095' extends '331772' salience 200
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("BCEN", "GCEN"), getCase0_1104089() == "01 to 04", getCase1_1104089() == "3-<4_years")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q23");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104096' extends '331772' salience 190
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("BCEN", "GCEN"), getCase0_1104089() == "01 to 04", getCase1_1104089() == "4-<5_years")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q25");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104097' extends '331772' salience 180
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("BCEN", "GCEN"), getCase0_1104089() == "01 to 04", getCase1_1104089() == "5-<7_years")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q26");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104098' extends '331772' salience 170
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("BCEN", "GCEN"), getCase0_1104089() == "01 to 04", getCase1_1104089() == "7-<10_years")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q27");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104099' extends '331772' salience 160
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("BCEN", "GCEN"), getCase0_1104089() == "01 to 04", getCase1_1104089() == "10-<15_years")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q28");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104100' extends '331772' salience 150
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("BCEN", "GCEN"), getCase0_1104089() == "01 to 04", getCase1_1104089() == "15-<20_years")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q29");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104101' extends '331772' salience 140
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("BCEN", "GCEN"), getCase0_1104089() == "01 to 04", getCase1_1104089() == ">20_years")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q30");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104102' extends '331772' salience 130
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("GOSN", "GLOL", "GREL", "GSNO"), euCtryInd == "Y", getCase0_1104089() == "01 to 04", getCase1_1104089() == "<1_month")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q16");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104103' extends '331772' salience 120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("GOSN", "GLOL", "GREL", "GSNO"), euCtryInd == "Y", getCase0_1104089() == "01 to 04", getCase1_1104089() == "1-<3_months")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q17");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104104' extends '331772' salience 110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("GOSN", "GLOL", "GREL", "GSNO"), euCtryInd == "Y", getCase0_1104089() == "01 to 04", getCase1_1104089() == "3-<6_months")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q18");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104105' extends '331772' salience 100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("GOSN", "GLOL", "GREL", "GSNO"), euCtryInd == "Y", getCase0_1104089() == "01 to 04", getCase1_1104089() == "6-<12_months")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q19");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104106' extends '331772' salience 90
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("GOSN", "GLOL", "GREL", "GSNO"), euCtryInd == "Y", getCase0_1104089() == "01 to 04", getCase1_1104089() == "1-<2_years")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q21");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104107' extends '331772' salience 80
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("GOSN", "GLOL", "GREL", "GSNO"), euCtryInd == "Y", getCase0_1104089() == "01 to 04", getCase1_1104089() == "2-<3_years")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q22");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104108' extends '331772' salience 70
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("GOSN", "GLOL", "GREL", "GSNO"), euCtryInd == "Y", getCase0_1104089() == "01 to 04", getCase1_1104089() == "3-<4_years")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q23");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104109' extends '331772' salience 60
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("GOSN", "GLOL", "GREL", "GSNO"), euCtryInd == "Y", getCase0_1104089() == "01 to 04", getCase1_1104089() == "4-<5_years")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q25");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104110' extends '331772' salience 50
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("GOSN", "GLOL", "GREL", "GSNO"), euCtryInd == "Y", getCase0_1104089() == "01 to 04", getCase1_1104089() == "5-<7_years")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q26");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104111' extends '331772' salience 40
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("GOSN", "GLOL", "GREL", "GSNO"), euCtryInd == "Y", getCase0_1104089() == "01 to 04", getCase1_1104089() == "7-<10_years")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q27");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104112' extends '331772' salience 30
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("GOSN", "GLOL", "GREL", "GSNO"), euCtryInd == "Y", getCase0_1104089() == "01 to 04", getCase1_1104089() == "10-<15_years")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q28");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104113' extends '331772' salience 20
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("GOSN", "GLOL", "GREL", "GSNO"), euCtryInd == "Y", getCase0_1104089() == "01 to 04", getCase1_1104089() == "15-<20_years")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q29");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+rule '1104114' extends '331772' salience 10
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hreRelTypeIssuer in ("GOSN", "GLOL", "GREL", "GSNO"), euCtryInd == "Y", getCase0_1104089() == "01 to 04", getCase1_1104089() == ">20_years")
+        
+    then
+        $gda.setCustomTxtHo06("MKR SA TDI coupon less than 3%_Q30");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3224");
+        
+end
+
+

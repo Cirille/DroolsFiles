@@ -1,0 +1,35 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332201'
+	when
+		$gda : GrlDetAmounts(gridId == "36024437" && actCode == "A0027000")
+	then
+        
+end
+
+
+
+
+
+rule '1146519' extends '332201' salience 10
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setRteCode("063");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3502");
+        
+end
+
+

@@ -1,0 +1,49 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+global com.ing.gfrs.logical.apis.GreLrCustRefLogicalApi greLrCustRefLogicalApi;
+
+
+dialect  "mvel"
+
+
+rule '336868'
+	when
+		$gda : GrlDetAmounts(actCode != null && hpePdtType not matches "STOCK.*")
+	then
+        
+end
+
+
+
+
+
+rule '1769962' extends '336868' salience 13340
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setSeSectors3(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6975");
+        
+end
+
+rule '1769961' extends '336868' salience 13330
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(,lcr_hly_rel_id,"SE_NON_MFI","N") == "Y", actCode in ("A0003000", "A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000", "A0080000", "A0081000", "A0082000", "A0083000", "A0088000", "A0090000", "A0092000", "A0093000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "A0101000", "A0102000", "A0103000", "A0104000", "L0105000", "L0106000", "L0107000", "L0110000", "L0111000", "L0113000", "L0117000", "L0118000", "L0119000", "L0242000", "L0229000", "L2569000", "L3351000", "L1425000", "L3334000", "L3343000", "L3933000"))
+        
+    then
+        $gda.setSeSectors3("9001-HK1_2201");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6975");
+        
+end
+
+

@@ -1,0 +1,432 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '335833'
+	when
+		$gda : GrlDetAmounts(scyActCode == "B0593000" && hreRelTypeIssuer != null)
+	then
+end
+
+
+rule '1741178' extends '335833' salience 9470
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ACCT")
+        
+    then
+        $gda.setScyCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741198' extends '335833' salience 9460
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setScyCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741177' extends '335833' salience 9450
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FINS", "FLIF", "FPEF"))
+        
+    then
+        $gda.setScyCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741203' extends '335833' salience 9440
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "Z.*", icInd == "N")
+        
+    then
+        $gda.setScyCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741181' extends '335833' salience 9430
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ACCT", hieInduType == "921190")
+        
+    then
+        $gda.setScyCgpCode("G0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741179' extends '335833' salience 9420
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ACCT", hieInduType == "522110")
+        
+    then
+        $gda.setScyCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741188' extends '335833' salience 9410
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "BMLD")
+        
+    then
+        $gda.setScyCgpCode("B0037");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741206' extends '335833' salience 9400
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "Z.*", icInd == "N", hieInduType == "921190")
+        
+    then
+        $gda.setScyCgpCode("G0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741196' extends '335833' salience 9390
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("GAMT", "GCEN", "GSNO", "GPSC"))
+        
+    then
+        $gda.setScyCgpCode("G0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741193' extends '335833' salience 9380
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "BCEN", residentInd == "Y")
+        
+    then
+        $gda.setScyCgpCode("B0034");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741199' extends '335833' salience 9370
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("IIPB", "INDV", "ISTF", "IREP", "ROMN"))
+        
+    then
+        $gda.setScyCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741204' extends '335833' salience 9360
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "Z.*", icInd == "N", hieInduType == "522110")
+        
+    then
+        $gda.setScyCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741180' extends '335833' salience 9350
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ACCT", hieInduType not in ("521110", "522110"), hieInduType matches "52.*")
+        
+    then
+        $gda.setScyCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741182' extends '335833' salience 9340
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ACCT", hieInduType != "921190", hieInduType matches "92.*")
+        
+    then
+        $gda.setScyCgpCode("G0009");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741183' extends '335833' salience 9330
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ACCT", residentInd == "Y", hieInduType == "522110")
+        
+    then
+        $gda.setScyCgpCode("B0034");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741184' extends '335833' salience 9320
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "ACCT", residentInd == "N", hieInduType == "522110")
+        
+    then
+        $gda.setScyCgpCode("B0035");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741191' extends '335833' salience 9310
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeIssuer matches "F.*" || hreRelTypeIssuer matches "V.*"), hreRelTypeIssuer not in ("FINS", "FLIF", "FPEF"), (getCase0_1029107() not matches "524.*" && getCase0_1029107() not matches "525.*"))
+        
+    then
+        $gda.setScyCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741194' extends '335833' salience 9300
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "BCEN", residentInd == "N")
+        
+    then
+        $gda.setScyCgpCode("B0035");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741176' extends '335833' salience 9290
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "F.*", icInd == "Y")
+        
+    then
+        $gda.setScyCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741209' extends '335833' salience 9280
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "Z.*", residentInd == "N", icInd == "N", hieInduType == "521110")
+        
+    then
+        $gda.setScyCgpCode("B0035");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741208' extends '335833' salience 9270
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "Z.*", residentInd == "Y", icInd == "N", hieInduType == "521110")
+        
+    then
+        $gda.setScyCgpCode("B0034");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741207' extends '335833' salience 9260
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "Z.*", icInd == "N", hieInduType != "921190", hieInduType matches "92.*")
+        
+    then
+        $gda.setScyCgpCode("G0009");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741205' extends '335833' salience 9250
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "Z.*", icInd == "N", hieInduType not in ("521110", "522110"), hieInduType matches "52.*")
+        
+    then
+        $gda.setScyCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741202' extends '335833' salience 9240
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeIssuer matches "F.*" || hreRelTypeIssuer matches "V.*"), hreRelTypeIssuer not in ("FINS", "FLIF", "FPEF"), (getCase0_1029107() matches "524.*" || getCase0_1029107() matches "525.*"), getCase0_1029109() == "regulated")
+        
+    then
+        $gda.setScyCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741201' extends '335833' salience 9230
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeIssuer matches "C.*" || hreRelTypeIssuer == "REXC" || hreRelTypeIssuer == "RLIM" || hreRelTypeIssuer == "RPRJ" || hreRelTypeIssuer == "RPTR" || hreRelTypeIssuer == "RREG" || hreRelTypeIssuer == "RSPV"), (getCase0_1029107() == 522298 || getCase0_1029107() matches "5223.*" || getCase0_1029107() matches "523.*"), getCase0_1029109() != "unregulated")
+        
+    then
+        $gda.setScyCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741200' extends '335833' salience 9220
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "C.*", icInd == "Y")
+        
+    then
+        $gda.setScyCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741197' extends '335833' salience 9210
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "G.*", hreRelTypeIssuer not in ("GAMT", "GCEN", "GSNO", "GPSC"))
+        
+    then
+        $gda.setScyCgpCode("G0009");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741192' extends '335833' salience 9200
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "Z.*", icInd == "Y")
+        
+    then
+        $gda.setScyCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741195' extends '335833' salience 9190
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "B.*", hreRelTypeIssuer not in ("BCEN", "BMLD"))
+        
+    then
+        $gda.setScyCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741185' extends '335833' salience 9180
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "Z.*", icInd == "Y", getCase0_1617372() == "BANK")
+        
+    then
+        $gda.setScyCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741186' extends '335833' salience 9170
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "Z.*", icInd == "Y", getCase0_1617372() == "OFI")
+        
+    then
+        $gda.setScyCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+rule '1741187' extends '335833' salience 9160
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "Z.*", icInd == "Y", getCase0_1617372() == "OTHER")
+        
+    then
+        $gda.setScyCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6116");
+        
+end
+
+

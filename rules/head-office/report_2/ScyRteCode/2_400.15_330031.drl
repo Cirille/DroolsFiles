@@ -1,0 +1,81 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '330031'
+	when
+		$gda : GrlDetAmounts(( scyActCode in ( "L3348000" , "L3935000" ) || ( scyActCode == "L0242000" && scyPdtCode == "031500" && icInd == "N" ) || ( scyActCode == "L0272000" && icInd == "N" ) || scyActCode in ( "L3334000" , "L3934000" ) ))
+	then
+end
+
+
+rule '1614367' extends '330031' salience 5330
+
+    when
+        
+        GrlDetAmounts(this == $gda, scyActCode in ("L3334000", "L3934000"))
+        
+    then
+        $gda.setScyRteCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1914");
+        
+end
+
+rule '776998' extends '330031' salience 5320
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setScyRteCode("012");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1914");
+        
+end
+
+rule '1614366' extends '330031' salience 5310
+
+    when
+        
+        GrlDetAmounts(this == $gda, scyActCode in ("L3334000", "L3934000"), hheHedgeCl in ("01", "02"))
+        
+    then
+        $gda.setScyRteCode("206");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1914");
+        
+end
+
+rule '1184212' extends '330031' salience 5300
+
+    when
+        
+        GrlDetAmounts(this == $gda, scyPdtCode == "031500")
+        
+    then
+        $gda.setScyRteCode("163");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1914");
+        
+end
+
+rule '1614364' extends '330031' salience 5290
+
+    when
+        
+        GrlDetAmounts(this == $gda, scyActCode in ("L3334000", "L3934000"), hheHedgeCl in ("04", "05"))
+        
+    then
+        $gda.setScyRteCode("205");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1914");
+        
+end
+
+

@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332378'
+	when
+		$gda : GrlDetAmounts(MANUALLY adjust this subselect: ACT_CODE IN ('A0025000','L0251000') AND IC_IND = 'Y' and RLN_WW_CUST_ID in (select cr.custom_key from gre_lr_cust_ref cr where cr.lcr_hly_rel_id = lse_hly_rel_id and lcr_custom_ref_type = 'CTPYPOS'))
+	then
+        
+end
+
+
+
+
+
+rule '1160888' extends '332378' salience 80
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000")
+        
+    then
+        $gda.setLocMassLine("Counterparty Receivable");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3628");
+        
+end
+
+rule '1160889' extends '332378' salience 70
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0251000")
+        
+    then
+        $gda.setLocMassLine("Counterparty Payable");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3628");
+        
+end
+
+

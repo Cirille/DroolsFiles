@@ -1,0 +1,42 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '329975'
+	when
+		$gda : GrlDetAmounts(hpePdtType == "SPOT FX" && hacAmtCl == "10" && intInd == "N" && scyActCode != null)
+	then
+end
+
+
+rule '773033' extends '329975' salience 15110
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setScyPdtCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1852");
+        
+end
+
+rule '773032' extends '329975' salience 15100
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX")
+        
+    then
+        $gda.setScyPdtCode("025600");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1852");
+        
+end
+
+

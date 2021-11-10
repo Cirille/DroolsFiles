@@ -1,0 +1,523 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336875'
+	when
+		$gda : GrlDetAmounts(actCode in ( "A0017000" , "A0058000" , "A3291000" , "A3331000" , "A3333000" , "A4412000" , "A4564000" , "A4565000" , "A7985000" , "A7986000" , "A7987000" , "A7988000" , "A8349000" , "A8609000" , "A9260000" , "A9458000" , "A9460000" , "L0268000" , "L0269000" ) && hpePdtType matches "STOCK.*")
+	then
+        
+end
+
+
+
+
+
+rule '1770809' extends '336875' salience 11770
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setSeCode1(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770773' extends '336875' salience 11760
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1220.*" && seSectors not matches ".*2260.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_02.000-1.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770774' extends '336875' salience 11750
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "USD", pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1220.*" && seSectors not matches ".*2260.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_02.000-4.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770775' extends '336875' salience 11740
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "JPY", pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1220.*" && seSectors not matches ".*2260.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_02.000-5.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770776' extends '336875' salience 11730
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "CHF", pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1220.*" && seSectors not matches ".*2260.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_02.000-6.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770777' extends '336875' salience 11720
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "GBP", pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1220.*" && seSectors not matches ".*2260.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_02.000-2.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770778' extends '336875' salience 11710
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg in ("BGN", "CZK", "DKK", "EEK", "HUF", "LTL", "LVL", "PLN", "RON", "SEK"), pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1220.*" && seSectors not matches ".*2260.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_02.000-3.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770779' extends '336875' salience 11700
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg not in ("EUR", "GBP", "USD", "JPY", "CHF", "BGN", "CZK", "DKK", "EEK", "HUF", "LTL", "LVL", "PLN", "RON", "SEK"), pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1220.*" && seSectors not matches ".*2260.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_02.000-7.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770780' extends '336875' salience 11690
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("004700", "004800"), actCode matches "L.*", (seSectors not matches ".*1220.*" && seSectors not matches ".*2260.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_02.070-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770795' extends '336875' salience 11680
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("004700", "004800"), actCode matches "L.*", (seSectors not matches ".*1214.*" && seSectors not matches ".*1212.*" && seSectors not matches ".*2260.*" && seSectors not matches ".*2271.*" && seSectors not matches ".*2272.*" && seSectors not matches ".*2273.*" && seSectors not matches ".*2221.*" && seSectors not matches ".*2222.*" && seSectors not matches ".*2241.*" && seSectors not matches ".*2242.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_04.370-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770802' extends '336875' salience 11670
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "USD", pdtCode not in ("004700", "004800"), actCode matches "A.*")
+        
+    then
+        $gda.setSeCode1("9001-HK2_05.000-4.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770803' extends '336875' salience 11660
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "JPY", pdtCode not in ("004700", "004800"), actCode matches "A.*")
+        
+    then
+        $gda.setSeCode1("9001-HK2_05.000-5.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770804' extends '336875' salience 11650
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "CHF", pdtCode not in ("004700", "004800"), actCode matches "A.*")
+        
+    then
+        $gda.setSeCode1("9001-HK2_05.000-6.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770805' extends '336875' salience 11640
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "GBP", pdtCode not in ("004700", "004800"), actCode matches "A.*")
+        
+    then
+        $gda.setSeCode1("9001-HK2_05.000-2.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770806' extends '336875' salience 11630
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg in ("BGN", "CZK", "DKK", "EEK", "HUF", "LTL", "LVL", "PLN", "RON", "SEK"), pdtCode not in ("004700", "004800"), actCode matches "A.*")
+        
+    then
+        $gda.setSeCode1("9001-HK2_05.000-3.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770807' extends '336875' salience 11620
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg not in ("EUR", "GBP", "USD", "JPY", "CHF", "BGN", "CZK", "DKK", "EEK", "HUF", "LTL", "LVL", "PLN", "RON", "SEK"), pdtCode not in ("004700", "004800"), actCode matches "A.*")
+        
+    then
+        $gda.setSeCode1("9001-HK2_05.000-7.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770808' extends '336875' salience 11610
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode not in ("004700", "004800"), actCode matches "L.*")
+        
+    then
+        $gda.setSeCode1("9001-HK2_05.070-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770781' extends '336875' salience 11600
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1214.*" && seSectors not matches ".*1212.*" && seSectors not matches ".*2260.*" && seSectors not matches ".*2271.*" && seSectors not matches ".*2272.*" && seSectors not matches ".*2273.*" && seSectors not matches ".*2221.*" && seSectors not matches ".*2222.*" && seSectors not matches ".*2241.*" && seSectors not matches ".*2242.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_04.300-1.000.0");
+        $gda.setSeCode2("9001-HK2_04.310-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770782' extends '336875' salience 11590
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "USD", pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1214.*" && seSectors not matches ".*1212.*" && seSectors not matches ".*2260.*" && seSectors not matches ".*2271.*" && seSectors not matches ".*2272.*" && seSectors not matches ".*2273.*" && seSectors not matches ".*2221.*" && seSectors not matches ".*2222.*" && seSectors not matches ".*2241.*" && seSectors not matches ".*2242.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_04.300-4.000.0");
+        $gda.setSeCode2("9001-HK2_04.310-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770783' extends '336875' salience 11580
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "JPY", pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1214.*" && seSectors not matches ".*1212.*" && seSectors not matches ".*2260.*" && seSectors not matches ".*2271.*" && seSectors not matches ".*2272.*" && seSectors not matches ".*2273.*" && seSectors not matches ".*2221.*" && seSectors not matches ".*2222.*" && seSectors not matches ".*2241.*" && seSectors not matches ".*2242.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_04.300-5.000.0");
+        $gda.setSeCode2("9001-HK2_04.310-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770784' extends '336875' salience 11570
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "CHF", pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1214.*" && seSectors not matches ".*1212.*" && seSectors not matches ".*2260.*" && seSectors not matches ".*2271.*" && seSectors not matches ".*2272.*" && seSectors not matches ".*2273.*" && seSectors not matches ".*2221.*" && seSectors not matches ".*2222.*" && seSectors not matches ".*2241.*" && seSectors not matches ".*2242.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_04.300-6.000.0");
+        $gda.setSeCode2("9001-HK2_04.310-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770785' extends '336875' salience 11560
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "GBP", pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1214.*" && seSectors not matches ".*1212.*" && seSectors not matches ".*2260.*" && seSectors not matches ".*2271.*" && seSectors not matches ".*2272.*" && seSectors not matches ".*2273.*" && seSectors not matches ".*2221.*" && seSectors not matches ".*2222.*" && seSectors not matches ".*2241.*" && seSectors not matches ".*2242.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_04.300-2.000.0");
+        $gda.setSeCode2("9001-HK2_04.310-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770786' extends '336875' salience 11550
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg in ("BGN", "CZK", "DKK", "EEK", "HUF", "LTL", "LVL", "PLN", "RON", "SEK"), pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1214.*" && seSectors not matches ".*1212.*" && seSectors not matches ".*2260.*" && seSectors not matches ".*2271.*" && seSectors not matches ".*2272.*" && seSectors not matches ".*2273.*" && seSectors not matches ".*2221.*" && seSectors not matches ".*2222.*" && seSectors not matches ".*2241.*" && seSectors not matches ".*2242.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_04.300-3.000.0");
+        $gda.setSeCode2("9001-HK2_04.310-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770787' extends '336875' salience 11540
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg not in ("EUR", "GBP", "USD", "JPY", "CHF", "BGN", "CZK", "DKK", "EEK", "HUF", "LTL", "LVL", "PLN", "RON", "SEK"), pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1214.*" && seSectors not matches ".*1212.*" && seSectors not matches ".*2260.*" && seSectors not matches ".*2271.*" && seSectors not matches ".*2272.*" && seSectors not matches ".*2273.*" && seSectors not matches ".*2221.*" && seSectors not matches ".*2222.*" && seSectors not matches ".*2241.*" && seSectors not matches ".*2242.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_04.300-7.000.0");
+        $gda.setSeCode2("9001-HK2_04.310-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770788' extends '336875' salience 11530
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1214.*" && seSectors not matches ".*1212.*" && seSectors not matches ".*2260.*" && seSectors not matches ".*2271.*" && seSectors not matches ".*2272.*" && seSectors not matches ".*2273.*" && seSectors not matches ".*2221.*" && seSectors not matches ".*2222.*" && seSectors not matches ".*2241.*" && seSectors not matches ".*2242.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_04.300-1.000.0");
+        $gda.setSeCode2("9001-HK2_04.320-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770789' extends '336875' salience 11520
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "USD", pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1214.*" && seSectors not matches ".*1212.*" && seSectors not matches ".*2260.*" && seSectors not matches ".*2271.*" && seSectors not matches ".*2272.*" && seSectors not matches ".*2273.*" && seSectors not matches ".*2221.*" && seSectors not matches ".*2222.*" && seSectors not matches ".*2241.*" && seSectors not matches ".*2242.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_04.300-4.000.0");
+        $gda.setSeCode2("9001-HK2_04.320-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770790' extends '336875' salience 11510
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "JPY", pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1214.*" && seSectors not matches ".*1212.*" && seSectors not matches ".*2260.*" && seSectors not matches ".*2271.*" && seSectors not matches ".*2272.*" && seSectors not matches ".*2273.*" && seSectors not matches ".*2221.*" && seSectors not matches ".*2222.*" && seSectors not matches ".*2241.*" && seSectors not matches ".*2242.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_04.300-5.000.0");
+        $gda.setSeCode2("9001-HK2_04.320-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770791' extends '336875' salience 11500
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "CHF", pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1214.*" && seSectors not matches ".*1212.*" && seSectors not matches ".*2260.*" && seSectors not matches ".*2271.*" && seSectors not matches ".*2272.*" && seSectors not matches ".*2273.*" && seSectors not matches ".*2221.*" && seSectors not matches ".*2222.*" && seSectors not matches ".*2241.*" && seSectors not matches ".*2242.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_04.300-6.000.0");
+        $gda.setSeCode2("9001-HK2_04.320-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770792' extends '336875' salience 11490
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "GBP", pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1214.*" && seSectors not matches ".*1212.*" && seSectors not matches ".*2260.*" && seSectors not matches ".*2271.*" && seSectors not matches ".*2272.*" && seSectors not matches ".*2273.*" && seSectors not matches ".*2221.*" && seSectors not matches ".*2222.*" && seSectors not matches ".*2241.*" && seSectors not matches ".*2242.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_04.300-2.000.0");
+        $gda.setSeCode2("9001-HK2_04.320-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770793' extends '336875' salience 11480
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg in ("BGN", "CZK", "DKK", "EEK", "HUF", "LTL", "LVL", "PLN", "RON", "SEK"), pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1214.*" && seSectors not matches ".*1212.*" && seSectors not matches ".*2260.*" && seSectors not matches ".*2271.*" && seSectors not matches ".*2272.*" && seSectors not matches ".*2273.*" && seSectors not matches ".*2221.*" && seSectors not matches ".*2222.*" && seSectors not matches ".*2241.*" && seSectors not matches ".*2242.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_04.300-3.000.0");
+        $gda.setSeCode2("9001-HK2_04.320-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770794' extends '336875' salience 11470
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg not in ("EUR", "GBP", "USD", "JPY", "CHF", "BGN", "CZK", "DKK", "EEK", "HUF", "LTL", "LVL", "PLN", "RON", "SEK"), pdtCode in ("004700", "004800"), actCode matches "A.*", (seSectors not matches ".*1214.*" && seSectors not matches ".*1212.*" && seSectors not matches ".*2260.*" && seSectors not matches ".*2271.*" && seSectors not matches ".*2272.*" && seSectors not matches ".*2273.*" && seSectors not matches ".*2221.*" && seSectors not matches ".*2222.*" && seSectors not matches ".*2241.*" && seSectors not matches ".*2242.*"))
+        
+    then
+        $gda.setSeCode1("9001-HK2_04.300-7.000.0");
+        $gda.setSeCode2("9001-HK2_04.320-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770796' extends '336875' salience 11460
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", pdtCode not in ("004700", "004800"), actCode matches "A.*", getCase0_1770663() == "one_year_or_less")
+        
+    then
+        $gda.setSeCode1("9001-HK2_05.000-1.010.0");
+        $gda.setSeCode2("9001-HK2_05.000-0.010.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770797' extends '336875' salience 11450
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", pdtCode not in ("004700", "004800"), actCode matches "A.*", getCase0_1770663() == "between_one_and_two_years")
+        
+    then
+        $gda.setSeCode1("9001-HK2_05.000-1.030.0");
+        $gda.setSeCode2("9001-HK2_05.000-0.030.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770798' extends '336875' salience 11440
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", pdtCode not in ("004700", "004800"), actCode matches "A.*", getCase0_1770663() == "more_than_two_years")
+        
+    then
+        $gda.setSeCode1("9001-HK2_05.000-1.060.0");
+        $gda.setSeCode2("9001-HK2_05.000-0.060.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770799' extends '336875' salience 11430
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", pdtCode not in ("004700", "004800"), actCode matches "A.*", getCase0_1770663() == "one_year_or_less")
+        
+    then
+        $gda.setSeCode1(null);
+        $gda.setSeCode2("9001-HK2_05.000-0.010.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770800' extends '336875' salience 11420
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", pdtCode not in ("004700", "004800"), actCode matches "A.*", getCase0_1770663() == "between_one_and_two_years")
+        
+    then
+        $gda.setSeCode1(null);
+        $gda.setSeCode2("9001-HK2_05.000-0.030.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+rule '1770801' extends '336875' salience 11410
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", pdtCode not in ("004700", "004800"), actCode matches "A.*", getCase0_1770663() == "more_than_two_years")
+        
+    then
+        $gda.setSeCode1(null);
+        $gda.setSeCode2("9001-HK2_05.000-0.060.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6982");
+        
+end
+
+

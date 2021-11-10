@@ -1,0 +1,224 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '335469'
+	when
+		$gda : GrlDetAmounts(scyActCode in ( "A3176000" , "A3177000" , "A3179000" , "L3180000" , "L3181000" , "L3183000" ))
+	then
+end
+
+
+rule '1707815' extends '335469' salience 15270
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setScyPdtCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5875");
+        
+end
+
+rule '1707768' extends '335469' salience 15260
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "IRS")
+        
+    then
+        $gda.setScyPdtCode("032000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5875");
+        
+end
+
+rule '1707912' extends '335469' salience 15250
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY OPT")
+        
+    then
+        $gda.setScyPdtCode("032800");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5875");
+        
+end
+
+rule '1707911' extends '335469' salience 15240
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType in ("FRA", "SWAPTION", "BOND OPTION"))
+        
+    then
+        $gda.setScyPdtCode("032700");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5875");
+        
+end
+
+rule '1707772' extends '335469' salience 15230
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "INTR RATE FUT")
+        
+    then
+        $gda.setScyPdtCode("032300");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5875");
+        
+end
+
+rule '1707769' extends '335469' salience 15220
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY FORW")
+        
+    then
+        $gda.setScyPdtCode("032400");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5875");
+        
+end
+
+rule '1707767' extends '335469' salience 15210
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY SWAP", xCcyInd == "N")
+        
+    then
+        $gda.setScyPdtCode("032500");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5875");
+        
+end
+
+rule '1707913' extends '335469' salience 15200
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3107")
+        
+    then
+        $gda.setScyPdtCode("032800");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5875");
+        
+end
+
+rule '1707910' extends '335469' salience 15190
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3102")
+        
+    then
+        $gda.setScyPdtCode("032700");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5875");
+        
+end
+
+rule '1707812' extends '335469' salience 15180
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3101")
+        
+    then
+        $gda.setScyPdtCode("032000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5875");
+        
+end
+
+rule '1707813' extends '335469' salience 15170
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3106")
+        
+    then
+        $gda.setScyPdtCode("032400");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5875");
+        
+end
+
+rule '1707766' extends '335469' salience 15160
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY SWAP", xCcyInd == "Y")
+        
+    then
+        $gda.setScyPdtCode("032600");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5875");
+        
+end
+
+rule '1707811' extends '335469' salience 15150
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3105")
+        
+    then
+        $gda.setScyPdtCode("032500");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5875");
+        
+end
+
+rule '1707814' extends '335469' salience 15140
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3103")
+        
+    then
+        $gda.setScyPdtCode("032100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5875");
+        
+end
+
+rule '1707770' extends '335469' salience 15130
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "INTR RATE OPT", capInd == "Y", floorInd == "N")
+        
+    then
+        $gda.setScyPdtCode("032100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5875");
+        
+end
+
+rule '1707771' extends '335469' salience 15120
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "INTR RATE OPT", capInd == "N", floorInd == "Y")
+        
+    then
+        $gda.setScyPdtCode("032200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5875");
+        
+end
+
+

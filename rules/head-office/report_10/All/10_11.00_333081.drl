@@ -1,0 +1,32 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+global com.ing.gfrs.logical.apis.ChoCodeCombosLogicalApi choCodeCombosLogicalApi;
+
+dialect  "mvel"
+
+
+rule '333081'
+	when
+		$gda : GrlDetAmounts(icInd == "Y" && choCodeCombosLogicalApi.existsRecord(actCode,pdtCode,cgpCode,rteCode) == true)
+	then
+end
+
+
+rule '1364511' extends '333081' salience 80
+
+    when
+
+         /*WARNING: this rule will always be called, since it has no conditions*/
+
+    then
+        $gda.setCpyBeyNumber(null);
+        $gda.setCpyReyCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3954");
+        
+end
+
+

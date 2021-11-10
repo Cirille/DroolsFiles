@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335722'
+	when
+		$gda : GrlDetAmounts(( ( hpePdtType == "FRA" && hacAmtCl == "10" ) || ( ebaProduct matches "Derivatives.*" && intInd == "N" && hacAmtCl == "10" ) || ( ebaProduct matches "FX-Spots" && intInd == "N" && hacAmtCl == "10" ) ) && ( signFlipCode == null || signFlipCode not matches ".*OTC.*" ))
+	then
+        
+end
+
+
+
+
+
+rule '1727336' extends '335722' salience 140
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N")
+        
+    then
+        $gda.setSignFlipCode(signFlipCode + "OTC][SF3]" );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6053");
+        
+end
+
+rule '1737193' extends '335722' salience 130
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y")
+        
+    then
+        $gda.setSignFlipCode({this.getSignFlipCode()});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6053");
+        
+end
+
+rule '1737200' extends '335722' salience 120
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "FRA")
+        
+    then
+        $gda.setSignFlipCode(signFlipCode + "OTC][SF3]" );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6053");
+        
+end
+
+

@@ -1,0 +1,517 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+global com.ing.gfrs.logical.apis.GreLrCustRefLogicalApi greLrCustRefLogicalApi;
+
+
+dialect  "mvel"
+
+
+rule '337343'
+	when
+		$gda : GrlDetAmounts(( ( ( substr ( actCode , 1 , 1 ) in ( "A" , "L" , "Q" , "B" ) ) || hpePdtType == "REPO" ) && intInd == "N" ))
+	then
+        
+end
+
+
+
+
+
+rule '1822834' extends '337343' salience 21130
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setEbaCtpyTypeEup(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822845' extends '337343' salience 21120
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup == "ACCT")
+        
+    then
+        $gda.setEbaCtpyTypeEup("Non-financial customers");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822847' extends '337343' salience 21110
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup in ("BGOF", "GNFU", "GPSL", "GPSC"))
+        
+    then
+        $gda.setEbaCtpyTypeEup("Public sector entities (other)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822852' extends '337343' salience 21100
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup in ("GCFI", "GCPL", "GLFI", "GLPL", "GNFP", "GSOC", "CGOG"))
+        
+    then
+        $gda.setEbaCtpyTypeEup("Public sector entities (treatment as central government)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822853' extends '337343' salience 21090
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup in ("BGPR", "BPRO", "BRPR"))
+        
+    then
+        $gda.setEbaCtpyTypeEup("Promotional lender");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822818' extends '337343' salience 21080
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup in ("BDIP", "BLEV", "BLIM", "BSPM", "BSPV"))
+        
+    then
+        $gda.setEbaCtpyTypeEup("Financial customers other than Credit institutions");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822819' extends '337343' salience 21070
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup == "FHOL")
+        
+    then
+        $gda.setEbaCtpyTypeEup("Financial customers other than Credit institutions");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822820' extends '337343' salience 21060
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup in ("FINS", "FLIF"))
+        
+    then
+        $gda.setEbaCtpyTypeEup("Financial customers other than Credit institutions");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822821' extends '337343' salience 21050
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup in ("FFFM", "FCLF", "FETF", "FUND", "FOHF", "FOPF", "FPEF", "FUSB"))
+        
+    then
+        $gda.setEbaCtpyTypeEup("Financial corporations other than credit instxx");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822822' extends '337343' salience 21040
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup in ("VAMB", "VABS", "VCMB", "VMBS", "VRMB"))
+        
+    then
+        $gda.setEbaCtpyTypeEup("Financial corporations other than credit instxx");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822823' extends '337343' salience 21030
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup == "VFIM")
+        
+    then
+        $gda.setEbaCtpyTypeEup("Financial corporations other than credit instxx");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822824' extends '337343' salience 21020
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup == "VING")
+        
+    then
+        $gda.setEbaCtpyTypeEup("Financial corporations other than credit instxx");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822825' extends '337343' salience 21010
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup in ("VGRP", "VGRX"))
+        
+    then
+        $gda.setEbaCtpyTypeEup("Financial corporations other than credit instxx");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822828' extends '337343' salience 21000
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup matches "Z.*")
+        
+    then
+        $gda.setEbaCtpyTypeEup("Financial corporations other than credit instxx");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822829' extends '337343' salience 20990
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup matches "S.*")
+        
+    then
+        $gda.setEbaCtpyTypeEup("SME");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822833' extends '337343' salience 20980
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup matches "I.*")
+        
+    then
+        $gda.setEbaCtpyTypeEup("Households");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822836' extends '337343' salience 20970
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup == "ACCT", getCase0_1822837() matches "929.*")
+        
+    then
+        $gda.setEbaCtpyTypeEup("Regional governments or local authorities (other)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822837' extends '337343' salience 20960
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup == "ACCT", getCase0_1822837() == "521110")
+        
+    then
+        $gda.setEbaCtpyTypeEup("Central banks");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822838' extends '337343' salience 20950
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup == "ACCT", getCase0_1822837() == "921190")
+        
+    then
+        $gda.setEbaCtpyTypeEup("Central governments");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822839' extends '337343' salience 20940
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup == "ACCT", getCase0_1822837() == "522110")
+        
+    then
+        $gda.setEbaCtpyTypeEup("Credit institutions");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822840' extends '337343' salience 20930
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup == "BCEN")
+        
+    then
+        $gda.setEbaCtpyTypeEup("Central banks");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822844' extends '337343' salience 20920
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup == "GLOC")
+        
+    then
+        $gda.setEbaCtpyTypeEup("Regional governments or local authorities (treatment as central government)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822846' extends '337343' salience 20910
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup in ("GAMT", "GCEN", "GSNO", "GOSN"))
+        
+    then
+        $gda.setEbaCtpyTypeEup("Central governments");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822851' extends '337343' salience 20900
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup == "BMLD")
+        
+    then
+        $gda.setEbaCtpyTypeEup("Multilateral Development Banks");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822817' extends '337343' salience 20890
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup matches "B.*", hreRelTypeCtpyEup not in ("BCEN", "BGPR", "BPRO", "BRPR", "BMLD", "BDIP", "BGOF", "BLEV", "BLIM"))
+        
+    then
+        $gda.setEbaCtpyTypeEup("Credit institutions");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822826' extends '337343' salience 20880
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup matches "V.*", hreRelTypeCtpyEup not in ("VGRP", "VGRX", "VAMB", "VABS", "VCMB", "VFIM", "VING", "VMBS", "VRMB"))
+        
+    then
+        $gda.setEbaCtpyTypeEup("Financial corporations other than credit instxx");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822827' extends '337343' salience 20870
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup matches "F.*", hreRelTypeCtpyEup not in ("FGVO", "FHOL", "FINS", "FLIF", "FFFM", "FCLF", "FETF", "FUND", "FOHF", "FOPF", "FPEF", "FUSB"))
+        
+    then
+        $gda.setEbaCtpyTypeEup("Financial corporations other than credit instxx");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822831' extends '337343' salience 20860
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeCtpyEup matches "K.*" || hreRelTypeCtpyEup matches "R.*"), hreRelTypeCtpyEup not in ("KGVO", "RGVO"))
+        
+    then
+        $gda.setEbaCtpyTypeEup("Non-financial customers");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822832' extends '337343' salience 20850
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup matches "C.*", hreRelTypeCtpyEup != "CGOG")
+        
+    then
+        $gda.setEbaCtpyTypeEup("Non-financial customers");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822835' extends '337343' salience 20840
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup == "ACCT", getCase0_1822837() not in ("521110", "522110"), getCase0_1822837() matches "52.*")
+        
+    then
+        $gda.setEbaCtpyTypeEup("Financial corporations other than credit instxx");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822848' extends '337343' salience 20830
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpyEup matches "G.*", hreRelTypeCtpyEup not in ("GAMT", "GCEN", "GCFI", "GCPL", "GLFI", "GLPL", "GNFP", "GNFU", "GSNO", "GOSN", "GLOC", "GPSL", "GPSC", "GSOC", "CGOG"))
+        
+    then
+        $gda.setEbaCtpyTypeEup("Regional governments or local authorities (other)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822830' extends '337343' salience 20820
+
+    when
+        
+        GrlDetAmounts(this == $gda, smeInd == "Y")
+        
+    then
+        $gda.setEbaCtpyTypeEup("SME");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822841' extends '337343' salience 20810
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,lcr_hly_rel_id,"LCRNSFRREL","N") == "EFSF")
+        
+    then
+        $gda.setEbaCtpyTypeEup("EFSF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822842' extends '337343' salience 20800
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,lcr_hly_rel_id,"LCRNSFRREL","N") == "IMF")
+        
+    then
+        $gda.setEbaCtpyTypeEup("IMF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822843' extends '337343' salience 20790
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,lcr_hly_rel_id,"LCRNSFRREL","N") == "EU")
+        
+    then
+        $gda.setEbaCtpyTypeEup("EU");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822849' extends '337343' salience 20780
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,lcr_hly_rel_id,"LCRNSFRREL","N") == "ESM")
+        
+    then
+        $gda.setEbaCtpyTypeEup("ESM");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822850' extends '337343' salience 20770
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,lcr_hly_rel_id,"LCRNSFRREL","N") == "BIS")
+        
+    then
+        $gda.setEbaCtpyTypeEup("BIS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+rule '1822854' extends '337343' salience 20760
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,lcr_hly_rel_id,"LCRNSFRREL","N") == "ECB")
+        
+    then
+        $gda.setEbaCtpyTypeEup("ECB");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7369");
+        
+end
+
+

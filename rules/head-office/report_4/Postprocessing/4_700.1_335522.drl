@@ -1,0 +1,30 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+global com.ing.gfrs.logical.apis.ChoExchangeRatesLogicalApi choExchangeRatesLogicalApi;
+
+dialect  "mvel"
+
+
+rule '335522'
+	when
+		$gda : GrlDetAmounts( detAmtRepCcy != null && hcuRepCcyCd != null && nvl ( status , "X" ) not in ('RVD','RVL'))
+	then
+end
+
+rule '1710424' extends '335522' salience 6
+
+    when
+
+        GrlDetAmounts(this == $gda, !isNaN(choExchangeRatesLogicalApi.getUltimoRate($gda.getHcuRepCcyCd(),"EUR",$gda.getPrdId() ) ))
+        
+    then
+        $gda.setDetAmtEuro($gda.getDetAmtRepCcy() * choExchangeRatesLogicalApi.getUltimoRate($gda.getHcuRepCcyCd(),"EUR",$gda.getPrdId()));
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5898");
+        
+end
+
+
+

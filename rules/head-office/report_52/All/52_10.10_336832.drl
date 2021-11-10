@@ -1,0 +1,620 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336832'
+	when
+		$gda : GrlDetAmounts(actCode in ( "A0027000" , "A0057000" , "A3329000" , "A3332000" , "A3931000" , "A4112000" , "A8328000" , "A8350000" , "A8939000" , "A0007000" , "A0081000" , "A0082000" , "A0090000" , "A0093000" , "A0102000" , "A0103000" , "A8805000" , "A8806000" , "A8807000" , "A9457000" , "A9459000" , "A0104000" , "A8294000" , "A9260000" , "A9749000" , "A9750000" ) && cgpCode in ( "B0034" , "B0035" , "B0036" , "B0037" , "G0008" , "G0009" , "P0039" , "P0045" , "P0049" , "P0053" , "P0055" ) && intInd == "N" && icInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1769543' extends '336832' salience 2420
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setHb2Bis2CombiCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769522' extends '336832' salience 2410
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode in ("P0045", "P0055"), residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("26_08");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769523' extends '336832' salience 2400
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode in ("P0045", "P0055"), residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("26_08");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769533' extends '336832' salience 2390
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode == "P0049", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("27_08");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769534' extends '336832' salience 2380
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode == "P0049", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("27_08");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769540' extends '336832' salience 2370
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode in ("B0034", "B0035", "B0037", "G0008", "G0009"), residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("03_08");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769542' extends '336832' salience 2360
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode in ("B0034", "B0035", "B0037", "G0008", "G0009"), residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("03_08");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769549' extends '336832' salience 2350
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode == "B0036", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("02_08");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769550' extends '336832' salience 2340
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode == "B0036", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("02_08");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769561' extends '336832' salience 2330
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode in ("P0039", "P0053"), residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("10_08");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769562' extends '336832' salience 2320
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode in ("P0039", "P0053"), residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("10_08");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769519' extends '336832' salience 2310
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode in ("P0045", "P0055"), getCase1_1769554() == "between_one_and_two_years", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("26_06");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769520' extends '336832' salience 2300
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode in ("P0045", "P0055"), getCase1_1769554() == "more_than_two_years", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("26_07");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769521' extends '336832' salience 2290
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode in ("P0045", "P0055"), getCase1_1769554() == "more_than_two_years", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("26_07");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769524' extends '336832' salience 2280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode == "P0049", getCase1_1769554() == "one_year_or_less", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("27_05");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769525' extends '336832' salience 2270
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode == "P0049", getCase1_1769554() == "one_year_or_less", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("27_05");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769526' extends '336832' salience 2260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode == "P0049", getCase1_1769554() == "between_one_and_two_years", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("27_06");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769527' extends '336832' salience 2250
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode == "P0049", getCase1_1769554() == "between_one_and_two_years", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("27_06");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769528' extends '336832' salience 2240
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode == "P0049", getCase1_1769554() == "more_than_two_years", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("27_07");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769529' extends '336832' salience 2230
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode == "P0049", getCase1_1769554() == "more_than_two_years", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("27_07");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769530' extends '336832' salience 2220
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode in ("P0045", "P0055"), getCase1_1769554() == "one_year_or_less", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("26_05");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769531' extends '336832' salience 2210
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode in ("P0039", "P0053"), getCase1_1769554() == "one_year_or_less", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("10_05");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769532' extends '336832' salience 2200
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode in ("B0034", "B0035", "B0037", "G0008", "G0009"), getCase1_1769554() == "more_than_two_years", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("03_07");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769535' extends '336832' salience 2190
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "LOCAL CCY", cgpCode == "B0036", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("30");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769536' extends '336832' salience 2180
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "LOCAL CCY", cgpCode in ("B0034", "B0035", "B0037", "G0008", "G0009"), residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("31");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769537' extends '336832' salience 2170
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "LOCAL CCY", cgpCode in ("P0039", "P0053"), residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("33");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769538' extends '336832' salience 2160
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "LOCAL CCY", cgpCode in ("P0045", "P0055"), residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("35");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769539' extends '336832' salience 2150
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "LOCAL CCY", cgpCode == "P0049", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("36");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769541' extends '336832' salience 2140
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode == "B0036", getCase1_1769554() == "one_year_or_less", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("02_05");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769544' extends '336832' salience 2130
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode == "B0036", getCase1_1769554() == "one_year_or_less", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("02_05");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769545' extends '336832' salience 2120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode == "B0036", getCase1_1769554() == "between_one_and_two_years", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("02_06");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769546' extends '336832' salience 2110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode == "B0036", getCase1_1769554() == "between_one_and_two_years", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("02_06");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769547' extends '336832' salience 2100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode == "B0036", getCase1_1769554() == "more_than_two_years", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("02_07");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769548' extends '336832' salience 2090
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode == "B0036", getCase1_1769554() == "more_than_two_years", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("02_07");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769551' extends '336832' salience 2080
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode in ("B0034", "B0035", "B0037", "G0008", "G0009"), getCase1_1769554() == "one_year_or_less", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("03_05");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769552' extends '336832' salience 2070
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode in ("B0034", "B0035", "B0037", "G0008", "G0009"), getCase1_1769554() == "one_year_or_less", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("03_05");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769553' extends '336832' salience 2060
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode in ("B0034", "B0035", "B0037", "G0008", "G0009"), getCase1_1769554() == "between_one_and_two_years", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("03_06");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769554' extends '336832' salience 2050
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode in ("B0034", "B0035", "B0037", "G0008", "G0009"), getCase1_1769554() == "between_one_and_two_years", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("03_06");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769555' extends '336832' salience 2040
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode in ("B0034", "B0035", "B0037", "G0008", "G0009"), getCase1_1769554() == "more_than_two_years", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("03_07");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769556' extends '336832' salience 2030
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode in ("P0039", "P0053"), getCase1_1769554() == "one_year_or_less", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("10_05");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769557' extends '336832' salience 2020
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode in ("P0039", "P0053"), getCase1_1769554() == "between_one_and_two_years", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("10_06");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769558' extends '336832' salience 2010
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode in ("P0039", "P0053"), getCase1_1769554() == "between_one_and_two_years", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("10_06");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769559' extends '336832' salience 2000
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode in ("P0039", "P0053"), getCase1_1769554() == "more_than_two_years", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("10_07");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769560' extends '336832' salience 1990
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() in ("LOCAL CCY", "FOREIGN CCY"), cgpCode in ("P0039", "P0053"), getCase1_1769554() == "more_than_two_years", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("10_07");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769563' extends '336832' salience 1980
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode in ("P0045", "P0055"), getCase1_1769554() == "one_year_or_less", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("26_05");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+rule '1769564' extends '336832' salience 1970
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "FOREIGN CCY", cgpCode in ("P0045", "P0055"), getCase1_1769554() == "between_one_and_two_years", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("26_06");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6944");
+        
+end
+
+

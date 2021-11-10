@@ -1,0 +1,29 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '330021'
+	when
+		$gda : GrlDetAmounts(scyActCode == "B0596000" && icInd == "Y")
+	then
+end
+
+
+rule '776773' extends '330021' salience 5250
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setScyRteCode("010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1903");
+        
+end
+
+

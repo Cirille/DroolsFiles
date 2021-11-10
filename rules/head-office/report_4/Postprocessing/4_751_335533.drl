@@ -1,0 +1,36 @@
+// NOTE: below rules require records with the same contractRef to be processed in the same KIESession. The current workflow (Jan 2021)
+// does NOT guarantee this. Nonetheless an analysis of the conditions shows that with the current determination configuration the below
+// rules will never be matched. Business additionally confirmed that below referred account codes B061* have been closed already.
+
+/*
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+dialect  "mvel"
+
+
+rule '335533'
+	when
+        $gda1 : GrlDetAmounts(buyInd == 'N', hacAmtCl == '10', hpePdtType == 'SPOT FX')
+        $gda2 : GrlDetAmounts($gda1.getLseHlyRelId() == lseHlyRelId, $gda1.getContractRef == contractRef, buyInd == 'Y', hacAmtCl == '10', hpePdtType == 'SPOT FX')
+        $gda : GrlDetAmounts($gda2.getLseHlyRelId() == lseHlyRelId, $gda2.getContractRef == contractRef, scyActCode matches 'B0611.*' || scyActCode matches 'B0612.*', hacAmtCl == '10', hpePdtType == 'SPOT FX')
+	then
+end
+
+rule '1710614' extends '335533' salience -1
+
+    when
+
+        */
+/*DUMMY*//*
+
+
+    then
+        $gda.setChoDetAmtRepCcy(-$gda.getChoDetAmtRepCcy());
+        $gda.setChoDetAmtTan(-$gda.getChoDetAmtTan());
+        $gda.setChoDetAmtTanEur(-$gda.getChoDetAmtTanEur());
+
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5909");
+
+end*/

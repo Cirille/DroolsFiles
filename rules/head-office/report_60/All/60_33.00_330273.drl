@@ -1,0 +1,243 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '330273'
+	when
+		$gda : GrlDetAmounts(( ( hacAmtCl == "12" && hpePdtType == "FRA" ) || ( hacAmtCl == "01" && hscAcctSubcl == "3102" ) ) && htyTradCat == "03" && icInd == "N" && actCode != null)
+	then
+        
+end
+
+
+
+
+
+rule '851463' extends '330273' salience 37890
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setDerivativesCombiCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2128");
+        
+end
+
+rule '851461' extends '330273' salience 37880
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N")
+        
+    then
+        $gda.setDerivativesCombiCd("67.120_FVN_84");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2128");
+        
+end
+
+rule '851462' extends '330273' salience 37870
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("67.120_FVP_84");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2128");
+        
+end
+
+rule '851451' extends '330273' salience 37860
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setDerivativesCombiCd("67.120_FVN_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2128");
+        
+end
+
+rule '851453' extends '330273' salience 37850
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setDerivativesCombiCd("67.120_FVP_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2128");
+        
+end
+
+rule '851455' extends '330273' salience 37840
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "OTHER_BANKS", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setDerivativesCombiCd("67.120_FVN_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2128");
+        
+end
+
+rule '851456' extends '330273' salience 37830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "MULTILATERAL_DEVELOPMENT_BANKS")
+        
+    then
+        $gda.setDerivativesCombiCd("67.120_FVN_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2128");
+        
+end
+
+rule '851458' extends '330273' salience 37820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "OTHER_BANKS", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setDerivativesCombiCd("67.120_FVP_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2128");
+        
+end
+
+rule '851459' extends '330273' salience 37810
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "MULTILATERAL_DEVELOPMENT_BANKS")
+        
+    then
+        $gda.setDerivativesCombiCd("67.120_FVP_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2128");
+        
+end
+
+rule '1100212' extends '330273' salience 37800
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "LOCAL_GOVERNMENTS", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setDerivativesCombiCd("67.120_FVN_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2128");
+        
+end
+
+rule '1100213' extends '330273' salience 37790
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "LOCAL_GOVERNMENTS", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setDerivativesCombiCd("67.120_FVP_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2128");
+        
+end
+
+rule '851452' extends '330273' salience 37780
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", hzeZoneCtryReg == "B", locFundInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("67.120_FVN_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2128");
+        
+end
+
+rule '851454' extends '330273' salience 37770
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", hzeZoneCtryReg == "B", locFundInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("67.120_FVP_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2128");
+        
+end
+
+rule '851457' extends '330273' salience 37760
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "OTHER_BANKS", hzeZoneCtryReg == "B", getCase0_1022341() == "short_term")
+        
+    then
+        $gda.setDerivativesCombiCd("67.120_FVN_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2128");
+        
+end
+
+rule '851460' extends '330273' salience 37750
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "OTHER_BANKS", hzeZoneCtryReg == "B", getCase0_1022341() == "short_term")
+        
+    then
+        $gda.setDerivativesCombiCd("67.120_FVP_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2128");
+        
+end
+
+rule '1100214' extends '330273' salience 37740
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "LOCAL_GOVERNMENTS", euCtryInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("67.120_FVN_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2128");
+        
+end
+
+rule '1100215' extends '330273' salience 37730
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "LOCAL_GOVERNMENTS", euCtryInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("67.120_FVP_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2128");
+        
+end
+
+

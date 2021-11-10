@@ -1,0 +1,29 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+global String dateFormat;
+
+dialect  "mvel"
+
+
+rule '335603'
+	when
+		$gpy : GrlPlYtd( repDate != null && nvl ( status , "X" ) not in ('RVD','RVL') )
+	then
+end
+
+
+rule '1714391' extends '335603' salience 26410
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+    then
+        $gpy.setPrdId($gpy.formatDate($gpy.getRepDate(),dateFormat));
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5962");
+        
+end
+
+

@@ -1,0 +1,296 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+global com.ing.gfrs.logical.apis.GreLrCustRefLogicalApi greLrCustRefLogicalApi;
+
+
+dialect  "mvel"
+
+
+rule '335964'
+	when
+		$gda : GrlDetAmounts(actCode in ( "A9222000" , "A9223000" , "A9224000" , "A9225000" , "A9232000" , "A9233000" , "A9234000" , "A9763000" , "A9764000" , "A9765000" ) && icInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1749006' extends '335964' salience 1140
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "CENTRAL_BANKS")
+        
+    then
+        $gda.setRteCode("080");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '1749012' extends '335964' salience 1130
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "LOCAL_GOVERNMENTS")
+        
+    then
+        $gda.setRteCode("084");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '1749013' extends '335964' salience 1120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() in ("CLEARING_HOUSES", "OTHERS"))
+        
+    then
+        $gda.setRteCode("088");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '1749004' extends '335964' salience 1110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "BANKS", hzeZoneCtryReg == "B")
+        
+    then
+        $gda.setRteCode("080");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '1749003' extends '335964' salience 1100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "BANKS", hzeZoneCtryReg == "B", getCase0_1783220() == "one_year_or_less")
+        
+    then
+        $gda.setRteCode("078");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '1749002' extends '335964' salience 1090
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "BANKS", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setRteCode("078");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '1749005' extends '335964' salience 1080
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "CENTRAL_BANKS", locFundInd == "Y")
+        
+    then
+        $gda.setRteCode("077");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '1749007' extends '335964' salience 1070
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "CENTRAL_BANKS", hzeZoneCtryReg == "A", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("077");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '1749008' extends '335964' salience 1060
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "CENTRAL_GOVERNMENTS", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setRteCode("081");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '1749009' extends '335964' salience 1050
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "CENTRAL_GOVERNMENTS", hzeZoneCtryReg == "B", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("084");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '1749010' extends '335964' salience 1040
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "CENTRAL_GOVERNMENTS", hzeZoneCtryReg == "B", locFundInd == "Y")
+        
+    then
+        $gda.setRteCode("081");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '1749011' extends '335964' salience 1030
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "LOCAL_GOVERNMENTS", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setRteCode("082");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '2010262' extends '335964' salience 1020
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "BANKS", hzeZoneCtryReg == "B", callInd == "Y")
+        
+    then
+        $gda.setRteCode("180");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '1781434' extends '335964' salience 1010
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "CENTRAL_BANKS", actCode in ("A9763000", "A9764000", "A9765000"))
+        
+    then
+        $gda.setRteCode("175");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '2010227' extends '335964' salience 1000
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,"STNDRD","CPY-ISS","N") == "GOVTLOC")
+        
+    then
+        $gda.setRteCode("082");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '2010229' extends '335964' salience 990
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,"STNDRD","CPY-ISS","N") == "OFI")
+        
+    then
+        $gda.setRteCode("088");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '2010230' extends '335964' salience 980
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,"STNDRD","CPY-ISS","N") == "CORP")
+        
+    then
+        $gda.setRteCode("088");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '2010244' extends '335964' salience 970
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,"STNDRD","CPY-ISS","N") == "GOVT-TO-OFI")
+        
+    then
+        $gda.setRteCode("088");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '2010245' extends '335964' salience 960
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,"STNDRD","CPY-ISS","N") == "GOVT-TO-CORP")
+        
+    then
+        $gda.setRteCode("088");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '2010256' extends '335964' salience 950
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "BANKS", hzeZoneCtryReg == "A", callInd == "Y")
+        
+    then
+        $gda.setRteCode("178");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+rule '2010259' extends '335964' salience 940
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "BANKS", hzeZoneCtryReg == "B", getCase0_1783220() == "one_year_or_less", callInd == "Y")
+        
+    then
+        $gda.setRteCode("178");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6167");
+        
+end
+
+

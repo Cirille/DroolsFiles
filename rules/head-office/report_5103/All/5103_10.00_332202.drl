@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332202'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1146532' extends '332202' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0239")
+        
+    then
+        $gda.setCustomTxt10(nvl(cia_owner . goe_pck_tfn . goe_get_lce_cust_cd ("0239" , "FRONTDESK" , lde_dept_cd ) , "FILL CUST REF FRONTDESK" ) );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3503");
+        
+end
+
+rule '1146533' extends '332202' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0239_US")
+        
+    then
+        $gda.setCustomTxt10(nvl(cia_owner . goe_pck_tfn . goe_get_lce_cust_cd ("0239_US" , "FRONTDESK" , lde_dept_cd ) , "FILL CUST REF FRONTDESK" ) );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3503");
+        
+end
+
+rule '1146534' extends '332202' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0239_US_2")
+        
+    then
+        $gda.setCustomTxt10(nvl(cia_owner . goe_pck_tfn . goe_get_lce_cust_cd ("0239_US_2" , "FRONTDESK" , lde_dept_cd ) , "FILL CUST REF FRONTDESK" ) );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3503");
+        
+end
+
+

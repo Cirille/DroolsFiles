@@ -1,0 +1,696 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336873'
+	when
+		$gda : GrlDetAmounts(actCode in ( "A0027000" , "A0057000" , "A3329000" , "A3330000" , "A3332000" , "A3931000" , "A8350000" , "A8805000" , "A8806000" , "A8807000" , "A926000" , "A9457000" , "A9458000" , "A9459000" , "A9460000" , "L0241000" , "L0242000" , "L0272000" , "L1425000" , "L3348000" , "L3334000" , "L3343000" , "L3348000" , "L3932000" , "L3933000" , "L3935000" , "L3936000" , "L9261000" , "L9262000" ) && hpePdtType not matches "STOCK.*")
+	then
+        
+end
+
+
+
+
+
+rule '1770681' extends '336873' salience 12710
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), (seSectors matches ".*2110.*" || seSectors matches ".*2121.*" || seSectors matches ".*2122.*" || seSectors matches ".*2123.*" || seSectors matches ".*2272.*" || seSectors matches ".*2271.*" || seSectors matches ".*2273.*" || seSectors matches ".*2221.*" || seSectors matches ".*2222.*" || seSectors matches ".*2260.*"))
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-9.999.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770682' extends '336873' salience 12700
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), (seSectors matches ".*2110.*" || seSectors matches ".*2121.*" || seSectors matches ".*2122.*" || seSectors matches ".*2123.*" || seSectors matches ".*2272.*" || seSectors matches ".*2271.*" || seSectors matches ".*2273.*" || seSectors matches ".*2221.*" || seSectors matches ".*2222.*" || seSectors matches ".*2260.*"), getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-9.999.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770684' extends '336873' salience 12690
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("014000", "028000", "031500"), getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_24.100-0.000.0");
+        $gda.setSeCode11("9001-HK1_24.108-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770685' extends '336873' salience 12680
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("014000", "028000", "031500"), getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_24.100-0.000.0");
+        $gda.setSeCode3("9001-HK1_24.100-1.000.0");
+        $gda.setSeCode11("9001-HK1_24.108-0.000.0");
+        $gda.setSeCode6("9001-HK1_24.108-1.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770696' extends '336873' salience 12670
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("014000", "028000", "031500"), getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_24.100-0.000.0");
+        $gda.setSeCode3("9001-HK1_24.100-1.000.0");
+        $gda.setSeCode11("9001-HK1_24.108-0.000.0");
+        $gda.setSeCode6("9001-HK1_24.108-1.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770697' extends '336873' salience 12660
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("014000", "028000", "031500"), getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_24.100-0.000.0");
+        $gda.setSeCode11("9001-HK1_24.108-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770679' extends '336873' salience 12650
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("004200", "004300", "004400"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.200-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770680' extends '336873' salience 12640
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("014000", "028000", "031500"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.100-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770683' extends '336873' salience 12630
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode == "014000", (seSectors matches ".*2241.*" || seSectors matches ".*2242.*"), getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.550-0.000.0");
+        $gda.setSeCode3("9001-HK1_06.550-1.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770686' extends '336873' salience 12620
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("004200", "004300", "004400"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.200-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770687' extends '336873' salience 12610
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("014000", "028000", "031500"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.100-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770688' extends '336873' salience 12600
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode == "014000", (seSectors matches ".*2241.*" || seSectors matches ".*2242.*"), getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.550-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770689' extends '336873' salience 12590
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode == "014000", (seSectors matches ".*2241.*" || seSectors matches ".*2242.*"), getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.550-0.000.0");
+        $gda.setSeCode3("9001-HK1_06.550-1.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770690' extends '336873' salience 12580
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "one_year_or_less", getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_24.210-0.010.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770691' extends '336873' salience 12570
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "between_one_and_two_years", getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_24.210-0.030.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770692' extends '336873' salience 12560
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "more_than_two_years", getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_24.210-0.060.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770693' extends '336873' salience 12550
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "one_year_or_less", getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_24.210-0.010.0");
+        $gda.setSeCode3("9001-HK1_24.210-1.010.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770694' extends '336873' salience 12540
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "between_one_and_two_years", getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_24.210-0.030.0");
+        $gda.setSeCode3("9001-HK1_24.210-1.030.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770695' extends '336873' salience 12530
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "more_than_two_years", getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_24.210-0.060.0");
+        $gda.setSeCode3("9001-HK1_24.210-1.060.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770698' extends '336873' salience 12520
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "one_year_or_less", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_24.210-0.010.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770699' extends '336873' salience 12510
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "between_one_and_two_years", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_24.210-0.030.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770700' extends '336873' salience 12500
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "more_than_two_years", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_24.210-0.060.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770701' extends '336873' salience 12490
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "one_year_or_less", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_24.210-0.010.0");
+        $gda.setSeCode3("9001-HK1_24.210-1.010.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770702' extends '336873' salience 12480
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "between_one_and_two_years", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_24.210-0.030.0");
+        $gda.setSeCode3("9001-HK1_24.210-1.030.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770703' extends '336873' salience 12470
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "more_than_two_years", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_24.210-0.060.0");
+        $gda.setSeCode3("9001-HK1_24.210-1.060.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770704' extends '336873' salience 12460
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode == "014000", (seSectors matches ".*2241.*" || seSectors matches ".*2242.*"), getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_24.100-0.000.0");
+        $gda.setSeCode11("9001-HK1_24.108-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770705' extends '336873' salience 12450
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("004200", "004300", "004400"), (seSectors matches ".*2241.*" || seSectors matches ".*2242.*"), getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-9.999.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770712' extends '336873' salience 12440
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode == "014000", (seSectors matches ".*2241.*" || seSectors matches ".*2242.*"), getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.550-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770713' extends '336873' salience 12430
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("004200", "004300", "004400"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.200-0.000.0");
+        $gda.setSeCode3("9001-HK1_06.200-1.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770714' extends '336873' salience 12420
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("014000", "028000", "031500"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.100-0.000.0");
+        $gda.setSeCode3("9001-HK1_06.100-1.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770715' extends '336873' salience 12410
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("004200", "004300", "004400"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.200-0.000.0");
+        $gda.setSeCode3("9001-HK1_06.200-1.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770716' extends '336873' salience 12400
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("014000", "028000", "031500"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.100-0.000.0");
+        $gda.setSeCode3("9001-HK1_06.100-1.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770706' extends '336873' salience 12390
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("012200", "012700", "013600", "033300", "033400"), (seSectors matches ".*2241.*" || seSectors matches ".*2242.*" || seSectors matches ".*225.*"), getCase0_1770466() == "one_year_or_less", getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-0.010.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770707' extends '336873' salience 12380
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("012200", "012700", "013600", "033300", "033400"), (seSectors matches ".*2241.*" || seSectors matches ".*2242.*" || seSectors matches ".*225.*"), getCase0_1770466() == "between_one_and_five_years", getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-0.040.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770708' extends '336873' salience 12370
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("012200", "012700", "013600", "033300", "033400"), (seSectors matches ".*2241.*" || seSectors matches ".*2242.*" || seSectors matches ".*225.*"), getCase0_1770466() == "more_than_five_years", getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-0.070.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770709' extends '336873' salience 12360
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("012200", "012700", "013600", "033300", "033400"), (seSectors matches ".*2241.*" || seSectors matches ".*2242.*" || seSectors matches ".*225.*"), getCase0_1770466() == "one_year_or_less", getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-0.010.0");
+        $gda.setSeCode3("9001-HK1_06.570-1.010.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770710' extends '336873' salience 12350
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("012200", "012700", "013600", "033300", "033400"), (seSectors matches ".*2241.*" || seSectors matches ".*2242.*" || seSectors matches ".*225.*"), getCase0_1770466() == "between_one_and_five_years", getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-0.040.0");
+        $gda.setSeCode3("9001-HK1_06.570-1.040.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770711' extends '336873' salience 12340
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("012200", "012700", "013600", "033300", "033400"), (seSectors matches ".*2241.*" || seSectors matches ".*2242.*" || seSectors matches ".*225.*"), getCase0_1770466() == "more_than_five_years", getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-0.070.0");
+        $gda.setSeCode3("9001-HK1_06.570-1.070.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770717' extends '336873' salience 12330
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("012200", "012700", "013600"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase0_1770466() == "one_year_or_less", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-9.999.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770718' extends '336873' salience 12320
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("012200", "012700", "013600", "033300", "033400"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase0_1770466() == "one_year_or_less", getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-9.999.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770719' extends '336873' salience 12310
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("012200", "012700", "013600"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase0_1770466() == "one_year_or_less", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-9.999.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770720' extends '336873' salience 12300
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("012200", "012700", "013600", "033300", "033400"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase0_1770466() == "one_year_or_less", getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-9.999.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770721' extends '336873' salience 12290
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("012200", "012700", "013600"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase0_1770466() == "between_one_and_five_years", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-9.999.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770722' extends '336873' salience 12280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("012200", "012700", "013600", "033300", "033400"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase0_1770466() == "between_one_and_five_years", getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-9.999.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770723' extends '336873' salience 12270
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("012200", "012700", "013600"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase0_1770466() == "more_than_five_years", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-9.999.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770724' extends '336873' salience 12260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("012200", "012700", "013600", "033300", "033400"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase0_1770466() == "more_than_five_years", getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-9.999.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770725' extends '336873' salience 12250
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("012200", "012700", "013600"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase0_1770466() == "between_one_and_five_years", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-9.999.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770726' extends '336873' salience 12240
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("012200", "012700", "013600", "033300", "033400"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase0_1770466() == "between_one_and_five_years", getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-9.999.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770727' extends '336873' salience 12230
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("012200", "012700", "013600"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase0_1770466() == "more_than_five_years", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-9.999.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+rule '1770728' extends '336873' salience 12220
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("012200", "012700", "013600", "033300", "033400"), (seSectors matches ".*1100.*" || seSectors matches ".*1213.*" || seSectors matches ".*1214.*" || seSectors matches ".*1220.*" || seSectors matches ".*1212.*"), getCase0_1770466() == "more_than_five_years", getCase1_1770663() == "N")
+        
+    then
+        $gda.setSeCode2("9001-HK1_06.570-9.999.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6980");
+        
+end
+
+

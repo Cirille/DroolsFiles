@@ -1,0 +1,139 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlStructuredDleLines;
+
+
+
+
+dialect  "mvel"
+
+
+rule '333138'
+	when
+		$gsdl : GrlStructuredDleLines(dnbSecurityCode != null)
+	then
+        
+end
+
+
+
+
+
+rule '1389735' extends '333138' salience 90
+
+    when
+        
+        GrlStructuredDleLines(this == $gsdl, dnbSecurityCode == "DEBT SECURITIES TO BE SPECIFIED")
+        
+    then
+        $gsdl.setDnbSecurityCode2("DEBT SECURITIES");
+        
+        $gsdl.updateLdlIdTrail(kcontext.rule.name,"4012");
+        
+end
+
+rule '1389736' extends '333138' salience 80
+
+    when
+        
+        GrlStructuredDleLines(this == $gsdl, dnbSecurityCode == "EQUITY SECURITIES TO BE SPECIFIED")
+        
+    then
+        $gsdl.setDnbSecurityCode2("EQUITY SHARES");
+        
+        $gsdl.updateLdlIdTrail(kcontext.rule.name,"4012");
+        
+end
+
+rule '1389737' extends '333138' salience 70
+
+    when
+        
+        GrlStructuredDleLines(this == $gsdl, dnbSecurityCode == "PARTICIPATIONS IN INVESTMENTS FUNDS")
+        
+    then
+        $gsdl.setDnbSecurityCode2("EQUITY SHARES");
+        
+        $gsdl.updateLdlIdTrail(kcontext.rule.name,"4012");
+        
+end
+
+rule '1389738' extends '333138' salience 60
+
+    when
+        
+        GrlStructuredDleLines(this == $gsdl, dnbSecurityCode == "PARTICIPATIONS IN MONEY MARKET FUNDS")
+        
+    then
+        $gsdl.setDnbSecurityCode2("EQUITY SHARES");
+        
+        $gsdl.updateLdlIdTrail(kcontext.rule.name,"4012");
+        
+end
+
+rule '1389739' extends '333138' salience 50
+
+    when
+        
+        GrlStructuredDleLines(this == $gsdl, dnbSecurityCode == "NOT-LISTED EQUITY SECURITIES")
+        
+    then
+        $gsdl.setDnbSecurityCode2("EQUITY SHARES");
+        
+        $gsdl.updateLdlIdTrail(kcontext.rule.name,"4012");
+        
+end
+
+rule '1389740' extends '333138' salience 40
+
+    when
+        
+        GrlStructuredDleLines(this == $gsdl, dnbSecurityCode == "LISTED EQUITY SECURITIES")
+        
+    then
+        $gsdl.setDnbSecurityCode2("EQUITY SHARES");
+        
+        $gsdl.updateLdlIdTrail(kcontext.rule.name,"4012");
+        
+end
+
+rule '1389741' extends '333138' salience 30
+
+    when
+        
+        GrlStructuredDleLines(this == $gsdl, dnbSecurityCode == "DEBT SECURITIES ORIGINAL MATURITY 1 YEAR OR LESS")
+        
+    then
+        $gsdl.setDnbSecurityCode2("DEBT SECURITIES");
+        
+        $gsdl.updateLdlIdTrail(kcontext.rule.name,"4012");
+        
+end
+
+rule '1389742' extends '333138' salience 20
+
+    when
+        
+        GrlStructuredDleLines(this == $gsdl, dnbSecurityCode == "DEBT SECURITIES ORIGINAL MATURITY BETWEEN ONE AND TWO YEARS")
+        
+    then
+        $gsdl.setDnbSecurityCode2("DEBT SECURITIES");
+        
+        $gsdl.updateLdlIdTrail(kcontext.rule.name,"4012");
+        
+end
+
+rule '1389743' extends '333138' salience 10
+
+    when
+        
+        GrlStructuredDleLines(this == $gsdl, dnbSecurityCode == "DEBT SECURITIES ORIGINAL MATURITY MORE THAN TWO YEARS")
+        
+    then
+        $gsdl.setDnbSecurityCode2("DEBT SECURITIES");
+        
+        $gsdl.updateLdlIdTrail(kcontext.rule.name,"4012");
+        
+end
+
+

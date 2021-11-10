@@ -1,0 +1,191 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331701'
+	when
+		$gda : GrlDetAmounts(( ( hpePdtType in ( "INTR RATE FUT" , "OPT FUT" ) && hacAmtCl == "10" ) || ( hscAcctSubcl == "3004" && hacAmtCl == "01" ) ) && intInd == "N" && icInd == "N" && htyTradCat in ( "01" , "02" ))
+	then
+        
+end
+
+
+
+
+
+rule '1101655' extends '331701' salience 61200
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setDerivativesCombiCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3189");
+        
+end
+
+rule '1022154' extends '331701' salience 61190
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1022297() == "<1_year", moneyMarketInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("66.130_1_M");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3189");
+        
+end
+
+rule '1022155' extends '331701' salience 61180
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1022297() == "1-<2_years", moneyMarketInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("66.130_2_M");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3189");
+        
+end
+
+rule '1022156' extends '331701' salience 61170
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1022297() == "2-<3_years", moneyMarketInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("66.130_3_M");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3189");
+        
+end
+
+rule '1022157' extends '331701' salience 61160
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1022297() == "3-<4_years", moneyMarketInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("66.130_4_M");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3189");
+        
+end
+
+rule '1022158' extends '331701' salience 61150
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1022297() == "4-<5_years", moneyMarketInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("66.130_5_M");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3189");
+        
+end
+
+rule '1022159' extends '331701' salience 61140
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1022297() == ">5_years", moneyMarketInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("66.130_6_M");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3189");
+        
+end
+
+rule '1022166' extends '331701' salience 61130
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1022297() == "<1_year", moneyMarketInd == "N")
+        
+    then
+        $gda.setDerivativesCombiCd("66.130_1_B");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3189");
+        
+end
+
+rule '1022168' extends '331701' salience 61120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1022297() == "1-<2_years", moneyMarketInd == "N")
+        
+    then
+        $gda.setDerivativesCombiCd("66.130_2_B");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3189");
+        
+end
+
+rule '1022170' extends '331701' salience 61110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1022297() == "2-<3_years", moneyMarketInd == "N")
+        
+    then
+        $gda.setDerivativesCombiCd("66.130_3_B");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3189");
+        
+end
+
+rule '1022172' extends '331701' salience 61100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1022297() == "3-<4_years", moneyMarketInd == "N")
+        
+    then
+        $gda.setDerivativesCombiCd("66.130_4_B");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3189");
+        
+end
+
+rule '1022174' extends '331701' salience 61090
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1022297() == "4-<5_years", moneyMarketInd == "N")
+        
+    then
+        $gda.setDerivativesCombiCd("66.130_5_B");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3189");
+        
+end
+
+rule '1022176' extends '331701' salience 61080
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1022297() == ">5_years", moneyMarketInd == "N")
+        
+    then
+        $gda.setDerivativesCombiCd("66.130_6_B");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3189");
+        
+end
+
+

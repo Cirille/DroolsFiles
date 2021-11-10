@@ -1,0 +1,26 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlCredFacilities;
+
+global String dateFormat;
+
+dialect  "mvel"
+
+
+rule '331018'
+	when
+		$gcf : GrlCredFacilities( repDate != null )
+	then
+end
+
+
+rule '1710425' extends '331018' salience 10
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gcf.setPrdId($gcf.formatDate($gcf.getRepDate(),dateFormat));
+        
+end

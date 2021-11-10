@@ -1,0 +1,165 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336844'
+	when
+		$gda : GrlDetAmounts(hpePdtType in ( "CAPITAL AND RESERVE" , "CASH" , "CUST ACCT" , "FIXED ASSET" , "MINORITY INTEREST" , "NOSTRO" , "OTHER NON PROD PL ITEM" , "OTHER PAYABLES" , "OTHER RECEIVABLES" , "PART" , "PROV" , "TAXES" ) && hscAcctSubcl in ( "2706" , "2707" , "2718" , "2719" , "2723" , "2724" , "2725" ) && hacAmtCl == "01" && intInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1769772' extends '336844' salience 37650
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "2718")
+        
+    then
+        $gda.setPdtCode("004000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6953");
+        
+end
+
+rule '1769773' extends '336844' salience 37640
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "2724")
+        
+    then
+        $gda.setPdtCode("027100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6953");
+        
+end
+
+rule '1769774' extends '336844' salience 37630
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "2725")
+        
+    then
+        $gda.setPdtCode("031700");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6953");
+        
+end
+
+rule '1769780' extends '336844' salience 37620
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "2723")
+        
+    then
+        $gda.setPdtCode("005900");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6953");
+        
+end
+
+rule '1769781' extends '336844' salience 37610
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl in ("2706", "2707"))
+        
+    then
+        $gda.setPdtCode("012700");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6953");
+        
+end
+
+rule '1769775' extends '336844' salience 37600
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl in ("2706", "2707"), getCase0_1710436() == "long_term")
+        
+    then
+        $gda.setPdtCode("012200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6953");
+        
+end
+
+rule '1769776' extends '336844' salience 37590
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "2723", getCase0_1710436() == "long_term")
+        
+    then
+        $gda.setPdtCode("007300");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6953");
+        
+end
+
+rule '1772875' extends '336844' salience 37580
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "2706", hreRelTypeCtpy matches "I.*")
+        
+    then
+        $gda.setPdtCode("014000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6953");
+        
+end
+
+rule '1773531' extends '336844' salience 37570
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0768", hscAcctSubcl == "2706", hreRelTypeCtpy matches "I.*", ownUse01 == "PERSONLOAN")
+        
+    then
+        $gda.setPdtCode("012700");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6953");
+        
+end
+
+rule '1773532' extends '336844' salience 37560
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0768", hscAcctSubcl == "2706", hreRelTypeCtpy matches "I.*", ownUse01 == "MORTGAGE")
+        
+    then
+        $gda.setPdtCode("009400");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6953");
+        
+end
+
+rule '1773530' extends '336844' salience 37550
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0768", hscAcctSubcl == "2706", getCase0_1710436() == "long_term", hreRelTypeCtpy matches "I.*", ownUse01 == "PERSONLOAN")
+        
+    then
+        $gda.setPdtCode("012200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6953");
+        
+end
+
+

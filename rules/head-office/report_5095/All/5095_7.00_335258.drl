@@ -1,0 +1,113 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335258'
+	when
+		$gda : GrlDetAmounts(actCode == null && intInd == "Y")
+	then
+        
+end
+
+
+
+
+
+rule '1700595' extends '335258' salience 670
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == null)
+        
+    then
+        $gda.setLocMassLine("99.999");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5770");
+        
+end
+
+rule '1700598' extends '335258' salience 660
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == null, intInd == "Y", prodSubTypeLoc == "ICAP", massLine in ("Assets Intercompany excl. Intra", "Assets Intracompany"), contingInd == "N")
+        
+    then
+        $gda.setLocMassLine("Intraco Liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5770");
+        
+end
+
+rule '1700599' extends '335258' salience 650
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == null, intInd == "Y", prodSubTypeLoc == "ICAR", massLine in ("Assets Intercompany excl. Intra", "Assets Intracompany"), contingInd == "N")
+        
+    then
+        $gda.setLocMassLine("Intraco Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5770");
+        
+end
+
+rule '1700766' extends '335258' salience 640
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == null, intInd == "Y", massLine == "Assets Intracompany", contingInd == "N")
+        
+    then
+        $gda.setLocMassLine("Intraco Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5770");
+        
+end
+
+rule '1700767' extends '335258' salience 630
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == null, intInd == "Y", massLine == "Liabilities Intracompany", contingInd == "N")
+        
+    then
+        $gda.setLocMassLine("Intraco Liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5770");
+        
+end
+
+rule '1700594' extends '335258' salience 620
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == null, intInd == "Y", hpePdtType == "DEPOSIT", prodSubSubTypeLoc matches "DG.*", massLine in ("Assets Intercompany excl. Intra", "Assets Intracompany"), contingInd == "N")
+        
+    then
+        $gda.setLocMassLine("Intraco Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5770");
+        
+end
+
+rule '1700597' extends '335258' salience 610
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == null, intInd == "Y", hpePdtType == "DEPOSIT", prodSubSubTypeLoc matches "DT.*", massLine in ("Liabilities Intercompany excl. Intra", "Liabilities Intracompany"), contingInd == "N")
+        
+    then
+        $gda.setLocMassLine("Intraco Liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5770");
+        
+end
+
+

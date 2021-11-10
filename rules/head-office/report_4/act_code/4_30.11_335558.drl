@@ -1,0 +1,230 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335558'
+	when
+		$gda : GrlDetAmounts(hpePdtType == "STOCK DISC BILL PRM NOTE" && intInd == "N" && hacAmtCl in ( "01" , "05" , "16" , "18" , "22" ) && contingInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1711553' extends '335558' salience 50630
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setActCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5934");
+        
+end
+
+rule '1711543' extends '335558' salience 50620
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", htyTradCat == "03", hacAmtCl == "16")
+        
+    then
+        $gda.setActCode("L3334000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5934");
+        
+end
+
+rule '1711549' extends '335558' salience 50610
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", htyTradCat in ("01", "02"), hacAmtCl in ("01", "05", "18"))
+        
+    then
+        $gda.setActCode("L1425000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5934");
+        
+end
+
+rule '1711550' extends '335558' salience 50600
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", htyTradCat == "03", hacAmtCl in ("01", "05", "18"))
+        
+    then
+        $gda.setActCode("L0242000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5934");
+        
+end
+
+rule '1711551' extends '335558' salience 50590
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", htyTradCat in ("01", "02"), hacAmtCl in ("01", "05", "18"))
+        
+    then
+        $gda.setActCode("A0057000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5934");
+        
+end
+
+rule '1711556' extends '335558' salience 50580
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", htyTradCat == "03", hacAmtCl == "22")
+        
+    then
+        $gda.setActCode("A9457000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5934");
+        
+end
+
+rule '1711542' extends '335558' salience 50570
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", htyTradCat == "03", hacAmtCl == "16", himIfrs9MeasCl != "FVPL")
+        
+    then
+        $gda.setActCode("A3931000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5934");
+        
+end
+
+rule '1711544' extends '335558' salience 50560
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", htyTradCat == "03", volTradeInd == "Y", hacAmtCl in ("01", "05", "18"))
+        
+    then
+        $gda.setActCode("L3343000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5934");
+        
+end
+
+rule '1711546' extends '335558' salience 50550
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", htyTradCat == "03", hedgeInd == "Y", hacAmtCl in ("01", "05", "18"))
+        
+    then
+        $gda.setActCode("L3933000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5934");
+        
+end
+
+rule '1711548' extends '335558' salience 50540
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", htyTradCat == "03", hacAmtCl in ("01", "05", "18"), himIfrs9MeasCl != "FVPL")
+        
+    then
+        $gda.setActCode("A0027000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5934");
+        
+end
+
+rule '1711557' extends '335558' salience 50530
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", htyTradCat == "03", volTradeInd == "Y", hacAmtCl == "22")
+        
+    then
+        $gda.setActCode("A8350000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5934");
+        
+end
+
+rule '1711541' extends '335558' salience 50520
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", htyTradCat == "03", hedgeInd == "Y", fvAdjInd == "Y")
+        
+    then
+        $gda.setActCode("L3334000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5934");
+        
+end
+
+rule '1711545' extends '335558' salience 50510
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", htyTradCat == "03", volTradeInd == "Y", hacAmtCl in ("01", "05", "18"), himIfrs9MeasCl != "FVPL")
+        
+    then
+        $gda.setActCode("A3329000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5934");
+        
+end
+
+rule '1711547' extends '335558' salience 50500
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", htyTradCat == "03", hedgeInd == "Y", hacAmtCl in ("01", "05", "18"), himIfrs9MeasCl != "FVPL")
+        
+    then
+        $gda.setActCode("A3332000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5934");
+        
+end
+
+rule '1711554' extends '335558' salience 50490
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", htyTradCat == "03", hedgeInd == "N", hacAmtCl in ("01", "05", "18"), himIfrs9MeasCl == "FVPL")
+        
+    then
+        $gda.setActCode("A9260000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5934");
+        
+end
+
+rule '1711552' extends '335558' salience 50480
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", htyTradCat == "03", hedgeInd == "Y", fvAdjInd == "Y", himIfrs9MeasCl != "FVPL")
+        
+    then
+        $gda.setActCode("A3931000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5934");
+        
+end
+
+

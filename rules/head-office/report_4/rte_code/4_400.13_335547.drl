@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335547'
+	when
+		$gda : GrlDetAmounts(( ( actCode in ( "A0027000" , "A0034000" , "A0057000" , "A0624000" , "A3329000" , "A8350000" , "A8294000" , "A8805000" , "A8806000" , "A9260000" , "A9750000" , "L0272000" ) && icInd == "Y" ) || ( actCode == "L0242000" && pdtCode == "031500" && icInd == "Y" ) || ( actCode == "A0081000" && hpePdtType in ( "DEPOSIT" , "FACTORING" , "FIDUCIARY DEPOSIT" , "LEASING" , "LOAN" , "MARGIN FINANCE" ) && icInd == "Y" ) ))
+	then
+        
+end
+
+
+
+
+
+rule '1710722' extends '335547' salience 7260
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setRteCode("010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5923");
+        
+end
+
+rule '1710721' extends '335547' salience 7250
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode not in ("A0027000", "A0081000"), pdtCode == "031500")
+        
+    then
+        $gda.setRteCode("163");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5923");
+        
+end
+
+rule '1710723' extends '335547' salience 7240
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000"), pdtCode == "031500")
+        
+    then
+        $gda.setRteCode("010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5923");
+        
+end
+
+

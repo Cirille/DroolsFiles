@@ -1,0 +1,139 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '333135'
+	when
+		$gda : GrlDetAmounts(dnbSecurityCode != null)
+	then
+        
+end
+
+
+
+
+
+rule '1386832' extends '333135' salience 90
+
+    when
+        
+        GrlDetAmounts(this == $gda, dnbSecurityCode == "PARTICIPATIONS IN INVESTMENTS FUNDS")
+        
+    then
+        $gda.setDnbSecurityCode2("EQUITY SHARES");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4009");
+        
+end
+
+rule '1386834' extends '333135' salience 80
+
+    when
+        
+        GrlDetAmounts(this == $gda, dnbSecurityCode == "PARTICIPATIONS IN MONEY MARKET FUNDS")
+        
+    then
+        $gda.setDnbSecurityCode2("EQUITY SHARES");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4009");
+        
+end
+
+rule '1386835' extends '333135' salience 70
+
+    when
+        
+        GrlDetAmounts(this == $gda, dnbSecurityCode == "NOT-LISTED EQUITY SECURITIES")
+        
+    then
+        $gda.setDnbSecurityCode2("EQUITY SHARES");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4009");
+        
+end
+
+rule '1386836' extends '333135' salience 60
+
+    when
+        
+        GrlDetAmounts(this == $gda, dnbSecurityCode == "LISTED EQUITY SECURITIES")
+        
+    then
+        $gda.setDnbSecurityCode2("EQUITY SHARES");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4009");
+        
+end
+
+rule '1386838' extends '333135' salience 50
+
+    when
+        
+        GrlDetAmounts(this == $gda, dnbSecurityCode == "DEBT SECURITIES ORIGINAL MATURITY 1 YEAR OR LESS")
+        
+    then
+        $gda.setDnbSecurityCode2("DEBT SECURITIES");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4009");
+        
+end
+
+rule '1386839' extends '333135' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, dnbSecurityCode == "DEBT SECURITIES ORIGINAL MATURITY BETWEEN ONE AND TWO YEARS")
+        
+    then
+        $gda.setDnbSecurityCode2("DEBT SECURITIES");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4009");
+        
+end
+
+rule '1386840' extends '333135' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, dnbSecurityCode == "DEBT SECURITIES ORIGINAL MATURITY MORE THAN TWO YEARS")
+        
+    then
+        $gda.setDnbSecurityCode2("DEBT SECURITIES");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4009");
+        
+end
+
+rule '1389721' extends '333135' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, dnbSecurityCode == "DEBT SECURITIES TO BE SPECIFIED")
+        
+    then
+        $gda.setDnbSecurityCode2("DEBT SECURITIES");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4009");
+        
+end
+
+rule '1389722' extends '333135' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, dnbSecurityCode == "EQUITY SECURITIES TO BE SPECIFIED")
+        
+    then
+        $gda.setDnbSecurityCode2("EQUITY SHARES");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4009");
+        
+end
+
+

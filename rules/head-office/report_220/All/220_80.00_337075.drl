@@ -1,0 +1,58 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '337075'
+	when
+		$gda : GrlDetAmounts(( ( ebaProduct in ( "Debt securities. ABS" , "Debt securities. RMBS" , "Debt securities issued. ABS" , "Debt securities issued. RMBS" ) ) || ( ebaProduct matches "Security legs.*" && ebaUnderlyingProduct in ( "Debt securities. ABS" , "Debt securities. RMBS" ) ) ))
+	then
+        
+end
+
+
+
+
+
+rule '1781442' extends '337075' salience 20
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setBorrowInEeaCountryInd(Warning: selecting from goe_v_isin_isin_vw: data will not be available in source topic.
+ full statement: {(SELECT DISTINCT EEA_CTRY_IND
+  FROM goe_v_isin_isin_vw isin,
+    GRE_HR_CTRY grc
+  WHERE 1                      =1
+  AND isin.COUNTRYOFCOLLATERAL = grc.ctry_cd
+    and sel_tab.isin_cd = isin.isin_cd
+  )});
+        $gda.setUndertakingEeaCountryInd(Warning: selecting from goe_v_isin_isin_vw: data will not be available in source topic.
+ full statement: {(SELECT DISTINCT EEA_CTRY_IND
+  FROM goe_v_isin_isin_vw isin,
+    GRE_HR_CTRY grc
+  WHERE 1                      =1
+  AND isin.COUNTRYOFCOLLATERAL = grc.ctry_cd
+    and sel_tab.isin_cd = isin.isin_cd
+  )});
+        $gda.setLoansFacEeaCountryInd(Warning: selecting from goe_v_isin_isin_vw: data will not be available in source topic.
+ full statement: {(SELECT DISTINCT EEA_CTRY_IND
+  FROM goe_v_isin_isin_vw isin,
+    GRE_HR_CTRY grc
+  WHERE 1                      =1
+  AND isin.COUNTRYOFCOLLATERAL = grc.ctry_cd
+    and sel_tab.isin_cd = isin.isin_cd
+  )});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7132");
+        
+end
+
+

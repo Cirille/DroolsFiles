@@ -1,0 +1,68 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '330046'
+	when
+		$gda : GrlDetAmounts(scyActCode in ( "B0334000" , "B0597000" ) && icInd == "N")
+	then
+end
+
+
+rule '777604' extends '330046' salience 4230
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl in ("2900", "2904"))
+        
+    then
+        $gda.setScyRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1931");
+        
+end
+
+rule '922837' extends '330046' salience 4220
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "2906")
+        
+    then
+        $gda.setScyRteCode("018");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1931");
+        
+end
+
+rule '777606' extends '330046' salience 4210
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "2902")
+        
+    then
+        $gda.setScyRteCode("021");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1931");
+        
+end
+
+rule '777605' extends '330046' salience 4200
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl in ("2901", "2905"))
+        
+    then
+        $gda.setScyRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1931");
+        
+end
+
+

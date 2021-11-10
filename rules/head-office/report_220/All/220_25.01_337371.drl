@@ -1,0 +1,87 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '337371'
+	when
+		$gda : GrlDetAmounts(( ebaProduct in ( "Debt securities issued. ABS" , "Debt securities issued. RMBS" , "Debt securities. ABS" , "Debt securities. RMBS" ) ) || ( ebaProduct matches "Security legs.*" && ebaUnderlyingProduct in ( "Debt securities issued. ABS" , "Debt securities issued. RMBS" , "Debt securities. ABS" , "Debt securities. RMBS" ) ) || ( ebaProduct == "All assets other" && hssSecuProdSubcl in ( "0220" , "0230" , "0240" , "0250" , "0260" , "0280" , "0285" ) && decode ( isinCd , MANUALLY adjust: NULL , "N" , "Y" ) == "Y" ))
+	then
+        
+end
+
+
+
+
+
+rule '1864106' extends '337371' salience 3640
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCollTypeClass("OTHER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7399");
+        
+end
+
+rule '1864107' extends '337371' salience 3630
+
+    when
+        
+        GrlDetAmounts(this == $gda, (collType matches "WH.*" || collType matches "RMBSMT.*"))
+        
+    then
+        $gda.setCollTypeClass("RESIDENTIAL_MAIN_RESIDENCE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7399");
+        
+end
+
+rule '1864108' extends '337371' salience 3620
+
+    when
+        
+        GrlDetAmounts(this == $gda, collType matches "AUTO.*")
+        
+    then
+        $gda.setCollTypeClass("AUTO");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7399");
+        
+end
+
+rule '1864109' extends '337371' salience 3610
+
+    when
+        
+        GrlDetAmounts(this == $gda, collType == "CF-CLO-SME")
+        
+    then
+        $gda.setCollTypeClass("COMMERCIAL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7399");
+        
+end
+
+rule '1864110' extends '337371' salience 3600
+
+    when
+        
+        GrlDetAmounts(this == $gda, (collType == "CNSMER" || collType matches "CARD.*"))
+        
+    then
+        $gda.setCollTypeClass("PERSONAL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7399");
+        
+end
+
+

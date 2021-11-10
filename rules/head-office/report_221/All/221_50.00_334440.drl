@@ -1,0 +1,35 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334440'
+	when
+		$gda : GrlDetAmounts(actCode == "B0593000")
+	then
+        
+end
+
+
+
+
+
+rule '1621261' extends '334440' salience 110
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setSignFlipCode("[MM,LRR]");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5120");
+        
+end
+
+

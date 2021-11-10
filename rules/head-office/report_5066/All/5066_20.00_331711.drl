@@ -1,0 +1,87 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331711'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1102065' extends '331711' salience 50
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt02("TO BE DETERMINED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3199");
+        
+end
+
+rule '1102061' extends '331711' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0204", source in ("ODS", "GPL"), ldeDeptCd matches "ROHOR.*")
+        
+    then
+        $gda.setCustomTxt02("ROHOR SOURCE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3199");
+        
+end
+
+rule '1102062' extends '331711' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0204", source == "GRL", ldeDeptCd matches "ROHOR.*")
+        
+    then
+        $gda.setCustomTxt02("ROHOR ADJ");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3199");
+        
+end
+
+rule '1102063' extends '331711' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0204", source in ("ODS", "GPL"), ldeDeptCd not matches "ROHOR.*")
+        
+    then
+        $gda.setCustomTxt02("SOURCE (EXCL ROHOR)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3199");
+        
+end
+
+rule '1102064' extends '331711' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0204", source == "GRL", ldeDeptCd not matches "ROHOR.*")
+        
+    then
+        $gda.setCustomTxt02("ADJ (EXCL ROHOR)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3199");
+        
+end
+
+

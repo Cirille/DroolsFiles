@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335863'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1742525' extends '335863' salience 50
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        
+    then
+        $gda.setConvCd("02");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6124");
+        
+end
+
+rule '1742526' extends '335863' salience 40
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        
+    then
+        $gda.setConvCd("01");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6124");
+        
+end
+
+

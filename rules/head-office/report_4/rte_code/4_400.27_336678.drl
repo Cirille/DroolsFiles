@@ -1,0 +1,256 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336678'
+	when
+		$gda : GrlDetAmounts(( actCode in ( "A0082000" , "A0090000" , "A0093000" , "A0102000" , "A0103000" , "A0104000" ) || ( actCode == "A0081000" && hpePdtType in ( "OTHER PAYABLES" , "OTHER RECEIVABLES" , "PROV" ) ) || ( actCode == "A0081000" && hpePdtType in ( "CUST ACCT" , "NOSTRO" ) && hscAcctSubcl in ( "1605" , "2706" , "2707" ) ) || ( actCode == "A0081000" && pdtCode == "033300" ) ))
+	then
+        
+end
+
+
+
+
+
+rule '1767233' extends '336678' salience 490
+
+    when
+        
+        GrlDetAmounts(this == $gda, icInd == "Y")
+        
+    then
+        $gda.setRteCode("010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6863");
+        
+end
+
+rule '1767234' extends '336678' salience 480
+
+    when
+        
+        GrlDetAmounts(this == $gda, icInd == "N")
+        
+    then
+        $gda.setRteCode("095");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6863");
+        
+end
+
+rule '1767232' extends '336678' salience 470
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "OTHERS", hceCovType == "1401", icInd == "N")
+        
+    then
+        $gda.setRteCode("197");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6863");
+        
+end
+
+rule '1767224' extends '336678' salience 460
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "OTHERS", hceCovType == "1416", icInd == "N")
+        
+    then
+        $gda.setRteCode("090");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6863");
+        
+end
+
+rule '1767225' extends '336678' salience 450
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "OTHERS", hceCovType in ("1404", "1417"), icInd == "N")
+        
+    then
+        $gda.setRteCode("091");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6863");
+        
+end
+
+rule '1767226' extends '336678' salience 440
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "OTHERS", hceCovType == "1403", icInd == "N")
+        
+    then
+        $gda.setRteCode("011");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6863");
+        
+end
+
+rule '1767227' extends '336678' salience 430
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "OTHERS", hscAcctSubcl in ("2112", "2113"), icInd == "N")
+        
+    then
+        $gda.setRteCode("011");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6863");
+        
+end
+
+rule '1767229' extends '336678' salience 420
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() in ("LOCAL_GOVERNMENTS", "CENTRAL_GOVERNMENTS"), hzeZoneCtryReg == "A", hceCovType == "1401", icInd == "N")
+        
+    then
+        $gda.setRteCode("195");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6863");
+        
+end
+
+rule '2001381' extends '336678' salience 410
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "OTHERS", icInd == "N", pdtCode == "033300")
+        
+    then
+        $gda.setRteCode("197");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6863");
+        
+end
+
+rule '1767218' extends '336678' salience 400
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "OTHERS", hceCovType == "1452", icInd == "N")
+        
+    then
+        $gda.setRteCode("197");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6863");
+        
+end
+
+rule '1767219' extends '336678' salience 390
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "OTHERS", hceCovType == "1455", icInd == "N")
+        
+    then
+        $gda.setRteCode("090");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6863");
+        
+end
+
+rule '1767230' extends '336678' salience 380
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "OTHERS", mortgageInd == "Y", lseHlyRelId in ("9129", "9132", "9134", "9190", "9193", "9678", "9690", "9706"), ownUse14 in ("2", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("197");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6863");
+        
+end
+
+rule '1767220' extends '336678' salience 370
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "OTHERS", hceCovType not in ("1403", "1404", "1416", "1417"), mortgageInd == "Y", lseHlyRelId in ("0212", "0212_RET", "9614"), icInd == "N")
+        
+    then
+        $gda.setRteCode("091");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6863");
+        
+end
+
+rule '1767223' extends '336678' salience 360
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "OTHERS", hceCovType == null, mortgageInd == "Y", lseHlyRelId in ("0768", "9703"), icInd == "N")
+        
+    then
+        $gda.setRteCode("011");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6863");
+        
+end
+
+rule '1767231' extends '336678' salience 350
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() in ("LOCAL_GOVERNMENTS", "CENTRAL_GOVERNMENTS"), hzeZoneCtryReg == "A", mortgageInd == "Y", lseHlyRelId in ("9129", "9132", "9134", "9190", "9193", "9678", "9690", "9706"), ownUse14 in ("2", "02"), icInd == "N")
+        
+    then
+        $gda.setRteCode("195");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6863");
+        
+end
+
+rule '1767221' extends '336678' salience 340
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "OTHERS", lseHlyRelId in ("0212", "0212_RET", "9614"), getCase0_1767222() == "091", icInd == "N")
+        
+    then
+        $gda.setRteCode("091");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6863");
+        
+end
+
+rule '1767222' extends '336678' salience 330
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "OTHERS", lseHlyRelId in ("0212", "0212_RET", "9614"), getCase0_1767222() == "090", icInd == "N")
+        
+    then
+        $gda.setRteCode("090");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6863");
+        
+end
+
+rule '1767228' extends '336678' salience 320
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1749012() == "OTHERS", mortgageInd == "Y", lseHlyRelId in ("9129", "9132", "9134", "9190", "9193", "9678", "9679", "9690", "9706"), ownUse14 in ("1", "01"), icInd == "N")
+        
+    then
+        $gda.setRteCode("011");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6863");
+        
+end
+
+

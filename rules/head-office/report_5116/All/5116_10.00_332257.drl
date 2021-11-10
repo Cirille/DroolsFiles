@@ -1,0 +1,199 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332257'
+	when
+		$gda : GrlDetAmounts(hpePdtType == "LOAN" && intInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1735870' extends '332257' salience 1180
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("02", "03"), hreRelTypeCtpy matches "B.*")
+        
+    then
+        $gda.setCustomTxt01("1401100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3551");
+        
+end
+
+rule '1735582' extends '332257' salience 1170
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", hreRelTypeCtpy matches "B.*", synLoanInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1003030");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3551");
+        
+end
+
+rule '1735868' extends '332257' salience 1160
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("02", "03"), hreRelTypeCtpy not matches "B.*", synLoanInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1401010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3551");
+        
+end
+
+rule '1735869' extends '332257' salience 1150
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("02", "03"), hreRelTypeCtpy not matches "B.*", synLoanInd == "Y")
+        
+    then
+        $gda.setCustomTxt01("1401030");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3551");
+        
+end
+
+rule '1806016' extends '332257' salience 1140
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", hreRelTypeCtpy not matches "B.*", synLoanInd == "N")
+        
+    then
+        $gda.setCustomTxt01(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3551");
+        
+end
+
+rule '1735860' extends '332257' salience 1130
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{substr(pos_ref,4,1)}*/
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", (ldeDeptCd not matches "SHRMB.*" && ldeDeptCd not matches "BJRMB.*"), hreRelTypeCtpy not matches "B.*", synLoanInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1302010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3551");
+        
+end
+
+rule '1735861' extends '332257' salience 1120
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{substr(pos_ref,5,1)}*/
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", (ldeDeptCd matches "SHRMB.*" || ldeDeptCd matches "BJRMB.*"), hreRelTypeCtpy not matches "B.*", synLoanInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1302010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3551");
+        
+end
+
+rule '1735862' extends '332257' salience 1110
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{substr(pos_ref,4,1)}*/
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", (ldeDeptCd not matches "SHRMB.*" && ldeDeptCd not matches "BJRMB.*"), hreRelTypeCtpy not matches "B.*", synLoanInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1302020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3551");
+        
+end
+
+rule '1735863' extends '332257' salience 1100
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{substr(pos_ref,5,1)}*/
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", (ldeDeptCd matches "SHRMB.*" || ldeDeptCd matches "BJRMB.*"), hreRelTypeCtpy not matches "B.*", synLoanInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1302020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3551");
+        
+end
+
+rule '1735864' extends '332257' salience 1090
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{substr(pos_ref,4,1)}*/
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", (ldeDeptCd not matches "SHRMB.*" && ldeDeptCd not matches "BJRMB.*"), hreRelTypeCtpy not matches "B.*", synLoanInd == "Y")
+        
+    then
+        $gda.setCustomTxt01("1302010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3551");
+        
+end
+
+rule '1735865' extends '332257' salience 1080
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{substr(pos_ref,5,1)}*/
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", (ldeDeptCd matches "SHRMB.*" || ldeDeptCd matches "BJRMB.*"), hreRelTypeCtpy not matches "B.*", synLoanInd == "Y")
+        
+    then
+        $gda.setCustomTxt01("1302010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3551");
+        
+end
+
+rule '1735866' extends '332257' salience 1070
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{substr(pos_ref,4,1)}*/
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", (ldeDeptCd not matches "SHRMB.*" && ldeDeptCd not matches "BJRMB.*"), hreRelTypeCtpy not matches "B.*", synLoanInd == "Y")
+        
+    then
+        $gda.setCustomTxt01("1302020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3551");
+        
+end
+
+rule '1735867' extends '332257' salience 1060
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{substr(pos_ref,5,1)}*/
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", (ldeDeptCd matches "SHRMB.*" || ldeDeptCd matches "BJRMB.*"), hreRelTypeCtpy not matches "B.*", synLoanInd == "Y")
+        
+    then
+        $gda.setCustomTxt01("1302020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3551");
+        
+end
+
+

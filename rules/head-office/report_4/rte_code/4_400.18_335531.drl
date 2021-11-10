@@ -1,0 +1,1492 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+global com.ing.gfrs.logical.apis.GreLrCustRefLogicalApi greLrCustRefLogicalApi;
+
+
+dialect  "mvel"
+
+
+rule '335531'
+	when
+		$gda : GrlDetAmounts(actCode == "B0596000" && icInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1710508' extends '335531' salience 6100
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "031300")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710598' extends '335531' salience 6090
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "031900")
+        
+    then
+        $gda.setRteCode("041");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710553' extends '335531' salience 6080
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000"))
+        
+    then
+        $gda.setRteCode("021");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710561' extends '335531' salience 6070
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014300", "014800", "026900"))
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710566' extends '335531' salience 6060
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "015100", "015500"))
+        
+    then
+        $gda.setRteCode("018");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710570' extends '335531' salience 6050
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014500", "015000"))
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '2000568' extends '335531' salience 6040
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "033100", cgpCode in ("P0039", "P0045", "P0049", "P0053", "P0055"))
+        
+    then
+        $gda.setRteCode("021");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '2009036' extends '335531' salience 6030
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "033400")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710546' extends '335531' salience 6020
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014100", getCase0_1710577() == "BANKS", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710547' extends '335531' salience 6010
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014100", getCase0_1710577() == "BANKS", getCase0_1710554() == "within_one_year")
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710552' extends '335531' salience 6000
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014500", "015000"), getCase0_1710577() == "BANKS", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setRteCode("020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710560' extends '335531' salience 5990
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014900", "015000", "027000"), getCase0_1710577() in ("CENTRAL_BANKS", "CENTRAL_GOVERNMENTS"), hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710565' extends '335531' salience 5980
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000"), getCase0_1710577() == "BANKS", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setRteCode("119");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710572' extends '335531' salience 5970
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014100", getCase0_1710577() == "CLEARING_HOUSES", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710573' extends '335531' salience 5960
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014100", getCase0_1710577() == "CLEARING_HOUSES", getCase0_1710554() == "within_one_year")
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710574' extends '335531' salience 5950
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014500", "015000"), getCase0_1710577() == "CLEARING_HOUSES", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setRteCode("020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710577' extends '335531' salience 5940
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000"), getCase0_1710577() == "CLEARING_HOUSES", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setRteCode("119");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710578' extends '335531' salience 5930
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014500", "015000"), getCase0_1710577() == "LOCAL_GOVERNMENTS", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setRteCode("020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710586' extends '335531' salience 5920
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000", "033100"), getCase0_1710577() == "LOCAL_GOVERNMENTS", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setRteCode("017");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710595' extends '335531' salience 5910
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014500", getCase0_1710577() == "CENTRAL_GOVERNMENTS", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setRteCode("041");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710597' extends '335531' salience 5900
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000", "033100"), getCase0_1710577() == "GOVERNMENTS_OTHER", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setRteCode("017");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '2000569' extends '335531' salience 5890
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "033100", hzeZoneCtryReg == "A", cgpCode == "B0036")
+        
+    then
+        $gda.setRteCode("017");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '2000570' extends '335531' salience 5880
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "033100", hzeZoneCtryReg == "B", cgpCode == "B0036")
+        
+    then
+        $gda.setRteCode("021");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710548' extends '335531' salience 5870
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "026900", cgpCode in ("P0045", "P0049"), lseHlyRelId in ("0212", "0212_RET", "9614", "9661"))
+        
+    then
+        $gda.setRteCode("014");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710549' extends '335531' salience 5860
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "027000", cgpCode in ("P0045", "P0049"), lseHlyRelId in ("0212", "0212_RET", "9614", "9661"))
+        
+    then
+        $gda.setRteCode("013");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710550' extends '335531' salience 5850
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014500", "015000"), hceCovType == "2009")
+        
+    then
+        $gda.setRteCode("020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710551' extends '335531' salience 5840
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014500", "015000"), hceCovType in ("2005", "2008", "2011", "2021"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710554' extends '335531' salience 5830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014500", "015000"), getCase0_1710577() == "BANKS", hzeZoneCtryReg == "B", getCase0_1710554() == "within_one_year")
+        
+    then
+        $gda.setRteCode("020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710558' extends '335531' salience 5820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014500", "014900", "015000", "027000"), getCase0_1710577() in ("CENTRAL_BANKS", "CENTRAL_GOVERNMENTS"), hzeZoneCtryReg == "B", getCase0_1710554() == "within_one_year")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710563' extends '335531' salience 5810
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000"), getCase0_1710577() == "BANKS", hzeZoneCtryReg == "B", getCase0_1710554() == "within_one_year")
+        
+    then
+        $gda.setRteCode("119");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710564' extends '335531' salience 5800
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000"), hceCovType == "2009")
+        
+    then
+        $gda.setRteCode("117");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710568' extends '335531' salience 5790
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "015100", "015500"), hceCovType in ("2005", "2008", "2011", "2021"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710569' extends '335531' salience 5780
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "015100", "015500"), hceCovType == "2009")
+        
+    then
+        $gda.setRteCode("049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710575' extends '335531' salience 5770
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014500", "015000"), getCase0_1710577() == "CLEARING_HOUSES", hzeZoneCtryReg == "B", getCase0_1710554() == "within_one_year")
+        
+    then
+        $gda.setRteCode("020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710576' extends '335531' salience 5760
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000"), getCase0_1710577() == "CLEARING_HOUSES", hzeZoneCtryReg == "B", getCase0_1710554() == "within_one_year")
+        
+    then
+        $gda.setRteCode("119");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710583' extends '335531' salience 5750
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014900", "015000", "027000"), getCase0_1710577() == "LOCAL_GOVERNMENTS", hzeZoneCtryReg == "A", euCtryInd == "N")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710584' extends '335531' salience 5740
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014500", getCase0_1710577() == "LOCAL_GOVERNMENTS", hzeZoneCtryReg == "A", euCtryInd == "N")
+        
+    then
+        $gda.setRteCode("041");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710585' extends '335531' salience 5730
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014500", getCase0_1710577() == "LOCAL_GOVERNMENTS", hzeZoneCtryReg == "A", euCtryInd == "Y")
+        
+    then
+        $gda.setRteCode("041");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710587' extends '335531' salience 5720
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014900", "015000", "027000"), getCase0_1710577() == "LOCAL_GOVERNMENTS", hzeZoneCtryReg == "A", euCtryInd == "Y")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710590' extends '335531' salience 5710
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014500", getCase0_1710577() == "GOVERNMENT_RELATED", hzeZoneCtryReg == "A", euCtryInd == "N")
+        
+    then
+        $gda.setRteCode("041");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710591' extends '335531' salience 5700
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014500", getCase0_1710577() == "GOVERNMENT_RELATED", hzeZoneCtryReg == "A", euCtryInd == "Y")
+        
+    then
+        $gda.setRteCode("041");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710592' extends '335531' salience 5690
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014900", "015000", "027000"), getCase0_1710577() == "GOVERNMENTS_OTHER", hzeZoneCtryReg == "A", euCtryInd == "N")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710593' extends '335531' salience 5680
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014500", getCase0_1710577() == "GOVERNMENTS_OTHER", hzeZoneCtryReg == "A", euCtryInd == "N")
+        
+    then
+        $gda.setRteCode("041");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710594' extends '335531' salience 5670
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014500", getCase0_1710577() == "GOVERNMENTS_OTHER", hzeZoneCtryReg == "A", euCtryInd == "Y")
+        
+    then
+        $gda.setRteCode("041");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710608' extends '335531' salience 5660
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014900", "015000", "027000"), getCase0_1710577() == "GOVERNMENTS_OTHER", hzeZoneCtryReg == "A", euCtryInd == "Y")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710510' extends '335531' salience 5650
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000"), hceCovType in ("2005", "2008", "2011", "2021"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("117");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710512' extends '335531' salience 5640
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014500", "014900", "015000", "027000"), (hceCovType == "2001" || hceCovType == "2101" || hceCovType matches "15.*"), hzeZoneCtryCov == "B", locFundInd == "Y")
+        
+    then
+        $gda.setRteCode("054");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710521' extends '335531' salience 5630
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014500", "014900", "015000", "027000"), hceCovType == "2002", hzeZoneCtryCov == "B", locFundInd == "Y")
+        
+    then
+        $gda.setRteCode("050");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710527' extends '335531' salience 5620
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000"), hceCovType in ("2024", "2030"), covRelType == "BMLD")
+        
+    then
+        $gda.setRteCode("117");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710528' extends '335531' salience 5610
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000"), hceCovType == "2009")
+        
+    then
+        $gda.setRteCode("117");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710529' extends '335531' salience 5600
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000", "033100"), hceCovType == "2002", hzeZoneCtryCov == "B", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("021");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710530' extends '335531' salience 5590
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014500", "014900", "015000", "027000"), getCase0_1710577() == "GOVERNMENTS_OTHER", hzeZoneCtryReg == "B", euCtryInd == "N", locFundInd == "Y")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710531' extends '335531' salience 5580
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014100", getCase0_1710577() == "GOVERNMENTS_OTHER", hzeZoneCtryReg == "B", euCtryInd == "N", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("018");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710532' extends '335531' salience 5570
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000", "033100"), getCase0_1710577() == "GOVERNMENTS_OTHER", hzeZoneCtryReg == "B", euCtryInd == "N", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("021");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710533' extends '335531' salience 5560
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014500", "015000"), getCase0_1710577() == "GOVERNMENTS_OTHER", hzeZoneCtryReg == "B", euCtryInd == "N", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710536' extends '335531' salience 5550
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014500", "015000"), hceCovType in ("2024", "2030"), covRelType == "BMLD")
+        
+    then
+        $gda.setRteCode("020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710537' extends '335531' salience 5540
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014500", "015000"), hceCovType in ("2024", "2030"), covRelType in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BSPV", "GLOL", "BGOF", "BGPR", "BPRO", "BRPR"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710542' extends '335531' salience 5530
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "015100", "015500"), hceCovType in ("2024", "2030"), covRelType in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BSPV", "GLOL", "BGOF", "BGPR", "BPRO", "BRPR"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710543' extends '335531' salience 5520
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "015100", "015500"), hceCovType in ("2024", "2030"), covRelType == "BMLD")
+        
+    then
+        $gda.setRteCode("049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710545' extends '335531' salience 5510
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000"), hceCovType in ("2024", "2030"), covRelType in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BSPV", "GLOL", "BGOF", "BGPR", "BPRO", "BRPR"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("117");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710555' extends '335531' salience 5500
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "027000", getCase0_1710554() == "over_one_year", hceCovType in ("1403", "1404", "1416", "1417"))
+        
+    then
+        $gda.setRteCode("013");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710556' extends '335531' salience 5490
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "026900", getCase0_1710577() != "FINANCIAL_INSTITUTIONS", getCase0_1710554() == "within_one_year", hceCovType in ("1403", "1404", "1416", "1417"))
+        
+    then
+        $gda.setRteCode("014");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710557' extends '335531' salience 5480
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000", "033100"), (hceCovType == "2001" || hceCovType == "2101" || hceCovType matches "15.*"), hzeZoneCtryCov == "B", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("021");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710567' extends '335531' salience 5470
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "015100", "015500"), getCase0_1710554() == "within_one_year", hceCovType in ("2005", "2008", "2011", "2021"), hzeZoneCtryCov == "B")
+        
+    then
+        $gda.setRteCode("048");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710571' extends '335531' salience 5460
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014500", "015000"), getCase0_1710554() == "within_one_year", hceCovType in ("2005", "2008", "2011", "2021"), hzeZoneCtryCov == "B")
+        
+    then
+        $gda.setRteCode("020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710579' extends '335531' salience 5450
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014500", "014900", "015000", "027000"), getCase0_1710577() == "LOCAL_GOVERNMENTS", hzeZoneCtryReg == "B", euCtryInd == "N", locFundInd == "Y")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710580' extends '335531' salience 5440
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014100", getCase0_1710577() == "LOCAL_GOVERNMENTS", hzeZoneCtryReg == "B", euCtryInd == "N", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("018");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710581' extends '335531' salience 5430
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000", "033100"), getCase0_1710577() == "LOCAL_GOVERNMENTS", hzeZoneCtryReg == "B", euCtryInd == "N", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("021");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710582' extends '335531' salience 5420
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014500", "015000"), getCase0_1710577() == "LOCAL_GOVERNMENTS", hzeZoneCtryReg == "B", euCtryInd == "N", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710588' extends '335531' salience 5410
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014100", getCase0_1710577() == "GOVERNMENT_RELATED", hzeZoneCtryReg == "B", euCtryInd == "N", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("018");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710589' extends '335531' salience 5400
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014500", "015000"), getCase0_1710577() == "GOVERNMENT_RELATED", hzeZoneCtryReg == "B", euCtryInd == "N", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710599' extends '335531' salience 5390
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "026900", getCase0_1710577() == "FINANCIAL_INSTITUTIONS", getCase0_1710554() == "within_one_year", hceCovType in ("1403", "1404", "1416", "1417"))
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710605' extends '335531' salience 5380
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014100", (hceCovType == "2001" || hceCovType == "2101" || hceCovType matches "15.*"), hzeZoneCtryCov == "B", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("018");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710606' extends '335531' salience 5370
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014100", hceCovType == "2002", hzeZoneCtryCov == "B", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("018");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1778852' extends '335531' salience 5360
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "015100", "015500"), hceCovType in ("2024", "2030"), covRelType in ("GCPL", "GLPL"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1778854' extends '335531' salience 5350
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000"), hceCovType in ("2024", "2030"), covRelType in ("GCPL", "GLPL"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("117");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1778855' extends '335531' salience 5340
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014500", "015000"), hceCovType in ("2024", "2030"), covRelType in ("GCPL", "GLPL"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710511' extends '335531' salience 5330
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014500", "014900", "015000", "027000"), hceCovType == "2030", covRelType in ("GCEN", "GCFI", "GNFP", "GNFU", "GSOC"), hzeZoneCtryCov == "B", locFundInd == "Y")
+        
+    then
+        $gda.setRteCode("054");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710513' extends '335531' salience 5320
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014500", "014900", "015000", "027000"), hceCovType in ("2024", "2030"), covRelType in ("GCEN", "GCFI", "GNFP", "GNFU", "GSOC"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710514' extends '335531' salience 5310
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014500", "014900", "015000", "027000"), (hceCovType == "2001" || hceCovType == "2101" || hceCovType matches "15.*"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710519' extends '335531' salience 5300
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014500", "014900", "015000", "027000"), hceCovType in ("2024", "2030"), covRelType == "BCEN", hzeZoneCtryCov == "B", locFundInd == "Y")
+        
+    then
+        $gda.setRteCode("050");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710520' extends '335531' salience 5290
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000", "033100"), hceCovType in ("2024", "2030"), covRelType == "BCEN", hzeZoneCtryCov == "B", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("021");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710522' extends '335531' salience 5280
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014100", hceCovType in ("1103", "1105"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("046");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710523' extends '335531' salience 5270
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014100", hceCovType in ("2005", "2008", "2011", "2021"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710524' extends '335531' salience 5260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014500", "014900", "015000", "015100", "015500", "027000"), getCase0_1710577() != "LOCAL_GOVERNMENTS", hceCovType in ("1101", "1102", "1201", "1202", "1203", "2025"))
+        
+    then
+        $gda.setRteCode("063");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710525' extends '335531' salience 5250
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014500", "014900", "015000", "015500", "027000"), hceCovType in ("1104", "1301"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("064");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710526' extends '335531' salience 5240
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "027000"), hceCovType in ("1103", "1105"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("116");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710538' extends '335531' salience 5230
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000", "033100"), hceCovType in ("2024", "2030"), covRelType in ("GCEN", "GCFI", "GNFP", "GNFU", "GSOC"), hzeZoneCtryCov == "B", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("021");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710539' extends '335531' salience 5220
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014500", "014900", "015000", "027000"), hceCovType in ("2024", "2030"), covRelType == "BCEN", hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("052");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710540' extends '335531' salience 5210
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000"), getCase0_1710554() == "within_one_year", hceCovType in ("2024", "2030"), covRelType in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BSPV", "GLOL", "BGOF", "BGPR", "BPRO", "BRPR"), hzeZoneCtryCov == "B")
+        
+    then
+        $gda.setRteCode("117");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710541' extends '335531' salience 5200
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "015100", "015500"), getCase0_1710554() == "within_one_year", hceCovType in ("2024", "2030"), covRelType in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BSPV", "GLOL", "BGOF", "BGPR", "BPRO", "BRPR"), hzeZoneCtryCov == "B")
+        
+    then
+        $gda.setRteCode("048");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710544' extends '335531' salience 5190
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014500", "015000"), getCase0_1710554() == "within_one_year", hceCovType in ("2024", "2030"), covRelType in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BSPV", "GLOL", "BGOF", "BGPR", "BPRO", "BRPR"), hzeZoneCtryCov == "B")
+        
+    then
+        $gda.setRteCode("020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710559' extends '335531' salience 5180
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014500", "014900", "015000", "027000"), hceCovType == "2002", hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("052");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710562' extends '335531' salience 5170
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000"), getCase0_1710554() == "within_one_year", hceCovType in ("2005", "2008", "2011", "2021"), hzeZoneCtryCov == "B")
+        
+    then
+        $gda.setRteCode("117");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710596' extends '335531' salience 5160
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014500", "014900", "015000", "015100", "015500", "027000"), getCase0_1710577() == "LOCAL_GOVERNMENTS", hceCovType in ("1101", "1102", "1201", "1202", "1203", "2025"))
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710600' extends '335531' salience 5150
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "015100", "015500"), hceCovType in ("2024", "2030"), covRelType in ("GAMT", "GOSN", "GLOC", "GLOL", "GPSC", "GPSL", "GLFI"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("057");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710601' extends '335531' salience 5140
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "015100", "015500"), hceCovType == "2003", hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("057");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710602' extends '335531' salience 5130
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000"), hceCovType == "2003", hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("118");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710603' extends '335531' salience 5120
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000"), hceCovType in ("2024", "2030"), covRelType in ("GAMT", "GOSN", "GLOC", "GLOL", "GPSC", "GPSL", "GLFI"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("118");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710604' extends '335531' salience 5110
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014100", hceCovType in ("2024", "2030"), covRelType in ("GCEN", "GCFI", "GNFP", "GNFU", "GSOC"), hzeZoneCtryCov == "B", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("018");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710607' extends '335531' salience 5100
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014100", hceCovType in ("2024", "2030"), covRelType == "BCEN", hzeZoneCtryCov == "B", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("018");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1778850' extends '335531' salience 5090
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014200", "014400", "014900", "027000"), getCase0_1710554() == "within_one_year", hceCovType in ("2024", "2030"), covRelType in ("GCPL", "GLPL"), hzeZoneCtryCov == "B")
+        
+    then
+        $gda.setRteCode("117");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1778851' extends '335531' salience 5080
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "015100", "015500"), getCase0_1710554() == "within_one_year", hceCovType in ("2024", "2030"), covRelType in ("GCPL", "GLPL"), hzeZoneCtryCov == "B")
+        
+    then
+        $gda.setRteCode("048");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1778853' extends '335531' salience 5070
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014500", "015000"), getCase0_1710554() == "within_one_year", hceCovType in ("2024", "2030"), covRelType in ("GCPL", "GLPL"), hzeZoneCtryCov == "B")
+        
+    then
+        $gda.setRteCode("020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710515' extends '335531' salience 5060
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014500", "014900", "015000", "027000"), hceCovType in ("2024", "2030"), covRelType in ("GAMT", "GOSN", "GLOC", "GLOL", "GPSC", "GPSL", "GLFI"), hzeZoneCtryCov == "A", hcyCtryCdCov in ("AU", "CA", "CH", "JP", "KR", "US"))
+        
+    then
+        $gda.setRteCode("055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710516' extends '335531' salience 5050
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014500", "014900", "015000", "027000"), hceCovType == "2003", hzeZoneCtryCov == "A", hcyCtryCdCov in ("AT", "BE", "CY", "CZ", "DE", "DK", "EE", "FI", "FR", "GB", "GR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "SE", "SI", "SK"))
+        
+    then
+        $gda.setRteCode("055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710517' extends '335531' salience 5040
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014500", "014900", "015000", "027000"), hceCovType in ("2024", "2030"), covRelType in ("GAMT", "GOSN", "GLOC", "GLOL", "GPSC", "GPSL", "GLFI"), hzeZoneCtryCov == "A", hcyCtryCdCov in ("AT", "BE", "CY", "CZ", "DE", "DK", "EE", "FI", "FR", "GB", "GR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "SE", "SI", "SK"))
+        
+    then
+        $gda.setRteCode("055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710518' extends '335531' salience 5030
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014500", "014900", "015000", "027000"), hceCovType == "2025")
+        
+    then
+        $gda.setRteCode("055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710534' extends '335531' salience 5020
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014500", "014900", "015000", "027000"), hceCovType == "2003", hzeZoneCtryCov == "B", hcyCtryCdCov in ("HK", "SG"), locFundInd == "Y")
+        
+    then
+        $gda.setRteCode("054");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '1710535' extends '335531' salience 5010
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("014100", "014200", "014400", "014500", "014900", "015000", "027000"), hceCovType in ("2024", "2030"), covRelType in ("GAMT", "GOSN", "GLOC", "GLOL", "GPSC", "GPSL", "GLFI"), hzeZoneCtryCov == "B", hcyCtryCdCov in ("HK", "SG"), locFundInd == "Y")
+        
+    then
+        $gda.setRteCode("054");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '2010243' extends '335531' salience 5000
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,"STNDRD","CPY-ISS","N") == "GOVTLOC")
+        
+    then
+        $gda.setRteCode("021");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '2010248' extends '335531' salience 4990
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,"STNDRD","CPY-ISS","N") == "GOVT-TO-OFI")
+        
+    then
+        $gda.setRteCode("021");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+rule '2010249' extends '335531' salience 4980
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,"STNDRD","CPY-ISS","N") == "GOVT-TO-CORP")
+        
+    then
+        $gda.setRteCode("021");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5907");
+        
+end
+
+

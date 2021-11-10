@@ -1,0 +1,360 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332559'
+	when
+		$gda : GrlDetAmounts(( actCode matches "A.*" && ( pdtCode in ( "002900" , "004700" , "004800" , "005100" , "005900" , "006100" , "007300" , "029000" ) || ( pdtCode matches "03.*" && not pdtCode in ( "031300" , "031200" , "031400" ) ) ) && ( actCode != "A0023000" || pdtCode not in ( "004700" , "004800" ) ) ) || ( actCode matches "L0269000" && ( pdtCode in ( 002900 , 004700 , 005100 , 005900 , 006100 , 007300 , 009100 ) || ( pdtCode matches "03.*" && not pdtCode in ( "031300" , "031200" , "031400" ) ) ) ))
+	then
+        
+end
+
+
+
+
+
+rule '1184106' extends '332559' salience 1320
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() != "Y", actCode matches "A.*")
+        
+    then
+        $gda.setIlaapCollType("4.9.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1184959' extends '332559' salience 1310
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", actCode matches "A.*")
+        
+    then
+        $gda.setIlaapCollType("4.7.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1186471' extends '332559' salience 1300
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", actCode matches "L.*")
+        
+    then
+        $gda.setIlaapCollType("4.7.9");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1486931' extends '332559' salience 1290
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() != "Y", actCode matches "L.*")
+        
+    then
+        $gda.setIlaapCollType("4.9.9");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1176526' extends '332559' salience 1280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", pdtCode matches "03.*", actCode matches "A.*")
+        
+    then
+        $gda.setIlaapCollType("4.4.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1184955' extends '332559' salience 1270
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", cgpCode in ("00003", "00004", "00005", "00006", "00007"), actCode matches "A.*")
+        
+    then
+        $gda.setIlaapCollType("4.1.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1184956' extends '332559' salience 1260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", cgpCode == "00022", actCode matches "A.*")
+        
+    then
+        $gda.setIlaapCollType("4.2.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1184957' extends '332559' salience 1250
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", pdtCode == "029000", actCode matches "A.*")
+        
+    then
+        $gda.setIlaapCollType("4.3.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1184958' extends '332559' salience 1240
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", cgpCode == "TBD2", actCode matches "A.*")
+        
+    then
+        $gda.setIlaapCollType("4.6.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1186433' extends '332559' salience 1230
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", cgpCode == "TBD3", actCode matches "A.*")
+        
+    then
+        $gda.setIlaapCollType("4.5.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1186465' extends '332559' salience 1220
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", cgpCode in ("00003", "00004", "00005", "00006", "00007"), actCode matches "L.*")
+        
+    then
+        $gda.setIlaapCollType("4.1.9");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1186466' extends '332559' salience 1210
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", cgpCode == "00022", actCode matches "L.*")
+        
+    then
+        $gda.setIlaapCollType("4.2.9");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1186467' extends '332559' salience 1200
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", pdtCode == "029000", actCode matches "L.*")
+        
+    then
+        $gda.setIlaapCollType("4.3.9");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1186468' extends '332559' salience 1190
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", pdtCode matches "03.*", actCode matches "L.*")
+        
+    then
+        $gda.setIlaapCollType("4.4.9");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1186469' extends '332559' salience 1180
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", cgpCode == "TBD3", actCode matches "L.*")
+        
+    then
+        $gda.setIlaapCollType("4.5.9");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1186470' extends '332559' salience 1170
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", cgpCode == "TBD2", actCode matches "L.*")
+        
+    then
+        $gda.setIlaapCollType("4.6.9");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1486932' extends '332559' salience 1160
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() != "Y", actCode matches "A.*", quotedInd == "Y")
+        
+    then
+        $gda.setIlaapCollType("4.8.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1486933' extends '332559' salience 1150
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() != "Y", actCode matches "L.*", quotedInd == "Y")
+        
+    then
+        $gda.setIlaapCollType("4.8.9");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1176527' extends '332559' salience 1140
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", pdtCode in ("004700", "004800"), actCode matches "A.*")
+        
+    then
+        $gda.setIlaapCollType("4.8.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1530544' extends '332559' salience 1130
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", actCode matches "L.*", hreRelTypeIssuer in ("GCEN", "GAMT"))
+        
+    then
+        $gda.setIlaapCollType("4.1.9");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1592487' extends '332559' salience 1120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", actCode matches "A.*", hreRelTypeIssuer matches "G.*", hreRelTypeIssuer not in ("GCEN", "GAMT"))
+        
+    then
+        $gda.setIlaapCollType("4.2.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1592489' extends '332559' salience 1110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", cgpCode != "00022", actCode matches "A.*", hreRelTypeIssuer in ("GCEN", "GAMT"))
+        
+    then
+        $gda.setIlaapCollType("4.1.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1530547' extends '332559' salience 1100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", actCode matches "L.*", hreRelTypeIssuer matches "G.*", hreRelTypeIssuer not in ("GCEN", "GAMT"))
+        
+    then
+        $gda.setIlaapCollType("4.2.9");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1475017' extends '332559' salience 1090
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("004700", "004800"), actCode matches "A.*", quotedInd == "Y")
+        
+    then
+        $gda.setIlaapCollType("4.8.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1475019' extends '332559' salience 1080
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("004700", "004800"), actCode matches "L.*", quotedInd == "Y")
+        
+    then
+        $gda.setIlaapCollType("4.8.9");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+rule '1186472' extends '332559' salience 1070
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1184959() == "Y", pdtCode in ("004700", "004800"), actCode matches "L.*", quotedInd == "Y")
+        
+    then
+        $gda.setIlaapCollType("4.8.9");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3691");
+        
+end
+
+

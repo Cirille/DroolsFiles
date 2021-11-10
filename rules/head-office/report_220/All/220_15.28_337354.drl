@@ -1,0 +1,165 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '337354'
+	when
+		$gda : GrlDetAmounts(contingInd == "Y" && hpePdtType in ( "DEPOSIT" , "LOAN" , "FACTORING" , "STOCK DISC BILL PRM NOTE" ) && intInd == "N" && hacAmtCl == "01" && smnBeyNumber != nvl ( cpyBeyNumber , "X" ))
+	then
+        
+end
+
+
+
+
+
+rule '1823091' extends '337354' salience 5960
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setEbaProduct(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7381");
+        
+end
+
+rule '1823085' extends '337354' salience 5950
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hpePdtType == "LOAN")
+        
+    then
+        $gda.setEbaProduct("Loans and advances. Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7381");
+        
+end
+
+rule '1823089' extends '337354' salience 5940
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", hpePdtType == "LOAN")
+        
+    then
+        $gda.setEbaProduct("Deposits. Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7381");
+        
+end
+
+rule '1823092' extends '337354' salience 5930
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hpePdtType == "STOCK DISC BILL PRM NOTE")
+        
+    then
+        $gda.setEbaProduct("Loans and advances. Trade Financing");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7381");
+        
+end
+
+rule '1823093' extends '337354' salience 5920
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hpePdtType == "FACTORING")
+        
+    then
+        $gda.setEbaProduct("Loans and advances. Factoring");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7381");
+        
+end
+
+rule '1823083' extends '337354' salience 5910
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hpePdtType == "DEPOSIT", eval(nvl(this.getfixtermind(), 'n')) == "N", eval(nvl(this.getcallind(), 'n')) == "Y")
+        
+    then
+        $gda.setEbaProduct("Loans and advances. On demand and short notice");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7381");
+        
+end
+
+rule '1823084' extends '337354' salience 5900
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hpePdtType == "DEPOSIT", eval(nvl(this.getfixtermind(), 'n')) == "Y", eval(nvl(this.getcallind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaProduct("Loans and advances. Term deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7381");
+        
+end
+
+rule '1823087' extends '337354' salience 5890
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", hpePdtType == "DEPOSIT", eval(nvl(this.getfixtermind(), 'n')) == "N", eval(nvl(this.getcallind(), 'n')) == "Y")
+        
+    then
+        $gda.setEbaProduct("Deposits. On demand and short notice");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7381");
+        
+end
+
+rule '1823088' extends '337354' salience 5880
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", hpePdtType == "DEPOSIT", eval(nvl(this.getfixtermind(), 'n')) == "Y", eval(nvl(this.getcallind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaProduct("Deposits. Term deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7381");
+        
+end
+
+rule '1823086' extends '337354' salience 5870
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hpePdtType == "DEPOSIT", getCase0_1823086() == "overnight_deposit")
+        
+    then
+        $gda.setEbaProduct("Loans and advances. Overnight");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7381");
+        
+end
+
+rule '1823090' extends '337354' salience 5860
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", hpePdtType == "DEPOSIT", getCase0_1823086() == "overnight_deposit")
+        
+    then
+        $gda.setEbaProduct("Deposits. Overnight");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7381");
+        
+end
+
+

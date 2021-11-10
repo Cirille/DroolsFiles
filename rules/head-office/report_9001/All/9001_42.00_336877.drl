@@ -1,0 +1,210 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336877'
+	when
+		$gda : GrlDetAmounts(actCode in ( "A0027000" , "A0057000" , "A3329000" , "A3330000" , "A3332000" , "A3931000" , "A8350000" , "A8805000" , "A8806000" , "A8807000" , "A926000" , "A9457000" , "A9458000" , "A9459000" , "A9460000" , "L0241000" , "L0242000" , "L0272000" , "L1425000" , "L3348000" , "L3334000" , "L3343000" , "L3348000" , "L3932000" , "L3933000" , "L3935000" , "L3936000" ) && hpePdtType not matches "STOCK.*" && seCode7 in ( "9001-HK4_2241" , "9001-HK4_2242" , "9001-HK4_2251" , "9001-HK4_2252" ) && hcuCcyCdOrg == "EUR")
+	then
+        
+end
+
+
+
+
+
+rule '1770274' extends '336877' salience 10940
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setSeCode12(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6984");
+        
+end
+
+rule '1770275' extends '336877' salience 10930
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "less_than_one_year")
+        
+    then
+        $gda.setSeCode12(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6984");
+        
+end
+
+rule '1770276' extends '336877' salience 10920
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "between_one_and_two_years", getCase1_1614942() == "less_than_one_year")
+        
+    then
+        $gda.setSeCode12("9001-HK4_06.000-1.021.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6984");
+        
+end
+
+rule '1770279' extends '336877' salience 10910
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "between_one_and_two_years", getCase1_1614942() == "between_one_and_two_years")
+        
+    then
+        $gda.setSeCode12("9001-HK4_06.000-1.024.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6984");
+        
+end
+
+rule '1770280' extends '336877' salience 10900
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "between_one_and_two_years", getCase1_1614942() == "more_than_two_years")
+        
+    then
+        $gda.setSeCode12("9001-HK4_06.000-1.024.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6984");
+        
+end
+
+rule '1770281' extends '336877' salience 10890
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "more_than_two_years", getCase1_1614942() == "less_than_one_year")
+        
+    then
+        $gda.setSeCode12("9001-HK4_06.000-1.065.0");
+        $gda.setSeCode13("9001-HK4_06.000-1.021.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6984");
+        
+end
+
+rule '1770282' extends '336877' salience 10880
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "more_than_two_years", getCase1_1614942() == "between_one_and_two_years")
+        
+    then
+        $gda.setSeCode12("9001-HK4_06.000-1.065.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6984");
+        
+end
+
+rule '1770287' extends '336877' salience 10870
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "more_than_two_years", getCase1_1614942() == "more_than_two_years")
+        
+    then
+        $gda.setSeCode12("9001-HK4_06.000-1.068.0");
+        $gda.setSeCode13("9001-HK4_06.000-1.024.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6984");
+        
+end
+
+rule '1770277' extends '336877' salience 10860
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "between_one_and_two_years", getCase1_1614942() == "between_one_and_two_years", getCase0_1614952() == "intr_reset_within_one_year")
+        
+    then
+        $gda.setSeCode12("9001-HK4_06.000-1.023.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6984");
+        
+end
+
+rule '1770278' extends '336877' salience 10850
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "between_one_and_two_years", getCase1_1614942() == "more_than_two_years", getCase0_1614952() == "intr_reset_within_one_year")
+        
+    then
+        $gda.setSeCode12("9001-HK4_06.000-1.023.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6984");
+        
+end
+
+rule '1770283' extends '336877' salience 10840
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "more_than_two_years", getCase1_1614942() == "between_one_and_two_years", getCase0_1614952() == "intr_reset_within_one_year")
+        
+    then
+        $gda.setSeCode12("9001-HK4_06.000-1.065.0");
+        $gda.setSeCode13("9001-HK4_06.000-1.023.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6984");
+        
+end
+
+rule '1770284' extends '336877' salience 10830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "more_than_two_years", getCase1_1614942() == "between_one_and_two_years", getCase0_1614952() == "intr_reset_within_two_years")
+        
+    then
+        $gda.setSeCode12("9001-HK4_06.000-1.065.0");
+        $gda.setSeCode13("9001-HK4_06.000-1.024.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6984");
+        
+end
+
+rule '1770285' extends '336877' salience 10820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "more_than_two_years", getCase1_1614942() == "more_than_two_years", getCase0_1614952() == "intr_reset_within_one_year")
+        
+    then
+        $gda.setSeCode12("9001-HK4_06.000-1.067.0");
+        $gda.setSeCode13("9001-HK4_06.000-1.023.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6984");
+        
+end
+
+rule '1770286' extends '336877' salience 10810
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "more_than_two_years", getCase1_1614942() == "more_than_two_years", getCase0_1614952() == "intr_reset_within_two_years")
+        
+    then
+        $gda.setSeCode12("9001-HK4_06.000-1.067.0");
+        $gda.setSeCode13("9001-HK4_06.000-1.024.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6984");
+        
+end
+
+

@@ -1,0 +1,36 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332194'
+	when
+		$gda : GrlDetAmounts(ajtId != null)
+	then
+        
+end
+
+
+
+
+
+rule '1145035' extends '332194' salience 10
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setMemoText(Warning: selecting from GRL_ADJUSTMENTS: data will not be available in source topic.
+ full statement: {(select AJT.MEMO_TEXT from GRL_ADJUSTMENTS AJT where AJT.ID = sel_tab.AJT_ID)});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3496");
+        
+end
+
+

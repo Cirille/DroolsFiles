@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336838'
+	when
+		$gda : GrlDetAmounts(( actCode in ( "A0013000" , "A0041000" , "A0059000" , "A0429000" , "A3176000" , "A3177000" , "A3178000" , "A3179000" , "A3282000" , "A3906000" , "A3908000" , "A3910000" , "A3912000" , "A3914000" , "A3916000" , "A8267000" , "A8268000" , "A8269000" , "A8270000" , "A8334000" , "A8650000" , "A8651000" , "A8652000" , "A8653000" , "A8654000" , "A9016000" ) && intInd == "N" && icInd == "N" && ( quotedInd == null || quotedInd == "N" ) ))
+	then
+        
+end
+
+
+
+
+
+rule '1769664' extends '336838' salience 230
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setHb2Bis2CombiCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6950");
+        
+end
+
+rule '1769663' extends '336838' salience 220
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setHb2Bis2CombiCd("22");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6950");
+        
+end
+
+

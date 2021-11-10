@@ -1,0 +1,74 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335555'
+	when
+		$gda : GrlDetAmounts(actCode in ( "B0334000" , "B0597000" ) && icInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1710838' extends '335555' salience 4970
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "2906")
+        
+    then
+        $gda.setRteCode("018");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5931");
+        
+end
+
+rule '1710839' extends '335555' salience 4960
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl in ("2900", "2904"))
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5931");
+        
+end
+
+rule '1710840' extends '335555' salience 4950
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl in ("2901", "2905"))
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5931");
+        
+end
+
+rule '1710841' extends '335555' salience 4940
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "2902")
+        
+    then
+        $gda.setRteCode("021");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5931");
+        
+end
+
+

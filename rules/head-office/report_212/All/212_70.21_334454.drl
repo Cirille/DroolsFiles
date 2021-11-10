@@ -1,0 +1,35 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334454'
+	when
+		$gda : GrlDetAmounts(hpePdtType == "REPO" && hacAmtCl in ( "11" , "19" ) && lcrProduct in ( "Repo" , "Stock Lending" ) && intInd == "N" && contingInd == "Y")
+	then
+        
+end
+
+
+
+
+
+rule '1634855' extends '334454' salience 4380
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setNsfrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5124");
+        
+end
+
+

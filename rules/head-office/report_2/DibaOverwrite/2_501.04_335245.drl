@@ -1,0 +1,29 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '335245'
+	when
+		$gda : GrlDetAmounts(scyActCode == "A0024000" && nettingType matches "CUST_LCH_DIBA.*")
+	then
+end
+
+
+rule '1699899' extends '335245' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, scyActCode == "A0024000")
+        
+    then
+        $gda.setScyRteCode("063");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5761");
+        
+end
+
+

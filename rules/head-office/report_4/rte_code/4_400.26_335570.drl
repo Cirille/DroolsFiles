@@ -1,0 +1,360 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335570'
+	when
+		$gda : GrlDetAmounts(actCode == "A0025000" && icInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1711128' extends '335570' salience 750
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setRteCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711134' extends '335570' salience 740
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000")
+        
+    then
+        $gda.setRteCode("059");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711125' extends '335570' salience 730
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", getCase0_1710241() == "CENTRAL_GOVERNMENTS", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setRteCode("041");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711129' extends '335570' salience 720
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hceCovType == "2009")
+        
+    then
+        $gda.setRteCode("049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1732787' extends '335570' salience 710
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", getCase0_1710241() == "CENTRAL_GOVERNMENTS", hzeZoneCtryReg == "B", locFundInd == "N")
+        
+    then
+        $gda.setRteCode("042");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1732788' extends '335570' salience 700
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", getCase0_1710241() == "CENTRAL_GOVERNMENTS", hzeZoneCtryReg == "B", locFundInd == "Y")
+        
+    then
+        $gda.setRteCode("043");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711126' extends '335570' salience 690
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hceCovType in ("2024", "2030"), covRelType == "BMLD")
+        
+    then
+        $gda.setRteCode("049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711130' extends '335570' salience 680
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", getCase0_1710241() in ("BANKS", "MULTILATERAL_DEVELOPMENT_BANKS"), hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setRteCode("035");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711132' extends '335570' salience 670
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hceCovType in ("1103", "1105"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("046");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711133' extends '335570' salience 660
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hceCovType in ("2005", "2008", "2011", "2021"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711127' extends '335570' salience 650
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hceCovType in ("2024", "2030"), covRelType in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BSPV", "BGOF", "BGPR", "BPRO", "BRPR"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711131' extends '335570' salience 640
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", getCase0_1710241() in ("BANKS", "MULTILATERAL_DEVELOPMENT_BANKS"), hzeZoneCtryReg == "B", getCase0_1711131() == "one_year_or_less")
+        
+    then
+        $gda.setRteCode("036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711135' extends '335570' salience 630
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", getCase0_1710241() in ("CENTRAL_GOVERNMENTS", "GOVERNMENTS_OTHER"), getCase0_1711131() == "less_than_5_days")
+        
+    then
+        $gda.setRteCode("072");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711136' extends '335570' salience 620
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", getCase0_1710241() in ("BANKS", "CENTRAL_BANKS", "MULTILATERAL_DEVELOPMENT_BANKS"), getCase0_1711131() == "less_than_5_days")
+        
+    then
+        $gda.setRteCode("073");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711137' extends '335570' salience 610
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", getCase0_1710241() not in ("BANKS", "CENTRAL_BANKS", "MULTILATERAL_DEVELOPMENT_BANKS", "GOVERNMENTS_OTHER", "CENTRAL_GOVERNMENTS"), getCase0_1711131() == "less_than_5_days")
+        
+    then
+        $gda.setRteCode("074");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711141' extends '335570' salience 600
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hscAcctSubcl != null, getCase0_1710241() in ("BANKS", "MULTILATERAL_DEVELOPMENT_BANKS"), hzeZoneCtryReg == "B", getCase0_1710228() == "one_year_or_less")
+        
+    then
+        $gda.setRteCode("036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711142' extends '335570' salience 590
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hscAcctSubcl != null, getCase0_1710241() in ("CENTRAL_GOVERNMENTS", "GOVERNMENTS_OTHER"), getCase0_1710228() == "less_than_8_days")
+        
+    then
+        $gda.setRteCode("072");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711143' extends '335570' salience 580
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hscAcctSubcl != null, getCase0_1710241() in ("BANKS", "CENTRAL_BANKS", "MULTILATERAL_DEVELOPMENT_BANKS"), getCase0_1710228() == "less_than_8_days")
+        
+    then
+        $gda.setRteCode("073");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711144' extends '335570' salience 570
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hscAcctSubcl != null, getCase0_1710241() not in ("BANKS", "CENTRAL_BANKS", "MULTILATERAL_DEVELOPMENT_BANKS", "GOVERNMENTS_OTHER", "CENTRAL_GOVERNMENTS"), getCase0_1710228() == "less_than_8_days")
+        
+    then
+        $gda.setRteCode("074");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1778862' extends '335570' salience 560
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hceCovType in ("2024", "2030"), covRelType in ("GCPL", "GLPL"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711138' extends '335570' salience 550
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", getCase0_1710241() in ("CENTRAL_GOVERNMENTS", "GOVERNMENTS_OTHER"), getCase0_1711131() == "less_than_5_days", htyTradCat == "03")
+        
+    then
+        $gda.setRteCode("172");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711139' extends '335570' salience 540
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", getCase0_1710241() in ("BANKS", "CENTRAL_BANKS", "MULTILATERAL_DEVELOPMENT_BANKS"), getCase0_1711131() == "less_than_5_days", htyTradCat == "03")
+        
+    then
+        $gda.setRteCode("173");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711140' extends '335570' salience 530
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", getCase0_1710241() not in ("BANKS", "CENTRAL_BANKS", "MULTILATERAL_DEVELOPMENT_BANKS", "GOVERNMENTS_OTHER", "CENTRAL_GOVERNMENTS"), getCase0_1711131() == "less_than_5_days", htyTradCat == "03")
+        
+    then
+        $gda.setRteCode("174");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711145' extends '335570' salience 520
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hscAcctSubcl != null, getCase0_1710241() in ("CENTRAL_GOVERNMENTS", "GOVERNMENTS_OTHER"), htyTradCat == "03", getCase0_1710228() == "less_than_8_days")
+        
+    then
+        $gda.setRteCode("172");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711146' extends '335570' salience 510
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hscAcctSubcl != null, getCase0_1710241() in ("BANKS", "CENTRAL_BANKS", "MULTILATERAL_DEVELOPMENT_BANKS"), htyTradCat == "03", getCase0_1710228() == "less_than_8_days")
+        
+    then
+        $gda.setRteCode("173");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+rule '1711147' extends '335570' salience 500
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hscAcctSubcl != null, getCase0_1710241() not in ("BANKS", "CENTRAL_BANKS", "MULTILATERAL_DEVELOPMENT_BANKS", "GOVERNMENTS_OTHER", "CENTRAL_GOVERNMENTS"), htyTradCat == "03", getCase0_1710228() == "less_than_8_days")
+        
+    then
+        $gda.setRteCode("174");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5946");
+        
+end
+
+

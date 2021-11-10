@@ -1,0 +1,113 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332645'
+	when
+		$gda : GrlDetAmounts(retailInd == "Y")
+	then
+        
+end
+
+
+
+
+
+rule '1184164' extends '332645' salience 520
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setStableInd("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3698");
+        
+end
+
+rule '1182021' extends '332645' salience 510
+
+    when
+        
+        GrlDetAmounts(this == $gda, dgsCd == "Y", monoInd == "N")
+        
+    then
+        $gda.setStableInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3698");
+        
+end
+
+rule '1184163' extends '332645' salience 500
+
+    when
+        
+        GrlDetAmounts(this == $gda, dgsCd == "Y", transactionalInd == "Y")
+        
+    then
+        $gda.setStableInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3698");
+        
+end
+
+rule '1182018' extends '332645' salience 490
+
+    when
+        
+        GrlDetAmounts(this == $gda, stableInd == "Y")
+        
+    then
+        $gda.setStableInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3698");
+        
+end
+
+rule '1182020' extends '332645' salience 480
+
+    when
+        
+        GrlDetAmounts(this == $gda, stableInd == "N")
+        
+    then
+        $gda.setStableInd("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3698");
+        
+end
+
+rule '1182019' extends '332645' salience 470
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1182019() == "Y")
+        
+    then
+        $gda.setStableInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3698");
+        
+end
+
+rule '1184204' extends '332645' salience 460
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode not matches "L.*")
+        
+    then
+        $gda.setStableInd(MANUALLY adjust: NULL );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3698");
+        
+end
+
+

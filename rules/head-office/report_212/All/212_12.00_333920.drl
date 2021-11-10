@@ -1,0 +1,387 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+global com.ing.gfrs.logical.apis.GreLrCustRefLogicalApi greLrCustRefLogicalApi;
+
+
+dialect  "mvel"
+
+
+rule '333920'
+	when
+		$gda : GrlDetAmounts(( substr ( actCode , 1 , 1 ) in ( "A" , "L" , "Q" , "B" ) || ( hpePdtType == "REPO" ) ) && hreRelTypeCtpy != null && intInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1559848' extends '333920' salience 93880
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLcrCtpyType("Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559824' extends '333920' salience 93870
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "VING", icInd == "N")
+        
+    then
+        $gda.setLcrCtpyType("Insurance Undertaking");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559825' extends '333920' salience 93860
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "VFIM", icInd == "N")
+        
+    then
+        $gda.setLcrCtpyType("Financial Institution");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559826' extends '333920' salience 93850
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy in ("VGRP", "VGRX"), icInd == "N")
+        
+    then
+        $gda.setLcrCtpyType("Mixed Holding");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559829' extends '333920' salience 93840
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "Z.*", icInd == "N")
+        
+    then
+        $gda.setLcrCtpyType("SSPE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559835' extends '333920' salience 93830
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy in ("GAMT", "GCEN", "GLOC", "GSNO", "GOSN"), icInd == "N")
+        
+    then
+        $gda.setLcrCtpyType("Sovereign");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559836' extends '333920' salience 93820
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "G.*", hreRelTypeCtpy not in ("GAMT", "GCEN", "GLOC", "GPSL", "GPSC", "GSNO", "GOSN", "GCFI", "GCPL", "GLFI", "GLPL", "GNFP", "GNFU", "GSOC"))
+        
+    then
+        $gda.setLcrCtpyType("Local Government");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559838' extends '333920' salience 93810
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "BMLD", icInd == "N")
+        
+    then
+        $gda.setLcrCtpyType("MDB");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559839' extends '333920' salience 93800
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "BCEN", icInd == "N")
+        
+    then
+        $gda.setLcrCtpyType("Central Bank");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559841' extends '333920' salience 93790
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy in ("BDIP", "BLEV", "BLIM", "BSPM", "BSPV"), icInd == "N")
+        
+    then
+        $gda.setLcrCtpyType("Financial Institution");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559843' extends '333920' salience 93780
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "I.*", icInd == "N")
+        
+    then
+        $gda.setLcrCtpyType("Retail");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559844' extends '333920' salience 93770
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "S.*", icInd == "N")
+        
+    then
+        $gda.setLcrCtpyType("SME");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559845' extends '333920' salience 93760
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "FHOL", icInd == "N")
+        
+    then
+        $gda.setLcrCtpyType("Financial Holding");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559846' extends '333920' salience 93750
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy in ("FINS", "FLIF"), icInd == "N")
+        
+    then
+        $gda.setLcrCtpyType("Insurance Undertaking");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559847' extends '333920' salience 93740
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy in ("FFFM", "FCLF", "FETF", "FUND", "FOHF", "FOPF", "FPEF", "FUSB"), icInd == "N")
+        
+    then
+        $gda.setLcrCtpyType("Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559850' extends '333920' salience 93730
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy in ("VAMB", "VABS", "VCMB", "VMBS", "VRMB"), icInd == "N")
+        
+    then
+        $gda.setLcrCtpyType("SSPE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559827' extends '333920' salience 93720
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "V.*", hreRelTypeCtpy not in ("VGRP", "VGRX", "VAMB", "VABS", "VCMB", "VFIM", "VING", "VMBS", "VRMB"), icInd == "N")
+        
+    then
+        $gda.setLcrCtpyType("Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559828' extends '333920' salience 93710
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "F.*", hreRelTypeCtpy not in ("FGVO", "FHOL", "FINS", "FLIF", "FFFM", "FCLF", "FETF", "FUND", "FOHF", "FOPF", "FPEF", "FUSB"))
+        
+    then
+        $gda.setLcrCtpyType("Financial Institution");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559830' extends '333920' salience 93700
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,lcr_hly_rel_id,"LCRNSFRREL","N") == "BIS")
+        
+    then
+        $gda.setLcrCtpyType("BIS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559831' extends '333920' salience 93690
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,lcr_hly_rel_id,"LCRNSFRREL","N") == "EU")
+        
+    then
+        $gda.setLcrCtpyType("EU");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559832' extends '333920' salience 93680
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,lcr_hly_rel_id,"LCRNSFRREL","N") == "ESM")
+        
+    then
+        $gda.setLcrCtpyType("ESM");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559833' extends '333920' salience 93670
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,lcr_hly_rel_id,"LCRNSFRREL","N") == "IMF")
+        
+    then
+        $gda.setLcrCtpyType("IMF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559834' extends '333920' salience 93660
+
+    when
+        
+        GrlDetAmounts(this == $gda, greLrCustRefLogicalApi.getCustomCd(gridId,lcr_hly_rel_id,"LCRNSFRREL","N") == "EFSF")
+        
+    then
+        $gda.setLcrCtpyType("EFSF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559837' extends '333920' salience 93650
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy in ("BGOF", "GPSL", "GPSC", "GCFI", "GCPL", "GLFI", "GLPL", "GNFP", "GNFU", "GSOC", "CGOG"), hreRelTypeCtpy != "BGVO")
+        
+    then
+        $gda.setLcrCtpyType("PSE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559840' extends '333920' salience 93640
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "B.*", hreRelTypeCtpy not in ("BCEN", "BDIP", "BGOF", "BLEV", "BLIM", "BMLD", "BSPM", "BSPV"), icInd == "N")
+        
+    then
+        $gda.setLcrCtpyType("Credit Institution");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559842' extends '333920' salience 93630
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeCtpy matches "C.*" || hreRelTypeCtpy == "IPBC"), hreRelTypeCtpy not in ("CGVO", "CGOG"), icInd == "N")
+        
+    then
+        $gda.setLcrCtpyType("Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559849' extends '333920' salience 93620
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeCtpy matches "K.*" || hreRelTypeCtpy matches "R.*"), hreRelTypeCtpy not in ("KGVO", "RGVO"), icInd == "N")
+        
+    then
+        $gda.setLcrCtpyType("Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+rule '1559852' extends '333920' salience 93610
+
+    when
+        
+        GrlDetAmounts(this == $gda, icInd == "N", smeInd == "Y")
+        
+    then
+        $gda.setLcrCtpyType("SME");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4679");
+        
+end
+
+

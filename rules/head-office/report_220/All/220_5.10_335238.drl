@@ -1,0 +1,113 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335238'
+	when
+		$gda : GrlDetAmounts(ratingIngLongIss != null)
+	then
+        
+end
+
+
+
+
+
+rule '1699865' extends '335238' salience 21770
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setEbaCqsGridIssExtRat("CQS 6");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5754");
+        
+end
+
+rule '1699860' extends '335238' salience 21760
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIngLongIss in ("1", "2", "3", "4"))
+        
+    then
+        $gda.setEbaCqsGridIssExtRat("CQS 1");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5754");
+        
+end
+
+rule '1699861' extends '335238' salience 21750
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIngLongIss in ("5", "6", "7"))
+        
+    then
+        $gda.setEbaCqsGridIssExtRat("CQS 2");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5754");
+        
+end
+
+rule '1699862' extends '335238' salience 21740
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIngLongIss in ("8", "9", "10"))
+        
+    then
+        $gda.setEbaCqsGridIssExtRat("CQS 3");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5754");
+        
+end
+
+rule '1699863' extends '335238' salience 21730
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIngLongIss in ("11", "12", "13"))
+        
+    then
+        $gda.setEbaCqsGridIssExtRat("CQS 4");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5754");
+        
+end
+
+rule '1699864' extends '335238' salience 21720
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIngLongIss in ("14", "15", "16"))
+        
+    then
+        $gda.setEbaCqsGridIssExtRat("CQS 5");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5754");
+        
+end
+
+rule '1699902' extends '335238' salience 21710
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIngLongIss == "N/A")
+        
+    then
+        $gda.setEbaCqsGridIssExtRat(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5754");
+        
+end
+
+

@@ -1,0 +1,125 @@
+package com.ing.gfrs.rules;
+
+
+import com.ing.gfrs.avro.GoeVCashflowSplit
+import com.ing.gfrs.avro.GrlCashflows;
+
+global String dateFormat;
+
+dialect  "mvel"
+
+
+rule '333548'
+    when
+        $ods : GoeVCashflowSplit(cfwRepDate != null)
+	then
+        GrlCashflows cfw = new GrlCashflows();
+        cfw.setRvdId($ods.getDatRvdId());
+        cfw.setAjtDraftInd($ods.getDatAjtDraftInd());
+        cfw.setAjtId($ods.getDatAjtId());
+        cfw.setStatus($ods.getDatStatus());
+        cfw.setCustSegMa($ods.getCfwCustSegMa());
+        cfw.setEligibleSrc($ods.getCfwEligibleSrc());
+        cfw.setGridId($ods.getCfwGridId());
+        cfw.setLocalMassProduct($ods.getCfwLocalMassProduct());
+        cfw.setMassLocation($ods.getCfwMassLocation());
+        cfw.setMassProduct($ods.getCfwMassProduct());
+        cfw.setMassSeg($ods.getCfwMassSeg());
+        cfw.setProfCtpyInd($ods.getCfwProfCtpyInd());
+        cfw.setQuotedInd($ods.getCfwQuotedInd());
+        cfw.setRepAssetInd($ods.getCfwRepAssetInd() != $ods.getDatRepAssetInd() ? "333548" :$ods.getCfwRepAssetInd());
+        cfw.setRlnDescr($ods.getCfwRlnDescr());
+        cfw.setRlnRelIdIssuedBy($ods.getCfwRlnRelIdIssuedBy());
+        cfw.setSignFlipInd($ods.getCfwSignFlipInd());
+        cfw.setUltCustSeg($ods.getCfwUltCustSeg());
+        cfw.setUltGridId($ods.getCfwUltGridId());
+        cfw.setRlnRelId($ods.getCfwRlnRelId());
+        cfw.setCpyBeyNumber($ods.getCfwCpyBeyNumber());
+        cfw.setCpyReyCode($ods.getCfwCpyReyCode());
+        cfw.setIcInd($ods.getCfwIcInd());
+        cfw.setIntInd($ods.getCfwIntInd());
+        cfw.setSmnBeyNumber($ods.getCfwSmnBeyNumber());
+        cfw.setSmnReyCode($ods.getCfwSmnReyCode());
+        cfw.setOwnUse01($ods.getCfwOwnUse01());
+        cfw.setOwnUse02($ods.getCfwOwnUse02());
+        cfw.setOwnUse03($ods.getCfwOwnUse03());
+        cfw.setOwnUse04($ods.getCfwOwnUse04());
+        cfw.setOwnUse05($ods.getCfwOwnUse05());
+        cfw.setOwnUse06($ods.getCfwOwnUse06());
+        cfw.setOwnUse07($ods.getCfwOwnUse07());
+        cfw.setOwnUse08($ods.getCfwOwnUse08());
+        cfw.setOwnUse09($ods.getCfwOwnUse09());
+        cfw.setOwnUse10($ods.getCfwOwnUse10());
+        cfw.setOwnUse11($ods.getCfwOwnUse11());
+        cfw.setOwnUse12($ods.getCfwOwnUse12());
+        cfw.setOwnUse13($ods.getCfwOwnUse13());
+        cfw.setOwnUse14($ods.getCfwOwnUse14());
+        cfw.setOwnUse15($ods.getCfwOwnUse15());
+        cfw.setOwnUse16($ods.getCfwOwnUse16());
+        cfw.setOwnUse17($ods.getCfwOwnUse17());
+        cfw.setOwnUse18($ods.getCfwOwnUse18());
+        cfw.setOwnUse19($ods.getCfwOwnUse19());
+        cfw.setOwnUse20($ods.getCfwOwnUse20());
+        cfw.setOwnUse21($ods.getCfwOwnUse21());
+        cfw.setOwnUse22($ods.getCfwOwnUse22());
+        cfw.setOwnUse23($ods.getCfwOwnUse23());
+        cfw.setOwnUse24($ods.getCfwOwnUse24());
+        cfw.setOwnUse25($ods.getCfwOwnUse25());
+        cfw.setCashflowRef($ods.getCfwCashflowRef());
+        cfw.setHacAmtCl($ods.getCfwHacAmtCl());
+        cfw.setHimIrrrCd($ods.getCfwHimIrrrCd());
+        cfw.setHitBucketCd($ods.getCfwHitBucketCd());
+        cfw.setHtyTradCat($ods.getCfwHtyTradCat());
+        cfw.setLdeDeptCd($ods.getCfwLdeDeptCd());
+        cfw.setPayTitle($ods.getCfwPayTitle());
+        cfw.setRemTerm($ods.getCfwRemTerm());
+        cfw.setRemTermMonths($ods.getCfwRemTermMonths());
+        cfw.setIncomingInd($ods.getCfwIncomingInd());
+        cfw.setHcuCcyCdRep($ods.getCfwHcuCcyCdRep());
+        cfw.setHcuCcyCdAdj($ods.getCfwHcuCcyCdAdj());
+        cfw.setHcuCcyCdCashflow($ods.getCfwHcuCcyCdCashflow());
+        cfw.setCashflowDate($ods.getCfwCashflowDate());
+        cfw.setHpePdtTypeFor($ods.getCfwHpePdtTypeFor());
+        cfw.setPsnPosId($ods.getCfwPsnPosId());
+        cfw.setCashflowId($ods.getCfwCashflowId());
+        cfw.setRepDate($ods.getCfwRepDate());
+        cfw.setLseHlyRelId($ods.getLseHlyRelId());
+        cfw.setGplId($ods.getCfwGplId());
+        cfw.setHpePdtType($ods.getCfwHpePdtType());
+        cfw.setLseId($ods.getCfwLseId());
+
+        //following columns needs to be updated in the original table GRL_CASHFLOWS_COPY
+        cfw.setSource($ods.getCase0_source());
+        cfw.setDatId($ods.getDatId());
+        cfw.setPrdId($ods.formatDate($ods.getCfwRepDate(),dateFormat) );
+        cfw.setCashflowDetAmtRepCcy($ods.getMultiplier() * (($ods.getCfwCashflowDetAmtRepCcy()!= null)? $ods.getCfwCashflowDetAmtRepCcy() : 0.0));
+        cfw.setCashflowAmtRepCcy($ods.getMultiplier() * (($ods.getCfwCashflowAmtRepCcy() != null)? $ods.getCfwCashflowAmtRepCcy() : 0.0) );
+        cfw.setCashflowAmtAdj($ods.getMultiplier() * (($ods.getCfwCashflowAmt() != null)? $ods.getCfwCashflowAmt() : 0.0) );
+        cfw.setCashflowAmt($ods.getMultiplier() * (($ods.getCfwCashflowAmt()!= null)? $ods.getCfwCashflowAmt() : 0.0));
+
+
+        //following columns needs to be determined in case of SNW (Split New) source
+        cfw.setOwnUse90($ods.getCase0_source().equals("SNW")? (double)$ods.getCfwIdUpdate() : null);
+        cfw.setCashflowDetAmtEuro($ods.getCase0_source().equals("SNW")? $ods.getMultiplier() * (($ods.getCfwCashflowDetAmtEuro()!= null)? $ods.getCfwCashflowDetAmtEuro() : 0.0):$ods.getCfwCashflowDetAmtEuro());
+        cfw.setCashflowAmtEuro($ods.getCase0_source().equals("SNW")? $ods.getMultiplier() * (($ods.getCfwCashflowAmtEuro()!= null)? $ods.getCfwCashflowAmtEuro(): 0.0):$ods.getCfwCashflowAmtEuro());
+        cfw.setCashflowDetAmt($ods.getCase0_source().equals("SNW")? $ods.getMultiplier() * (($ods.getCfwCashflowDetAmt()!= null)? $ods.getCfwCashflowDetAmt(): 0.0):$ods.getCfwCashflowDetAmt());
+        cfw.setId($ods.getCase0_source().equals("SNW")? null : $ods.getCfwId());
+
+        // Id is set via database sequence (hardcoded in avro model)
+        // CreatedBy, CreationDate, LastUpdatedBy, LastUpdateDate are set as default values via db writer
+        cfw.updateLdlIdTrail(kcontext.rule.name,"4316");
+        insert(cfw);
+end
+
+rule '1579999' extends '333548'  salience 20
+    when
+        $cfw : GrlCashflows(datId==$ods.getDatId() , repAssetInd != null, repAssetInd == "333548")
+    then
+        $cfw.setCashflowAmtRepCcy(-1 * $ods.getMultiplier() * (($ods.getCfwCashflowAmtRepCcy() != null)? $ods.getCfwCashflowAmtRepCcy() : 0.0) );
+        $cfw.setCashflowAmt(-1 * $ods.getMultiplier() * (($ods.getCfwCashflowAmt()!= null)? $ods.getCfwCashflowAmt() : 0.0));
+        $cfw.setIncomingInd($ods.getCfwIncomingInd()!= null && $ods.getCfwIncomingInd().equals("Y") ? "N" : "Y");
+        $cfw.setRepAssetInd($ods.getCfwRepAssetInd()!= null && $ods.getCfwRepAssetInd().equals("Y") ? "N" : "Y");
+        $cfw.updateLdlIdTrail(kcontext.rule.name,"4767");
+
+end
+

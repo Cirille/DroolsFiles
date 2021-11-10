@@ -1,0 +1,13 @@
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+dialect  "mvel"
+
+rule 'Reconciliation' salience 5
+    when
+        $gda : GrlDetAmounts()
+    then
+        $gda.setLdlIdTrail($gda.getLdlIdTrail().replace("REP_NULLIFY;",""));
+        $gda.setLdlIdTrail($gda.getLdlIdTrail().replace("REP_NULLIFY",""));
+        $gda.setMemoText($gda.performReconciliation());
+end

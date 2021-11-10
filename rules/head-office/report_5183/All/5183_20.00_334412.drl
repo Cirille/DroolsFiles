@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334412'
+	when
+		$gpy : GrlPlYtd()
+	then
+        
+end
+
+
+
+
+
+rule '1617346' extends '334412' salience 20
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setMassProduct({this.getMassProduct()});
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5095");
+        
+end
+
+rule '1617344' extends '334412' salience 10
+
+    when
+        
+        GrlPlYtd(this == $gpy, ldeAcctUnit in ("UK10", "ES10", "ES11", "ES12", "N101", "N102", "N125", "N132", "N147", "N188"), ownUse01 in ("I019710100", "I019715100", "I019715200", "I019715300", "I019762000", "019790099", "I019911000", "I019911100", "I019911200", "I019912100", "I019912200", "I019914100", "I019914200", "I019915100", "I019915200", "I019916100", "I019916300", "I019917100", "I019917300", "I019969400", "I019969500", "I019990099"))
+        
+    then
+        $gpy.setMassProduct("Lending Model Risk Total");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5095");
+        
+end
+
+

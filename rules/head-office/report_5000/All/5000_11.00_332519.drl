@@ -1,0 +1,53 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332519'
+	when
+		$gda : GrlDetAmounts(( actCode == null ) && ( ajtDraftInd == "Y" ) && ( hacAmtCl != null && hacAmtCl not in ( "06" , "07" , "09" , "10" , "11" , "14" , "15" , "16" , "17" , "18" , "19" ) ) && ( contingInd != "Y" || contingInd == null ))
+	then
+        
+end
+
+
+
+
+
+rule '1175218' extends '332519' salience 40
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt20("TO BE ELIMINATED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3677");
+        
+end
+
+rule '1175217' extends '332519' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CAPITAL AND RESERVE", ajtDraftInd == "Y")
+        
+    then
+        $gda.setCustomTxt20(Warning: selecting from gre_lr_cust_ref: data will not be available in source topic.
+ full statement: {nvl((select min(custom_cd)
+  from gre_lr_cust_ref
+  where lcr_hly_rel_id = '0239'
+  and lcr_custom_ref_type = 'NOTTOBEREP'
+  and pos_ref like custom_key),'TO BE ELIMINATED')});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3677");
+        
+end
+
+

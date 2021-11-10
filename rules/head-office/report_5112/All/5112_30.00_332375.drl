@@ -1,0 +1,243 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332375'
+	when
+		$gda : GrlDetAmounts(MANUALLY adjust this subselect: ACT_CODE IN ('A0025000','L0251000') AND IC_IND = 'Y' and RLN_WW_CUST_ID in (select cr.custom_key from gre_lr_cust_ref cr where cr.lcr_hly_rel_id = lse_hly_rel_id and lcr_custom_ref_type = 'CTPYPOS'))
+	then
+        
+end
+
+
+
+
+
+rule '1160861' extends '332375' salience 420
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000")
+        
+    then
+        $gda.setRteCode("059");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3625");
+        
+end
+
+rule '1160845' extends '332375' salience 410
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0251000", hreRelTypeCtpy matches "B.*")
+        
+    then
+        $gda.setRteCode("075");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3625");
+        
+end
+
+rule '1160846' extends '332375' salience 400
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0251000", hreRelTypeCtpy not matches "B.*")
+        
+    then
+        $gda.setRteCode("076");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3625");
+        
+end
+
+rule '1160849' extends '332375' salience 390
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hceCovType == "2009")
+        
+    then
+        $gda.setRteCode("049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3625");
+        
+end
+
+rule '1160847' extends '332375' salience 380
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hceCovType in ("1103", "1105"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("046");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3625");
+        
+end
+
+rule '1160848' extends '332375' salience 370
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hceCovType in ("2005", "2008", "2011", "2021"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3625");
+        
+end
+
+rule '1160850' extends '332375' salience 360
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hceCovType in ("2024", "2030"), covRelType == "BMLD")
+        
+    then
+        $gda.setRteCode("049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3625");
+        
+end
+
+rule '1160853' extends '332375' salience 350
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hreRelTypeCtpy in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BMLD", "BMOR", "BSPV"), hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setRteCode("035");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3625");
+        
+end
+
+rule '1160854' extends '332375' salience 340
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hreRelTypeCtpy matches "G.*", getCase0_1160854() == "less_than_8_days")
+        
+    then
+        $gda.setRteCode("072");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3625");
+        
+end
+
+rule '1160856' extends '332375' salience 330
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hreRelTypeCtpy matches "B.*", getCase0_1160854() == "less_than_8_days")
+        
+    then
+        $gda.setRteCode("073");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3625");
+        
+end
+
+rule '1160858' extends '332375' salience 320
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", (hreRelTypeCtpy not matches "B.*" && hreRelTypeCtpy not matches "G.*"), getCase0_1160854() == "less_than_8_days")
+        
+    then
+        $gda.setRteCode("074");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3625");
+        
+end
+
+rule '1160860' extends '332375' salience 310
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hreRelTypeCtpy == "GCEN", hzeZoneCtryReg == "A")
+        
+    then
+        $gda.setRteCode("041");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3625");
+        
+end
+
+rule '1160851' extends '332375' salience 300
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hceCovType in ("2024", "2030"), covRelType in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BMOR", "BSPV"), hzeZoneCtryCov == "A")
+        
+    then
+        $gda.setRteCode("049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3625");
+        
+end
+
+rule '1160852' extends '332375' salience 290
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hreRelTypeCtpy in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BMLD", "BMOR", "BSPV"), hzeZoneCtryReg == "B", getCase0_1160854() == "one_year_or_less")
+        
+    then
+        $gda.setRteCode("036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3625");
+        
+end
+
+rule '1160855' extends '332375' salience 280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hreRelTypeCtpy matches "G.*", getCase0_1160854() == "less_than_8_days", htyTradCat == "03")
+        
+    then
+        $gda.setRteCode("172");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3625");
+        
+end
+
+rule '1160857' extends '332375' salience 270
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hreRelTypeCtpy matches "B.*", getCase0_1160854() == "less_than_8_days", htyTradCat == "03")
+        
+    then
+        $gda.setRteCode("173");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3625");
+        
+end
+
+rule '1160859' extends '332375' salience 260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", (hreRelTypeCtpy not matches "B.*" && hreRelTypeCtpy not matches "G.*"), getCase0_1160854() == "less_than_8_days", htyTradCat == "03")
+        
+    then
+        $gda.setRteCode("174");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3625");
+        
+end
+
+

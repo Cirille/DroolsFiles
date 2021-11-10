@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336728'
+	when
+		$gda : GrlDetAmounts(actCode in ( "A0080000" , "A0083000" , "A0092000" , "A0094000" , "A0095000" , "A0097000" , "A0101000" , "A0104000" ) && pdtCode != "033300")
+	then
+        
+end
+
+
+
+
+
+rule '1768293' extends '336728' salience 310
+
+    when
+        
+        GrlDetAmounts(this == $gda, icInd == "Y")
+        
+    then
+        $gda.setRteCode("010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6874");
+        
+end
+
+rule '1768294' extends '336728' salience 300
+
+    when
+        
+        GrlDetAmounts(this == $gda, icInd == "N")
+        
+    then
+        $gda.setRteCode("095");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6874");
+        
+end
+
+

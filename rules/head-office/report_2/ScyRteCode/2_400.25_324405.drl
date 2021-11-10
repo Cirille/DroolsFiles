@@ -1,0 +1,29 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '324405'
+	when
+		$gda : GrlDetAmounts(scyActCode in ( "L0250000" , "L2527000" , "L2528000" , "L2529000" , "L2530000" , "L2531000" , "L2532000" , "L2533000" , "Q0063000" , "Q0065000" , "Q0066000" , "Q0069000" , "Q0070000" , "Q0071000" , "Q0073000" , "Q0076000" , "Q0077000" ))
+	then
+end
+
+
+rule '75463' extends '324405' salience 480
+
+    when
+        
+        GrlDetAmounts(this == $gda, (scyActCode matches "D.*" || scyActCode matches "E.*" || scyActCode matches "I.*" || scyActCode matches "L.*" || scyActCode matches "R.*" || scyActCode matches "Y.*" || scyActCode matches "Z.*" || scyActCode == "A0025000" || scyActCode == "A0032000" || scyActCode == "A2549000" || scyActCode == "B0595000" || scyActCode == "B0607000" || scyActCode == "B0608000" || scyActCode == "B0611000" || scyActCode == "B0612000" || scyActCode == "L2527000" || scyActCode == "L2528000" || scyActCode == "L2529000" || scyActCode == "L2530000" || scyActCode == "L2531000" || scyActCode == "L2532000" || scyActCode == "L2533000" || scyActCode == "Q0063000" || scyActCode == "Q0065000" || scyActCode == "Q0066000" || scyActCode == "Q0069000" || scyActCode == "Q0070000" || scyActCode == "Q0071000" || scyActCode == "Q0073000" || scyActCode == "Q0076000" || scyActCode == "Q0077000"))
+        
+    then
+        $gda.setScyRteCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1225");
+        
+end
+
+

@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335551'
+	when
+		$gda : GrlDetAmounts(actCode in ( "A0027000" , "A0057000" , "A3329000" , "A3332000" , "A3931000" , "A8350000" , "A9260000" , "A9750000" , "A9835000" ) && pdtCode in ( "027800" , "027900" ) && icInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1710759' extends '335551' salience 6140
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A3329000", "A3332000", "A3931000", "A8350000", "A9260000", "A9750000", "A9835000"))
+        
+    then
+        $gda.setRteCode("062");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5927");
+        
+end
+
+rule '1710757' extends '335551' salience 6130
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0057000", htyTradCat == "01")
+        
+    then
+        $gda.setRteCode("170");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5927");
+        
+end
+
+rule '1710758' extends '335551' salience 6120
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0057000", htyTradCat == "02")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5927");
+        
+end
+
+

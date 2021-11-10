@@ -1,0 +1,243 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332222'
+	when
+		$gpy : GrlPlYtd(MANUALLY adjust this subselect: id in (select id from ( select ple.id , ple.lse_hly_rel_id ple_lse_hly_rel_id , lde_acct_unit , (select lbk.lat_acct_unit from gre_lr_dept lde , gre_lr_book lbk , gpl_relations rln where lde.lbk_book_cd = lbk.book_cd and lde.lbk_hly_rel_id = lbk.hly_rel_id and lde.dept_cd = rln.cred_resp_acct_unit||'_'||rln.cred_resp_dept_cd and rln.lse_hly_rel_id = lde.hly_rel_id and rln.lse_hly_rel_id = ple.lse_hly_rel_id and rln.rel_id = ple.own_use_01 ) acct_unit from grl_pl_ytd ple ) where lde_acct_unit in ('WHOLESALE', 'RETAIL') and ple_lse_hly_rel_id = lse_hly_rel_id and acct_unit in ('WHOLESALE', 'RETAIL') and lde_acct_unit <> acct_unit ) and int_ind = 'Y')
+	then
+        
+end
+
+
+
+
+
+rule '1146862' extends '332222' salience 170
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setCustomTxt05("TO BE DETERMINED");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3523");
+        
+end
+
+rule '1146897' extends '332222' salience 160
+
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "Y", hsoPlSubcl == "1118", ldeAcctUnit == "WHOLESALE")
+        
+    then
+        $gpy.setCustomTxt05("0204-I0199000-028000-B0036--9060");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3523");
+        
+end
+
+rule '1146898' extends '332222' salience 150
+
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "N", hsoPlSubcl == "1118", ldeAcctUnit == "WHOLESALE")
+        
+    then
+        $gpy.setCustomTxt05("0204-I0197000-028000-B0036--9060");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3523");
+        
+end
+
+rule '1146903' extends '332222' salience 140
+
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "Y", hsoPlSubcl == "1118", ldeAcctUnit == "RETAIL")
+        
+    then
+        $gpy.setCustomTxt05("9060-I0199000-028000-B0036--0204");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3523");
+        
+end
+
+rule '1146904' extends '332222' salience 130
+
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "N", hsoPlSubcl == "1118", ldeAcctUnit == "RETAIL")
+        
+    then
+        $gpy.setCustomTxt05("9060-I0197000-028000-B0036--0204");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3523");
+        
+end
+
+rule '1146905' extends '332222' salience 120
+
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "Y", hsoPlSubcl == "1603", ldeAcctUnit == "WHOLESALE")
+        
+    then
+        $gpy.setCustomTxt05("0204-I0199000-014000-B0036--9060");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3523");
+        
+end
+
+rule '1146906' extends '332222' salience 110
+
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "Y", hsoPlSubcl == "1603", ldeAcctUnit == "RETAIL")
+        
+    then
+        $gpy.setCustomTxt05("9060-I0199000-014000-B0036--0204");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3523");
+        
+end
+
+rule '1146907' extends '332222' salience 100
+
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "N", hsoPlSubcl == "1603", ldeAcctUnit == "WHOLESALE")
+        
+    then
+        $gpy.setCustomTxt05("0204-I0197000-014000-B0036--9060");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3523");
+        
+end
+
+rule '1146908' extends '332222' salience 90
+
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "N", hsoPlSubcl == "1603", ldeAcctUnit == "RETAIL")
+        
+    then
+        $gpy.setCustomTxt05("9060-I0197000-014000-B0036--0204");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3523");
+        
+end
+
+rule '1146893' extends '332222' salience 80
+no-loop
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "Y", hsoPlSubcl == "1111", ldeAcctUnit == "WHOLESALE", getCase0_1146893() == "short_term")
+        
+    then
+        $gpy.setCustomTxt05("0204-I0199000-004400-B0036--9060");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3523");
+        
+end
+
+rule '1146894' extends '332222' salience 70
+no-loop
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "N", hsoPlSubcl == "1111", ldeAcctUnit == "WHOLESALE", getCase0_1146893() == "short_term")
+        
+    then
+        $gpy.setCustomTxt05("0204-I0197000-004400-B0036--9060");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3523");
+        
+end
+
+rule '1146895' extends '332222' salience 60
+no-loop
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "Y", hsoPlSubcl == "1111", ldeAcctUnit == "WHOLESALE", getCase0_1146893() == "long_term")
+        
+    then
+        $gpy.setCustomTxt05("0204-I0199000-004300-B0036--9060");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3523");
+        
+end
+
+rule '1146896' extends '332222' salience 50
+no-loop
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "N", hsoPlSubcl == "1111", ldeAcctUnit == "WHOLESALE", getCase0_1146893() == "long_term")
+        
+    then
+        $gpy.setCustomTxt05("0204-I0197000-004300-B0036--9060");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3523");
+        
+end
+
+rule '1146899' extends '332222' salience 40
+no-loop
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "Y", hsoPlSubcl == "1111", ldeAcctUnit == "RETAIL", getCase0_1146893() == "short_term")
+        
+    then
+        $gpy.setCustomTxt05("9060-I0199000-004400-B0036--0204");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3523");
+        
+end
+
+rule '1146900' extends '332222' salience 30
+no-loop
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "N", hsoPlSubcl == "1111", ldeAcctUnit == "RETAIL", getCase0_1146893() == "short_term")
+        
+    then
+        $gpy.setCustomTxt05("9060-I0197000-004400-B0036--0204");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3523");
+        
+end
+
+rule '1146901' extends '332222' salience 20
+no-loop
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "Y", hsoPlSubcl == "1111", ldeAcctUnit == "RETAIL", getCase0_1146893() == "long_term")
+        
+    then
+        $gpy.setCustomTxt05("9060-I0199000-004300-B0036--0204");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3523");
+        
+end
+
+rule '1146902' extends '332222' salience 10
+no-loop
+    when
+        
+        GrlPlYtd(this == $gpy, repRecInd == "N", hsoPlSubcl == "1111", ldeAcctUnit == "RETAIL", getCase0_1146893() == "long_term")
+        
+    then
+        $gpy.setCustomTxt05("9060-I0197000-004300-B0036--0204");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3523");
+        
+end
+
+

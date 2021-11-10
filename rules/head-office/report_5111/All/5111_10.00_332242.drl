@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332242'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1148912' extends '332242' salience 220
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "HKD")
+        
+    then
+        $gda.setCustomTxt01("1");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3535");
+        
+end
+
+rule '1148913' extends '332242' salience 210
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "USD")
+        
+    then
+        $gda.setCustomTxt01("2");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3535");
+        
+end
+
+rule '1148914' extends '332242' salience 200
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg not in ("HKD", "USD"))
+        
+    then
+        $gda.setCustomTxt01("3");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3535");
+        
+end
+
+

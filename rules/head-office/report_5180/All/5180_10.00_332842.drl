@@ -1,0 +1,78 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332842'
+	when
+		$gpy : GrlPlYtd()
+	then
+        
+end
+
+
+
+
+
+rule '1231709' extends '332842' salience 50
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine(massLine );
+        $gpy.setMassLine({this.getMassLine()});
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3771");
+        
+end
+
+rule '1231710' extends '332842' salience 40
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse14 == "FTP")
+        
+    then
+        $gpy.setLocMassLine("Interest Internal Received (FTP)");
+        $gpy.setMassLine("Interest Internal Received (FTP)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3771");
+        
+end
+
+rule '1707931' extends '332842' salience 30
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse14 in ("CLC", "EOS"))
+        
+    then
+        $gpy.setLocMassLine("Interest Internal Received (CLC)");
+        $gpy.setMassLine("Interest Internal Received (CLC)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3771");
+        
+end
+
+rule '1363090' extends '332842' salience 20
+
+    when
+        
+        GrlPlYtd(this == $gpy, ownUse20 in ("36001", "36065", "36108"), lseHlyRelId in ("0720", "0720_SF4L", "9743", "9744", "9744_SF4L"))
+        
+    then
+        $gpy.setLocMassLine("Interest External Received (Deferred)");
+        $gpy.setMassLine("Interest External Received (Deferred)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3771");
+        
+end
+
+

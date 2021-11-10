@@ -1,0 +1,126 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331350'
+	when
+		$gda : GrlDetAmounts(( ( hacAmtCl == "10" ) && ( lseId != null && lseId != null && lseId not in ( "9349" , "19165" , "19230" , "20684" , "20695" , "20698" ) ) && ( substr ( prodSubSubTypeLoc , 1 , 5 ) in ( "INTDP" , "INTDT" , "INTFX" ) ) ))
+	then
+        
+end
+
+
+
+
+
+rule '1038960' extends '331350' salience 80
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt11("NOT FOUND seq 42");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2870");
+        
+end
+
+rule '1038953' extends '331350' salience 70
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", posGroupId == "10901", (prodSubSubTypeLoc matches "INTDP.*" || prodSubSubTypeLoc matches "INTDT.*"))
+        
+    then
+        $gda.setCustomTxt11("10901 INT DEPO SWAP MMKT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2870");
+        
+end
+
+rule '1038941' extends '331350' salience 60
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY FORW", posGroupId == "30000", prodSubSubTypeLoc matches "INTFX.*", buyInd == "N")
+        
+    then
+        $gda.setCustomTxt11("OFF BAL 41301 INTFX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2870");
+        
+end
+
+rule '1038943' extends '331350' salience 50
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY FORW", posGroupId == "30000", prodSubSubTypeLoc matches "INTFX.*", buyInd == "Y")
+        
+    then
+        $gda.setCustomTxt11("OFF BAL 31301 INTFX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2870");
+        
+end
+
+rule '1038958' extends '331350' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", posGroupId == "30000", prodSubSubTypeLoc matches "INTFX.*", buyInd == "Y")
+        
+    then
+        $gda.setCustomTxt11("OFF BAL 31201 INTFX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2870");
+        
+end
+
+rule '1038959' extends '331350' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", posGroupId == "30000", prodSubSubTypeLoc matches "INTFX.*", buyInd == "N")
+        
+    then
+        $gda.setCustomTxt11("OFF BAL 41201 INTFX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2870");
+        
+end
+
+rule '1038954' extends '331350' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", posGroupId == "10901", (prodSubSubTypeLoc matches "INTDP.*" || prodSubSubTypeLoc matches "INTDT.*"), repAssetInd == "Y", contingInd == "Y")
+        
+    then
+        $gda.setCustomTxt11("OFF BAL 10901 IDS FORW ASSET");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2870");
+        
+end
+
+rule '1038955' extends '331350' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", posGroupId == "10901", (prodSubSubTypeLoc matches "INTDP.*" || prodSubSubTypeLoc matches "INTDT.*"), repAssetInd == "N", contingInd == "Y")
+        
+    then
+        $gda.setCustomTxt11("OFF BAL 10901 IDS FORW LIAB");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2870");
+        
+end
+
+

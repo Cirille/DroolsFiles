@@ -1,0 +1,29 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '335242'
+	when
+		$gda : GrlDetAmounts(ownUse07 in ( "xxxA798700002900000015089" ) && lseHlyRelId in ( "0212" , "0212_RET" , "9661" , "9614" ))
+	then
+end
+
+
+rule '1699880' extends '335242' salience 200
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId in ("0212", "0212_RET", "9614", "9661"), ownUse07 == "A798700002900000015089")
+        
+    then
+        $gda.setScyPdtCode("029000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5758");
+        
+end
+
+

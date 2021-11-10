@@ -1,0 +1,308 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332221'
+	when
+		$gda : GrlDetAmounts(MANUALLY adjust this subselect: id in (select id from ( select dat.id , dat.lse_hly_rel_id dat_lse_hly_rel_id , lde_acct_unit , (select lbk.lat_acct_unit from gre_lr_dept lde , gre_lr_book lbk , gpl_relations rln where lde.lbk_book_cd = lbk.book_cd and lde.lbk_hly_rel_id = lbk.hly_rel_id and lde.dept_cd = rln.cred_resp_acct_unit||'_'||rln.cred_resp_dept_cd and rln.lse_hly_rel_id = lde.hly_rel_id and rln.lse_hly_rel_id = dat.lse_hly_rel_id and rln.rel_id = dat.own_use_01 ) acct_unit from grl_det_amounts dat ) where lde_acct_unit in ('WHOLESALE', 'RETAIL') and dat_lse_hly_rel_id = lse_hly_rel_id and acct_unit in ('WHOLESALE', 'RETAIL') and lde_acct_unit <> acct_unit ) and int_ind = 'Y')
+	then
+        
+end
+
+
+
+
+
+rule '1146887' extends '332221' salience 220
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt05("TO BE DETERMINED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146892' extends '332221' salience 210
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "CUST ACCT")
+        
+    then
+        $gda.setCustomTxt05("REROUTE (XXXF CUSTOMER)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146888' extends '332221' salience 200
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "NOSTRO", repAssetInd == "Y", hacAmtCl == "01", ldeAcctUnit == "WHOLESALE")
+        
+    then
+        $gda.setCustomTxt05("0204-A0027000-014000-B0036-010-9060");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146889' extends '332221' salience 190
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "NOSTRO", repAssetInd == "Y", hacAmtCl == "01", ldeAcctUnit == "RETAIL")
+        
+    then
+        $gda.setCustomTxt05("9060-A0027000-014000-B0036-010-0204");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146890' extends '332221' salience 180
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "NOSTRO", repAssetInd == "N", hacAmtCl == "01", ldeAcctUnit == "WHOLESALE")
+        
+    then
+        $gda.setCustomTxt05("0204-L0242000-014000-B0036--9060");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146891' extends '332221' salience 170
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "NOSTRO", repAssetInd == "N", hacAmtCl == "01", ldeAcctUnit == "RETAIL")
+        
+    then
+        $gda.setCustomTxt05("9060-L0242000-014000-B0036--0204");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146882' extends '332221' salience 160
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "Y", hacAmtCl in ("02", "03"), ldeAcctUnit == "WHOLESALE", contingInd == "N")
+        
+    then
+        $gda.setCustomTxt05("0204-A0003000---010-9060");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146883' extends '332221' salience 150
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "N", hacAmtCl in ("02", "03"), ldeAcctUnit == "WHOLESALE", contingInd == "N")
+        
+    then
+        $gda.setCustomTxt05("0204-L0229000----9060");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146884' extends '332221' salience 140
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "N", hacAmtCl in ("02", "03"), ldeAcctUnit == "RETAIL", contingInd == "N")
+        
+    then
+        $gda.setCustomTxt05("9060-L0229000----0204");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146885' extends '332221' salience 130
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "Y", hacAmtCl in ("02", "03"), ldeAcctUnit == "RETAIL", contingInd == "N")
+        
+    then
+        $gda.setCustomTxt05("9060-A0003000---010-0204");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146861' extends '332221' salience 120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "Y", hacAmtCl == "01", ldeAcctUnit == "WHOLESALE", contingInd == "N", getCase0_1146879() == "short_term_deposit")
+        
+    then
+        $gda.setCustomTxt05("0204-A0027000-004400-B0036-010-9060");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146868' extends '332221' salience 110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "Y", hacAmtCl == "01", ldeAcctUnit == "WHOLESALE", contingInd == "N", getCase0_1146879() == "long_term_deposit")
+        
+    then
+        $gda.setCustomTxt05("0204-A0027000-004300-B0036-010-9060");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146869' extends '332221' salience 100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "Y", hacAmtCl == "01", ldeAcctUnit == "WHOLESALE", contingInd == "N", getCase0_1146879() == "overnight_deposit")
+        
+    then
+        $gda.setCustomTxt05("0204-A0027000-028000-B0036-010-9060");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146870' extends '332221' salience 90
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "Y", hacAmtCl == "01", ldeAcctUnit == "RETAIL", contingInd == "N", getCase0_1146879() == "short_term_deposit")
+        
+    then
+        $gda.setCustomTxt05("9060-A0027000-004400-B0036-010-0204");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146871' extends '332221' salience 80
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "Y", hacAmtCl == "01", ldeAcctUnit == "RETAIL", contingInd == "N", getCase0_1146879() == "long_term_deposit")
+        
+    then
+        $gda.setCustomTxt05("9060-A0027000-004300-B0036-010-0204");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146872' extends '332221' salience 70
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "Y", hacAmtCl == "01", ldeAcctUnit == "RETAIL", contingInd == "N", getCase0_1146879() == "overnight_deposit")
+        
+    then
+        $gda.setCustomTxt05("9060-A0027000-028000-B0036-010-0204");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146874' extends '332221' salience 60
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "N", hacAmtCl == "01", ldeAcctUnit == "WHOLESALE", contingInd == "N", getCase0_1146879() == "short_term_deposit")
+        
+    then
+        $gda.setCustomTxt05("0204-L0242000-004400-B0036--9060");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146875' extends '332221' salience 50
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "N", hacAmtCl == "01", ldeAcctUnit == "WHOLESALE", contingInd == "N", getCase0_1146879() == "long_term_deposit")
+        
+    then
+        $gda.setCustomTxt05("0204-L0242000-004300-B0036--9060");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146876' extends '332221' salience 40
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "N", hacAmtCl == "01", ldeAcctUnit == "WHOLESALE", contingInd == "N", getCase0_1146879() == "overnight_deposit")
+        
+    then
+        $gda.setCustomTxt05("0204-L0242000-028000-B0036--9060");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146877' extends '332221' salience 30
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "N", hacAmtCl == "01", ldeAcctUnit == "RETAIL", contingInd == "N", getCase0_1146879() == "short_term_deposit")
+        
+    then
+        $gda.setCustomTxt05("9060-L0242000-004400-B0036--0204");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146878' extends '332221' salience 20
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "N", hacAmtCl == "01", ldeAcctUnit == "RETAIL", contingInd == "N", getCase0_1146879() == "long_term_deposit")
+        
+    then
+        $gda.setCustomTxt05("9060-L0242000-004300-B0036--0204");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+rule '1146879' extends '332221' salience 10
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "DEPOSIT", repAssetInd == "N", hacAmtCl == "01", ldeAcctUnit == "RETAIL", contingInd == "N", getCase0_1146879() == "overnight_deposit")
+        
+    then
+        $gda.setCustomTxt05("9060-L0242000-028000-B0036--0204");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3522");
+        
+end
+
+

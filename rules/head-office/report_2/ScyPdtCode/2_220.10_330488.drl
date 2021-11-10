@@ -1,0 +1,107 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '330488'
+	when
+		$gda : GrlDetAmounts(hpePdtType in ( "NIF AND RUF" , "UNUSED FAC AMT" , "CFY" ) && rootFacInd == "Y" && hacAmtCl == "09" && credFacInd == "Y" && drawAllowedInd == "Y" && intInd == "N" && scyActCode != null)
+	then
+end
+
+
+rule '886510' extends '330488' salience 11020
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setScyPdtCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2318");
+        
+end
+
+rule '1103157' extends '330488' salience 11010
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType in ("UNUSED FAC AMT", "CFY"), hfeFacType in ("310", "330"))
+        
+    then
+        $gda.setScyPdtCode("014400");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2318");
+        
+end
+
+rule '886508' extends '330488' salience 11000
+
+    when
+        
+        GrlDetAmounts(this == $gda, commInd == "Y", hpePdtType == "NIF AND RUF")
+        
+    then
+        $gda.setScyPdtCode("014400");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2318");
+        
+end
+
+rule '1592745' extends '330488' salience 10990
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType in ("UNUSED FAC AMT", "CFY"), hfeFacType == "8057")
+        
+    then
+        $gda.setScyPdtCode("031300");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2318");
+        
+end
+
+rule '886511' extends '330488' salience 10980
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, commInd == "Y", getCase0_1150623() == "within_one_year", hpePdtType in ("UNUSED FAC AMT", "CFY"), hfeFacType not in ("310", "330", "8057"))
+        
+    then
+        $gda.setScyPdtCode("026900");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2318");
+        
+end
+
+rule '886512' extends '330488' salience 10970
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, commInd == "Y", getCase0_1150623() == "more_then_a_year", hpePdtType in ("UNUSED FAC AMT", "CFY"), hfeFacType not in ("310", "330", "8057"))
+        
+    then
+        $gda.setScyPdtCode("027000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2318");
+        
+end
+
+rule '886509' extends '330488' salience 10960
+
+    when
+        
+        GrlDetAmounts(this == $gda, commInd == "N", hpePdtType in ("UNUSED FAC AMT", "CFY"), hfeFacType not in ("310", "330", "8057"))
+        
+    then
+        $gda.setScyPdtCode("014800");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2318");
+        
+end
+
+

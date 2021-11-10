@@ -1,0 +1,13 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+dialect  "mvel"
+
+rule 'Reconciliation' salience 10
+    when
+        $gpy : GrlPlYtd()
+    then
+        $gpy.setLdlIdTrail($gpy.getLdlIdTrail().replace("REP_NULLIFY;",""));
+        $gpy.setMemoText($gpy.performReconciliation());
+end

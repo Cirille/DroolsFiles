@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '338641'
+	when
+		$gpy : GrlPlYtd(( hpnPlCl in ( "1000" , "2000" , "3000" , "4000" , "5000" ) || nvl ( massLine , 0 ) in ( "Corporate Tax Financial Accounting" , "Specific Debtor Provisions" , "IBNR Debtor Provisions" ) ) && ldeDeptCd matches ( "SG001%" ))
+	then
+        
+end
+
+
+
+
+
+rule '2014866' extends '338641' salience 30
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I8573000")
+        
+    then
+        $gpy.setLocMassLine("Real FX Arbitrage (Trading)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"8605");
+        
+end
+
+rule '2014867' extends '338641' salience 20
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I9774000")
+        
+    then
+        $gpy.setLocMassLine("IFRS16 interest expense posting");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"8605");
+        
+end
+
+rule '2014868' extends '338641' salience 10
+
+    when
+        
+        GrlPlYtd(this == $gpy, actCode == "I0193000")
+        
+    then
+        $gpy.setLocMassLine("Advisory/ remittance/ arrangement / underwriting fee income");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"8605");
+        
+end
+
+

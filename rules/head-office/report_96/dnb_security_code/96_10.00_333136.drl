@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlStructuredDleLines;
+
+
+
+
+dialect  "mvel"
+
+
+rule '333136'
+	when
+		$gsdl : GrlStructuredDleLines(( actCode in ( "A0017000" , "A0058000" , "A3331000" , "A3333000" , "A8349000" , "A8609000" , "A9260000" , "A9458000" , "A9460000" ) && pdtCode in ( "004700" , "004800" ) && cpyBeyNumber == null || ( actCode in ( "A0022000" ) && cpyBeyNumber == null ) ))
+	then
+        
+end
+
+
+
+
+
+rule '1389729' extends '333136' salience 160
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gsdl.setDnbSecurityCode("NOT-LISTED EQUITY SECURITIES");
+        
+        $gsdl.updateLdlIdTrail(kcontext.rule.name,"4010");
+        
+end
+
+rule '1389728' extends '333136' salience 150
+
+    when
+        
+        GrlStructuredDleLines(this == $gsdl, quotedInd == "Y")
+        
+    then
+        $gsdl.setDnbSecurityCode("LISTED EQUITY SECURITIES");
+        
+        $gsdl.updateLdlIdTrail(kcontext.rule.name,"4010");
+        
+end
+
+

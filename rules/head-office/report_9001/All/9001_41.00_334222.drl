@@ -1,0 +1,197 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334222'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1614941' extends '334222' salience 11070
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setSeRemTermCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4936");
+        
+end
+
+rule '1614942' extends '334222' salience 11060
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "between_one_and_two_years", getCase1_1614942() == "less_than_one_year")
+        
+    then
+        $gda.setSeRemTermCd("MAT0007");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4936");
+        
+end
+
+rule '1614945' extends '334222' salience 11050
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "between_one_and_two_years", getCase1_1614942() == "between_one_and_two_years")
+        
+    then
+        $gda.setSeRemTermCd("MAT0009");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4936");
+        
+end
+
+rule '1614946' extends '334222' salience 11040
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "between_one_and_two_years", getCase1_1614942() == "more_than_two_years")
+        
+    then
+        $gda.setSeRemTermCd("MAT0009");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4936");
+        
+end
+
+rule '1614947' extends '334222' salience 11030
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "more_than_two_years", getCase1_1614942() == "less_than_one_year")
+        
+    then
+        $gda.setSeRemTermCd("MAT0010");
+        $gda.setSeCode8("MAT0007");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4936");
+        
+end
+
+rule '1614948' extends '334222' salience 11020
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "more_than_two_years", getCase1_1614942() == "between_one_and_two_years")
+        
+    then
+        $gda.setSeRemTermCd("MAT0010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4936");
+        
+end
+
+rule '1614953' extends '334222' salience 11010
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "more_than_two_years", getCase1_1614942() == "more_than_two_years")
+        
+    then
+        $gda.setSeRemTermCd("MAT0012");
+        $gda.setSeCode8("MAT0009");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4936");
+        
+end
+
+rule '1614943' extends '334222' salience 11000
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "between_one_and_two_years", getCase1_1614942() == "between_one_and_two_years", getCase0_1614952() == "intr_reset_within_one_year")
+        
+    then
+        $gda.setSeRemTermCd("MAT0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4936");
+        
+end
+
+rule '1614944' extends '334222' salience 10990
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "between_one_and_two_years", getCase1_1614942() == "more_than_two_years", getCase0_1614952() == "intr_reset_within_one_year")
+        
+    then
+        $gda.setSeRemTermCd("MAT0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4936");
+        
+end
+
+rule '1614949' extends '334222' salience 10980
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "more_than_two_years", getCase1_1614942() == "between_one_and_two_years", getCase0_1614952() == "intr_reset_within_one_year")
+        
+    then
+        $gda.setSeRemTermCd("MAT0010");
+        $gda.setSeCode8("MAT0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4936");
+        
+end
+
+rule '1614950' extends '334222' salience 10970
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "more_than_two_years", getCase1_1614942() == "between_one_and_two_years", getCase0_1614952() == "intr_reset_within_two_years")
+        
+    then
+        $gda.setSeRemTermCd("MAT0010");
+        $gda.setSeCode8("MAT0009");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4936");
+        
+end
+
+rule '1614951' extends '334222' salience 10960
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "more_than_two_years", getCase1_1614942() == "more_than_two_years", getCase0_1614952() == "intr_reset_within_one_year")
+        
+    then
+        $gda.setSeRemTermCd("MAT0011");
+        $gda.setSeCode8("MAT0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4936");
+        
+end
+
+rule '1614952' extends '334222' salience 10950
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1614942() == "more_than_two_years", getCase1_1614942() == "more_than_two_years", getCase0_1614952() == "intr_reset_within_two_years")
+        
+    then
+        $gda.setSeRemTermCd("MAT0011");
+        $gda.setSeCode8("MAT0009");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4936");
+        
+end
+
+

@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332549'
+	when
+		$gda : GrlDetAmounts(ownUse07 in ( "xx" , "xx" ))
+	then
+        
+end
+
+
+
+
+
+rule '1175996' extends '332549' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId in ("0751", "9679"), ownUse07 matches "1211210001.*")
+        
+    then
+        $gda.setRteCode("052");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3684");
+        
+end
+
+rule '1175997' extends '332549' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId in ("0751", "9679"), ownUse07 matches "1217210001.*")
+        
+    then
+        $gda.setRteCode("052");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3684");
+        
+end
+
+

@@ -1,0 +1,50 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '338071'
+	when
+		$gda : GrlDetAmounts(substr ( actCode , 1 , 1 ) in ( "B" ))
+	then
+        
+end
+
+
+
+
+
+rule '1956744' extends '338071' salience 30
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setFinrepCode(Warning: selecting from cia_owner.cho_multi_tree_explosions: data will not be available in source topic.
+ full statement: {( select ( '|'  || regexp_substr(mle.label,'[^|]+',1,1) || '-' ||
+  regexp_substr(mle.label,'[^|]+',1,2) || '-' ||
+  regexp_substr(mle.label,'[^|]+',1,3) || '|' )  from  cia_owner.cho_multi_tree_explosions mle WHERE mle.mtr_name = 'FINREP DPM 2.9 COMBOS'
+AND  '|' || sel_tab.act_code || '|' || sel_tab.pdt_code || '|' || sel_tab.cgp_code ||'|' ||sel_tab.rte_code ||'|'  =
+ '|'   ||mle.act_code   ||'|'   ||mle.pdt_code   ||'|'   ||mle.cgp_code   ||'|'   ||mle.rte_code   || '|'
+and mle.ldr_code = 'ACTUALS'
+and sel_tab.ldr_code = 'ACTUALS'
+/*and substr(mle.act_code,1,1) = 'B'
+and substr(sel_tab.act_code,1,1) = 'B'
+*/
+and mle.act_code = sel_tab.act_code
+AND ((NVL(mle.INTERCOMPANY_IND,'B') = 'Y' AND sel_tab.cpy_rey_code IS NOT NULL) OR (NVL(mle.INTERCOMPANY_IND,'B')  <> 'Y'))
+AND mle.label like '|F.18.00|%|010|'
+AND regexp_substr(mle.label,'[^|]+',1,1) = 'F.18.00'
+and regexp_substr(mle.label,'[^|]+',1,2) not in ('160','930','910'))});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"8066");
+        
+end
+
+

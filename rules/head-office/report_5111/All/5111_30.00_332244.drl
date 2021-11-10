@@ -1,0 +1,100 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332244'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1148926' extends '332244' salience 110
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt03("TO BE DETERMINED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3537");
+        
+end
+
+rule '1148927' extends '332244' salience 100
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse04 in ("21003", "21004"))
+        
+    then
+        $gda.setCustomTxt03("01");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3537");
+        
+end
+
+rule '1148928' extends '332244' salience 90
+
+    when
+        
+        GrlDetAmounts(this == $gda, (ownUse04 matches "5.*" || ownUse04 matches "6.*"))
+        
+    then
+        $gda.setCustomTxt03("01");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3537");
+        
+end
+
+rule '1148929' extends '332244' salience 80
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse04 in ("20701", "20702"))
+        
+    then
+        $gda.setCustomTxt03("24");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3537");
+        
+end
+
+rule '1148930' extends '332244' salience 70
+
+    when
+        
+        GrlDetAmounts(this == $gda, customTxt02 == "X")
+        
+    then
+        $gda.setCustomTxt03("99");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3537");
+        
+end
+
+rule '1148931' extends '332244' salience 60
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse06 == "SHAI")
+        
+    then
+        $gda.setCustomTxt03("20");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3537");
+        
+end
+
+

@@ -1,0 +1,568 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335607'
+	when
+		$gpy : GrlPlYtd(( actCode in ( "I0198000" , "I0200000" , "I4168000" , "I4404000" , "I7467000" , "I7468000" , "I7469000" , "I8630000" , "I9462000" ) || ( actCode == "I7671000" && pdtCode != null && pdtCode not in ( "004200" , "004300" , "004400" , "009400" , "012200" , "012700" , "013600" , "014000" , "015200" , "027800" , "027900" , "028000" , "031400" , "031500" , "031800" ) ) ))
+	then
+        
+end
+
+
+
+
+
+rule '1714396' extends '335607' salience 8490
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer == "ACCT", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00011");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714427' extends '335607' salience 8480
+
+    when
+        
+        GrlPlYtd(this == $gpy, icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00011");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714397' extends '335607' salience 8470
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer == "ACCT", (hieInduTypeIss matches "2.*" || hieInduTypeIss matches "3.*"), icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00012");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714398' extends '335607' salience 8460
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer == "ACCT", hieInduTypeIss == "521110", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00009");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714404' extends '335607' salience 8450
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer == "ACCT", hieInduTypeIss == "522110", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00010");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714420' extends '335607' salience 8440
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer == "VING", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00013");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714421' extends '335607' salience 8430
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer in ("FINS", "FLIF"), issuedInd == "N", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00013");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714422' extends '335607' salience 8420
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer == "FTRU", issuedInd == "N", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00015");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714423' extends '335607' salience 8410
+
+    when
+        
+        GrlPlYtd(this == $gpy, issuedInd == "Y", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00017");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714424' extends '335607' salience 8400
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer not in ("BCRI", "BEXC", "BGOG", "BGVO", "BHOL", "BJVT", "BLIM", "BMLD", "BSPV", "BSPM", "BGOF", "BGPR", "BPRO", "BRPR"), issuedInd == "Y", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00013");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714425' extends '335607' salience 8390
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer == "VGRP", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00019");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714426' extends '335607' salience 8380
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer == "BMLD", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00008");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714399' extends '335607' salience 8370
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer == "ACCT", hcyCtryCdIssuer == "NL", hieInduTypeIss matches "92.*", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00003");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714400' extends '335607' salience 8360
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer == "ACCT", hcyCtryCdIssuer == "BE", hieInduTypeIss matches "92.*", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00004");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714401' extends '335607' salience 8350
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer == "ACCT", hcyCtryCdIssuer == "DE", hieInduTypeIss matches "92.*", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00005");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714402' extends '335607' salience 8340
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer == "ACCT", hcyCtryCdIssuer == "US", hieInduTypeIss matches "92.*", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00006");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714403' extends '335607' salience 8330
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer == "ACCT", hcyCtryCdIssuer not in ("NL", "BE", "DE", "US"), hieInduTypeIss matches "92.*", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00007");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714405' extends '335607' salience 8320
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer == "ACCT", hieInduTypeIss not in ("521110", "522110"), icInd == "N", hieInduTypeIss matches "52.*")
+        
+    then
+        $gpy.setCustomTxtHo05("00015");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714408' extends '335607' salience 8310
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer in ("BCRI", "BEXC", "BGOG", "BGVO", "BHOL", "BJVT", "BLIM", "BSPV", "BSPM", "BGOF", "BGPR", "BPRO", "BRPR"), issuedInd == "N", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00010");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714410' extends '335607' salience 8300
+
+    when
+        
+        GrlPlYtd(this == $gpy, icInd == "Y")
+        
+    then
+        $gpy.setCustomTxtHo05("00017");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714412' extends '335607' salience 8290
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer matches "C.*", issuedInd == "N", (hieInduTypeIss matches "2.*" || hieInduTypeIss matches "3.*"), icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00012");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714413' extends '335607' salience 8280
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer matches "F.*", hreRelTypeIssuer not in ("FINS", "FLIF", "FTRU"), issuedInd == "N", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00015");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714414' extends '335607' salience 8270
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer matches "Z.*", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00015");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714416' extends '335607' salience 8260
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer == "BCEN", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00009");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714419' extends '335607' salience 8250
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer matches "C.*", issuedInd == "N", (hieInduTypeIss not matches "2.*" && hieInduTypeIss not matches "3.*"), icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00011");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1778865' extends '335607' salience 8240
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer in ("GCPL", "GLPL"), icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00010");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714406' extends '335607' salience 8230
+
+    when
+        
+        GrlPlYtd(this == $gpy, icInd == "Y", pdtCode in ("030000", "030100", "030200", "030300", "030400", "030500", "030600", "030700", "030800", "030900", "031000", "031100"))
+        
+    then
+        $gpy.setCustomTxtHo05("00017");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714409' extends '335607' salience 8220
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer matches "G.*", hreRelTypeIssuer not in ("GCPL", "GLPL"), hcyCtryCdIssuer == "US", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00006");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714411' extends '335607' salience 8210
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer matches "G.*", hreRelTypeIssuer not in ("GCPL", "GLPL"), hcyCtryCdIssuer == "NL", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00003");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714415' extends '335607' salience 8200
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer matches "G.*", hreRelTypeIssuer not in ("GCPL", "GLPL"), hcyCtryCdIssuer not in ("NL", "BE", "DE", "US"), icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00007");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714417' extends '335607' salience 8190
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer matches "G.*", hreRelTypeIssuer not in ("GCPL", "GLPL"), hcyCtryCdIssuer == "DE", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00005");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714418' extends '335607' salience 8180
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer matches "G.*", hreRelTypeIssuer not in ("GCPL", "GLPL"), hcyCtryCdIssuer == "BE", icInd == "N")
+        
+    then
+        $gpy.setCustomTxtHo05("00004");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714428' extends '335607' salience 8170
+
+    when
+        
+        GrlPlYtd(this == $gpy, issuedInd == "Y", pdtCode in ("030000", "030100", "030200", "030300", "030400", "030500", "030600", "030700", "030800", "030900", "031000", "031100"))
+        
+    then
+        $gpy.setCustomTxtHo05("00017");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714407' extends '335607' salience 8160
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer not in ("FAMT", "GAMT", "FGVO"), issuedInd == "N", icInd == "N", pdtCode in ("030000", "030100", "030200", "030300", "030400", "030500", "030600", "030700", "030800", "030900", "031000", "031100"), custSeg matches "FB.*")
+        
+    then
+        $gpy.setCustomTxtHo05("00010");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714429' extends '335607' salience 8150
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer not in ("FAMT", "GAMT", "FGVO"), issuedInd == "N", icInd == "N", pdtCode in ("030000", "030100", "030200", "030300", "030400", "030500", "030600", "030700", "030800", "030900", "031000", "031100"), custSeg matches "FII.*")
+        
+    then
+        $gpy.setCustomTxtHo05("00013");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714430' extends '335607' salience 8140
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer not in ("FAMT", "GAMT", "FGVO"), issuedInd == "N", icInd == "N", pdtCode in ("030000", "030100", "030200", "030300", "030400", "030500", "030600", "030700", "030800", "030900", "031000", "031100"), (custSeg matches "FIO.*" || custSeg matches "FNB.*" || custSeg matches "PFM.*" || custSeg matches "PSS.*" || custSeg matches "SEC.*"))
+        
+    then
+        $gpy.setCustomTxtHo05("00015");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714431' extends '335607' salience 8130
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer in ("FAMT", "GAMT", "FGVO"), issuedInd == "N", hcyCtryCdIssuer == "NL", icInd == "N", pdtCode in ("030000", "030100", "030200", "030300", "030400", "030500", "030600", "030700", "030800", "030900", "031000", "031100"))
+        
+    then
+        $gpy.setCustomTxtHo05("00003");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714432' extends '335607' salience 8120
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer in ("FAMT", "GAMT", "FGVO"), issuedInd == "N", hcyCtryCdIssuer == "BE", icInd == "N", pdtCode in ("030000", "030100", "030200", "030300", "030400", "030500", "030600", "030700", "030800", "030900", "031000", "031100"))
+        
+    then
+        $gpy.setCustomTxtHo05("00004");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714433' extends '335607' salience 8110
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer in ("FAMT", "GAMT", "FGVO"), issuedInd == "N", hcyCtryCdIssuer == "DE", icInd == "N", pdtCode in ("030000", "030100", "030200", "030300", "030400", "030500", "030600", "030700", "030800", "030900", "031000", "031100"))
+        
+    then
+        $gpy.setCustomTxtHo05("00005");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714434' extends '335607' salience 8100
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer in ("FAMT", "GAMT", "FGVO"), issuedInd == "N", hcyCtryCdIssuer == "US", icInd == "N", pdtCode in ("030000", "030100", "030200", "030300", "030400", "030500", "030600", "030700", "030800", "030900", "031000", "031100"))
+        
+    then
+        $gpy.setCustomTxtHo05("00006");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714435' extends '335607' salience 8090
+
+    when
+        
+        GrlPlYtd(this == $gpy, hreRelTypeIssuer in ("FAMT", "GAMT", "FGVO"), issuedInd == "N", hcyCtryCdIssuer not in ("NL", "BE", "DE", "US"), icInd == "N", pdtCode in ("030000", "030100", "030200", "030300", "030400", "030500", "030600", "030700", "030800", "030900", "031000", "031100"))
+        
+    then
+        $gpy.setCustomTxtHo05("00007");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+rule '1714395' extends '335607' salience 8080
+no-loop
+    when
+        
+        GrlPlYtd(this == $gpy, getCase0_1714395() == "EU")
+        
+    then
+        $gpy.setCustomTxtHo05("00022");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5966");
+        
+end
+
+

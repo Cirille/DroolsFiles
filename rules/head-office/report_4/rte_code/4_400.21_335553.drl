@@ -1,0 +1,620 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335553'
+	when
+		$gda : GrlDetAmounts(actCode == "B0593000")
+	then
+        
+end
+
+
+
+
+
+rule '1710816' extends '335553' salience 4890
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", icInd == "N")
+        
+    then
+        $gda.setRteCode("018");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1769751' extends '335553' salience 4880
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "015200", icInd == "N")
+        
+    then
+        $gda.setRteCode("018");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710823' extends '335553' salience 4870
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", icInd == "Y", hpePdtType not in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710828' extends '335553' salience 4860
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("018");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710813' extends '335553' salience 4850
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType in ("1101", "1102", "1104", "1106", "1201", "1202", "1203", "1301"), icInd == "N")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710814' extends '335553' salience 4840
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710819() == "CENTRAL_GOVERNMENTS", hzeZoneCtryIssuer == "A", icInd == "N")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710815' extends '335553' salience 4830
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType in ("2001", "2002", "2101"), hzeZoneCtryCov == "A", icInd == "N")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710819' extends '335553' salience 4820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710819() in ("BANKS", "CENTRAL_BANKS", "MULTILATERAL_DEVELOPMENT_BANKS"), hzeZoneCtryIssuer == "A", icInd == "N")
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710820' extends '335553' salience 4810
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType == "2009", icInd == "N")
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710821' extends '335553' salience 4800
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType in ("2005", "2008", "2011", "2021"), hzeZoneCtryCov == "A", icInd == "N")
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1782845' extends '335553' salience 4790
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType matches "15.*", hzeZoneCtryCov == "A", icInd == "N")
+        
+    then
+        $gda.setRteCode("127");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710803' extends '335553' salience 4780
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType in ("2024", "2030"), hzeZoneCtryCov == "A", covRelType in ("BCEN", "GCEN", "GCFI", "GNFP", "GNFU", "GSOC"), icInd == "N")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710805' extends '335553' salience 4770
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType in ("2024", "2030"), covRelType == "BMLD", icInd == "N")
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710806' extends '335553' salience 4760
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType in ("2024", "2030"), hzeZoneCtryCov == "A", covRelType in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BSPV", "GAMT", "GOSN", "GLOC", "GLOL", "GPSC", "GPSL", "BGOF", "BGPR", "BPRO", "BRPR", "GLFI"), icInd == "N")
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710807' extends '335553' salience 4750
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710819() == "GOVERNMENTS_OTHER", hzeZoneCtryIssuer == "A", euCtryInd == "N", icInd == "N")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710811' extends '335553' salience 4740
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710819() == "CENTRAL_GOVERNMENTS", hzeZoneCtryIssuer == "B", locFundInd == "Y", icInd == "N")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710812' extends '335553' salience 4730
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710817() == "within_one_year", hceCovType in ("2001", "2002", "2101"), hzeZoneCtryCov == "B", icInd == "N")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710817' extends '335553' salience 4720
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710817() == "within_one_year", hceCovType in ("2005", "2008", "2011", "2021"), hzeZoneCtryCov == "B", icInd == "N")
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710818' extends '335553' salience 4710
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710817() == "within_one_year", getCase0_1710819() in ("BANKS", "CENTRAL_BANKS", "MULTILATERAL_DEVELOPMENT_BANKS"), hzeZoneCtryIssuer == "B", icInd == "N")
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710825' extends '335553' salience 4700
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType in ("1101", "1102", "1104", "1106", "1201", "1202", "1203", "1301"), icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710826' extends '335553' salience 4690
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710819() == "CENTRAL_GOVERNMENTS", hzeZoneCtryIssuer == "A", icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710827' extends '335553' salience 4680
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", (hceCovType == "2001" || hceCovType == "2002" || hceCovType == "2101" || hceCovType matches "15.*"), hzeZoneCtryCov == "A", icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710830' extends '335553' salience 4670
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710819() in ("BANKS", "CENTRAL_BANKS", "MULTILATERAL_DEVELOPMENT_BANKS"), hzeZoneCtryIssuer == "A", icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710831' extends '335553' salience 4660
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType == "2009", icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710832' extends '335553' salience 4650
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType in ("2005", "2008", "2011", "2021"), hzeZoneCtryCov == "A", icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1778861' extends '335553' salience 4640
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType in ("2024", "2030"), hzeZoneCtryCov == "A", covRelType in ("GCPL", "GLPL"), icInd == "N")
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1782844' extends '335553' salience 4630
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710817() == "within_one_year", hceCovType matches "15.*", hzeZoneCtryCov == "B", icInd == "N")
+        
+    then
+        $gda.setRteCode("127");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710797' extends '335553' salience 4620
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType in ("2024", "2030"), hzeZoneCtryCov == "A", covRelType in ("BCEN", "GCEN", "GCFI", "GNFP", "GNFU", "GSOC"), icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710799' extends '335553' salience 4610
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType in ("2024", "2030"), covRelType == "BMLD", icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710800' extends '335553' salience 4600
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType in ("2024", "2030"), hzeZoneCtryCov == "A", covRelType in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BSPV", "GAMT", "GOSN", "GLOC", "GLOL", "GPSC", "GPSL", "BGOF", "BGPR", "BPRO", "BRPR", "GLFI"), icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710802' extends '335553' salience 4590
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710817() == "within_one_year", hceCovType in ("2024", "2030"), hzeZoneCtryCov == "B", covRelType in ("BCEN", "GCEN", "GCFI", "GNFP", "GNFU", "GSOC"), icInd == "N")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710804' extends '335553' salience 4580
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710817() == "within_one_year", hceCovType in ("2024", "2030"), hzeZoneCtryCov == "B", covRelType in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BSPV", "BGOF", "BGPR", "BPRO", "BRPR"), icInd == "N")
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710808' extends '335553' salience 4570
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710819() == "GOVERNMENTS_OTHER", hzeZoneCtryIssuer == "A", euCtryInd == "Y", icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710810' extends '335553' salience 4560
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType in ("2024", "2030"), hzeZoneCtryCov == "A", covRelType in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BSPV", "GAMT", "GOSN", "GLOC", "GLOL", "GPSC", "GPSL", "BGOF", "BGPR", "BPRO", "BRPR", "GLFI"), hcyCtryCdCov in ("AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "FI", "FR", "GB", "GR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO", "SE", "SI", "SK"), icInd == "N")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710822' extends '335553' salience 4550
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710819() == "CENTRAL_GOVERNMENTS", hzeZoneCtryIssuer == "B", locFundInd == "Y", icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710824' extends '335553' salience 4540
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710817() == "within_one_year", (hceCovType == "2001" || hceCovType == "2002" || hceCovType == "2101" || hceCovType matches "15.*"), hzeZoneCtryCov == "B", icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710829' extends '335553' salience 4530
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710817() == "within_one_year", hceCovType in ("2005", "2008", "2011", "2021"), hzeZoneCtryCov == "B", icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710833' extends '335553' salience 4520
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710817() == "within_one_year", getCase0_1710819() in ("BANKS", "CENTRAL_BANKS", "MULTILATERAL_DEVELOPMENT_BANKS"), hzeZoneCtryIssuer == "B", icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1778857' extends '335553' salience 4510
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType in ("2024", "2030"), hzeZoneCtryCov == "A", covRelType in ("GCPL", "GLPL"), hcyCtryCdCov in ("AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "FI", "FR", "GB", "GR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO", "SE", "SI", "SK"), icInd == "N")
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1778859' extends '335553' salience 4500
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType in ("2024", "2030"), hzeZoneCtryCov == "A", covRelType in ("GCPL", "GLPL"), icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1778860' extends '335553' salience 4490
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710817() == "within_one_year", hceCovType in ("2024", "2030"), hzeZoneCtryCov == "B", covRelType in ("GCPL", "GLPL"), icInd == "N")
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710798' extends '335553' salience 4480
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710817() == "within_one_year", hceCovType in ("2024", "2030"), hzeZoneCtryCov == "B", covRelType in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BSPV", "GAMT", "GOSN", "GLOC", "GLOL", "GPSC", "GPSL", "BGOF", "BGPR", "BPRO", "BRPR", "GLFI"), icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710801' extends '335553' salience 4470
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710817() == "within_one_year", hceCovType in ("2024", "2030"), hzeZoneCtryCov == "B", covRelType in ("BCEN", "GCEN", "GCFI", "GNFP", "GNFU", "GSOC"), icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1710809' extends '335553' salience 4460
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType in ("2024", "2030"), hzeZoneCtryCov == "A", covRelType in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BSPV", "GAMT", "GOSN", "GLOC", "GLOL", "GPSC", "GPSL", "BGOF", "BGPR", "BPRO", "BRPR", "GLFI"), hcyCtryCdCov in ("AU", "CA", "CH", "JP", "KR", "US"), icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1778856' extends '335553' salience 4450
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", hceCovType in ("2024", "2030"), hzeZoneCtryCov == "A", covRelType in ("GCPL", "GLPL"), hcyCtryCdCov in ("AU", "CA", "CH", "JP", "KR", "US"), icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("016");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+rule '1778858' extends '335553' salience 4440
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014600", getCase0_1710817() == "within_one_year", hceCovType in ("2024", "2030"), hzeZoneCtryCov == "B", covRelType in ("GCPL", "GLPL"), icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setRteCode("019");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5929");
+        
+end
+
+

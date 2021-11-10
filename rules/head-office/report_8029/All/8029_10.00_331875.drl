@@ -1,0 +1,35 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331875'
+	when
+		$gda : GrlDetAmounts(MANUALLY adjust this subselect: own_use_09 <> 0 and own_use_09 is not null and act_code like 'L%' and act_code <> 'L1605000' and custom_txt_01 is not null and (lse_hly_rel_id, own_use_09) in (with data as (select dat.lse_hly_rel_id, dat.own_use_02 parent_name, dat.own_use_09 parent_id, sum(cho_det_amt_eur) amount from grl_det_amounts dat where dat.lse_hly_rel_id = '0557' and dat.act_code like 'L%' and dat.custom_txt_01 is not null group by dat.own_use_02, dat.own_use_09,dat.lse_hly_rel_id) (select lse_hly_rel_id, parent_id from data where amount < (select 0.03 * sum(amount) from data)) ))
+	then
+        
+end
+
+
+
+
+
+rule '1114247' extends '331875' salience 10
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt03("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3293");
+        
+end
+
+

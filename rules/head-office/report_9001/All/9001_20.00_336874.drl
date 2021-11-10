@@ -1,0 +1,630 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336874'
+	when
+		$gda : GrlDetAmounts(actCode != null && hpePdtType in ( "STOCK BOND" , "STOCK CD AND CP" , "STOCK CONV BOND" , "STOCK FLOATING RATE NOTE" , "STOCK MEDIUM TERM NOTE" , "STOCK SAVING CERT" , "STOCK SHARE" , "STOCK TREASURY PAPER" ))
+	then
+        
+end
+
+
+
+
+
+rule '1770734' extends '336874' salience 12210
+
+    when
+        
+        GrlDetAmounts(this == $gda, cgpCode != "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2241");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770742' extends '336874' salience 12200
+
+    when
+        
+        GrlDetAmounts(this == $gda, cgpCode == "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2241");
+        $gda.setSeSectors3("9001-HK1_2201");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770755' extends '336874' salience 12190
+
+    when
+        
+        GrlDetAmounts(this == $gda, icInd == "N", actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors2("9001-HK1_2241");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770771' extends '336874' salience 12180
+
+    when
+        
+        GrlDetAmounts(this == $gda, icInd == "Y", actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors3("9001-HK1_2201");
+        $gda.setSeSectors2("9001-HK1_2241");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770730' extends '336874' salience 12170
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FINS", "FLIF", "VABS", "VAMB", "VCMB", "VFND", "VIFM", "VRMB"), cgpCode != "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2221");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770731' extends '336874' salience 12160
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "FPEF", cgpCode != "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2222");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770732' extends '336874' salience 12150
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FCLF", "FOFM", "FOHF", "FOPF"), cgpCode != "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2260");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770733' extends '336874' salience 12140
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches ".*SPV", cgpCode != "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2271");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770736' extends '336874' salience 12130
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FINS", "FLIF", "VABS", "VAMB", "VCMB", "VFND", "VIFM", "VRMB"), cgpCode == "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2221");
+        $gda.setSeSectors3("9001-HK1_2201");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770737' extends '336874' salience 12120
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "FPEF", cgpCode == "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2222");
+        $gda.setSeSectors3("9001-HK1_2201");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770738' extends '336874' salience 12110
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FCLF", "FOFM", "FOHF", "FOPF"), cgpCode == "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2260");
+        $gda.setSeSectors3("9001-HK1_2201");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770739' extends '336874' salience 12100
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches ".*SPV", cgpCode == "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2212");
+        $gda.setSeSectors3("9001-HK1_2201");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770743' extends '336874' salience 12090
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("GAMT", "GCEN", "GSNO", "GPSC"), cgpCode != "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770745' extends '336874' salience 12080
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "BCEN", cgpCode != "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_1100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770746' extends '336874' salience 12070
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("IIPB", "INDV", "ISTF", "IREP", "ROMN"), cgpCode != "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2251");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770747' extends '336874' salience 12060
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("COMB", "KOMB", "ROMB", "SOMB"), cgpCode != "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2241");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770751' extends '336874' salience 12050
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FINS", "FLIF", "VABS", "VAMB", "VCMB", "VFND", "VIFM", "VRMB"), icInd == "N", actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors2("9001-HK1_2221");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770752' extends '336874' salience 12040
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "FPEF", icInd == "N", actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors2("9001-HK1_2222");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770753' extends '336874' salience 12030
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FCLF", "FOFM", "FOHF", "FOPF"), icInd == "N", actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors2("9001-HK1_2260");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770754' extends '336874' salience 12020
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches ".*SPV", icInd == "N", actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors2("9001-HK1_2271");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770757' extends '336874' salience 12010
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("GAMT", "GCEN", "GSNO", "GPSC"), actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors2("9001-HK1_2110");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770759' extends '336874' salience 12000
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "BCEN", actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors2("9001-HK1_1100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770760' extends '336874' salience 11990
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("IIPB", "INDV", "ISTF", "IREP", "ROMN"), actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors2("9001-HK1_2251");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770761' extends '336874' salience 11980
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("COMB", "KOMB", "ROMB", "SOMB"), actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors2("9001-HK1_2241");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770764' extends '336874' salience 11970
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("CGVO", "KGVO", "RGVO", "SGVO"), icInd == "N", actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors2("9001-HK1_2242");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770765' extends '336874' salience 11960
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FINS", "FLIF", "VABS", "VAMB", "VCMB", "VFND", "VIFM", "VRMB"), icInd == "Y", actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors3("9001-HK1_2201");
+        $gda.setSeSectors2("9001-HK1_2221");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770766' extends '336874' salience 11950
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer == "FPEF", icInd == "Y", actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors3("9001-HK1_2201");
+        $gda.setSeSectors2("9001-HK1_2222");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770767' extends '336874' salience 11940
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("FCLF", "FOFM", "FOHF", "FOPF"), icInd == "Y", actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors3("9001-HK1_2201");
+        $gda.setSeSectors2("9001-HK1_2260");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770768' extends '336874' salience 11930
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches ".*SPV", icInd == "Y", actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors3("9001-HK1_2201");
+        $gda.setSeSectors2("9001-HK1_2212");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770772' extends '336874' salience 11920
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer in ("CGVO", "KGVO", "RGVO", "SGVO"), cgpCode != "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2242");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770729' extends '336874' salience 11910
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "F.*", hreRelTypeIssuer not in ("FINS", "FLIF", "FPEF", "FSPV", "VFND", "VIFM", "VING"), cgpCode != "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2273");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770735' extends '336874' salience 11900
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeIssuer matches "C.*" || hreRelTypeIssuer matches "K.*" || hreRelTypeIssuer matches "R.*" || hreRelTypeIssuer matches "S.*"), hreRelTypeIssuer not in ("COMB", "CSPV", "CGVO", "KGVO", "KOMB", "KSPV", "RGVO", "SGVO", "SSPV", "SOMB"), cgpCode != "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2241");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770740' extends '336874' salience 11890
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "F.*", hreRelTypeIssuer not in ("FINS", "FLIF", "FPEF", "FSPV", "VFND", "VIFM", "VING"), cgpCode == "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2273");
+        $gda.setSeSectors3("9001-HK1_2201");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770741' extends '336874' salience 11880
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeIssuer matches "C.*" || hreRelTypeIssuer matches "K.*" || hreRelTypeIssuer matches "R.*" || hreRelTypeIssuer matches "S.*"), hreRelTypeIssuer not in ("COMB", "CSPV", "CGVO", "KGVO", "KOMB", "KSPV", "RGVO", "RSPV", "SGVO", "SSPV", "SOMB"), cgpCode == "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2241");
+        $gda.setSeSectors3("9001-HK1_2201");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770744' extends '336874' salience 11870
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "G.*", hreRelTypeIssuer not in ("GAMT", "GCEN", "GSNO", "GPSC"), cgpCode != "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_2122");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770748' extends '336874' salience 11860
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "B.*", hreRelTypeIssuer not in ("BCEN", "BSPV"), cgpCode != "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_1214");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770749' extends '336874' salience 11850
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "B.*", hreRelTypeIssuer not in ("BCEN", "BSPV"), cgpCode == "00017", actCode not in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_1213");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770750' extends '336874' salience 11840
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "F.*", hreRelTypeIssuer not in ("FINS", "FLIF", "FPEF", "FSPV", "VFND", "VIFM", "VING"), icInd == "N", actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors2("9001-HK1_2273");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770756' extends '336874' salience 11830
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeIssuer matches "C.*" || hreRelTypeIssuer matches "K.*" || hreRelTypeIssuer matches "R.*" || hreRelTypeIssuer matches "S.*"), hreRelTypeIssuer not in ("COMB", "CSPV", "CGVO", "KGVO", "KOMB", "KSPV", "RGVO", "RSPV", "SGVO", "SSPV", "SOMB"), icInd == "N", actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors2("9001-HK1_2241");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770758' extends '336874' salience 11820
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "G.*", hreRelTypeIssuer not in ("GAMT", "GCEN", "GSNO", "GPSC"), actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors2("9001-HK1_2122");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770762' extends '336874' salience 11810
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "B.*", hreRelTypeIssuer not in ("BCEN", "BSPV"), icInd == "N", actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors2("9001-HK1_1214");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770763' extends '336874' salience 11800
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "B.*", hreRelTypeIssuer not in ("BCEN", "BSPV"), icInd == "Y", actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors2("9001-HK1_1213");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770769' extends '336874' salience 11790
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeIssuer matches "F.*", hreRelTypeIssuer not in ("FINS", "FLIF", "FPEF", "FSPV", "VFND", "VIFM", "VING"), icInd == "Y", actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors3("9001-HK1_2201");
+        $gda.setSeSectors2("9001-HK1_2273");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+rule '1770770' extends '336874' salience 11780
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeIssuer matches "C.*" || hreRelTypeIssuer matches "K.*" || hreRelTypeIssuer matches "R.*" || hreRelTypeIssuer matches "S.*"), hreRelTypeIssuer not in ("COMB", "CSPV", "CGVO", "KGVO", "KOMB", "KSPV", "RGVO", "RSPV", "SGVO", "SSPV", "SOMB"), icInd == "Y", actCode in ("A0003000", "A0080000", "A0083000", "A0088000", "A0092000", "A0094000", "A0095000", "A0097000", "A0098000", "A0100000", "L0229000", "L3351000", "L0105000", "L0107000", "L0110000", "L0115000", "L0116000", "L0117000", "L0119000"))
+        
+    then
+        $gda.setSeSectors("9001-HK1_9998");
+        $gda.setSeSectors3("9001-HK1_2201");
+        $gda.setSeSectors2("9001-HK1_2241");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6981");
+        
+end
+
+

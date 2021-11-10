@@ -1,0 +1,4622 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '326557'
+	when
+		$gda : GrlDetAmounts(hpePdtType != "UNUSED FAC AMT")
+	then
+        
+end
+
+
+
+
+
+rule '96464' extends '326557' salience 3640
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setMassLine("99.999");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '96461' extends '326557' salience 3630
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "A0001.*" || actCode matches "A0003.*" || actCode matches "A0005.*" || actCode matches "A0010.*" || actCode matches "A0024.*" || actCode matches "A0031.*" || actCode matches "A0035.*" || actCode matches "A0036.*" || actCode matches "A0037.*" || actCode matches "A0038.*" || actCode matches "A0039.*" || actCode matches "A0040.*"))
+        
+    then
+        $gda.setMassLine("Other assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '892774' extends '326557' salience 3620
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3282000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Trading Derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '892777' extends '326557' salience 3610
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3283000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Trading derivatives (liabilities)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1042370' extends '326557' salience 3600
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3331000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1122360' extends '326557' salience 3590
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A7987000", hacAmtCl != "11")
+        
+    then
+        $gda.setMassLine("Securities at amortised cost excl. LLP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1131597' extends '326557' salience 3580
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A5437000")
+        
+    then
+        $gda.setMassLine("Balancing accounts assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1131598' extends '326557' salience 3570
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L1615000", "L2510000", "L5438000"))
+        
+    then
+        $gda.setMassLine("Balancing Accounts Liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1131606' extends '326557' salience 3560
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3906000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Trading Derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1131607' extends '326557' salience 3550
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3907000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Trading derivatives (liabilities)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1146946' extends '326557' salience 3540
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8241000", hacAmtCl != "11")
+        
+    then
+        $gda.setMassLine("Other assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1147560' extends '326557' salience 3530
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0019000", "A0021000"))
+        
+    then
+        $gda.setMassLine("Other Property and Equipment");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1147562' extends '326557' salience 3520
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0017000", "A3333000"), pdtCode in ("002900", "005100", "005900", "006100", "007300", "007700", "029000", "030_00", "030900", "030800", "030700", "030600", "030500", "030400", "030300", "030200", "030100", "030000", "031000", "031100", "031200"))
+        
+    then
+        $gda.setMassLine("Debt securities at FVOCI excl. LLP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1147563' extends '326557' salience 3510
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0017000", "A3333000"), pdtCode in ("004700", "004800"))
+        
+    then
+        $gda.setMassLine("Equity securities at FVOCI");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1148640' extends '326557' salience 3500
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("Q0066000", "Q0068000", "Q0073000", "Q0075000", "Q0076000", "Q2341000", "Q8610000", "Q8611000", "Q9265000"))
+        
+    then
+        $gda.setMassLine("Shareholders equity (excl. revaluation reserve)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1150682' extends '326557' salience 3490
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8267000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Trading Derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1150683' extends '326557' salience 3480
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8268000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Trading Derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1150684' extends '326557' salience 3470
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8269000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Trading Derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1150685' extends '326557' salience 3460
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8270000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Trading Derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1150686' extends '326557' salience 3450
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L8276000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Trading derivatives (liabilities)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1150687' extends '326557' salience 3440
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L8277000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1159949' extends '326557' salience 3430
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A4412000", "A4564000", "A4565000"), hacAmtCl != "11")
+        
+    then
+        $gda.setMassLine("Securities at amortised cost excl. LLP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1159954' extends '326557' salience 3420
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A7986000", "A7988000"), hacAmtCl != "11")
+        
+    then
+        $gda.setMassLine("Securities at amortised cost excl. LLP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1159956' extends '326557' salience 3410
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3911000", hacAmtCl != "11")
+        
+    then
+        $gda.setMassLine("Other liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1175194' extends '326557' salience 3400
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L4146000", "L4147000", "L4150000"), cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1175195' extends '326557' salience 3390
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A4144000", "A4152000"), cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1175750' extends '326557' salience 3380
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A3291000", "A4112000", "A7985000"))
+        
+    then
+        $gda.setMassLine("Securities at amortised cost excl. LLP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1182065' extends '326557' salience 3370
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8334000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Trading Derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1186976' extends '326557' salience 3360
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8350000", pdtCode in ("004200", "028000"))
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1186981' extends '326557' salience 3350
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8350000", pdtCode in ("008200", "013600", "015200"))
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1186982' extends '326557' salience 3340
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8350000", pdtCode == "009400")
+        
+    then
+        $gda.setMassLine("FV adjustment hedged part mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1186986' extends '326557' salience 3330
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8350000", pdtCode == "014000")
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1467996' extends '326557' salience 3320
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "A0015.*" || actCode matches "A0016.*"))
+        
+    then
+        $gda.setMassLine("Other Intangible Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1467997' extends '326557' salience 3310
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "A0006.*" || actCode matches "A0028.*" || actCode matches "A0029.*" || actCode matches "A0052.*"))
+        
+    then
+        $gda.setMassLine("Other Property and Equipment");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1467998' extends '326557' salience 3300
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A0023.*")
+        
+    then
+        $gda.setMassLine("Equity securities at FVOCI");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1467999' extends '326557' salience 3290
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "A0022.*" || actCode matches "A0032.*" || actCode matches "A0050.*"))
+        
+    then
+        $gda.setMassLine("Investments in associates");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468004' extends '326557' salience 3280
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A0009.*")
+        
+    then
+        $gda.setMassLine("Cash and balances with central banks");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468005' extends '326557' salience 3270
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A4887000", hacAmtCl != "11")
+        
+    then
+        $gda.setMassLine("Other assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468013' extends '326557' salience 3260
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A4145000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other Property and Equipment");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468043' extends '326557' salience 3250
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0020000")
+        
+    then
+        $gda.setMassLine("Other assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1608121' extends '326557' salience 3240
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("Q0064000", "Q0065000", "Q0069000", "Q0070000", "Q0071000", "Q8076000", "Q3167000", "Q3168000", "Q3335000", "Q8332000"))
+        
+    then
+        $gda.setMassLine("Revaluation reserve");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1608122' extends '326557' salience 3230
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0258000", "L2531000", "L2532000", "L2533000"))
+        
+    then
+        $gda.setMassLine("Shareholders equity (excl. revaluation reserve)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1608123' extends '326557' salience 3220
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L2529000", "L2530000", "L3340000", "L3892000", "L3893000", "L6687000", "L8333000"))
+        
+    then
+        $gda.setMassLine("Revaluation reserve");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1676305' extends '326557' salience 3210
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8867000")
+        
+    then
+        $gda.setMassLine("Other assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1690867' extends '326557' salience 3200
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L8940000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Current Tax Liability");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1697900' extends '326557' salience 3190
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A9003000")
+        
+    then
+        $gda.setMassLine("Other assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1697901' extends '326557' salience 3180
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L9004000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1703527' extends '326557' salience 3170
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A9016000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Trading Derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1703528' extends '326557' salience 3160
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A9011000")
+        
+    then
+        $gda.setMassLine("Other assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1703530' extends '326557' salience 3150
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L9012000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1703886' extends '326557' salience 3140
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L4597000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other provisions");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1727307' extends '326557' salience 3130
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L8068000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Loss allowance for loan commitms. & fin. guar. contracts");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1731034' extends '326557' salience 3120
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A0011.*")
+        
+    then
+        $gda.setMassLine("Current Tax Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1731035' extends '326557' salience 3110
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A0014.*")
+        
+    then
+        $gda.setMassLine("Deferred Tax Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1749026' extends '326557' salience 3100
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0013000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Trading Derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1749027' extends '326557' salience 3090
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0059000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Trading Derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1769884' extends '326557' salience 3080
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0102000", "A0103000", "A8805000", "A8806000", "A8807000"), cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Loans and advances at FVOCI excl. LLP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1769885' extends '326557' salience 3070
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A8808000", "A8809000", "A8810000"), cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("LLP Loans and advances at FVOCI");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1769888' extends '326557' salience 3060
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A9229000", "A9230000", "A9231000"), cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("LLP Debt securities at FVOCI");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1769890' extends '326557' salience 3050
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A9260000", "A9457000", "A9458000"), cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other Financial Assets - mandatorily at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1769892' extends '326557' salience 3040
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L8221000", "L8222000", "L8223000", "L8224000", "L8225000", "L8226000", "L9235000", "L9236000", "L9237000", "L9238000", "L9239000", "L9240000", "L9241000", "L9242000", "L9243000"), cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Loss allowance for loan commitms. & fin. guar. contracts");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1769893' extends '326557' salience 3030
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("Q8075000", "Q8077000", "Q8078000", "Q8079000", "Q8080000", "Q8081000", "Q8082000", "Q8083000", "Q8084000", "Q8085000", "Q8086000", "Q8087000", "Q8088000", "Q8089000", "Q8090000", "Q8091000", "Q8092000", "Q8093000", "Q8094000", "Q9742000"), cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("IFRS 9 Transition impact");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1769894' extends '326557' salience 3020
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "Q9264000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Realised Revaluation reserve Equity Securities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772450' extends '326557' salience 3010
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A9226000", "A9227000", "A9228000"), cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("LLP Securities at amortised cost");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772597' extends '326557' salience 3000
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0090000", "A0092000"), cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1773419' extends '326557' salience 2990
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L8095000", "L8097000", "L8098000", "L8099000", "L8100000", "L8101000", "L8102000", "L8103000", "L8104000", "L8107000", "L8108000", "L8109000", "L8120000", "L8121000", "L8194000", "L8195000", "L8196000"), cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Shareholders equity (excl. revaluation reserve)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1773528' extends '326557' salience 2980
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3917000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Trading derivatives (liabilities)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1781424' extends '326557' salience 2970
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A9766000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other Financial Assets - mandatorily at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1790338' extends '326557' salience 2960
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A9795000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1790339' extends '326557' salience 2950
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L9797000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1805598' extends '326557' salience 2940
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0104000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other Financial Assets - mandatorily at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1805599' extends '326557' salience 2930
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A9459000", "A9460000"), cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1805600' extends '326557' salience 2920
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A9750000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Reverse Repos & Borrowing - mandatorily at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1806039' extends '326557' salience 2910
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A9768000", "A9769000", "A9770000"))
+        
+    then
+        $gda.setMassLine("Other Property and Equipment");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1806040' extends '326557' salience 2900
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A9789000")
+        
+    then
+        $gda.setMassLine("Deferred Tax Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1806041' extends '326557' salience 2890
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L9790000")
+        
+    then
+        $gda.setMassLine("Deferred Tax Liability");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1806042' extends '326557' salience 2880
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L9771000", "L9772000", "L9773000"))
+        
+    then
+        $gda.setMassLine("Other liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1806047' extends '326557' salience 2870
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "Q9791000")
+        
+    then
+        $gda.setMassLine("Shareholders equity (excl. revaluation reserve)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1892585' extends '326557' salience 2860
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A0012.*")
+        
+    then
+        $gda.setMassLine("Data-Processing Equipment");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1892586' extends '326557' salience 2850
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A0051.*")
+        
+    then
+        $gda.setMassLine("Acquired Software");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1892587' extends '326557' salience 2840
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A4620.*")
+        
+    then
+        $gda.setMassLine("Internally Developed Software");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1892588' extends '326557' salience 2830
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A6370.*")
+        
+    then
+        $gda.setMassLine("Software under Development");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1972092' extends '326557' salience 2820
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A9824000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1998023' extends '326557' salience 2810
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8327000")
+        
+    then
+        $gda.setMassLine("Other assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '96462' extends '326557' salience 2800
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A.*", hacAmtCl != "11", cpyBeyNumber != null)
+        
+    then
+        $gda.setMassLine("Assets Intercompany excl. Intra");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '96510' extends '326557' salience 2790
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "L0229.*" || actCode matches "L0230.*" || actCode matches "L0233.*" || actCode matches "L0239.*" || actCode matches "L0240.*" || actCode matches "L0244.*" || actCode matches "L0245.*" || actCode matches "L0249.*" || actCode matches "L0250.*" || actCode matches "L0251.*" || actCode matches "L0252.*" || actCode matches "L0253.*" || actCode matches "L0254.*" || actCode matches "L0255.*" || actCode matches "L0256.*" || actCode matches "L0257.*" || actCode matches "L0270.*" || actCode matches "L0271.*" || actCode matches "L0273.*" || actCode matches "L0276.*" || actCode matches "L0277.*" || actCode matches "L0278.*" || actCode matches "L4888.*" || actCode == "L8292000"), hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '324389' extends '326557' salience 2780
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "A0042.*" || actCode matches "A0044.*" || actCode matches "A0047.*" || actCode matches "A0049.*" || actCode matches "A0053.*" || actCode matches "A0054.*" || actCode matches "A0055.*" || actCode matches "A0056.*" || actCode matches "A0061.*" || actCode matches "A0623.*" || actCode matches "A1614.*" || actCode matches "A2342.*" || actCode matches "A2500.*" || actCode matches "A2581.*" || actCode matches "A4392.*" || actCode == "A6685000"), hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '801835' extends '326557' salience 2770
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1605000")
+        
+    then
+        $gda.setMassLine("Current year profit");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '892775' extends '326557' salience 2760
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "A3145.*" || actCode matches "A3146.*" || actCode matches "A3147.*"), hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other Property and Equipment");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '892776' extends '326557' salience 2750
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "L3180.*" || actCode matches "L3181.*" || actCode matches "L3182.*" || actCode matches "L3183.*" || actCode matches "L9833.*"), hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Non-trading derivatives (liabilities)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '892778' extends '326557' salience 2740
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "A0041.*" || actCode matches "A0429.*" || actCode matches "A3176.*" || actCode matches "A3177.*" || actCode matches "A3178.*" || actCode matches "A3179.*" || actCode matches "A8650.*" || actCode matches "A8651.*" || actCode matches "A8652.*" || actCode matches "A8653.*" || actCode matches "A8654.*"), hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Non-trading derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1131592' extends '326557' salience 2730
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8005000", hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("LLP L&A to Customers");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1131593' extends '326557' salience 2720
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8008000", hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Assets held for sale");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1131594' extends '326557' salience 2710
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L8009000", hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Liabilities held for sale");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1131604' extends '326557' salience 2700
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L2569000", hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Fixed term savings accounts non-individuals");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1148641' extends '326557' salience 2690
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L2730000", "Q0077000"))
+        
+    then
+        $gda.setMassLine("Non-Controlling Interests (internal)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1159197' extends '326557' salience 2680
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A4884000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Current Tax Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1159952' extends '326557' salience 2670
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A3291000", "A4412000", "A4564000", "A4565000"), hacAmtCl != "11", rteCode == "010")
+        
+    then
+        $gda.setMassLine("Assets Intercompany excl. Intra");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1159953' extends '326557' salience 2660
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L2569000", hacAmtCl != "11", cpyBeyNumber != null)
+        
+    then
+        $gda.setMassLine("Liabilities Intercompany excl. Intra");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1160870' extends '326557' salience 2650
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A6682000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other Intangible Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1175142' extends '326557' salience 2640
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8294000", hacAmtCl != "11", rteCode == "130")
+        
+    then
+        $gda.setMassLine("Securities at amortised cost excl. LLP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1175143' extends '326557' salience 2630
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8295000", hacAmtCl != "11", rteCode == "130")
+        
+    then
+        $gda.setMassLine("Securities at amortised cost excl. LLP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1186975' extends '326557' salience 2620
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8349000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1186987' extends '326557' salience 2610
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8350000", pdtCode == "014000", cgpCode == "B0034")
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1186989' extends '326557' salience 2600
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8350000", cpyBeyNumber == null, pdtCode in ("027800", "027900"))
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468017' extends '326557' salience 2590
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0269000", hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Trading securities (liabilities)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468052' extends '326557' salience 2580
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3329000", cpyBeyNumber == null, pdtCode in ("027800", "027900"))
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468053' extends '326557' salience 2570
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0057000", cpyBeyNumber == null, pdtCode in ("000800", "001600", "013200", "018200", "027800", "027900"))
+        
+    then
+        $gda.setMassLine("Reverse Repos & Borrowing at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1580002' extends '326557' salience 2560
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0057000", cpyBeyNumber == null, pdtCode in ("000300", "009400", "010000"))
+        
+    then
+        $gda.setMassLine("Residential mortgages excl. FV adjustment");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1614265' extends '326557' salience 2550
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A7987000", hacAmtCl != "11", cgpCode == "00010")
+        
+    then
+        $gda.setMassLine("Securities at amortised cost excl. LLP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1617377' extends '326557' salience 2540
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0596000", cpyBeyNumber == null, pdtCode == "031300")
+        
+    then
+        $gda.setMassLine("Off Balance Credit Cards");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1652868' extends '326557' salience 2530
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L8658000", hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Non-trading derivatives (liabilities)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1690866' extends '326557' salience 2520
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8939000", cpyBeyNumber == null, pdtCode == "009400")
+        
+    then
+        $gda.setMassLine("Residential mortgages excl. FV adjustment");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1703533' extends '326557' salience 2510
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A9018000", cpyBeyNumber == null, pdtCode in ("002900", "005100", "005900", "006100", "007300", "007700", "029000", "030_00", "030900", "030800", "030700", "030600", "030500", "030400", "030300", "030200", "030100", "030000", "031000", "031100", "031200"))
+        
+    then
+        $gda.setMassLine("Debt securities at FVOCI excl. LLP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1703534' extends '326557' salience 2500
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A9018000", cpyBeyNumber == null, pdtCode in ("004700", "004800"))
+        
+    then
+        $gda.setMassLine("Equity securities at FVOCI");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1720987' extends '326557' salience 2490
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0608000", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("AuM Mutual Funds");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1727428' extends '326557' salience 2480
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0596000", cpyBeyNumber == null, pdtCode == "033000")
+        
+    then
+        $gda.setMassLine("Revocable Credit and Pre-Settlement Facilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1731036' extends '326557' salience 2470
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "L0234.*" || actCode matches "L4885.*"), hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Current Tax Liability");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1731037' extends '326557' salience 2460
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L0238.*", hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Deferred Tax Liability");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1731038' extends '326557' salience 2450
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "L0243.*" || actCode matches "L0246.*" || actCode matches "L0267.*" || actCode == "L7510000"), hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other provisions");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1769886' extends '326557' salience 2440
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A9222000", "A9223000", "A9224000", "A9225000"), cpyBeyNumber == null, cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("LLP Banks");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1769887' extends '326557' salience 2430
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A9222000", "A9223000", "A9224000", "A9225000"), cpyBeyNumber == null, cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("LLP L&A to Customers");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1769889' extends '326557' salience 2420
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A9232000", "A9233000", "A9234000"), cpyBeyNumber == null, cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("LLP L&A to Customers");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1770850' extends '326557' salience 2410
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0082000", "A9749000"), cpyBeyNumber == null, pdtCode in ("000800", "001600", "013200", "018200", "027800", "027900"))
+        
+    then
+        $gda.setMassLine("Reverse Repos & Borrowing at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772576' extends '326557' salience 2400
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0088000", "A0095000", "A0097000", "A0098000", "A0099000", "A0100000"), hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Securities at amortised cost excl. LLP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772603' extends '326557' salience 2390
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0107000", hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Trading securities (liabilities)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772834' extends '326557' salience 2380
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0081000", "A0091000", "A0093000"), cpyBeyNumber == null, pdtCode == "009400")
+        
+    then
+        $gda.setMassLine("Residential mortgages excl. FV adjustment");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772863' extends '326557' salience 2370
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A9232000", "A9233000", "A9234000"), cpyBeyNumber == null, cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("LLP Banks");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1773420' extends '326557' salience 2360
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L3351.*", hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1773433' extends '326557' salience 2350
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0080000", "A0094000"), cpyBeyNumber == null, pdtCode in ("002900", "005100", "005900", "006100", "007300", "007700", "029000", "030_00", "030900", "030800", "030700", "030600", "030500", "030400", "030300", "030200", "030100", "030000", "031000", "031100", "031200"))
+        
+    then
+        $gda.setMassLine("Debt securities at FVOCI excl. LLP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1773445' extends '326557' salience 2340
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "A3908.*" || actCode matches "A3910.*" || actCode matches "A3912.*" || actCode matches "A3914.*" || actCode matches "A9832.*"), hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Non-trading derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1773446' extends '326557' salience 2330
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3916000", hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Trading Derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1773527' extends '326557' salience 2320
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "L3909.*" || actCode matches "L3911.*" || actCode matches "L3915.*"), hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Non-trading derivatives (liabilities)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1781423' extends '326557' salience 2310
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A9763000", "A9764000", "A9765000"), cpyBeyNumber == null, cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Cash and balances with central banks");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1783230' extends '326557' salience 2300
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0596000", cpyBeyNumber == null, pdtCode == "033100")
+        
+    then
+        $gda.setMassLine("Other Contingent Irrevocable Facilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '96467' extends '326557' salience 2290
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A3332000", "A3329000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "009400")
+        
+    then
+        $gda.setMassLine("Residential mortgages excl. FV adjustment");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '96480' extends '326557' salience 2280
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0058000", "A0083000", "A8609000", "A9799000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode != "013200")
+        
+    then
+        $gda.setMassLine("Trading Securities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '96506' extends '326557' salience 2270
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode == "L0272000" || actCode == "L3935000" || actCode matches "L3936.*"), hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Subordinated loans");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '96509' extends '326557' salience 2260
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0111000", "L1425000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("027800", "027900"))
+        
+    then
+        $gda.setMassLine("Repos & lending (at FV)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '96512' extends '326557' salience 2250
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", hacAmtCl != "11", cpyBeyNumber != null, actCode not in ("L0258000", "L2529000", "L2530000", "L2531000", "L2532000", "L2533000", "L3340000", "L3892000", "L6687000", "L8333000"))
+        
+    then
+        $gda.setMassLine("Liabilities Intercompany excl. Intra");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '324388' extends '326557' salience 2240
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "L0279.*" || actCode matches "L0280.*" || actCode matches "L2510.*" || actCode matches "L2550.*" || actCode matches "L2571.*" || actCode matches "L3899.*"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode != "014000")
+        
+    then
+        $gda.setMassLine("Other liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '772318' extends '326557' salience 2230
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004200", "015300"))
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1131605' extends '326557' salience 2220
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3330000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004400", "012700"))
+        
+    then
+        $gda.setMassLine("Loans L&A excl. Mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1147566' extends '326557' salience 2210
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0596000", cpyBeyNumber == null, pdtCode in ("014300", "014400", "014500", "014700"), rteCode != "010")
+        
+    then
+        $gda.setMassLine("Other Contingent Irrevocable Facilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1148420' extends '326557' salience 2200
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0610000", cpyBeyNumber == null, pdtCode in ("015200", "015600"), rteCode != "010")
+        
+    then
+        $gda.setMassLine("Discounted Bills");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1148648' extends '326557' salience 2190
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0596000", cpyBeyNumber == null, pdtCode in ("026900", "027000"), rteCode in ("013", "014"))
+        
+    then
+        $gda.setMassLine("Contingent Irrevocable Facilities related to Mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1148814' extends '326557' salience 2180
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0593000", cpyBeyNumber == null, pdtCode == "014700", rteCode != "010")
+        
+    then
+        $gda.setMassLine("Other Contingent Irrevocable Facilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1148815' extends '326557' salience 2170
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0596000", cpyBeyNumber == null, pdtCode in ("014100", "014200", "031900"), rteCode != "010")
+        
+    then
+        $gda.setMassLine("Guarantees");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1148816' extends '326557' salience 2160
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0596000", cpyBeyNumber == null, pdtCode in ("014900", "015000"), rteCode != "010")
+        
+    then
+        $gda.setMassLine("Irrevocable Letters of Credit");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1148828' extends '326557' salience 2150
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0593000", cpyBeyNumber == null, pdtCode == "014600", rteCode != "010")
+        
+    then
+        $gda.setMassLine("Other Contingent Irrevocable Facilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1148905' extends '326557' salience 2140
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0596000", cpyBeyNumber == null, pdtCode in ("026900", "027000"), rteCode not in ("013", "014"))
+        
+    then
+        $gda.setMassLine("Other Contingent Irrevocable Facilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1159060' extends '326557' salience 2130
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0596000", cpyBeyNumber == null, pdtCode == "014800", rteCode == "016")
+        
+    then
+        $gda.setMassLine("Revocable Credit and Pre-Settlement Facilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1159232' extends '326557' salience 2120
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "A0045.*" || actCode matches "A0046.*" || actCode == "A3943000" || actCode == "A4598000"), hacAmtCl != "11", cpyBeyNumber == null, (cgpCode matches "B.*" || cgpCode == "00008" || cgpCode == "00009" || cgpCode == "00010"))
+        
+    then
+        $gda.setMassLine(Warning: selecting from Banks: data will not be available in source topic.
+ full statement: Other Amounts due from Banks);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1159950' extends '326557' salience 2110
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A4412000", "A4564000", "A4565000"), hacAmtCl != "11", pdtCode in ("030000", "030200", "030400", "030500"), cgpCode in ("00008", "00010"))
+        
+    then
+        $gda.setMassLine("Securities at amortised cost excl. LLP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1159951' extends '326557' salience 2100
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A3291000", "A4412000", "A4564000", "A4565000"), hacAmtCl != "11", cgpCode == "00017")
+        
+    then
+        $gda.setMassLine("Assets Intercompany excl. Intra");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1159955' extends '326557' salience 2090
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A7986000", "A7988000"), hacAmtCl != "11", pdtCode in ("030000", "030200", "030400", "030500"), cgpCode == "00010")
+        
+    then
+        $gda.setMassLine("Securities at amortised cost excl. LLP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1160013' extends '326557' salience 2080
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3931000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "009400")
+        
+    then
+        $gda.setMassLine("FV adjustment hedged part mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1186977' extends '326557' salience 2070
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8350000", cpyBeyNumber == null, pdtCode in ("004300", "004400"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine(Warning: selecting from banks): data will not be available in source topic.
+ full statement: Deposits (due from banks));
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1186978' extends '326557' salience 2060
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8350000", cpyBeyNumber == null, pdtCode in ("004300", "012200"), cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1186980' extends '326557' salience 2050
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8350000", cpyBeyNumber == null, pdtCode == "004400", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1369204' extends '326557' salience 2040
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0105000", "L0115000", "L0237000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "031000")
+        
+    then
+        $gda.setMassLine("Certificates of Deposit & Commercial Paper");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1459126' extends '326557' salience 2030
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3346000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("006100", "031200"))
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1459127' extends '326557' salience 2020
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0105000", "L0115000", "L0237000", "L3345000", "L3934000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("005900", "006100", "031100", "031200"))
+        
+    then
+        $gda.setMassLine("Certificates of Deposit & Commercial Paper");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1459128' extends '326557' salience 2010
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0237000", "L3345000", "L3934000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("002900", "007300", "012200", "029000"))
+        
+    then
+        $gda.setMassLine("Other debt securities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1459129' extends '326557' salience 2000
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0113000", "L0117000", "L3343000", "L3346000", "L9261000", "L9262000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("002900", "007300", "012200", "029000"))
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1459130' extends '326557' salience 1990
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0237000", "L3345000", "L3934000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("015100", "012700"))
+        
+    then
+        $gda.setMassLine("Other debt securities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1459131' extends '326557' salience 1980
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0113000", "L3343000", "L3346000", "L9261000", "L9262000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("005900", "015100", "012700"))
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1459134' extends '326557' salience 1970
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("002900", "007300", "012200", "029000"))
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1467988' extends '326557' salience 1960
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3343000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "004000")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1467994' extends '326557' salience 1950
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0057000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("007900", "012200", "012300"))
+        
+    then
+        $gda.setMassLine("Other Loans and Receivables");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1467995' extends '326557' salience 1940
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3329000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("007900", "012200", "012300"))
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468000' extends '326557' salience 1930
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A0007.*", cgpCode matches "B.*", rteCode != "010")
+        
+    then
+        $gda.setMassLine(Warning: selecting from Banks: data will not be available in source topic.
+ full statement: Other Amounts due from Banks);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468001' extends '326557' salience 1920
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A0007.*", cgpCode not matches "B.*", rteCode != "010")
+        
+    then
+        $gda.setMassLine("Other Amounts L&A excl. Mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468015' extends '326557' salience 1910
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L0230.*", hacAmtCl != "11", cpyBeyNumber == null, rteCode in ("075", "098"))
+        
+    then
+        $gda.setMassLine("Other Amounts due to Banks");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468016' extends '326557' salience 1900
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L0230.*", hacAmtCl != "11", cpyBeyNumber == null, rteCode not in ("075", "098"))
+        
+    then
+        $gda.setMassLine("Other credit balances on customer accounts");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468020' extends '326557' salience 1890
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L3334.*", hacAmtCl != "11", cpyBeyNumber == null, pdtCode != "014000")
+        
+    then
+        $gda.setMassLine("Other liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468021' extends '326557' salience 1880
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L1615.*", hacAmtCl != "11", cpyBeyNumber == null, pdtCode != "014000")
+        
+    then
+        $gda.setMassLine("Balancing Accounts Liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468022' extends '326557' salience 1870
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L3343000", "L0113000", "L9261000", "L9262000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004200", "015300"))
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468045' extends '326557' salience 1860
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3329000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("007800", "008000", "008200", "008300", "010000", "010100", "010200", "012000", "012400", "013300", "013600", "015200"))
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468047' extends '326557' salience 1850
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "A0045.*" || actCode matches "A0046.*" || actCode == "A3943000" || actCode == "A4598000"), hacAmtCl != "11", cpyBeyNumber == null, (cgpCode not matches "B.*" && cgpCode != "00008" && cgpCode != "00009" && cgpCode != "00010"))
+        
+    then
+        $gda.setMassLine("LLP L&A to Customers");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468051' extends '326557' salience 1840
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3343000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("027800", "027900"))
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468060' extends '326557' salience 1830
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8350000", cpyBeyNumber == null, pdtCode == "012700")
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1486983' extends '326557' salience 1820
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3348000", hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1487171' extends '326557' salience 1810
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A4412000", "A4564000", "A4565000"), hacAmtCl != "11", pdtCode not in ("030000", "030200", "030400", "030500"), cgpCode in ("00008", "00010"))
+        
+    then
+        $gda.setMassLine("Securities at amortised cost excl. LLP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1487172' extends '326557' salience 1800
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A7986000", "A7988000"), hacAmtCl != "11", pdtCode not in ("030000", "030200", "030400", "030500"), cgpCode == "00010")
+        
+    then
+        $gda.setMassLine("Securities at amortised cost excl. LLP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1614266' extends '326557' salience 1790
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L3334000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "027100")
+        
+    then
+        $gda.setMassLine("Variable savings accounts individuals");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1614278' extends '326557' salience 1780
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3934000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "004300")
+        
+    then
+        $gda.setMassLine("Other debt securities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1617365' extends '326557' salience 1770
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L2569000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004000", "004005", "004300", "004400"))
+        
+    then
+        $gda.setMassLine("Fixed term savings accounts non-individuals");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1617366' extends '326557' salience 1760
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L2569000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "027100")
+        
+    then
+        $gda.setMassLine("Variable savings accounts non-individuals");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1676306' extends '326557' salience 1750
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0237000", "L3345000", "L3934000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "030300")
+        
+    then
+        $gda.setMassLine("Other debt securities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1676307' extends '326557' salience 1740
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0237000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "031600")
+        
+    then
+        $gda.setMassLine("Certificates of Deposit & Commercial Paper");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1697902' extends '326557' salience 1730
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3343000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "031700")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1703535' extends '326557' salience 1720
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L0251.*", hacAmtCl != "11", cpyBeyNumber == null, rteCode not in ("075", "098"))
+        
+    then
+        $gda.setMassLine("Other liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1703536' extends '326557' salience 1710
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L0251.*", hacAmtCl != "11", cpyBeyNumber == null, rteCode in ("075", "098"))
+        
+    then
+        $gda.setMassLine("Other liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1703537' extends '326557' salience 1700
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A0025.*", cgpCode matches "B.*", rteCode != "010")
+        
+    then
+        $gda.setMassLine("Other assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1703538' extends '326557' salience 1690
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A0025.*", cgpCode not matches "B.*", rteCode != "010")
+        
+    then
+        $gda.setMassLine("Other assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1723638' extends '326557' salience 1680
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0593000", cpyBeyNumber == null, pdtCode == "015200", rteCode != "010")
+        
+    then
+        $gda.setMassLine("Other Contingent Irrevocable Facilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1731039' extends '326557' salience 1670
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L3873.*", hacAmtCl != "11", cpyBeyNumber == null, pdtCode != "014000")
+        
+    then
+        $gda.setMassLine("Other provisions");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772598' extends '326557' salience 1660
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0082000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004200", "004300", "004400", "012200", "012700", "028000", "031500"))
+        
+    then
+        $gda.setMassLine("Other Loans and Receivables");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772599' extends '326557' salience 1650
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0111000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "004200")
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772602' extends '326557' salience 1640
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0105000", "L0115000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("002900", "007300", "012200", "029000", "030300", "031600"))
+        
+    then
+        $gda.setMassLine("Other debt securities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772604' extends '326557' salience 1630
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0113000", "L9261000", "L9262000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004000", "014000", "027100", "027800", "027900", "028000", "031700"))
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772606' extends '326557' salience 1620
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0116000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("002900", "005900", "006100", "007300", "015100", "029000", "031200", "031600"))
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772864' extends '326557' salience 1610
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0110000", "L0119000", "L0121000", "L0132000"), hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Subordinated loans");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772865' extends '326557' salience 1600
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0111000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "004000")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772868' extends '326557' salience 1590
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L9263000", hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772869' extends '326557' salience 1580
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L9751000", hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Repos & Lending Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1783534' extends '326557' salience 1570
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L7991000")
+        
+    then
+        $gda.setMassLine("Shareholders equity (excl. revaluation reserve)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1805683' extends '326557' salience 1560
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L4467000", hacAmtCl != "11", cpyBeyNumber == null)
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1925165' extends '326557' salience 1550
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0111000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "028000")
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1925166' extends '326557' salience 1540
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "028000")
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1977162' extends '326557' salience 1530
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0596000", cpyBeyNumber == null, pdtCode in ("015100", "015500"), rteCode != "010")
+        
+    then
+        $gda.setMassLine("Other Contingent Liabilities and Commitments");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '96466' extends '326557' salience 1520
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000", "A3330000", "A3332000", "A3931000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("010900", "014000"), cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Current Accounts L&A");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '96468' extends '326557' salience 1510
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000", "A3330000", "A3332000", "A3931000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("027800", "027900"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine(Warning: selecting from banks): data will not be available in source topic.
+ full statement: Reverse repos & borrowing (due from banks));
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '96470' extends '326557' salience 1500
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000", "A3332000", "A3931000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("007800", "008000", "008200", "008300", "010000", "010100", "010200", "012000", "012400", "013300", "013600", "015100", "015200"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Lending (to Banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '96508' extends '326557' salience 1490
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "014000", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Current accounts (due to non-banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '772313' extends '326557' salience 1480
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000", "A3332000", "A3931000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("007900", "012200", "012300"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Lending (to Banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '772314' extends '326557' salience 1470
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000", "A3332000", "A3931000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004200", "027500"), cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other Amounts L&A excl. Mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '772317' extends '326557' salience 1460
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004200", "015200", "015300", "026700", "027500"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Deposits (due to banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '926867' extends '326557' salience 1450
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000", "A3332000", "A3931000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "004400", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Loans L&A excl. Mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '936660' extends '326557' salience 1440
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), (cgpCode not matches "B.*" && cgpCode != "P0049"))
+        
+    then
+        $gda.setMassLine("Other corporate deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1033257' extends '326557' salience 1430
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000", "A3332000", "A3931000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "004300", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Loans L&A excl. Mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1033387' extends '326557' salience 1420
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000", "A3332000", "A3931000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("012500", "012700", "012800", "031300", "031400", "033100", "033300", "033400"), cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Loans L&A excl. Mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1038677' extends '326557' salience 1410
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000", "A3332000", "A3931000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004200", "004300", "004400", "028000", "031500"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine(Warning: selecting from banks): data will not be available in source topic.
+ full statement: Deposits (due from banks));
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1038678' extends '326557' salience 1400
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004200", "004300", "004400", "028000"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Deposits (due to banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1104132' extends '326557' salience 1390
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "014000", cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Current accounts (due to banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1104459' extends '326557' salience 1380
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "028000", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Overnight corporate deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1104650' extends '326557' salience 1370
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000", "A3332000", "A3931000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "028000", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other Amounts L&A excl. Mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1131601' extends '326557' salience 1360
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("027800", "027900"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Repos & lending (due to banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1148649' extends '326557' salience 1350
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0610000", cpyBeyNumber == null, pdtCode in ("015200", "015600"), rteCode != null)
+        
+    then
+        $gda.setMassLine("Discounted Bills");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1171813' extends '326557' salience 1340
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode not in ("004000", "004200", "005900", "007300", "012200", "012700", "014000", "015300", "027100", "027800", "027900", "028000", "031500"), (cgpCode not matches "B.*" && cgpCode != "P0049"))
+        
+    then
+        $gda.setMassLine("Other corporate deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1459132' extends '326557' salience 1330
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0242000", "L0106000", "L0118000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("002900", "007300", "012200", "029000"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Loans (due to banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1459133' extends '326557' salience 1320
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("002900", "007300", "012200", "029000"), cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other customer deposits (non-repos & lending)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1459135' extends '326557' salience 1310
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("005900", "012700", "015100"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Loans (due to banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1459136' extends '326557' salience 1300
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("005900", "012700", "015100"), cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other customer deposits (non-repos & lending)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1467986' extends '326557' salience 1290
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "004000", (cgpCode not matches "B.*" && cgpCode != "P0049"))
+        
+    then
+        $gda.setMassLine("Fixed term savings accounts non-individuals");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1467987' extends '326557' salience 1280
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "004000", cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Savings (due to banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1467989' extends '326557' salience 1270
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), cgpCode == "P0049")
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1467990' extends '326557' salience 1260
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L3343000", "L0113000", "L9261000", "L9262000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), cgpCode == "P0049")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1467991' extends '326557' salience 1250
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3329000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "004300", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1467992' extends '326557' salience 1240
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0057000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "004300", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other Loans and Receivables");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1467993' extends '326557' salience 1230
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000", "A3332000", "A3931000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("007900", "012200", "012300"), cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Loans L&A excl. Mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468002' extends '326557' salience 1220
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A0007.*", cgpCode == null, rteCode in ("035", "036", "073", "098", "173"))
+        
+    then
+        $gda.setMassLine(Warning: selecting from Banks: data will not be available in source topic.
+ full statement: Other Amounts due from Banks);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468003' extends '326557' salience 1210
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A0007.*", cgpCode == null, rteCode not in ("010", "035", "036", "073", "098", "173"))
+        
+    then
+        $gda.setMassLine("Other Amounts L&A excl. Mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468006' extends '326557' salience 1200
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3329000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "028000", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468007' extends '326557' salience 1190
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0057000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "028000")
+        
+    then
+        $gda.setMassLine("Other Loans and Receivables");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468008' extends '326557' salience 1180
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000", "A3332000", "A3931000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "014000", cgpCode in ("B0036", "B0037"))
+        
+    then
+        $gda.setMassLine(Warning: selecting from banks): data will not be available in source topic.
+ full statement: Current accounts (due from banks));
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468009' extends '326557' salience 1170
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3329000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "014000", cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468010' extends '326557' salience 1160
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3329000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004200", "027500"), cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468011' extends '326557' salience 1150
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0057000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004200", "027500"))
+        
+    then
+        $gda.setMassLine("Other Loans and Receivables");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468012' extends '326557' salience 1140
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0057000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "014000", cgpCode in ("B0036", "B0037"))
+        
+    then
+        $gda.setMassLine("Other Loans and Receivables");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468014' extends '326557' salience 1130
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004200", "026700", "027500"), cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Overnight corporate deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468018' extends '326557' salience 1120
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L3343000", "L0113000", "L9261000", "L9262000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "014000", cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468019' extends '326557' salience 1110
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "014000", cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468023' extends '326557' salience 1100
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L3343000", "L0113000", "L9261000", "L9262000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "014000", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468024' extends '326557' salience 1090
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0111000", "L1425000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "014000", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468031' extends '326557' salience 1080
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode not in ("004200", "005900", "007300", "012200", "012700", "014000", "015300", "027100", "027800", "027900", "028000"), (cgpCode not matches "B.*" && cgpCode != "P0049"))
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468033' extends '326557' salience 1070
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), (cgpCode not matches "B.*" && cgpCode != "P0049"))
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468041' extends '326557' salience 1060
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L3343000", "L0113000", "L9261000", "L9262000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), (cgpCode not matches "B.*" && cgpCode != "P0049"))
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468044' extends '326557' salience 1050
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000", "A3332000", "A3931000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("007800", "008000", "008200", "008300", "010000", "010100", "010200", "012000", "012400", "013300", "013600", "015100", "015200"), cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Loans L&A excl. Mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468046' extends '326557' salience 1040
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3343000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "028000", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468048' extends '326557' salience 1030
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "A0045.*" || actCode matches "A0046.*" || actCode == "A3943000" || actCode == "A4598000"), hacAmtCl != "11", cpyBeyNumber == null, cgpCode == null, rteCode in ("077", "078", "079", "080"))
+        
+    then
+        $gda.setMassLine(Warning: selecting from Banks: data will not be available in source topic.
+ full statement: Other Amounts due from Banks);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468049' extends '326557' salience 1020
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "A0045.*" || actCode matches "A0046.*" || actCode == "A3943000" || actCode == "A4598000"), hacAmtCl != "11", cpyBeyNumber == null, cgpCode == null, rteCode not in ("077", "078", "079", "080"))
+        
+    then
+        $gda.setMassLine("LLP L&A to Customers");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468050' extends '326557' salience 1010
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("027800", "027900"), cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other customer deposits (repos & lending)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468054' extends '326557' salience 1000
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000", "A3330000", "A3332000", "A3931000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("027800", "027900"), cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Reverse Repos & Borrowing L&A");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468055' extends '326557' salience 990
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3329000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "004400", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468056' extends '326557' salience 980
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0057000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004400", "031500"), cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other Loans and Receivables");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468057' extends '326557' salience 970
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0057000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("012500", "012700", "012800", "031300"), cgpCode == "P0049")
+        
+    then
+        $gda.setMassLine("Other Loans and Receivables");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468058' extends '326557' salience 960
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0057000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("012500", "012700", "012800", "031300"), cgpCode != "P0049")
+        
+    then
+        $gda.setMassLine("Other Loans and Receivables");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468059' extends '326557' salience 950
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3329000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("012500", "012700", "012800", "031300"))
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468064' extends '326557' salience 940
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000", "A3332000", "A3931000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("012500", "012700", "012800"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Lending (to Banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1486923' extends '326557' salience 930
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "A0007.*" || actCode matches "A0025.*"), rteCode == "010")
+        
+    then
+        $gda.setMassLine("Assets Intercompany excl. Intra");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1487110' extends '326557' salience 920
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3329000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1487162' extends '326557' salience 910
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0057000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400", "031500"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Other Loans and Receivables");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1487167' extends '326557' salience 900
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400", "012700", "028000", "031500"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1487170' extends '326557' salience 890
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3343000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400", "028000"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1580001' extends '326557' salience 880
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0057000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("007900", "012200", "012300"), cgpCode != null)
+        
+    then
+        $gda.setMassLine("Other Loans and Receivables");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1592564' extends '326557' salience 870
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "014005", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Current accounts (due to non-banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1592565' extends '326557' salience 860
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0027000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "014005", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Current Accounts L&A");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1614263' extends '326557' salience 850
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0241000", "L0242000", "L1118000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "031500", cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Deposits (due to banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1614264' extends '326557' salience 840
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "031500", (cgpCode not matches "B.*" && cgpCode != "P0049"))
+        
+    then
+        $gda.setMassLine("Other corporate deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1615993' extends '326557' salience 830
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L2569000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004000", "004005", "004300", "004400"), cgpCode == "P0049")
+        
+    then
+        $gda.setMassLine("Fixed term savings accounts individuals");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1616024' extends '326557' salience 820
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L2569000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "027100", cgpCode == "P0049")
+        
+    then
+        $gda.setMassLine("Variable savings accounts individuals");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1616025' extends '326557' salience 810
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004000", "015300"), cgpCode matches "P.*")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1616026' extends '326557' salience 800
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004000", "015300"), cgpCode not matches "P.*")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1616027' extends '326557' salience 790
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "015300", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other customer deposits (non-repos & lending)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1616028' extends '326557' salience 780
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3933000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "015300", cgpCode matches "P.*")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1616029' extends '326557' salience 770
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L3334000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "015300", cgpCode not matches "P.*")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1648068' extends '326557' salience 760
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000", "A3332000", "A3931000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "031500", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other Amounts L&A excl. Mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1652867' extends '326557' salience 750
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "004200", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Overnight corporate deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1691053' extends '326557' salience 740
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "015000", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Loans L&A excl. Mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1691237' extends '326557' salience 730
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "015000", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other customer deposits (non-repos & lending)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1697897' extends '326557' salience 720
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "031700", cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Savings (due to banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1697898' extends '326557' salience 710
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "031700", cgpCode == "P0049")
+        
+    then
+        $gda.setMassLine("Variable savings accounts individuals");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1697899' extends '326557' salience 700
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "031700", (cgpCode not matches "B.*" && cgpCode != "P0049"))
+        
+    then
+        $gda.setMassLine("Variable savings accounts non-individuals");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1703529' extends '326557' salience 690
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A8294000", rteCode == "010")
+        
+    then
+        $gda.setMassLine("Assets Intercompany excl. Intra");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1703531' extends '326557' salience 680
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0242000", "L0106000", "L0118000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "013600", cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Loans (due to banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1703539' extends '326557' salience 670
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A0025.*", cgpCode == null, rteCode in ("035", "036", "073", "098", "173"))
+        
+    then
+        $gda.setMassLine("Other assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1703540' extends '326557' salience 660
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A0025.*", cgpCode == null, rteCode not in ("010", "035", "036", "073", "098", "173"))
+        
+    then
+        $gda.setMassLine("Other assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1706454' extends '326557' salience 650
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "031800", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other Amounts L&A excl. Mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1768744' extends '326557' salience 640
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "015200", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other customer deposits (non-repos & lending)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1769891' extends '326557' salience 630
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L7990000")
+        
+    then
+        $gda.setMassLine("Revaluation reserve");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772600' extends '326557' salience 620
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0111000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400", "012700", "014000", "028000", "031500"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772601' extends '326557' salience 610
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0111000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "012200")
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772605' extends '326557' salience 600
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0113000", "L9261000", "L9262000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772835' extends '326557' salience 590
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0111000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode not in ("004200", "005900", "007300", "012200", "014000", "015300", "027100", "027800", "027900", "028000"), (cgpCode not matches "B.*" && cgpCode != "P0049"))
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772866' extends '326557' salience 580
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0111000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), cgpCode not matches B%)
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1772867' extends '326557' salience 570
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0111000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "015300", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other customer deposits (non-repos & lending)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1773421' extends '326557' salience 560
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L2569000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "027100", cgpCode == "B0036")
+        
+    then
+        $gda.setMassLine("Savings (due to banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1773429' extends '326557' salience 550
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0118000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "015300", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other customer deposits (non-repos & lending)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1773431' extends '326557' salience 540
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0106000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "015300", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other customer deposits (non-repos & lending)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1773432' extends '326557' salience 530
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "031500", cgpCode == "P0049")
+        
+    then
+        $gda.setMassLine("Other customer deposits (non-repos & lending)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1773533' extends '326557' salience 520
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0242000", "L0106000", "L0118000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "013600", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other customer deposits (non-repos & lending)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1777580' extends '326557' salience 510
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3329000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004200", "027500"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1777581' extends '326557' salience 500
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000", "A3332000", "A3931000", "A1111000", "A3330000", "A8617000", "A8618000", "A8939000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("031300", "031400", "033100"), cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine(Warning: selecting from banks): data will not be available in source topic.
+ full statement: Current accounts (due from banks));
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1805619' extends '326557' salience 490
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3334000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "015300", cgpCode matches "P.*")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '96504' extends '326557' salience 480
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0242000", "L0106000", "L0118000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("003000", "003100", "003200", "003400", "003500", "003900"), repAssetInd == "N", cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Loans (due to banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1044984' extends '326557' salience 470
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == null, hacAmtCl == "01", hpePdtType in ("NOSTRO", "CUST ACCT", "CASH", "OTHER PAYABLES", "OTHER RECEIVABLES"), intInd == "Y", repAssetInd == "N", hscAcctSubcl != "1999")
+        
+    then
+        $gda.setMassLine("Liabilities Intracompany");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1044985' extends '326557' salience 460
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == null, hacAmtCl == "01", hpePdtType in ("NOSTRO", "CUST ACCT", "CASH", "OTHER PAYABLES", "OTHER RECEIVABLES"), intInd == "Y", repAssetInd == "Y", hscAcctSubcl != "1999")
+        
+    then
+        $gda.setMassLine("Assets Intracompany");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1103153' extends '326557' salience 450
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0081000", "A0093000", "A3332000", "A3931000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004200", "014000", "028000"), cgpCode in ("B0034", "B0035"))
+        
+    then
+        $gda.setMassLine("Cash and balances with central banks");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1104860' extends '326557' salience 440
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004005", "004300", "004400"), cgpCode == "P0049")
+        
+    then
+        $gda.setMassLine("Fixed term savings accounts individuals");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1147569' extends '326557' salience 430
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "004000", cgpCode == "P0049")
+        
+    then
+        $gda.setMassLine("Fixed term savings accounts individuals");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1171803' extends '326557' salience 420
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode not in ("004000", "004200", "005900", "007300", "012200", "012700", "014000", "015300", "027100", "027800", "027900", "028000", "031500"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "one_month_or_less")
+        
+    then
+        $gda.setMassLine("Other corporate deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1171804' extends '326557' salience 410
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode not in ("004000", "004200", "005900", "007300", "012200", "012700", "014000", "015300", "027100", "027800", "027900", "028000", "031500"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "between_one_and_three_months")
+        
+    then
+        $gda.setMassLine("Other corporate deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1171805' extends '326557' salience 400
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode not in ("004000", "004200", "005900", "007300", "012200", "012700", "014000", "015300", "027100", "027800", "027900", "028000", "031500"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "between_three_and_twelve_months")
+        
+    then
+        $gda.setMassLine("Other corporate deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1171806' extends '326557' salience 390
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode not in ("004000", "004200", "005900", "007300", "012200", "012700", "014000", "015300", "027100", "027800", "027900", "028000", "031500"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "between_one_and_five_years")
+        
+    then
+        $gda.setMassLine("Other corporate deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1171807' extends '326557' salience 380
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode not in ("004000", "004200", "005900", "007300", "012200", "012700", "014000", "015300", "027100", "027800", "027900", "028000", "031500"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "more_than_five_years")
+        
+    then
+        $gda.setMassLine("Other corporate deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1171808' extends '326557' salience 370
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode not in ("004000", "004200", "005900", "007300", "012200", "012700", "014000", "015300", "027100", "027800", "027900", "028000", "031500"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "one_month_or_less")
+        
+    then
+        $gda.setMassLine("Other corporate deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1171809' extends '326557' salience 360
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "between_one_and_three_months")
+        
+    then
+        $gda.setMassLine("Other corporate deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1171810' extends '326557' salience 350
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "between_three_and_twelve_months")
+        
+    then
+        $gda.setMassLine("Other corporate deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1171811' extends '326557' salience 340
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "between_one_and_five_years")
+        
+    then
+        $gda.setMassLine("Other corporate deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1171812' extends '326557' salience 330
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0242000", "L3334000", "L3932000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "more_than_five_years")
+        
+    then
+        $gda.setMassLine("Other corporate deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468025' extends '326557' salience 320
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "between_one_and_three_months")
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468026' extends '326557' salience 310
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode not in ("004200", "005900", "007300", "012200", "012700", "014000", "015300", "027100", "027800", "027900", "028000"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "between_one_and_three_months")
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468027' extends '326557' salience 300
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode not in ("004200", "005900", "007300", "012200", "012700", "014000", "015300", "027100", "027800", "027900", "028000"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "between_one_and_five_years")
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468028' extends '326557' salience 290
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "between_one_and_five_years")
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468029' extends '326557' salience 280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "between_three_and_twelve_months")
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468030' extends '326557' salience 270
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode not in ("004200", "005900", "007300", "012200", "012700", "014000", "015300", "027100", "027800", "027900", "028000"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "between_three_and_twelve_months")
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468032' extends '326557' salience 260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode not in ("004200", "005900", "007300", "012200", "012700", "014000", "015300", "027100", "027800", "027900", "028000"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "one_month_or_less")
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468035' extends '326557' salience 250
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "more_than_five_years")
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468036' extends '326557' salience 240
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode not in ("004200", "005900", "007300", "012200", "012700", "014000", "015300", "027100", "027800", "027900", "028000"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "more_than_five_years")
+        
+    then
+        $gda.setMassLine("Other trading liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468037' extends '326557' salience 230
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3343000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "between_one_and_three_months")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468038' extends '326557' salience 220
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3343000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "between_one_and_five_years")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468039' extends '326557' salience 210
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3343000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "between_three_and_twelve_months")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468040' extends '326557' salience 200
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3343000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode not in ("004200", "005900", "007300", "012200", "012700", "014000", "015300", "027100", "027800", "027900", "028000"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "one_month_or_less")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468042' extends '326557' salience 190
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3343000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("004300", "004400"), (cgpCode not matches "B.*" && cgpCode != "P0049"), getCase0_1171803() == "more_than_five_years")
+        
+    then
+        $gda.setMassLine("Other Financial Liabilities Designated at FV PL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468061' extends '326557' salience 180
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L3334000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("003000", "003100", "003200", "003400", "003500", "003900"), repAssetInd == "N", cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Loans (due to banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468062' extends '326557' salience 170
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L3334000", "L3933000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("003000", "003100", "003200", "003400", "003500", "003900"), repAssetInd == "N", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other customer deposits (non-repos & lending)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1468063' extends '326557' salience 160
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode in ("003000", "003100", "003200", "003400", "003500", "003900"), repAssetInd == "N", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other customer deposits (non-repos & lending)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1474994' extends '326557' salience 150
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "027100", repAssetInd == "N", cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine("Savings (due to banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1474995' extends '326557' salience 140
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "027100", repAssetInd == "N", cgpCode == "P0049")
+        
+    then
+        $gda.setMassLine("Variable savings accounts individuals");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+rule '1474996' extends '326557' salience 130
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0106000", "L0118000", "L0242000"), hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "027100", repAssetInd == "N", (cgpCode not matches "B.*" && cgpCode != "P0049"))
+        
+    then
+        $gda.setMassLine("Variable savings accounts non-individuals");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+
+
+rule '1703532' extends '326557' salience 100
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", hacAmtCl != "11", cpyBeyNumber == null, pdtCode == "013600", cgpCode in ("P0039", "P0045"))
+        
+    then
+        $gda.setMassLine("Other liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1490");
+        
+end
+
+

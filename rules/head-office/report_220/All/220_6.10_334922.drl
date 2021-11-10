@@ -1,0 +1,113 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334922'
+	when
+		$gda : GrlDetAmounts(ratingIngLongCtpy != null)
+	then
+        
+end
+
+
+
+
+
+rule '1682659' extends '334922' salience 21640
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setEbaCredQualStepCtpy("CQS 6");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5575");
+        
+end
+
+rule '1682654' extends '334922' salience 21630
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIngLongCtpy in ("1", "2", "3", "4"))
+        
+    then
+        $gda.setEbaCredQualStepCtpy("CQS 1");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5575");
+        
+end
+
+rule '1682655' extends '334922' salience 21620
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIngLongCtpy in ("5", "6", "7"))
+        
+    then
+        $gda.setEbaCredQualStepCtpy("CQS 2");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5575");
+        
+end
+
+rule '1682656' extends '334922' salience 21610
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIngLongCtpy in ("8", "9", "10"))
+        
+    then
+        $gda.setEbaCredQualStepCtpy("CQS 3");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5575");
+        
+end
+
+rule '1682657' extends '334922' salience 21600
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIngLongCtpy in ("11", "12", "13"))
+        
+    then
+        $gda.setEbaCredQualStepCtpy("CQS 4");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5575");
+        
+end
+
+rule '1682658' extends '334922' salience 21590
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIngLongCtpy in ("14", "15", "16"))
+        
+    then
+        $gda.setEbaCredQualStepCtpy("CQS 5");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5575");
+        
+end
+
+rule '1699903' extends '334922' salience 21580
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIngLongCtpy == "N/A")
+        
+    then
+        $gda.setEbaCredQualStepCtpy(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5575");
+        
+end
+
+

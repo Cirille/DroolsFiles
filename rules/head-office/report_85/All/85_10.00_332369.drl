@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332369'
+	when
+		$gda : GrlDetAmounts(( ( ( ( actCode matches "L.*" && pdtCode in ( "004000" , "004200" , "004300" , "004400" , "012200" , "012700" , "014000" , "027100" , "027800" , "027900" , "028000" ) && cgpCode in ( "P0045" , "P0049" ) ) || ( ( actCode matches "L.*" && pdtCode == "015300" ) && ( hreRelTypeCtpy in ( "IIPB" , "INDV" , "IPBI" , "IST%" ) || hreRelTypeCtpy matches "C.*" && hieInduType not matches "5223.*" && hieInduType not matches "523.*" ) ) ) || ( ( actCode == "L0230000" && rteCode == "100" ) ) ) || ( ( actCode == "L0251000" && rteCode == "076" ) ) ) && detAmtEuro < 100000)
+	then
+        
+end
+
+
+
+
+
+rule '1160836' extends '332369' salience 100
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setDgsCd("017_AMT_LESS_THEN_100k_EEA");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3619");
+        
+end
+
+rule '1160835' extends '332369' salience 90
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0557")
+        
+    then
+        $gda.setDgsCd("017_AMT_LESS_THEN_100k_NL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3619");
+        
+end
+
+

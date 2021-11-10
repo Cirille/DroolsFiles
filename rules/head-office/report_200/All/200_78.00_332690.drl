@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332690'
+	when
+		$gda : GrlDetAmounts(repAssetInd == "Y" || actCode matches "A.*")
+	then
+        
+end
+
+
+
+
+
+rule '1184205' extends '332690' salience 420
+
+    when
+        
+        GrlDetAmounts(this == $gda, encumberedInd == "Y")
+        
+    then
+        $gda.setEncumberedInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3720");
+        
+end
+
+rule '1184206' extends '332690' salience 410
+
+    when
+        
+        GrlDetAmounts(this == $gda, encumberedInd == "N")
+        
+    then
+        $gda.setEncumberedInd("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3720");
+        
+end
+
+rule '1184207' extends '332690' salience 400
+
+    when
+        
+        GrlDetAmounts(this == $gda, encumberedInd == null)
+        
+    then
+        $gda.setEncumberedInd("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3720");
+        
+end
+
+

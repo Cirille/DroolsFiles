@@ -1,0 +1,102 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332379'
+	when
+		$gda : GrlDetAmounts(MANUALLY adjust this subselect: ACT_CODE IN ('A0025000','L0251000') AND IC_IND = 'Y' and RLN_WW_CUST_ID in (select cr.custom_key from gre_lr_cust_ref cr where cr.lcr_hly_rel_id = lse_hly_rel_id and lcr_custom_ref_type = 'CTPYPOS'))
+	then
+        
+end
+
+
+
+
+
+rule '1474866' extends '332379' salience 60
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", cgpCode not matches "B.*")
+        
+    then
+        $gda.setMassLine("Other Amounts L&A excl. Mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3629");
+        
+end
+
+rule '1474867' extends '332379' salience 50
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", cgpCode matches "B.*")
+        
+    then
+        $gda.setMassLine(Warning: selecting from Banks: data will not be available in source topic.
+ full statement: Other Amounts due from Banks);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3629");
+        
+end
+
+rule '1474870' extends '332379' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0251000", rteCode not in ("075", "098"))
+        
+    then
+        $gda.setMassLine("Other credit balances on customer accounts");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3629");
+        
+end
+
+rule '1474871' extends '332379' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0251000", rteCode in ("075", "098"))
+        
+    then
+        $gda.setMassLine("Other Amounts due to Banks");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3629");
+        
+end
+
+rule '1474868' extends '332379' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", cgpCode == null, rteCode not in ("035", "036", "073", "098", "173"))
+        
+    then
+        $gda.setMassLine("Other Amounts L&A excl. Mortgages");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3629");
+        
+end
+
+rule '1474869' extends '332379' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", cgpCode == null, rteCode in ("035", "036", "073", "098", "173"))
+        
+    then
+        $gda.setMassLine(Warning: selecting from Banks: data will not be available in source topic.
+ full statement: Other Amounts due from Banks);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3629");
+        
+end
+
+

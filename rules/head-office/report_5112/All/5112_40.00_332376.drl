@@ -1,0 +1,113 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332376'
+	when
+		$gda : GrlDetAmounts(MANUALLY adjust this subselect: ACT_CODE IN ('A0025000','L0251000') AND IC_IND = 'Y' and RLN_WW_CUST_ID in (select cr.custom_key from gre_lr_cust_ref cr where cr.lcr_hly_rel_id = lse_hly_rel_id and lcr_custom_ref_type = 'CTPYPOS'))
+	then
+        
+end
+
+
+
+
+
+rule '1160871' extends '332376' salience 250
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hbyRiskCat == "LOCALLOCAL", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("16");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3626");
+        
+end
+
+rule '1160872' extends '332376' salience 240
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0251000", hbyRiskCat in ("LOCFUNDING", "INTCMPFUND"), residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("17");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3626");
+        
+end
+
+rule '1160873' extends '332376' salience 230
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hbyRiskCat == "CROSSBORDR", hreRelTypeCtpy matches "B.*", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("02_05");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3626");
+        
+end
+
+rule '1160874' extends '332376' salience 220
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hbyRiskCat == "CROSSBORDR", hreRelTypeCtpy matches "F.*", residentInd == "N")
+        
+    then
+        $gda.setHb2Bis2CombiCd("04_05");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3626");
+        
+end
+
+rule '1160875' extends '332376' salience 210
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hbyRiskCat == "FOREIGNLOC", hreRelTypeCtpy matches "B.*", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("02_05");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3626");
+        
+end
+
+rule '1160876' extends '332376' salience 200
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000", hbyRiskCat == "FOREIGNLOC", hreRelTypeCtpy matches "F.*", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("04_05");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3626");
+        
+end
+
+rule '1160877' extends '332376' salience 190
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setHb2Bis2CombiCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3626");
+        
+end
+
+

@@ -1,0 +1,74 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334748'
+	when
+		$gda : GrlDetAmounts(( substr ( actCode , 1 , 1 ) in ( "B" , "L" , "Q" ) || ( intInd == "Y" && ebaProduct == "Deposits. Repurchase agreements" ) ) && actCode != "B0611000" && ( signFlipCode == null || signFlipCode not matches ".*DA.*" ))
+	then
+        
+end
+
+
+
+
+
+rule '1676209' extends '334748' salience 90
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setSignFlipCode(signFlipCode + "[DA][MM][SF3]" );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5412");
+        
+end
+
+rule '1690661' extends '334748' salience 80
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0269000")
+        
+    then
+        $gda.setSignFlipCode(signFlipCode + "[DA][SF3]" );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5412");
+        
+end
+
+rule '1743718' extends '334748' salience 70
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "Y")
+        
+    then
+        $gda.setSignFlipCode(signFlipCode + "[DA]" );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5412");
+        
+end
+
+rule '1706390' extends '334748' salience 60
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", hpePdtType == "REPO", nettingUpd == "UPD")
+        
+    then
+        $gda.setSignFlipCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5412");
+        
+end
+
+

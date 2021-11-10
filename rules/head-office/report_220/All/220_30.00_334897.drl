@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334897'
+	when
+		$gda : GrlDetAmounts(ebaProduct in ( "Debt securities. Covered bonds" , "Debt securities issued. Covered bonds" ))
+	then
+        
+end
+
+
+
+
+
+rule '1681619' extends '334897' salience 3590
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setWghtUnderlAssets(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5555");
+        
+end
+
+rule '1681618' extends '334897' salience 3580
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcyCtryCdIssuer in ("IT", "PT"))
+        
+    then
+        $gda.setWghtUnderlAssets("35");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5555");
+        
+end
+
+

@@ -1,0 +1,165 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334918'
+	when
+		$gda : GrlDetAmounts(ebaProduct != null)
+	then
+        
+end
+
+
+
+
+
+rule '1682303' extends '334918' salience 3470
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setMorInd("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5571");
+        
+end
+
+rule '1682299' extends '334918' salience 3460
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct matches "Debt securities.*")
+        
+    then
+        $gda.setMorInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5571");
+        
+end
+
+rule '1682300' extends '334918' salience 3450
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct matches "Security legs.*")
+        
+    then
+        $gda.setMorInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5571");
+        
+end
+
+rule '1682302' extends '334918' salience 3440
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct matches "Equity instruments.*")
+        
+    then
+        $gda.setMorInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5571");
+        
+end
+
+rule '1687697' extends '334918' salience 3430
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Cash on hand")
+        
+    then
+        $gda.setMorInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5571");
+        
+end
+
+rule '1687698' extends '334918' salience 3420
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setMorInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5571");
+        
+end
+
+rule '1687699' extends '334918' salience 3410
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setMorInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5571");
+        
+end
+
+rule '1688591' extends '334918' salience 3400
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct matches "CB.*")
+        
+    then
+        $gda.setMorInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5571");
+        
+end
+
+rule '2007612' extends '334918' salience 3390
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "CIU")
+        
+    then
+        $gda.setMorInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5571");
+        
+end
+
+rule '1695613' extends '334918' salience 3380
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "All assets other", hacAmtCl in ("02", "03"), hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setMorInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5571");
+        
+end
+
+rule '2003975' extends '334918' salience 3370
+
+    when
+        
+        GrlDetAmounts(this == $gda, morQualify == "N")
+        
+    then
+        $gda.setMorInd("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5571");
+        
+end
+
+

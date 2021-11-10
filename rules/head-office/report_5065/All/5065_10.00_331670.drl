@@ -1,0 +1,282 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331670'
+	when
+		$gpy : GrlPlYtd(hpnPlCl in ( "6000" , "7000" ) && hsoPlSubcl != 7401 && ldeDeptCd matches "CZPRG.*")
+	then
+        
+end
+
+
+
+
+
+rule '1109173' extends '331670' salience 1730
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine(massLine );
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1109190' extends '331670' salience 1720
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Depreciation Software")
+        
+    then
+        $gpy.setLocMassLine("Depreciation Locally Selected Software");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1109204' extends '331670' salience 1710
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Software Expenses not Capitalised")
+        
+    then
+        $gpy.setLocMassLine("Leasing/Renting Locally Selected Software");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1109309' extends '331670' salience 1700
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Accommodation Expenses")
+        
+    then
+        $gpy.setLocMassLine("Other Accommodation");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1109310' extends '331670' salience 1690
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Expenses")
+        
+    then
+        $gpy.setLocMassLine("Other Expenses - Other");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1109320' extends '331670' salience 1680
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Professional Services")
+        
+    then
+        $gpy.setLocMassLine("Professional Services Other");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1109425' extends '331670' salience 1670
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Salaries and Wages")
+        
+    then
+        $gpy.setLocMassLine("Salaries and Wages Permanent");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1109449' extends '331670' salience 1660
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Communication Expenses")
+        
+    then
+        $gpy.setLocMassLine("Other Data Lines");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1144645' extends '331670' salience 1650
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Personnel Related Costs")
+        
+    then
+        $gpy.setLocMassLine("Other Personnel Costs - Other");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1144646' extends '331670' salience 1640
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Expenses related to Deferred Bonuses", "Expenses related to Deferred Equity/Shares"))
+        
+    then
+        $gpy.setLocMassLine("Expenses related to Deferred Equity/Shares");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1732835' extends '331670' salience 1630
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine("Interest External paid regular");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1732837' extends '331670' salience 1620
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine("Commissions Fees paid");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1732839' extends '331670' salience 1610
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine("Commissions Fees received");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1109186' extends '331670' salience 1600
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Communication Expenses", ownUse05 in ("PY-COM-MBL", "COM-MBL-CHG", " COM-VFL-CHG", " ND-COM-VFL"))
+        
+    then
+        $gpy.setLocMassLine("Other Personal Communication");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1109431' extends '331670' salience 1590
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Travel related Costs", ownUse05 in ("ADVERT/PUBLC", "ADVERT-OTH", "ND-ADVERT", "ND-REPRE", "PY-ADVERT", "PY-ND-REPRE", "ND-CHARITY"))
+        
+    then
+        $gpy.setLocMassLine("Travel - Representation");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1109432' extends '331670' salience 1580
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Travel related Costs", ownUse05 in ("A-TRAV-ACCOM", "ND-TRAV", "PY-TRAV-TRAN", "PY-TRAV-ACCM", "SR-TR-ACCOM", "SR-TR-ALLOW", "SR-TR-OTH", "SR-TR-TRANS", "TRAV-ACCOM", "TRAV-ALLOW", "TRAV-OTH", "TRAV-TRANS", "TRAV-PRV-CAR"))
+        
+    then
+        $gpy.setLocMassLine("Travel - Business trips");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1109433' extends '331670' salience 1570
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Travel related Costs", ownUse05 in ("BC-OTH", "BC-REP", "CAREXP", "ND-PETROL-BC", "OPERLEAS", "PETROL-BC", "PY-BC-INS", "PY-OPERLEAS ", "ROADTAX", "PY-OPERLEAS", "ND-OPERLEAS", "PY-TR-PRVCAR", "PY-PETROL-BC", "PY-BC-OTH", "PY-CAREXP"))
+        
+    then
+        $gpy.setLocMassLine("Travel - Representation");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1178710' extends '331670' salience 1560
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Group Overhead Staff FA", hsoPlSubcl != "6524")
+        
+    then
+        $gpy.setLocMassLine("Group Overhead Staff FA");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1732838' extends '331670' salience 1550
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Incentives - Other", ownUse05 == "MF-BONUS")
+        
+    then
+        $gpy.setLocMassLine("Incentives - Other");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+rule '1732836' extends '331670' salience 1540
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Incentives - Other", ownUse05 == "MF-BONUS")
+        
+    then
+        $gpy.setLocMassLine("Incentives - Other");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3157");
+        
+end
+
+

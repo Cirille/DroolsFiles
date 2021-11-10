@@ -1,0 +1,139 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335507'
+	when
+		$gda : GrlDetAmounts(( ( actCode in ( "A0001000" , "A0002000" , "A0003000" , "A0005000" , "A0006000" , "A0007000" , "A0008000" , "A0009000" , "A0010000" , "A0011000" , "A0012000" , "A0014000" , "A0016000" , "A0019000" , "A0020000" , "A0021000" , "A0022000" , "A0023000" , "A0024000" , "A0025000" , "A0028000" , "A0029000" , "A0031000" , "A0033000" , "A0035000" , "A0036000" , "A0037000" , "A0038000" , "A0039000" , "A0040000" , "A0044000" , "A0050000" , "A0051000" , "A0052000" , "A0053000" , "A0054000" , "A0055000" , "A0056000" , "A0061000" , "A1614000" , "A2342000" , "A2535000" , "A2536000" , "A2537000" , "A2538000" , "A2539000" , "A2540000" , "A2541000" , "A2581000" , "A2698000" , "A3145000" , "A3146000" , "A3147000" , "A3176000" , "A3177000" , "A3178000" , "A3179000" , "A3282000" , "A3914000" , "A3916000" , "A8008000" , "A8294000" , "A8295000" , "L0230000" , "L0251000" ) && icInd == "Y" ) || ( actCode == "A0081000" && hpePdtType in ( "CUST ACCT" , "NOSTRO" , "OTHER PAYABLES" , "OTHER RECEIVABLES" , "PROV" ) && icInd == "Y" ) ) && actCode != null)
+	then
+        
+end
+
+
+
+
+
+rule '1708289' extends '335507' salience 7890
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3178000", intInd == "Y")
+        
+    then
+        $gda.setRteCode("102");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5883");
+        
+end
+
+rule '1708291' extends '335507' salience 7880
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N")
+        
+    then
+        $gda.setRteCode("010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5883");
+        
+end
+
+rule '1708294' extends '335507' salience 7870
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0007000", "L0230000"), intInd == "Y")
+        
+    then
+        $gda.setRteCode("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5883");
+        
+end
+
+rule '1708292' extends '335507' salience 7860
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0007000", "L0230000"), intInd == "Y", getCase0_1708292() == "BANKS")
+        
+    then
+        $gda.setRteCode("098");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5883");
+        
+end
+
+rule '1708293' extends '335507' salience 7850
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0007000", "L0230000"), intInd == "Y", getCase0_1708292() == "GOVERNMENTS")
+        
+    then
+        $gda.setRteCode("099");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5883");
+        
+end
+
+rule '1708295' extends '335507' salience 7840
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3282000", intInd == "Y", htyTradCat == "02")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5883");
+        
+end
+
+rule '1708296' extends '335507' salience 7830
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3282000", intInd == "Y", htyTradCat == "01")
+        
+    then
+        $gda.setRteCode("170");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5883");
+        
+end
+
+rule '1708288' extends '335507' salience 7820
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0003000", intInd == "Y", hpePdtType matches "STOCK.*", htyTradCat == "01")
+        
+    then
+        $gda.setRteCode("170");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5883");
+        
+end
+
+rule '1708290' extends '335507' salience 7810
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0003000", intInd == "Y", hpePdtType matches "STOCK.*", htyTradCat == "02")
+        
+    then
+        $gda.setRteCode("070");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5883");
+        
+end
+
+

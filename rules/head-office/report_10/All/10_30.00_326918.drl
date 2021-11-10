@@ -1,0 +1,35 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '326918'
+	when
+		$gda : GrlDetAmounts(( smnBeyNumber == cpyBeyNumber ) && ( smnReyCode == cpyReyCode ))
+	then
+        
+end
+
+
+
+
+
+rule '98232' extends '326918' salience 70
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCpyBeyNumber(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1539");
+        
+end
+
+

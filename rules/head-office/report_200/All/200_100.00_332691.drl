@@ -1,0 +1,100 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332691'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1184208' extends '332691' salience 220
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode not matches "L.*")
+        
+    then
+        $gda.setOperationalInd(MANUALLY adjust: NULL );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3721");
+        
+end
+
+rule '1184211' extends '332691' salience 210
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*")
+        
+    then
+        $gda.setOperationalInd("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3721");
+        
+end
+
+rule '1184209' extends '332691' salience 200
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", operationalInd == "Y")
+        
+    then
+        $gda.setOperationalInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3721");
+        
+end
+
+rule '1184210' extends '332691' salience 190
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", operationalInd == "N")
+        
+    then
+        $gda.setOperationalInd("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3721");
+        
+end
+
+rule '1184924' extends '332691' salience 180
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode not matches "L.*", ilaapCustGr == "House")
+        
+    then
+        $gda.setOperationalInd(MANUALLY adjust: NULL );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3721");
+        
+end
+
+rule '1606827' extends '332691' salience 170
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode not matches "L.*", operationalInd == null, ilaapCustGr == "House", ilaapCat1 matches ".*DEPOSIT.*")
+        
+    then
+        $gda.setOperationalInd("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3721");
+        
+end
+
+

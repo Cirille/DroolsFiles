@@ -1,0 +1,230 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '337369'
+	when
+		$gda : GrlDetAmounts(hpePdtType == "REPO")
+	then
+        
+end
+
+
+
+
+
+rule '1863810' extends '337369' salience 5010
+
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getissuedind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaUnderlyingProduct("Debt securities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7397");
+        
+end
+
+rule '1863803' extends '337369' salience 5000
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1863817() == "ABS or RMBS", eval(nvl(this.getissuedind(), 'n')) == "Y")
+        
+    then
+        $gda.setEbaUnderlyingProduct("Debt securities issued. ABS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7397");
+        
+end
+
+rule '1863805' extends '337369' salience 4990
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1863817() == "Hybrid Bond", eval(nvl(this.getissuedind(), 'n')) == "Y")
+        
+    then
+        $gda.setEbaUnderlyingProduct("Debt securities issued. Hybrid contracts");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7397");
+        
+end
+
+rule '1863806' extends '337369' salience 4980
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1863817() == "Corporate Bond", eval(nvl(this.getissuedind(), 'n')) == "Y")
+        
+    then
+        $gda.setEbaUnderlyingProduct("Debt securities issued. Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7397");
+        
+end
+
+rule '1863807' extends '337369' salience 4970
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1863817() == "Commercial Paper", eval(nvl(this.getissuedind(), 'n')) == "Y")
+        
+    then
+        $gda.setEbaUnderlyingProduct("Debt securities issued. Other");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7397");
+        
+end
+
+rule '1863808' extends '337369' salience 4960
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1863817() == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "Y")
+        
+    then
+        $gda.setEbaUnderlyingProduct("Debt securities issued. Covered bonds");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7397");
+        
+end
+
+rule '1863809' extends '337369' salience 4950
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1863817() == "ABS or RMBS", eval(nvl(this.getissuedind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaUnderlyingProduct("Debt securities. ABS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7397");
+        
+end
+
+rule '1863813' extends '337369' salience 4940
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1863817() == "Covered Bond", eval(nvl(this.getissuedind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaUnderlyingProduct("Debt securities. Covered bonds");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7397");
+        
+end
+
+rule '1863814' extends '337369' salience 4930
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1863817() == "Other Equity Securities", eval(nvl(this.getissuedind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaUnderlyingProduct("Equity instruments");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7397");
+        
+end
+
+rule '1863815' extends '337369' salience 4920
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1863817() == "Corporate Bond", eval(nvl(this.getissuedind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaUnderlyingProduct("Debt securities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7397");
+        
+end
+
+rule '1863816' extends '337369' salience 4910
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1863817() == "Commercial Paper", eval(nvl(this.getissuedind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaUnderlyingProduct("Debt securities. Commercial paper");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7397");
+        
+end
+
+rule '1863817' extends '337369' salience 4900
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1863817() == "CIU", eval(nvl(this.getissuedind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaUnderlyingProduct("CIU");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7397");
+        
+end
+
+rule '1863802' extends '337369' salience 4890
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1863817() == "ABS or RMBS", hreRelTypeIssuer in ("ZABG", "ZABS", "ZAIN", "ZSEC"), eval(nvl(this.getissuedind(), 'n')) == "Y")
+        
+    then
+        $gda.setEbaUnderlyingProduct("Debt securities issued. ABS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7397");
+        
+end
+
+rule '1863804' extends '337369' salience 4880
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1863817() == "ABS or RMBS", hreRelTypeIssuer in ("ZABG", "ZABS", "ZAIN", "ZSEC"), eval(nvl(this.getissuedind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaUnderlyingProduct("Debt securities. ABS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7397");
+        
+end
+
+rule '1863811' extends '337369' salience 4870
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1863817() == "ABS or RMBS", hreRelTypeIssuer in ("ZCMB", "ZCMG", "ZMBG", "ZMBS", "ZMIN", "ZRMB"), eval(nvl(this.getissuedind(), 'n')) == "Y")
+        
+    then
+        $gda.setEbaUnderlyingProduct("Debt securities issued. RMBS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7397");
+        
+end
+
+rule '1863812' extends '337369' salience 4860
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1863817() == "ABS or RMBS", hreRelTypeIssuer in ("ZCMB", "ZCMG", "ZMBG", "ZMBS", "ZMIN", "ZRMB"), eval(nvl(this.getissuedind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaUnderlyingProduct("Debt securities. RMBS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7397");
+        
+end
+
+

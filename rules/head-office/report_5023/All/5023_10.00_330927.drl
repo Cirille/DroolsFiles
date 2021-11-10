@@ -1,0 +1,776 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '330927'
+	when
+		$gpy : GrlPlYtd(hsoPlSubcl != "7401")
+	then
+        
+end
+
+
+
+
+
+rule '1102291' extends '330927' salience 580
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setMisRarocLine(substr (massLine , 1 , 50 ) );
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1102275' extends '330927' salience 570
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Interest Intercompany (CLC)", "Interest Intercompany (FTP)", "Interest Balance Sheet Related (External)", "Amortised Results Investments", "Lending commissions", "Interest Non-Performing Loans", "Interest", "Interest Balance Sheet Related"))
+        
+    then
+        $gpy.setMisRarocLine("Interest");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1102276' extends '330927' salience 560
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Funds Transfer Fees", "Securities Commissions", "Other Securities Commissions", "Trailer Fees", "Custody Fees", "Portfolio Management Commissions", "Management Fees"))
+        
+    then
+        $gpy.setMisRarocLine("Total Commissions");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1102277' extends '330927' salience 550
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Investment Income")
+        
+    then
+        $gpy.setMisRarocLine("Investment Income");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1102281' extends '330927' salience 540
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setMisRarocLine("Other (Income)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1102284' extends '330927' salience 530
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Hardware Expenses not Capitalised", "Depreciation Hardware", "IT Expenses - Hardware"))
+        
+    then
+        $gpy.setMisRarocLine("General Expenses excl. Marketing");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1102285' extends '330927' salience 520
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Office Rental", "Depr - Leasehold Improvements", "Other Accommodation Expenses", "Accomodation"))
+        
+    then
+        $gpy.setMisRarocLine("General Expenses excl. Marketing");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1102286' extends '330927' salience 510
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Lease Cars Expenses", "Travel related Costs", "Representation Costs", "Travel and Representation"))
+        
+    then
+        $gpy.setMisRarocLine("General Expenses excl. Marketing");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1102288' extends '330927' salience 500
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Intangible Amortisation and Other Impairments")
+        
+    then
+        $gpy.setMisRarocLine("Intangible amortisation and other impairments");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1102289' extends '330927' salience 490
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("GSOP Expenses", "Group Overhead Staff", "Allocation Group Expenses"))
+        
+    then
+        $gpy.setMisRarocLine("Allocation Group Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1102290' extends '330927' salience 480
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Specific Debtor Provisions", "IBNR Debtor Provisions", "Addition to Provisions for Loan Losses"))
+        
+    then
+        $gpy.setMisRarocLine("Addition to provision for loan losses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1142579' extends '330927' salience 470
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Corporate Tax Financial Accounting")
+        
+    then
+        $gpy.setMisRarocLine("Corporate Tax Financial Accounting");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148659' extends '330927' salience 460
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Capital Charge")
+        
+    then
+        $gpy.setMisRarocLine("Capital Charge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148660' extends '330927' salience 450
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Impairments on Securities")
+        
+    then
+        $gpy.setMisRarocLine("Impairments on Securities");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148662' extends '330927' salience 440
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Income before Group Overhead", "Allocation Group Income"))
+        
+    then
+        $gpy.setMisRarocLine("Allocation Group Income");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148664' extends '330927' salience 430
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Salaries and Wages", "Payroll Taxes and Social Security", "Pension Costs", "Severance Costs", "Salaries Social Securities & Pension Costs", "Third Party Staff IT", "Third Party Staff Other", "Employee Education", "Recruitment Costs", "Fair Value Expenses Deferred Bonuses", "Other Personnel Costs", "Staff Claims", "Provision for Staff Benefits (IFRS)", "Sundry Personnel Expenses", "Total Personnel Costs Excluding Bonus", "Other Personnel Related Costs"))
+        
+    then
+        $gpy.setMisRarocLine("Personnel Expenses excl. Bonus");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148666' extends '330927' salience 420
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Outsourcing IT Activities")
+        
+    then
+        $gpy.setMisRarocLine("General Expenses excl. Marketing");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148667' extends '330927' salience 410
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Communication Expenses")
+        
+    then
+        $gpy.setMisRarocLine("General Expenses excl. Marketing");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148668' extends '330927' salience 400
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Information Services Expenses")
+        
+    then
+        $gpy.setMisRarocLine("General Expenses excl. Marketing");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148669' extends '330927' salience 390
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Marketing Expenses", "Events/Relationship Marketing", "Internal Communication", "Advertising and Promotion"))
+        
+    then
+        $gpy.setMisRarocLine("Marketing Expenses");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148670' extends '330927' salience 380
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Management Consultants", "Audit Expenses", "Other Professional Services", "Professional Services"))
+        
+    then
+        $gpy.setMisRarocLine("General Expenses excl. Marketing");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148671' extends '330927' salience 370
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Subscriptions", "Memberships"))
+        
+    then
+        $gpy.setMisRarocLine("General Expenses excl. Marketing");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148672' extends '330927' salience 360
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Office Supplies and Equipment")
+        
+    then
+        $gpy.setMisRarocLine("General Expenses excl. Marketing");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148673' extends '330927' salience 350
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Postal Charges")
+        
+    then
+        $gpy.setMisRarocLine("General Expenses excl. Marketing");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148674' extends '330927' salience 340
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Taxes")
+        
+    then
+        $gpy.setMisRarocLine("General Expenses excl. Marketing");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148676' extends '330927' salience 330
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Expenses")
+        
+    then
+        $gpy.setMisRarocLine("General Expenses excl. Marketing");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148677' extends '330927' salience 320
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Claims")
+        
+    then
+        $gpy.setMisRarocLine("General Expenses excl. Marketing");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148679' extends '330927' salience 310
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Other General Direct Expenses", "IC Services Bought Netherlands", "IC Services Bought Belgium", "IC Services Bought Regional", "IC Services Bought Other", "Invoiced Intercompany Services Bought", "Invoiced Intercompany Services Sold", "Invoiced Intercompany Services Bought/Sold"))
+        
+    then
+        $gpy.setMisRarocLine("Intercompany Services Bought/Sold");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148680' extends '330927' salience 300
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Bonus", "Bonus CB Pool", "Bonus Other"))
+        
+    then
+        $gpy.setMisRarocLine("Bonus");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148681' extends '330927' salience 290
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Own Booked Direct Costs", "Branch Network (FO) recharge", "Management & Other CBP (FO) recharge", "PCM (FO) recharge", "PCM Change (FO) recharge", "PCM (FO) Total recharge", "C&FI Lending (FO) recharge", "C&FI Lending Change Bought (FO) recharge", "C&FI Lending Change Sold (FO) recharge", "C&FI Lending (FO) Total recharge", "Front Office CBS recharge"))
+        
+    then
+        $gpy.setMisRarocLine("Front Office CB recharge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148682' extends '330927' salience 280
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Corporate Clients (FO) recharge", "Global Clients (FO) recharge", "Event Finance (FO) recharge", "Management Client (FO) recharge", "Customer Domain (FO) recharge", "Corporate Clients Total (FO) recharge", "Financial Institutions (FO) recharge", "Midsized (FO) recharge", "General Relationship Management (FO) recharge", "Commercial Banking Clients Other (FO) recharge", "Front Office CBC recharge"))
+        
+    then
+        $gpy.setMisRarocLine("Front Office CB recharge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148683' extends '330927' salience 270
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Front Office CF recharge", "Front Office EM recharge", "Front Office CF&EM recharge"))
+        
+    then
+        $gpy.setMisRarocLine("Front Office CB recharge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148684' extends '330927' salience 260
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("FM Sales (FO) recharge", "FM Structured Products Group (FO) recharge", "FM Research (FO) recharge", "FM Other Products & Services (FO) recharge", "DCM (FO) recharge", "FM Other (FO) recharge", "Front Office FM recharge"))
+        
+    then
+        $gpy.setMisRarocLine("Front Office CB recharge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148685' extends '330927' salience 250
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Front Office Other recharge")
+        
+    then
+        $gpy.setMisRarocLine("Front Office CB recharge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148700' extends '330927' salience 240
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Financial Markets IT Applications recharge", "Equity Markets IT Applications recharge", "Securities IT Applications recharge", "SF - IT Applications recharge", "Lending - IT Applications recharge", "Payments - IT Applications recharge", "Support Services IT Applications", "Commercial Branch Network IT Applications recharge", "Other IT Applications recharge", "IT Applications Baseline recharge"))
+        
+    then
+        $gpy.setMisRarocLine("IT Applications recharge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148701' extends '330927' salience 230
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("IT Infra Workplace Services recharge", "IT Infra Operations recharge", "IT Infra Server Support recharge", "IT Infrastructure Baseline recharge"))
+        
+    then
+        $gpy.setMisRarocLine("IT Infrastructure recharge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148703' extends '330927' salience 220
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Business Continuity Planning recharge", "OIB Management recharge", "OIB Baseline recharge", "OIB Management & Staff recharge"))
+        
+    then
+        $gpy.setMisRarocLine("Ops&IT Management recharge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148704' extends '330927' salience 210
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("OIB Baseline Management & Staff recharge", "Financial Markets OIB Change recharge", "Equity Markets & Securities OIB Change recharge", "SF - Lending & Payments OIB Change recharge", "Finance OIB Change recharge", "Support Services OIB Change recharge", "Commercial Branch Network OIB Change recharge", "OIB Client Change recharge", "OIB Discretionary Change recharge", "OIB Non-VC Specific Change recharge", "OIB Change recharge"))
+        
+    then
+        $gpy.setMisRarocLine("Ops&IT Change recharge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148706' extends '330927' salience 200
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("CRM excl Change recharge", "CRM Change recharge", "Credit Risk Management recharge"))
+        
+    then
+        $gpy.setMisRarocLine("Credit Risk Management recharge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148711' extends '330927' salience 190
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setMisRarocLine("Finance recharge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148716' extends '330927' salience 180
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Staff Communication CB Clients recharge", "Staff Communication CB Network recharge", "Staff Communication CB Services recharge", "Staff Communication CF&EM recharge", "Staff Communication Financial Markets recharge", "Staff Communication Commercial Banking recharge", "Staff Communication Retail/Other recharge", "Communications recharge"))
+        
+    then
+        $gpy.setMisRarocLine("Communications recharge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148717' extends '330927' salience 170
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("HR/MD excl Change recharge", "HR/MD Change recharge", "HR/MD recharge"))
+        
+    then
+        $gpy.setMisRarocLine("HR/MD recharge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148719' extends '330927' salience 160
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("General Mgmt/Advice & Strategy recharge", "General Mgmt/Advice & Strategy Change recharge", "General Mgmt/Advice & Strategy excl Change recharge"))
+        
+    then
+        $gpy.setMisRarocLine("General Mgmt/Advice & Strategy recharge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148720' extends '330927' salience 150
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setMisRarocLine("Trainess and Non-Active People recharge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148721' extends '330927' salience 140
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Product (SU) recharges", "Support Units FM recharge", "FM Other (SU) recharge", "DCM (SU) recharge", "FM Other Products & Services (SU) recharge", "FM Research (SU) recharge", "FM Structured Products Group (SU) recharge", "FM Sales (SU) recharge", "Support Units CF&EM recharge", "Equity Markets (SU) recharge", "Corporate Finance (SU) recharge", "Support Units CBC recharge", "Commercial Banking Clients Other (SU) recharge", "General Relationship Management (SU) recharge", "Midsized (SU) recharge", "European Business Desks (SU) recharge", "Corporate Clients Total (SU) recharge", "Financial Institutions (SU) recharge"))
+        
+    then
+        $gpy.setMisRarocLine("Front Office CB recharge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148722' extends '330927' salience 130
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Customer Domain (SU) recharge", "Management Clients (SU) recharge", "Event Finance (SU) recharge", "Global Clients (SU) recharge", "Corporate Clients (SU) recharge", " Support Units CBS recharge", "C&FI Lending (SU) recharge", "PCM (SU) recharge", "Managemnt & Other CBS (SU) recharge", "Branch Network (SU) recharge", "Support and facilities recharge"))
+        
+    then
+        $gpy.setMisRarocLine("Front Office CB recharge");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148723' extends '330927' salience 120
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Third Party Interest", "Tax on Profits", "Result after Tax"))
+        
+    then
+        $gpy.setMisRarocLine("Third Party Interest");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148724' extends '330927' salience 110
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Corporate Tax Head Office Transfers")
+        
+    then
+        $gpy.setMisRarocLine("Corporate Tax HEad Office Transfers");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148725' extends '330927' salience 100
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine in ("Corporate Tax Management Accounting", "Corporate Tax MA Other", "Corporate Tax MA on MA Transfers", "Corporate Tax MA on Group Overhead", "Corporate Tax MA Capital Charge", "Corporate Tax MA on IoAE"))
+        
+    then
+        $gpy.setMisRarocLine("Corporate Tax Management Accounting");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148791' extends '330927' salience 90
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Depreciation Software")
+        
+    then
+        $gpy.setMisRarocLine("General Expenses excl. Marketing");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148794' extends '330927' salience 80
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Software Expenses not Capitalised")
+        
+    then
+        $gpy.setMisRarocLine("General Expenses excl. Marketing");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1148801' extends '330927' salience 70
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setMisRarocLine("Realised gains and FV changes on investments (excl");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1152724' extends '330927' salience 60
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setMisRarocLine("CVA+DVA Adjustments Trading Portfolio");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1152725' extends '330927' salience 50
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setMisRarocLine("CVA+DVA Adjustments Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1178646' extends '330927' salience 40
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Operational Lease Income")
+        
+    then
+        $gpy.setMisRarocLine("Other Operational Lease Income");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1178647' extends '330927' salience 30
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setMisRarocLine("Sale of Leased Assets (SOLA)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1178648' extends '330927' salience 20
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Result of Trading Portfolio")
+        
+    then
+        $gpy.setMisRarocLine("Other Result of Trading Portfolio");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+rule '1178649' extends '330927' salience 10
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Valuation Result Non-Trading Derivatives")
+        
+    then
+        $gpy.setMisRarocLine("Other Valuation Result Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2602");
+        
+end
+
+

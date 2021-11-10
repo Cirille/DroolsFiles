@@ -1,0 +1,100 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334221'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1606652' extends '334221' salience 70
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1606652() == "less_than_one_year")
+        
+    then
+        $gda.setSeOrgTermCd("MAT0001");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4935");
+        
+end
+
+rule '1606653' extends '334221' salience 60
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1606652() == "between_one_and_two_years")
+        
+    then
+        $gda.setSeOrgTermCd("MAT0002");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4935");
+        
+end
+
+rule '1606654' extends '334221' salience 50
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1606652() == "between_two_and_three_years")
+        
+    then
+        $gda.setSeOrgTermCd("MAT0003");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4935");
+        
+end
+
+rule '1606655' extends '334221' salience 40
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1606652() == "between_three_and_four_years")
+        
+    then
+        $gda.setSeOrgTermCd("MAT0004");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4935");
+        
+end
+
+rule '1606656' extends '334221' salience 30
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1606652() == "between_four_and_five_years")
+        
+    then
+        $gda.setSeOrgTermCd("MAT0005");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4935");
+        
+end
+
+rule '1606657' extends '334221' salience 20
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1606652() == "more_than_five_years")
+        
+    then
+        $gda.setSeOrgTermCd("MAT0006");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4935");
+        
+end
+
+

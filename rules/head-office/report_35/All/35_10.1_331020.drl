@@ -1,0 +1,26 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlProducts;
+
+global String dateFormat;
+
+dialect  "mvel"
+
+
+rule '331020'
+	when
+		$gp : GrlProducts( repDate != null )
+	then
+end
+
+
+rule '1710425' extends '331020' salience 10
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gp.setPrdId($gp.formatDate($gp.getRepDate(),dateFormat));
+        
+end

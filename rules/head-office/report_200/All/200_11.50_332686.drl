@@ -1,0 +1,100 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332686'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1184162' extends '332686' salience 1440
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setRetailInd(MANUALLY adjust: NULL );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3719");
+        
+end
+
+rule '1184161' extends '332686' salience 1430
+
+    when
+        
+        GrlDetAmounts(this == $gda, retailInd == "Y", ilaapCustGr == null)
+        
+    then
+        $gda.setRetailInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3719");
+        
+end
+
+rule '1184158' extends '332686' salience 1420
+
+    when
+        
+        GrlDetAmounts(this == $gda, retailInd == "Y", ilaapCustGr == "Corporate", smeInd == "Y")
+        
+    then
+        $gda.setRetailInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3719");
+        
+end
+
+rule '1184159' extends '332686' salience 1410
+
+    when
+        
+        GrlDetAmounts(this == $gda, retailInd == "Y", ilaapCustGr == "Corporate", smeInd == "N")
+        
+    then
+        $gda.setRetailInd("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3719");
+        
+end
+
+rule '1184160' extends '332686' salience 1400
+
+    when
+        
+        GrlDetAmounts(this == $gda, ilaapCustGr == "Consumers")
+        
+    then
+        $gda.setRetailInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3719");
+        
+end
+
+rule '1364716' extends '332686' salience 1390
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L2569000")
+        
+    then
+        $gda.setRetailInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3719");
+        
+end
+
+

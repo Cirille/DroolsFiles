@@ -1,0 +1,243 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332149'
+	when
+		$gda : GrlDetAmounts(actCode == null && contingInd == "Y" && hpePdtType in ( "STOCK BOND" , "STOCK CD AND CP" , "STOCK CONV BOND" , "STOCK FLOATING RATE NOTE" , "STOCK MEDIUM TERM NOTE" , "STOCK SAVING CERT" , "STOCK SHARE" , "STOCK TREASURY PAPER" ) && intInd == "N" && hacAmtCl == "01" && smnBeyNumber != nvl ( cpyBeyNumber , "X" ))
+	then
+        
+end
+
+
+
+
+
+rule '1142286' extends '332149' salience 750
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType != "STOCK SHARE", repAssetInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("16-Accruals/Others-Liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3455");
+        
+end
+
+rule '1142287' extends '332149' salience 740
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "STOCK SHARE", repAssetInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("16-Accruals/Others-Liabilities");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3455");
+        
+end
+
+rule '1142284' extends '332149' salience 730
+
+    when
+        
+        GrlDetAmounts(this == $gda, issuedInd == "Y")
+        
+    then
+        $gda.setLiquidityCdReg("14-Bonds issued");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3455");
+        
+end
+
+rule '1142285' extends '332149' salience 720
+
+    when
+        
+        GrlDetAmounts(this == $gda, icInd == "Y")
+        
+    then
+        $gda.setLiquidityCdReg("14-Bonds issued");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3455");
+        
+end
+
+rule '1142281' extends '332149' salience 710
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType != "STOCK SHARE", repAssetInd == "Y", eval(nvl(this.getquotedind(), 'n')) == "N")
+        
+    then
+        $gda.setLiquidityCdReg("04-Investment /Trading");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3455");
+        
+end
+
+rule '1142282' extends '332149' salience 700
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "STOCK SHARE", repAssetInd == "Y", eval(nvl(this.getquotedind(), 'n')) == "Y")
+        
+    then
+        $gda.setLiquidityCdReg("04-Investment /Trading");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3455");
+        
+end
+
+rule '1142283' extends '332149' salience 690
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "STOCK SHARE", repAssetInd == "Y", eval(nvl(this.getquotedind(), 'n')) == "N")
+        
+    then
+        $gda.setLiquidityCdReg("04-Investment /Trading");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3455");
+        
+end
+
+rule '1142270' extends '332149' salience 680
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType != "STOCK SHARE", (hreRelTypeIssuer matches "G.*" || hreRelTypeIssuer == "BCEN"), repAssetInd == "Y", eval(nvl(this.geteligibleind(), 'n')) == "Y", eval(nvl(this.getquotedind(), 'n')) == "Y")
+        
+    then
+        $gda.setLiquidityCdReg("04-Investment /Trading");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3455");
+        
+end
+
+rule '1142271' extends '332149' salience 670
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType != "STOCK SHARE", hreRelTypeIssuer == "BMLD", repAssetInd == "Y", eval(nvl(this.geteligibleind(), 'n')) == "Y", eval(nvl(this.getquotedind(), 'n')) == "Y")
+        
+    then
+        $gda.setLiquidityCdReg("04-Investment /Trading");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3455");
+        
+end
+
+rule '1142274' extends '332149' salience 660
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType != "STOCK SHARE", hreRelTypeIssuer == "BMLD", repAssetInd == "Y", eval(nvl(this.geteligibleind(), 'n')) == "N", eval(nvl(this.getquotedind(), 'n')) == "Y")
+        
+    then
+        $gda.setLiquidityCdReg("04-Investment /Trading");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3455");
+        
+end
+
+rule '1142275' extends '332149' salience 650
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType != "STOCK SHARE", hreRelTypeIssuer in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BMOR", "BSPV"), repAssetInd == "Y", eval(nvl(this.geteligibleind(), 'n')) == "Y", eval(nvl(this.getquotedind(), 'n')) == "Y")
+        
+    then
+        $gda.setLiquidityCdReg("04-Investment /Trading");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3455");
+        
+end
+
+rule '1142277' extends '332149' salience 640
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType != "STOCK SHARE", hreRelTypeIssuer in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BMOR", "BSPV"), repAssetInd == "Y", eval(nvl(this.geteligibleind(), 'n')) == "N", eval(nvl(this.getquotedind(), 'n')) == "Y")
+        
+    then
+        $gda.setLiquidityCdReg("04-Investment /Trading");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3455");
+        
+end
+
+rule '1142278' extends '332149' salience 630
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType != "STOCK SHARE", (hreRelTypeIssuer != "BCRI" && hreRelTypeIssuer != "BEXC" && hreRelTypeIssuer != "BGVO" && hreRelTypeIssuer != "BHOL" && hreRelTypeIssuer != "BJVT" && hreRelTypeIssuer != "BLIM" && hreRelTypeIssuer != "BMOR" && hreRelTypeIssuer != "BSPV" && hreRelTypeIssuer != "BCEN" && hreRelTypeIssuer != "BMLD" && hreRelTypeIssuer not matches "G.*"), repAssetInd == "Y", eval(nvl(this.geteligibleind(), 'n')) == "Y", eval(nvl(this.getquotedind(), 'n')) == "Y")
+        
+    then
+        $gda.setLiquidityCdReg("04-Investment /Trading");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3455");
+        
+end
+
+rule '1142279' extends '332149' salience 620
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType != "STOCK SHARE", (hreRelTypeIssuer != "BCRI" && hreRelTypeIssuer != "BEXC" && hreRelTypeIssuer != "BGVO" && hreRelTypeIssuer != "BHOL" && hreRelTypeIssuer != "BJVT" && hreRelTypeIssuer != "BLIM" && hreRelTypeIssuer != "BMOR" && hreRelTypeIssuer != "BSPV" && hreRelTypeIssuer != "BCEN" && hreRelTypeIssuer != "BMLD" && hreRelTypeIssuer not matches "G.*"), repAssetInd == "Y", eval(nvl(this.geteligibleind(), 'n')) == "N", eval(nvl(this.getquotedind(), 'n')) == "Y")
+        
+    then
+        $gda.setLiquidityCdReg("04-Investment /Trading");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3455");
+        
+end
+
+rule '1142272' extends '332149' salience 610
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType != "STOCK SHARE", (hreRelTypeIssuer matches "G.*" || hreRelTypeIssuer == "BCEN"), hzeZoneCtryIssuer == "A", repAssetInd == "Y", eval(nvl(this.geteligibleind(), 'n')) == "N", eval(nvl(this.getquotedind(), 'n')) == "Y")
+        
+    then
+        $gda.setLiquidityCdReg("04-Investment /Trading");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3455");
+        
+end
+
+rule '1142273' extends '332149' salience 600
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType != "STOCK SHARE", (hreRelTypeIssuer matches "G.*" || hreRelTypeIssuer == "BCEN"), hzeZoneCtryIssuer == "B", repAssetInd == "Y", eval(nvl(this.geteligibleind(), 'n')) == "N", eval(nvl(this.getquotedind(), 'n')) == "Y")
+        
+    then
+        $gda.setLiquidityCdReg("04-Investment /Trading");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3455");
+        
+end
+
+rule '1142276' extends '332149' salience 590
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType != "STOCK SHARE", hreRelTypeIssuer in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BMOR", "BSPV"), hzeZoneCtryIssuer == "A", repAssetInd == "Y", eval(nvl(this.geteligibleind(), 'n')) == "N", eval(nvl(this.getquotedind(), 'n')) == "Y")
+        
+    then
+        $gda.setLiquidityCdReg("04-Investment /Trading");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3455");
+        
+end
+
+

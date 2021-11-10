@@ -1,0 +1,1309 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331682'
+	when
+		$gda : GrlDetAmounts(( ( hpePdtType in ( "BOND OPT" , "INTR RATE OPT" , "SWAPTION" ) && hacAmtCl == "10" ) || ( hscAcctSubcl == "3003" && hacAmtCl == "01" ) ) && intInd == "N" && icInd == "N" && htyTradCat == "03")
+	then
+        
+end
+
+
+
+
+
+rule '1100211' extends '331682' salience 38880
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setDerivativesCombiCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021955' extends '331682' salience 38870
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", quotedInd == "Y", getCase0_1022297() == "<1_year")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_1_EX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021956' extends '331682' salience 38860
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", quotedInd == "Y", getCase0_1022297() == "1-<2_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_2_EX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021957' extends '331682' salience 38850
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", quotedInd == "Y", getCase0_1022297() == "2-<3_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_3_EX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021958' extends '331682' salience 38840
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", quotedInd == "Y", getCase0_1022297() == "3-<4_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_4_EX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021959' extends '331682' salience 38830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", quotedInd == "Y", getCase0_1022297() == "4-<5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_5_EX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021960' extends '331682' salience 38820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", quotedInd == "Y", getCase0_1022297() == ">5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_6_EX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022017' extends '331682' salience 38810
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", quotedInd == "N", getCase0_1022297() == "<1_year")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_1_84");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022018' extends '331682' salience 38800
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", quotedInd == "N", getCase0_1022297() == "1-<2_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_2_84");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022019' extends '331682' salience 38790
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", quotedInd == "N", getCase0_1022297() == "2-<3_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_3_84");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022020' extends '331682' salience 38780
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", quotedInd == "N", getCase0_1022297() == "3-<4_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_4_84");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022021' extends '331682' salience 38770
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", quotedInd == "N", getCase0_1022297() == "4-<5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_5_84");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022022' extends '331682' salience 38760
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", quotedInd == "N", getCase0_1022297() == ">5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_6_84");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022054' extends '331682' salience 38750
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", quotedInd == "N", getCase0_1022297() == "<1_year")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_1_84");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022055' extends '331682' salience 38740
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", quotedInd == "N", getCase0_1022297() == "1-<2_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_2_84");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022056' extends '331682' salience 38730
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", quotedInd == "N", getCase0_1022297() == "2-<3_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_3_84");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022057' extends '331682' salience 38720
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", quotedInd == "N", getCase0_1022297() == "3-<4_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_4_84");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022058' extends '331682' salience 38710
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", quotedInd == "N", getCase0_1022297() == "4-<5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_5_84");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022059' extends '331682' salience 38700
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", quotedInd == "N", getCase0_1022297() == ">5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_6_84");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022066' extends '331682' salience 38690
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", quotedInd == "Y", getCase0_1022297() == "<1_year")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_1_EX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022067' extends '331682' salience 38680
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", quotedInd == "Y", getCase0_1022297() == "1-<2_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_2_EX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022068' extends '331682' salience 38670
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", quotedInd == "Y", getCase0_1022297() == "2-<3_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_3_EX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022069' extends '331682' salience 38660
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", quotedInd == "Y", getCase0_1022297() == "3-<4_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_4_EX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022070' extends '331682' salience 38650
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", quotedInd == "Y", getCase0_1022297() == "4-<5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_5_EX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022071' extends '331682' salience 38640
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", quotedInd == "Y", getCase0_1022297() == ">5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_6_EX");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021974' extends '331682' salience 38630
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "<1_year")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_1_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021976' extends '331682' salience 38620
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "1-<2_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_2_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021978' extends '331682' salience 38610
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "2-<3_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_3_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021980' extends '331682' salience 38600
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "3-<4_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_4_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021982' extends '331682' salience 38590
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "4-<5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_5_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021984' extends '331682' salience 38580
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == ">5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_6_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021998' extends '331682' salience 38570
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "<1_year")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_1_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021999' extends '331682' salience 38560
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "OTHER_BANKS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "<1_year")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_1_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022001' extends '331682' salience 38550
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "1-<2_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_2_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022002' extends '331682' salience 38540
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "OTHER_BANKS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "1-<2_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_2_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022003' extends '331682' salience 38530
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "2-<3_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_3_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022004' extends '331682' salience 38520
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "OTHER_BANKS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "2-<3_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_3_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022005' extends '331682' salience 38510
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "3-<4_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_4_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022006' extends '331682' salience 38500
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "OTHER_BANKS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "3-<4_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_4_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022007' extends '331682' salience 38490
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "4-<5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_5_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022008' extends '331682' salience 38480
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "OTHER_BANKS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "4-<5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_5_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022009' extends '331682' salience 38470
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == ">5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_6_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022010' extends '331682' salience 38460
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "OTHER_BANKS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == ">5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_6_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022036' extends '331682' salience 38450
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "<1_year")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_1_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022038' extends '331682' salience 38440
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "1-<2_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_2_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022040' extends '331682' salience 38430
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "2-<3_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_3_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022042' extends '331682' salience 38420
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "3-<4_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_4_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022044' extends '331682' salience 38410
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "4-<5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_5_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022046' extends '331682' salience 38400
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == ">5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_6_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022073' extends '331682' salience 38390
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "<1_year")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_1_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022074' extends '331682' salience 38380
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "OTHER_BANKS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "<1_year")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_1_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022076' extends '331682' salience 38370
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "1-<2_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_2_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022077' extends '331682' salience 38360
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "OTHER_BANKS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "1-<2_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_2_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022078' extends '331682' salience 38350
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "2-<3_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_3_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022079' extends '331682' salience 38340
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "OTHER_BANKS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "2-<3_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_3_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022080' extends '331682' salience 38330
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "3-<4_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_4_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022081' extends '331682' salience 38320
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "OTHER_BANKS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "3-<4_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_4_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022082' extends '331682' salience 38310
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "4-<5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_5_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022083' extends '331682' salience 38300
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "OTHER_BANKS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == "4-<5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_5_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022084' extends '331682' salience 38290
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == ">5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_6_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022085' extends '331682' salience 38280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "OTHER_BANKS", quotedInd == "N", hzeZoneCtryReg == "A", getCase0_1022297() == ">5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_6_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100187' extends '331682' salience 38270
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "MULTILATERAL_DEVELOPMENT_BANKS", quotedInd == "N", getCase0_1022297() == "<1_year")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_1_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100188' extends '331682' salience 38260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "MULTILATERAL_DEVELOPMENT_BANKS", quotedInd == "N", getCase0_1022297() == "1-<2_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_2_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100189' extends '331682' salience 38250
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "MULTILATERAL_DEVELOPMENT_BANKS", quotedInd == "N", getCase0_1022297() == "2-<3_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_3_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100190' extends '331682' salience 38240
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "MULTILATERAL_DEVELOPMENT_BANKS", quotedInd == "N", getCase0_1022297() == "3-<4_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_4_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100191' extends '331682' salience 38230
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "MULTILATERAL_DEVELOPMENT_BANKS", quotedInd == "N", getCase0_1022297() == "4-<5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_5_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100192' extends '331682' salience 38220
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "MULTILATERAL_DEVELOPMENT_BANKS", quotedInd == "N", getCase0_1022297() == ">5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_6_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100193' extends '331682' salience 38210
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "MULTILATERAL_DEVELOPMENT_BANKS", quotedInd == "N", getCase0_1022297() == "<1_year")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_1_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100194' extends '331682' salience 38200
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "MULTILATERAL_DEVELOPMENT_BANKS", quotedInd == "N", getCase0_1022297() == "1-<2_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_2_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100195' extends '331682' salience 38190
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "MULTILATERAL_DEVELOPMENT_BANKS", quotedInd == "N", getCase0_1022297() == "2-<3_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_3_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100196' extends '331682' salience 38180
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "MULTILATERAL_DEVELOPMENT_BANKS", quotedInd == "N", getCase0_1022297() == "3-<4_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_4_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100197' extends '331682' salience 38170
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "MULTILATERAL_DEVELOPMENT_BANKS", quotedInd == "N", getCase0_1022297() == "4-<5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_5_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100198' extends '331682' salience 38160
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "MULTILATERAL_DEVELOPMENT_BANKS", quotedInd == "N", getCase0_1022297() == ">5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_6_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021973' extends '331682' salience 38150
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "B", locFundInd == "Y", getCase0_1022297() == "<1_year")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_1_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021975' extends '331682' salience 38140
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "B", locFundInd == "Y", getCase0_1022297() == "1-<2_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_2_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021977' extends '331682' salience 38130
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "B", locFundInd == "Y", getCase0_1022297() == "2-<3_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_3_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021979' extends '331682' salience 38120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "B", locFundInd == "Y", getCase0_1022297() == "3-<4_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_4_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021981' extends '331682' salience 38110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "B", locFundInd == "Y", getCase0_1022297() == "4-<5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_5_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1021983' extends '331682' salience 38100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "B", locFundInd == "Y", getCase0_1022297() == ">5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_6_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022000' extends '331682' salience 38090
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "OTHER_BANKS", quotedInd == "N", hzeZoneCtryReg == "B", getCase0_1022801() == "short_term", getCase0_1022297() == "<1_year")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_1_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022035' extends '331682' salience 38080
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "B", locFundInd == "Y", getCase0_1022297() == "<1_year")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_1_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022037' extends '331682' salience 38070
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "B", locFundInd == "Y", getCase0_1022297() == "1-<2_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_2_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022039' extends '331682' salience 38060
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "B", locFundInd == "Y", getCase0_1022297() == "2-<3_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_3_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022041' extends '331682' salience 38050
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "B", locFundInd == "Y", getCase0_1022297() == "3-<4_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_4_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022043' extends '331682' salience 38040
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "B", locFundInd == "Y", getCase0_1022297() == "4-<5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_5_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022045' extends '331682' salience 38030
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "CENTRAL BANKS_CENTRAL GOVERNMENTS", quotedInd == "N", hzeZoneCtryReg == "B", locFundInd == "Y", getCase0_1022297() == ">5_years")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_6_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1022075' extends '331682' salience 38020
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "OTHER_BANKS", quotedInd == "N", hzeZoneCtryReg == "B", getCase0_1022801() == "short_term", getCase0_1022297() == "<1_year")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_1_83");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100199' extends '331682' salience 38010
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", getCase0_1022297() == "<1_year", euCtryInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_1_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100200' extends '331682' salience 38000
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", getCase0_1022297() == "1-<2_years", euCtryInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_2_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100201' extends '331682' salience 37990
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", getCase0_1022297() == "2-<3_years", euCtryInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_3_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100202' extends '331682' salience 37980
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", getCase0_1022297() == "3-<4_years", euCtryInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_4_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100203' extends '331682' salience 37970
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", getCase0_1022297() == "4-<5_years", euCtryInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_5_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100204' extends '331682' salience 37960
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", getCase0_1022297() == ">5_years", euCtryInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("67.145_6_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100205' extends '331682' salience 37950
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", getCase0_1022297() == "<1_year", euCtryInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_1_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100206' extends '331682' salience 37940
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", getCase0_1022297() == "1-<2_years", euCtryInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_2_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100207' extends '331682' salience 37930
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", getCase0_1022297() == "2-<3_years", euCtryInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_3_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100208' extends '331682' salience 37920
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", getCase0_1022297() == "3-<4_years", euCtryInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_4_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100209' extends '331682' salience 37910
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", getCase0_1022297() == "4-<5_years", euCtryInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_5_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+rule '1100210' extends '331682' salience 37900
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", getCase0_1022323() == "LOCAL_GOVERNMENTS", quotedInd == "N", getCase0_1022297() == ">5_years", euCtryInd == "Y")
+        
+    then
+        $gda.setDerivativesCombiCd("67.140_6_80");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3172");
+        
+end
+
+

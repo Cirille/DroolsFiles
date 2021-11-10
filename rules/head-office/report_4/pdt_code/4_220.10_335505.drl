@@ -1,0 +1,126 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335505'
+	when
+		$gda : GrlDetAmounts(hpePdtType in ( "NIF AND RUF" , "UNUSED FAC AMT" , "CFY" ) && rootFacInd == "Y" && hacAmtCl == "09" && credFacInd == "Y" && drawAllowedInd == "Y" && intInd == "N" && actCode != null)
+	then
+        
+end
+
+
+
+
+
+rule '1708268' extends '335505' salience 33280
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setPdtCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5881");
+        
+end
+
+rule '1708265' extends '335505' salience 33270
+
+    when
+        
+        GrlDetAmounts(this == $gda, commInd == "N", hpePdtType in ("UNUSED FAC AMT", "CFY"), hfeFacType == "8057")
+        
+    then
+        $gda.setPdtCode("031300");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5881");
+        
+end
+
+rule '1708266' extends '335505' salience 33260
+
+    when
+        
+        GrlDetAmounts(this == $gda, commInd == "Y", hpePdtType == "NIF AND RUF")
+        
+    then
+        $gda.setPdtCode("014400");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5881");
+        
+end
+
+rule '1708271' extends '335505' salience 33250
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType in ("UNUSED FAC AMT", "CFY"), hfeFacType in ("310", "330"))
+        
+    then
+        $gda.setPdtCode("014400");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5881");
+        
+end
+
+rule '1987988' extends '335505' salience 33240
+
+    when
+        
+        GrlDetAmounts(this == $gda, commInd == "Y", hpePdtType in ("UNUSED FAC AMT", "CFY"), hfeFacType == "8057")
+        
+    then
+        $gda.setPdtCode("033100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5881");
+        
+end
+
+rule '1708267' extends '335505' salience 33230
+
+    when
+        
+        GrlDetAmounts(this == $gda, commInd == "N", hpePdtType in ("UNUSED FAC AMT", "CFY"), hfeFacType not in ("310", "330", "8057"))
+        
+    then
+        $gda.setPdtCode("014800");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5881");
+        
+end
+
+rule '1708269' extends '335505' salience 33220
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, commInd == "Y", getCase0_1708375() == "within_one_year", hpePdtType in ("UNUSED FAC AMT", "CFY"), hfeFacType not in ("310", "330", "8057"))
+        
+    then
+        $gda.setPdtCode("026900");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5881");
+        
+end
+
+rule '1708270' extends '335505' salience 33210
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, commInd == "Y", getCase0_1708375() == "more_then_a_year", hpePdtType in ("UNUSED FAC AMT", "CFY"), hfeFacType not in ("310", "330", "8057"))
+        
+    then
+        $gda.setPdtCode("027000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5881");
+        
+end
+
+

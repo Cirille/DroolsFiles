@@ -1,0 +1,38 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+global com.ing.gfrs.logical.apis.GplVExchRatesDrlLogicalApi gplVExchRatesDrlLogicalApi;
+global com.ing.gfrs.logical.apis.GreHrCcyTransLogicalApi greHrCcyTransLogicalApi;
+
+dialect  "mvel"
+
+
+rule '335606'
+	when
+		$gpy : GrlPlYtd( nvl ( status , "X" ) not in ('RVD','RVL') )
+		eval(greHrCcyTransLogicalApi.existsRecord( $gpy.getLseHlyRelId(), $gpy.getHcuCcyCdOrg()) == true)
+	then
+end
+
+rule '1714394-1' extends '335606' salience 6
+
+    when
+        /*WARNING: this rule will always be called, since it has no conditions*/
+    then
+
+	    $gpy.setHcuCcyCdChoDetTan(greHrCcyTransLogicalApi.getHcuCcyCdCcyTranslation($gpy.getLseHlyRelId(), $gpy.getHcuCcyCdOrg()));
+
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5965");
+end
+
+rule '1714394-2' extends '335606' salience 5
+
+    when
+        eval(gplVExchRatesDrlLogicalApi.existsRecord($gpy.getHcuCcyCdOrg(),$gpy.getLseHlyRelId()) == true)
+
+    then
+        $gpy.setChoDetAmtTan($gpy.getChoDetAmtTan() * gplVExchRatesDrlLogicalApi.getExchangeRate($gpy.getHcuCcyCdOrg(),$gpy.getLseHlyRelId()));
+
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5965");
+
+end

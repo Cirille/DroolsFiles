@@ -1,0 +1,35 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332845'
+	when
+		$gda : GrlDetAmounts(lseHlyRelId in ( "0720" , "0720_SF4L" , "9743" , "9744" , "9744_SF4L" , "9794_SF4L" , "9792_SF4L" , "9800_SF4L" ))
+	then
+        
+end
+
+
+
+
+
+rule '1231715' extends '332845' salience 10
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt01("Balance Sheet Item");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3775");
+        
+end
+
+

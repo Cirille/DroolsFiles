@@ -1,0 +1,386 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335549'
+	when
+		$gda : GrlDetAmounts(( actCode in ( "L0106000" , "L0110000" , "L0111000" , "L0113000" , "L0118000" , "L0119000" , "L0241000" , "L0242000" , "L1425000" , "L0230000" , "L2569000" , "L3334000" , "L3343000" , "L3932000" , "L3933000" , "L3935000" , "L3936000" , "L8068000" , "L9238000" , "L9239000" , "L9240000" , "B0596000" , "B0595000" ) || ( actCode in ( "L0117000" , "L0272000" , "L3348000" ) && hreRelTypeIssuer == null ) ) && actCode != null)
+	then
+        
+end
+
+
+
+
+
+rule '1710726' extends '335549' salience 32860
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "ACCT")
+        
+    then
+        $gda.setCustomTxtHo10("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710747' extends '335549' salience 32850
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxtHo10("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710725' extends '335549' salience 32840
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy in ("FINS", "FLIF", "FPEF"))
+        
+    then
+        $gda.setCustomTxtHo10("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710727' extends '335549' salience 32830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "ACCT", getCase0_1710732() == "522110")
+        
+    then
+        $gda.setCustomTxtHo10("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710729' extends '335549' salience 32820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "ACCT", getCase0_1710732() == "921190")
+        
+    then
+        $gda.setCustomTxtHo10("G0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710732' extends '335549' salience 32810
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "ACCT", getCase0_1710732() == "521110")
+        
+    then
+        $gda.setCustomTxtHo10("B0035");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710741' extends '335549' salience 32800
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "BMLD")
+        
+    then
+        $gda.setCustomTxtHo10("B0037");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710728' extends '335549' salience 32790
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "ACCT", getCase0_1710732() not in ("521110", "522110"), getCase0_1710732() matches "52.*")
+        
+    then
+        $gda.setCustomTxtHo10("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710730' extends '335549' salience 32780
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "ACCT", getCase0_1710732() != "921190", getCase0_1710732() matches "92.*")
+        
+    then
+        $gda.setCustomTxtHo10("G0009");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710731' extends '335549' salience 32770
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "ACCT", residentInd == "Y", getCase0_1710732() == "521110")
+        
+    then
+        $gda.setCustomTxtHo10("B0034");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710738' extends '335549' salience 32760
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "BCEN", residentInd == "Y")
+        
+    then
+        $gda.setCustomTxtHo10("B0034");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710739' extends '335549' salience 32750
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "BCEN", residentInd == "N")
+        
+    then
+        $gda.setCustomTxtHo10("B0035");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710742' extends '335549' salience 32740
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy in ("GAMT", "GCEN", "GCFI", "GNFP", "GNFU", "GSNO", "GPSC", "GSOC"))
+        
+    then
+        $gda.setCustomTxtHo10("G0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710744' extends '335549' salience 32730
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeCtpy matches "F.*" || hreRelTypeCtpy matches "V.*"), hreRelTypeCtpy not in ("FINS", "FLIF", "FPEF"), (getCase0_1710744() not matches "524.*" && getCase0_1710744() not matches "525.*"))
+        
+    then
+        $gda.setCustomTxtHo10("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710749' extends '335549' salience 32720
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy in ("IIPB", "IMND", "INDV", "IREP", "ISTF", "ROMN"))
+        
+    then
+        $gda.setCustomTxtHo10("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710740' extends '335549' salience 32710
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "B.*", hreRelTypeCtpy not in ("BCEN", "BMLD"))
+        
+    then
+        $gda.setCustomTxtHo10("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710743' extends '335549' salience 32700
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "G.*", hreRelTypeCtpy not in ("GAMT", "GCEN", "GCFI", "GCPL", "GLPL", "GNFP", "GNFU", "GSNO", "GPSC", "GSOC"))
+        
+    then
+        $gda.setCustomTxtHo10("G0009");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710746' extends '335549' salience 32690
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeCtpy matches "C.*" || hreRelTypeCtpy == "REXC" || hreRelTypeCtpy == "RLIM" || hreRelTypeCtpy == "RPRJ" || hreRelTypeCtpy == "RPTR" || hreRelTypeCtpy == "RREG" || hreRelTypeCtpy == "RSPV"), (getCase0_1710744() == "522298" || getCase0_1710744() matches "5223.*" || getCase0_1710744() matches "523.*"), getCase0_1710751() != "unregulated")
+        
+    then
+        $gda.setCustomTxtHo10("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710751' extends '335549' salience 32680
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeCtpy matches "F.*" || hreRelTypeCtpy matches "V.*"), hreRelTypeCtpy not in ("FINS", "FLIF", "FPEF"), (getCase0_1710744() matches "524.*" || getCase0_1710744() matches "525.*"), getCase0_1710751() == "regulated")
+        
+    then
+        $gda.setCustomTxtHo10("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1778988' extends '335549' salience 32670
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy in ("GCPL", "GLPL"))
+        
+    then
+        $gda.setCustomTxtHo10("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710736' extends '335549' salience 32660
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "B.*", icInd == "Y")
+        
+    then
+        $gda.setCustomTxtHo10("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710745' extends '335549' salience 32650
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "F.*", icInd == "Y")
+        
+    then
+        $gda.setCustomTxtHo10("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710748' extends '335549' salience 32640
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "C.*", icInd == "Y")
+        
+    then
+        $gda.setCustomTxtHo10("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710750' extends '335549' salience 32630
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "Z.*", icInd == "Y")
+        
+    then
+        $gda.setCustomTxtHo10("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710733' extends '335549' salience 32620
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "Z.*", icInd == "Y", getCase0_1710733() == "BANK")
+        
+    then
+        $gda.setCustomTxtHo10("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710734' extends '335549' salience 32610
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "Z.*", icInd == "Y", getCase0_1710733() == "OFI")
+        
+    then
+        $gda.setCustomTxtHo10("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710735' extends '335549' salience 32600
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "Z.*", icInd == "Y", getCase0_1710733() == "OTHER")
+        
+    then
+        $gda.setCustomTxtHo10("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+rule '1710737' extends '335549' salience 32590
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1710737() == "Y", getCase1_1710737() == "L2569000", lseHlyRelId in ("9703", "9703_RET"))
+        
+    then
+        $gda.setCustomTxtHo10("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5925");
+        
+end
+
+

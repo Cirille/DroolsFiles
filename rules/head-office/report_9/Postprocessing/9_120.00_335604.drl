@@ -1,0 +1,43 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+global com.ing.gfrs.logical.apis.GreVPleCpyBeyReyDrlLogicalApi greVPleCpyBeyReyDrlLogicalApi;
+
+dialect  "mvel"
+
+
+rule '335604'
+	when
+		$gpy : GrlPlYtd( icInd == "Y" &&  rlnRelIdCtpy != null  && nvl ( status , "X" ) not in ('RVD','RVL') )
+	then
+end
+
+
+rule '1714392-1' extends '335604' salience 40
+
+    when
+
+        /*WARNING: this rule will always be called, since it has no conditions*/
+
+    then
+        $gpy.setErrorInd("Y");
+
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5963");
+
+end
+
+rule '1714392-2' extends '335604' salience 30
+
+    when
+        eval(greVPleCpyBeyReyDrlLogicalApi.existsRecord($gpy.getRlnRelIdCtpy(),$gpy.getLseHlyRelId()) == true)
+
+    then
+        $gpy.setCpyBeyNumber(greVPleCpyBeyReyDrlLogicalApi.getBeyNumber($gpy.getRlnRelIdCtpy(),$gpy.getLseHlyRelId()));
+        $gpy.setCpyReyCode(greVPleCpyBeyReyDrlLogicalApi.getReyCode($gpy.getRlnRelIdCtpy(),$gpy.getLseHlyRelId()));
+        $gpy.setErrorInd("N");
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"5963");
+
+end
+
+

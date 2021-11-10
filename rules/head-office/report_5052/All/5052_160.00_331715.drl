@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331715'
+	when
+		$gda : GrlDetAmounts(actCode != null && hpePdtType == "PROV")
+	then
+        
+end
+
+
+
+
+
+rule '1102154' extends '331715' salience 290
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt01(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3203");
+        
+end
+
+rule '1102153' extends '331715' salience 280
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "1601")
+        
+    then
+        $gda.setCustomTxt01("1220_0_BGN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3203");
+        
+end
+
+

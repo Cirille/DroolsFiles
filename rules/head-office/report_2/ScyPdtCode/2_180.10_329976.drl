@@ -1,0 +1,341 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '329976'
+	when
+		$gda : GrlDetAmounts(hpePdtType in ( "COMM DISC BILL" , "GUAR ISSUED" , "LC ISSUED" , "LETTER OF INTENT" , "OWN ACCEPTANCE" ) && scyActCode != null)
+	then
+end
+
+
+rule '773047' extends '329976' salience 15090
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setScyPdtCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '773034' extends '329976' salience 15080
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "COMM DISC BILL", issuedInd == "Y", intInd == "N")
+        
+    then
+        $gda.setScyPdtCode("015200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '773042' extends '329976' salience 15070
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "OWN ACCEPTANCE", issuedInd == "Y", intInd == "N", credInstInd == "Y")
+        
+    then
+        $gda.setScyPdtCode("015500");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '773040' extends '329976' salience 15060
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LETTER OF INTENT", issuedInd == "Y", intInd == "N", getCase0_1150623() == "more_then_a_year")
+        
+    then
+        $gda.setScyPdtCode("014500");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '773046' extends '329976' salience 15050
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LETTER OF INTENT", issuedInd == "Y", intInd == "N", getCase0_1150623() == "within_one_year")
+        
+    then
+        $gda.setScyPdtCode("014300");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '773037' extends '329976' salience 15040
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "OWN ACCEPTANCE", issuedInd == "Y", intInd == "N", credInstInd == "N")
+        
+    then
+        $gda.setScyPdtCode("015500");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '773036' extends '329976' salience 15030
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "GUAR ISSUED", issuedInd == "Y", intInd == "N", credSubstInd == "N")
+        
+    then
+        $gda.setScyPdtCode("014200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '773035' extends '329976' salience 15020
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "GUAR ISSUED", issuedInd == "Y", intInd == "N", credSubstInd == "Y")
+        
+    then
+        $gda.setScyPdtCode("014100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '1707307' extends '329976' salience 15010
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "GUAR ISSUED", issuedInd == "Y", intInd == "N", hfeFacType == "IPC")
+        
+    then
+        $gda.setScyPdtCode("031900");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '773039' extends '329976' salience 15000
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", intInd == "N", standbyInd == "N", confInd == "Y", underlConsInd == "Y")
+        
+    then
+        $gda.setScyPdtCode("015000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '999584' extends '329976' salience 14990
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "GUAR ISSUED", intInd == "N", credSubstInd == "N", hgnGlocCl == "05", getCase0_1150623() == "more_then_a_year")
+        
+    then
+        $gda.setScyPdtCode("027000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '773044' extends '329976' salience 14980
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", intInd == "N", standbyInd == "N", confInd == "Y", underlConsInd == "N")
+        
+    then
+        $gda.setScyPdtCode("014900");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '1727333' extends '329976' salience 14970
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "GUAR ISSUED", issuedInd == "N", intInd == "N", credSubstInd == "N", lseHlyRelId in ("9120", "9117"))
+        
+    then
+        $gda.setScyPdtCode("014200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '1615989' extends '329976' salience 14960
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "GUAR ISSUED", issuedInd == "N", intInd == "N", credSubstInd == "Y", lseHlyRelId in ("9675", "9679", "0768", "0212", "9120", "9117"))
+        
+    then
+        $gda.setScyPdtCode("014100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '773045' extends '329976' salience 14950
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", issuedInd == "Y", intInd == "N", standbyInd == "N", confInd == "Y", underlConsInd == "Y")
+        
+    then
+        $gda.setScyPdtCode("015000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '773043' extends '329976' salience 14940
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", issuedInd == "Y", intInd == "N", standbyInd == "N", confInd == "Y", underlConsInd == "N")
+        
+    then
+        $gda.setScyPdtCode("014900");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '773041' extends '329976' salience 14930
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", issuedInd == "Y", intInd == "N", standbyInd == "Y", confInd == "Y", credSubstInd == "N")
+        
+    then
+        $gda.setScyPdtCode("014200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '1087874' extends '329976' salience 14920
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", issuedInd == "Y", intInd == "N", standbyInd == "Y", confInd == "Y", credSubstInd == "Y")
+        
+    then
+        $gda.setScyPdtCode("014100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '999583' extends '329976' salience 14910
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "GUAR ISSUED", intInd == "N", credSubstInd == "N", hgnGlocCl == "05", getCase0_1150623() == "within_one_year", hfeFacType != "IPC")
+        
+    then
+        $gda.setScyPdtCode("026900");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '1114901' extends '329976' salience 14900
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", issuedInd == "Y", intInd == "N", standbyInd == "N", confInd == "N", commInd == "N")
+        
+    then
+        $gda.setScyPdtCode("014800");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '773038' extends '329976' salience 14890
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", issuedInd == "Y", intInd == "N", standbyInd == "N", confInd == "Y", hceCovType in ("1601", "1602"))
+        
+    then
+        $gda.setScyPdtCode("015000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '1114904' extends '329976' salience 14880
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", issuedInd == "Y", intInd == "N", standbyInd == "N", confInd == "N", getCase0_1150623() == "more_then_a_year", commInd == "Y")
+        
+    then
+        $gda.setScyPdtCode("027000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '1114903' extends '329976' salience 14870
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", issuedInd == "Y", intInd == "N", standbyInd == "N", confInd == "N", getCase0_1150623() == "within_one_year", commInd == "Y")
+        
+    then
+        $gda.setScyPdtCode("026900");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '1741156' extends '329976' salience 14860
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", intInd == "N", hacAmtCl == "01", acceptedInd == "Y")
+        
+    then
+        $gda.setScyPdtCode("015100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+rule '1741157' extends '329976' salience 14850
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", intInd == "N", hacAmtCl == "26", acceptedInd == "Y")
+        
+    then
+        $gda.setScyPdtCode("015200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1853");
+        
+end
+
+

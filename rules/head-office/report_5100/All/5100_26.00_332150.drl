@@ -1,0 +1,490 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332150'
+	when
+		$gda : GrlDetAmounts(actCode == null && contingInd == "Y" && hpePdtType in ( "DEPOSIT" , "LOAN" , "FACTORING" , "STOCK DISC BILL PRM NOTE" ) && intInd == "N" && hacAmtCl == "01" && smnBeyNumber != nvl ( cpyBeyNumber , "X" ))
+	then
+        
+end
+
+
+
+
+
+rule '1142321' extends '332150' salience 580
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLiquidityCdReg("01-Loan & Advance");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142290' extends '332150' salience 570
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "BCEN", repAssetInd == "N", icInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("12-Interbank deposit");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142292' extends '332150' salience 560
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BMOR", "BSPV"), repAssetInd == "Y", icInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("02-Interbank placed");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142294' extends '332150' salience 550
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "BMLD", repAssetInd == "Y", icInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("01-Loan & Advance");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142295' extends '332150' salience 540
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy in ("GCEN", "GSNO", "GLOL", "GREL", "GOSN"), repAssetInd == "Y", icInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("01-Loan & Advance");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142298' extends '332150' salience 530
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "BCEN", repAssetInd == "Y", icInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("02-Interbank placed");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142303' extends '332150' salience 520
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy not in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BMOR", "BSPV", "BMLD", "BCEN", "GCEN", "GSNO", "GLOL", "GREL", "GOSN"), repAssetInd == "Y", icInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("01-Loan & Advance");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142306' extends '332150' salience 510
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BMOR", "BSPV"), repAssetInd == "N", icInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("12-Interbank deposit");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142307' extends '332150' salience 500
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy in ("GCEN", "GSNO", "GLOL", "GREL", "GOSN"), repAssetInd == "N", icInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("11-Customer Deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142308' extends '332150' salience 490
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "BMLD", repAssetInd == "N", icInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("12-Interbank deposit");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142311' extends '332150' salience 480
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeCtpy == "IIPB" || hreRelTypeCtpy == "INDV" || hreRelTypeCtpy == "IPBI" || hreRelTypeCtpy matches "IST.*"), repAssetInd == "N", icInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("11-Customer Deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142312' extends '332150' salience 470
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy not in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BMOR", "BSPV", "BMLD", "BCEN", "GCEN", "GSNO", "GLOL", "GREL", "GOSN"), repAssetInd == "N", icInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("11-Customer Deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142288' extends '332150' salience 460
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "BCEN", repAssetInd == "N", icInd == "N", callInd == "Y")
+        
+    then
+        $gda.setLiquidityCdReg("12-Interbank deposit");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142293' extends '332150' salience 450
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BMOR", "BSPV"), repAssetInd == "Y", commInd == "Y", icInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("02-Interbank placed");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142296' extends '332150' salience 440
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy not in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BMOR", "BSPV", "BMLD", "BCEN", "GCEN", "GSNO", "GLOL", "GREL", "GOSN"), repAssetInd == "Y", profCtpyInd == "Y", icInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("01-Loan & Advance");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142299' extends '332150' salience 430
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeCtpy == "IIPB" || hreRelTypeCtpy == "INDV" || hreRelTypeCtpy == "IPBI" || hreRelTypeCtpy matches "IST.*"), repAssetInd == "Y", icInd == "N", hceCovType in ("1403", "1404", "1416", "1417"))
+        
+    then
+        $gda.setLiquidityCdReg("01-Loan & Advance");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142302' extends '332150' salience 420
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeCtpy == "IIPB" || hreRelTypeCtpy == "INDV" || hreRelTypeCtpy == "IPBI" || hreRelTypeCtpy matches "IST.*"), repAssetInd == "Y", icInd == "N", hpePdtType == "LOAN")
+        
+    then
+        $gda.setLiquidityCdReg("01-Loan & Advance");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142304' extends '332150' salience 410
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy not in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BMOR", "BSPV", "BMLD", "BCEN", "GCEN", "GSNO", "GLOL", "GREL", "GOSN"), repAssetInd == "Y", commInd == "Y", icInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("01-Loan & Advance");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142309' extends '332150' salience 400
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy not in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BMOR", "BSPV", "BCEN"), repAssetInd == "N", profCtpyInd == "Y", icInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("11-Customer Deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142310' extends '332150' salience 390
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeCtpy == "IIPB" || hreRelTypeCtpy == "INDV" || hreRelTypeCtpy == "IPBI" || hreRelTypeCtpy matches "IST.*"), repAssetInd == "N", icInd == "N", hpePdtType == "DEPOSIT")
+        
+    then
+        $gda.setLiquidityCdReg("11-Customer Deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142313' extends '332150' salience 380
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", icInd == "Y", hpePdtType == "CUST ACCT")
+        
+    then
+        $gda.setLiquidityCdReg("03-Interco-Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142314' extends '332150' salience 370
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", icInd == "Y", hpePdtType not in ("CUST ACCT", "REPO"))
+        
+    then
+        $gda.setLiquidityCdReg("03-Interco-Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142315' extends '332150' salience 360
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", icInd == "Y", hpePdtType == "CUST ACCT")
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-  Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142316' extends '332150' salience 350
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", icInd == "Y", hpePdtType not in ("CUST ACCT", "REPO"))
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142317' extends '332150' salience 340
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", icInd == "Y", hpePdtType == "REPO")
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142319' extends '332150' salience 330
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", icInd == "Y", hpePdtType == "REPO")
+        
+    then
+        $gda.setLiquidityCdReg("03-Interco-Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1144983' extends '332150' salience 320
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "BCEN", repAssetInd == "Y", icInd == "N", hpePdtType == "NOSTRO")
+        
+    then
+        $gda.setLiquidityCdReg("02-Interbank placed");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1144985' extends '332150' salience 310
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "BCEN", repAssetInd == "N", icInd == "N", hpePdtType == "NOSTRO")
+        
+    then
+        $gda.setLiquidityCdReg("12-Interbank deposit");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142297' extends '332150' salience 300
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy not in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BMOR", "BSPV", "BMLD", "BCEN", "GCEN", "GSNO", "GLOL", "GREL", "GOSN"), repAssetInd == "Y", profCtpyInd == "Y", commInd == "Y", icInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("01-Loan & Advance");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142300' extends '332150' salience 290
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeCtpy == "IIPB" || hreRelTypeCtpy == "INDV" || hreRelTypeCtpy == "IPBI" || hreRelTypeCtpy matches "IST.*"), repAssetInd == "Y", icInd == "N", fixTermInd == "Y", hpePdtType == "DEPOSIT")
+        
+    then
+        $gda.setLiquidityCdReg("01-Loan & Advance");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142301' extends '332150' salience 280
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hreRelTypeCtpy == "IIPB" || hreRelTypeCtpy == "INDV" || hreRelTypeCtpy == "IPBI" || hreRelTypeCtpy matches "IST.*"), repAssetInd == "Y", icInd == "N", fixTermInd == "N", hpePdtType == "DEPOSIT")
+        
+    then
+        $gda.setLiquidityCdReg("01-Loan & Advance");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142305' extends '332150' salience 270
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "BCEN", repAssetInd == "N", icInd == "N", fixTermInd == "Y", hpePdtType == "DEPOSIT")
+        
+    then
+        $gda.setLiquidityCdReg("12-Interbank deposit");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142318' extends '332150' salience 260
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", icInd == "Y", hpePdtType == "REPO", hssSecuProdSubcl in ("0110", "0120", "0130"))
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142320' extends '332150' salience 250
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", icInd == "Y", hpePdtType == "REPO", hssSecuProdSubcl in ("0110", "0120", "0130"))
+        
+    then
+        $gda.setLiquidityCdReg("03-Interco-Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1706387' extends '332150' salience 240
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy in ("BCRI", "BEXC", "BGVO", "BHOL", "BJVT", "BLIM", "BMOR", "BSPV", "BCEN"), repAssetInd == "N", hpePdtType == "DEPOSIT", contSubtSrc in ("DGIC", "DTIC"))
+        
+    then
+        $gda.setLiquidityCdReg(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+rule '1142291' extends '332150' salience 230
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy == "BCEN", repAssetInd == "N", icInd == "N", hpePdtType == "DEPOSIT", getCase0_1142291() == "overnight_deposit")
+        
+    then
+        $gda.setLiquidityCdReg("12-Interbank deposit");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3456");
+        
+end
+
+

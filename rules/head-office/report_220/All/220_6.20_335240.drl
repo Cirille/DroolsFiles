@@ -1,0 +1,100 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335240'
+	when
+		$gda : GrlDetAmounts(hcrRiskRating != null)
+	then
+        
+end
+
+
+
+
+
+rule '1699877' extends '335240' salience 21570
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setEbaCqsGridCtpyIntRat("CQS 6");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5756");
+        
+end
+
+rule '1699872' extends '335240' salience 21560
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hcrRiskRating matches ".*01.*" || hcrRiskRating matches ".*02.*" || hcrRiskRating matches ".*03.*" || hcrRiskRating matches ".*04.*"))
+        
+    then
+        $gda.setEbaCqsGridCtpyIntRat("CQS 1");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5756");
+        
+end
+
+rule '1699873' extends '335240' salience 21550
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hcrRiskRating matches ".*05.*" || hcrRiskRating matches ".*06.*" || hcrRiskRating matches ".*07.*"))
+        
+    then
+        $gda.setEbaCqsGridCtpyIntRat("CQS 2");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5756");
+        
+end
+
+rule '1699874' extends '335240' salience 21540
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hcrRiskRating matches ".*08.*" || hcrRiskRating matches ".*09.*" || hcrRiskRating matches ".*10.*"))
+        
+    then
+        $gda.setEbaCqsGridCtpyIntRat("CQS 3");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5756");
+        
+end
+
+rule '1699875' extends '335240' salience 21530
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hcrRiskRating matches ".*11.*" || hcrRiskRating matches ".*12.*" || hcrRiskRating matches ".*13.*"))
+        
+    then
+        $gda.setEbaCqsGridCtpyIntRat("CQS 4");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5756");
+        
+end
+
+rule '1699876' extends '335240' salience 21520
+
+    when
+        
+        GrlDetAmounts(this == $gda, (hcrRiskRating matches ".*14.*" || hcrRiskRating matches ".*15.*" || hcrRiskRating matches ".*16.*"))
+        
+    then
+        $gda.setEbaCqsGridCtpyIntRat("CQS 5");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5756");
+        
+end
+
+

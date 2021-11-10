@@ -1,0 +1,100 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '337352'
+	when
+		$gda : GrlDetAmounts(hacAmtCl in ( "11" , "19" ) && intInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1823077' extends '337352' salience 6040
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", eval(nvl(this.getsblsecvssecind(), 'n')) == "Y")
+        
+    then
+        $gda.setEbaProduct("Security legs. SBL Stock Borrowing");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7379");
+        
+end
+
+rule '1823078' extends '337352' salience 6030
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", eval(nvl(this.getsblsecvssecind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaProduct("Security legs. Repo");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7379");
+        
+end
+
+rule '1823079' extends '337352' salience 6020
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", eval(nvl(this.getsblsecvssecind(), 'n')) == "Y")
+        
+    then
+        $gda.setEbaProduct("Security legs. SBL Stock Lending");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7379");
+        
+end
+
+rule '1823080' extends '337352' salience 6010
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", eval(nvl(this.getsblsecvssecind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaProduct("Security legs. Reverse Repo");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7379");
+        
+end
+
+rule '1823075' extends '337352' salience 6000
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", eval(nvl(this.getsblsecvssecind(), 'n')) == "Y", ldeDeptCd != "3450", smnBeyNumber in ("U0242", "U0493", "U0618", "U2876"))
+        
+    then
+        $gda.setEbaProduct("Security legs. CLS Lending");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7379");
+        
+end
+
+rule '1823076' extends '337352' salience 5990
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", eval(nvl(this.getsblsecvssecind(), 'n')) == "Y", ldeDeptCd != "3450", smnBeyNumber in ("U0242", "U0493", "U0618", "U2876"))
+        
+    then
+        $gda.setEbaProduct("Security legs. CLS Borrowing");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7379");
+        
+end
+
+

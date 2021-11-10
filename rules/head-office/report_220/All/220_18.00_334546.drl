@@ -1,0 +1,711 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334546'
+	when
+		$gda : GrlDetAmounts(hreRelTypeIssuer != null)
+	then
+        
+end
+
+
+
+
+
+rule '1651124' extends '334546' salience 4850
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setEbaRiskWeightIss("99");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651100' extends '334546' salience 4840
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType in ("Central governments", "Central banks", "ECB", "Public sector entities (treatment as central government)", "Regional governments or local authorities (treatment as central government)"), eval(nvl(this.geteeactryissind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651101' extends '334546' salience 4830
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType in ("Central governments", "Central banks", "ECB", "Public sector entities (treatment as central government)", "Regional governments or local authorities (treatment as central government)"), eval(nvl(this.geteeactryissind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651108' extends '334546' salience 4820
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Regional governments or local authorities (other)", eval(nvl(this.geteeactryissind(), 'n')) == "Y")
+        
+    then
+        $gda.setEbaRiskWeightIss("20");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651115' extends '334546' salience 4810
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Regional governments or local authorities (other)", eval(nvl(this.geteeactryissind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651133' extends '334546' salience 4800
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Regional governments or local authorities (other)", eval(nvl(this.geteeactryissind(), 'n')) == "N")
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651141' extends '334546' salience 4790
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType in ("Central governments", "Central banks", "ECB", "Public sector entities (treatment as central government)", "Regional governments or local authorities (treatment as central government)"), eval(nvl(this.geteeactryissind(), 'n')) == "Y")
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1778918' extends '334546' salience 4780
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Public sector entities (other)", getCase0_1778919() == "3 months or more")
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651102' extends '334546' salience 4770
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType in ("Central governments", "Central banks", "ECB", "Public sector entities (treatment as central government)", "Regional governments or local authorities (treatment as central government)"), eval(nvl(this.geteeactryissind(), 'n')) == "N", ebaCredQualStepIss == "CQS 1")
+        
+    then
+        $gda.setEbaRiskWeightIss("0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651103' extends '334546' salience 4760
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType in ("Central governments", "Central banks", "ECB", "Public sector entities (treatment as central government)", "Regional governments or local authorities (treatment as central government)"), eval(nvl(this.geteeactryissind(), 'n')) == "N", ebaCredQualStepIss == "CQS 2")
+        
+    then
+        $gda.setEbaRiskWeightIss("20");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651104' extends '334546' salience 4750
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType in ("Central governments", "Central banks", "ECB", "Public sector entities (treatment as central government)", "Regional governments or local authorities (treatment as central government)"), eval(nvl(this.geteeactryissind(), 'n')) == "N", ebaCredQualStepIss == "CQS 3")
+        
+    then
+        $gda.setEbaRiskWeightIss("50");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651105' extends '334546' salience 4740
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType in ("Central governments", "Central banks", "ECB", "Public sector entities (treatment as central government)", "Regional governments or local authorities (treatment as central government)"), eval(nvl(this.geteeactryissind(), 'n')) == "N", ebaCredQualStepIss == "CQS 4")
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651106' extends '334546' salience 4730
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType in ("Central governments", "Central banks", "ECB", "Public sector entities (treatment as central government)", "Regional governments or local authorities (treatment as central government)"), eval(nvl(this.geteeactryissind(), 'n')) == "N", ebaCredQualStepIss == "CQS 5")
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651107' extends '334546' salience 4720
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType in ("Central governments", "Central banks", "ECB", "Public sector entities (treatment as central government)", "Regional governments or local authorities (treatment as central government)"), eval(nvl(this.geteeactryissind(), 'n')) == "N", ebaCredQualStepIss == "CQS 6")
+        
+    then
+        $gda.setEbaRiskWeightIss("150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651109' extends '334546' salience 4710
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Regional governments or local authorities (other)", eval(nvl(this.geteeactryissind(), 'n')) == "N", ebaCredQualStepIss == "CQS 1")
+        
+    then
+        $gda.setEbaRiskWeightIss("20");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651110' extends '334546' salience 4700
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Regional governments or local authorities (other)", eval(nvl(this.geteeactryissind(), 'n')) == "N", ebaCredQualStepIss == "CQS 2")
+        
+    then
+        $gda.setEbaRiskWeightIss("50");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651111' extends '334546' salience 4690
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Regional governments or local authorities (other)", eval(nvl(this.geteeactryissind(), 'n')) == "N", ebaCredQualStepIss == "CQS 3")
+        
+    then
+        $gda.setEbaRiskWeightIss("50");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651112' extends '334546' salience 4680
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Regional governments or local authorities (other)", eval(nvl(this.geteeactryissind(), 'n')) == "N", ebaCredQualStepIss == "CQS 4")
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651113' extends '334546' salience 4670
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Regional governments or local authorities (other)", eval(nvl(this.geteeactryissind(), 'n')) == "N", ebaCredQualStepIss == "CQS 5")
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651114' extends '334546' salience 4660
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Regional governments or local authorities (other)", eval(nvl(this.geteeactryissind(), 'n')) == "N", ebaCredQualStepIss == "CQS 6")
+        
+    then
+        $gda.setEbaRiskWeightIss("150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651122' extends '334546' salience 4650
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_fi_instr does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Public sector entities (other)", ebaProduct in ("Loans and advances. Reverse repurchase loans", "Deposits. Repurchase agreements", "Security legs. Reverse Repo", "Security legs. Repo", "Security legs. CLS Lending", "Security legs. CLS Borrowing"))
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651123' extends '334546' salience 4640
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Multilateral Development Banks")
+        
+    then
+        $gda.setEbaRiskWeightIss("0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651125' extends '334546' salience 4630
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaIssuerType in ("BIS", "EU", "ESM", "IMF", "EFSF"))
+        
+    then
+        $gda.setEbaRiskWeightIss("0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651126' extends '334546' salience 4620
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType in ("Central governments", "Central banks", "ECB", "Public sector entities (treatment as central government)", "Regional governments or local authorities (treatment as central government)"), eval(nvl(this.geteeactryissind(), 'n')) == "Y")
+        
+    then
+        $gda.setEbaRiskWeightIss("0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651127' extends '334546' salience 4610
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Regional governments or local authorities (other)", eval(nvl(this.geteeactryissind(), 'n')) == "N", ebaCredQualStepIss == "CQS 1")
+        
+    then
+        $gda.setEbaRiskWeightIss("20");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651128' extends '334546' salience 4600
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Regional governments or local authorities (other)", eval(nvl(this.geteeactryissind(), 'n')) == "N", ebaCredQualStepIss == "CQS 2")
+        
+    then
+        $gda.setEbaRiskWeightIss("50");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651129' extends '334546' salience 4590
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Regional governments or local authorities (other)", eval(nvl(this.geteeactryissind(), 'n')) == "N", ebaCredQualStepIss == "CQS 3")
+        
+    then
+        $gda.setEbaRiskWeightIss("50");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651130' extends '334546' salience 4580
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Regional governments or local authorities (other)", eval(nvl(this.geteeactryissind(), 'n')) == "N", ebaCredQualStepIss == "CQS 4")
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651131' extends '334546' salience 4570
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Regional governments or local authorities (other)", eval(nvl(this.geteeactryissind(), 'n')) == "N", ebaCredQualStepIss == "CQS 5")
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651132' extends '334546' salience 4560
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Regional governments or local authorities (other)", eval(nvl(this.geteeactryissind(), 'n')) == "N", ebaCredQualStepIss == "CQS 6")
+        
+    then
+        $gda.setEbaRiskWeightIss("150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651135' extends '334546' salience 4550
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType in ("Central governments", "Central banks", "ECB", "Public sector entities (treatment as central government)", "Regional governments or local authorities (treatment as central government)"), eval(nvl(this.geteeactryissind(), 'n')) == "Y", ebaCredQualStepIss == "CQS 1")
+        
+    then
+        $gda.setEbaRiskWeightIss("0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651136' extends '334546' salience 4540
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType in ("Central governments", "Central banks", "ECB", "Public sector entities (treatment as central government)", "Regional governments or local authorities (treatment as central government)"), eval(nvl(this.geteeactryissind(), 'n')) == "Y", ebaCredQualStepIss == "CQS 2")
+        
+    then
+        $gda.setEbaRiskWeightIss("20");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651137' extends '334546' salience 4530
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType in ("Central governments", "Central banks", "ECB", "Public sector entities (treatment as central government)", "Regional governments or local authorities (treatment as central government)"), eval(nvl(this.geteeactryissind(), 'n')) == "Y", ebaCredQualStepIss == "CQS 3")
+        
+    then
+        $gda.setEbaRiskWeightIss("50");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651138' extends '334546' salience 4520
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType in ("Central governments", "Central banks", "ECB", "Public sector entities (treatment as central government)", "Regional governments or local authorities (treatment as central government)"), eval(nvl(this.geteeactryissind(), 'n')) == "Y", ebaCredQualStepIss == "CQS 4")
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651139' extends '334546' salience 4510
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType in ("Central governments", "Central banks", "ECB", "Public sector entities (treatment as central government)", "Regional governments or local authorities (treatment as central government)"), eval(nvl(this.geteeactryissind(), 'n')) == "Y", ebaCredQualStepIss == "CQS 5")
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651140' extends '334546' salience 4500
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_ctry_ccy does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType in ("Central governments", "Central banks", "ECB", "Public sector entities (treatment as central government)", "Regional governments or local authorities (treatment as central government)"), eval(nvl(this.geteeactryissind(), 'n')) == "Y", ebaCredQualStepIss == "CQS 6")
+        
+    then
+        $gda.setEbaRiskWeightIss("150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1778912' extends '334546' salience 4490
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Public sector entities (other)", ebaCredQualStepIss == "CQS 1", getCase0_1778919() == "3 months or more")
+        
+    then
+        $gda.setEbaRiskWeightIss("20");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1778913' extends '334546' salience 4480
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Public sector entities (other)", ebaCredQualStepIss == "CQS 2", getCase0_1778919() == "3 months or more")
+        
+    then
+        $gda.setEbaRiskWeightIss("50");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1778914' extends '334546' salience 4470
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Public sector entities (other)", ebaCredQualStepIss == "CQS 3", getCase0_1778919() == "3 months or more")
+        
+    then
+        $gda.setEbaRiskWeightIss("50");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1778915' extends '334546' salience 4460
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Public sector entities (other)", ebaCredQualStepIss == "CQS 4", getCase0_1778919() == "3 months or more")
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1778916' extends '334546' salience 4450
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Public sector entities (other)", ebaCredQualStepIss == "CQS 5", getCase0_1778919() == "3 months or more")
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1778917' extends '334546' salience 4440
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Public sector entities (other)", ebaCredQualStepIss == "CQS 6", getCase0_1778919() == "3 months or more")
+        
+    then
+        $gda.setEbaRiskWeightIss("150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1778919' extends '334546' salience 4430
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Public sector entities (other)", getCase0_1778919() == "less than 3 months")
+        
+    then
+        $gda.setEbaRiskWeightIss("20");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651116' extends '334546' salience 4420
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_fi_instr does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Public sector entities (other)", ebaCredQualStepIss == "CQS 1", ebaProduct in ("Loans and advances. Reverse repurchase loans", "Deposits. Repurchase agreements", "Security legs. Reverse Repo", "Security legs. Repo", "Security legs. CLS Lending", "Security legs. CLS Borrowing"))
+        
+    then
+        $gda.setEbaRiskWeightIss("20");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651117' extends '334546' salience 4410
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_fi_instr does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Public sector entities (other)", ebaCredQualStepIss == "CQS 2", ebaProduct in ("Loans and advances. Reverse repurchase loans", "Deposits. Repurchase agreements", "Security legs. Reverse Repo", "Security legs. Repo", "Security legs. CLS Lending", "Security legs. CLS Borrowing"))
+        
+    then
+        $gda.setEbaRiskWeightIss("50");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651118' extends '334546' salience 4400
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_fi_instr does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Public sector entities (other)", ebaCredQualStepIss == "CQS 3", ebaProduct in ("Loans and advances. Reverse repurchase loans", "Deposits. Repurchase agreements", "Security legs. Reverse Repo", "Security legs. Repo", "Security legs. CLS Lending", "Security legs. CLS Borrowing"))
+        
+    then
+        $gda.setEbaRiskWeightIss("50");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651119' extends '334546' salience 4390
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_fi_instr does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Public sector entities (other)", ebaCredQualStepIss == "CQS 4", ebaProduct in ("Loans and advances. Reverse repurchase loans", "Deposits. Repurchase agreements", "Security legs. Reverse Repo", "Security legs. Repo", "Security legs. CLS Lending", "Security legs. CLS Borrowing"))
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651120' extends '334546' salience 4380
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_fi_instr does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Public sector entities (other)", ebaCredQualStepIss == "CQS 5", ebaProduct in ("Loans and advances. Reverse repurchase loans", "Deposits. Repurchase agreements", "Security legs. Reverse Repo", "Security legs. Repo", "Security legs. CLS Lending", "Security legs. CLS Borrowing"))
+        
+    then
+        $gda.setEbaRiskWeightIss("100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651121' extends '334546' salience 4370
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_fi_instr does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Public sector entities (other)", ebaCredQualStepIss == "CQS 6", ebaProduct in ("Loans and advances. Reverse repurchase loans", "Deposits. Repurchase agreements", "Security legs. Reverse Repo", "Security legs. Repo", "Security legs. CLS Lending", "Security legs. CLS Borrowing"))
+        
+    then
+        $gda.setEbaRiskWeightIss("150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+rule '1651134' extends '334546' salience 4360
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_fi_instr does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ebaIssuerType == "Public sector entities (other)", ebaProduct in ("Loans and advances. Reverse repurchase loans", "Deposits. Repurchase agreements", "Security legs. Reverse Repo", "Security legs. Repo", "Security legs. CLS Lending", "Security legs. CLS Borrowing"))
+        
+    then
+        $gda.setEbaRiskWeightIss("20");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5218");
+        
+end
+
+

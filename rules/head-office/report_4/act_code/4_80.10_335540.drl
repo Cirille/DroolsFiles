@@ -1,0 +1,165 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335540'
+	when
+		$gda : GrlDetAmounts(hpePdtType in ( "COMM DISC BILL" , "GUAR ISSUED" , "LC ISSUED" , "LETTER OF INTENT" , "OWN ACCEPTANCE" ))
+	then
+        
+end
+
+
+
+
+
+rule '1710684' extends '335540' salience 40940
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setActCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5916");
+        
+end
+
+rule '1710682' extends '335540' salience 40930
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LETTER OF INTENT", issuedInd == "Y", intInd == "N")
+        
+    then
+        $gda.setActCode("B0596000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5916");
+        
+end
+
+rule '1710683' extends '335540' salience 40920
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "OWN ACCEPTANCE", issuedInd == "Y", intInd == "N")
+        
+    then
+        $gda.setActCode("B0596000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5916");
+        
+end
+
+rule '1710685' extends '335540' salience 40910
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "COMM DISC BILL", issuedInd == "Y", intInd == "N")
+        
+    then
+        $gda.setActCode("B0610000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5916");
+        
+end
+
+rule '1710686' extends '335540' salience 40900
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "GUAR ISSUED", issuedInd == "Y", intInd == "N")
+        
+    then
+        $gda.setActCode("B0596000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5916");
+        
+end
+
+rule '1710680' extends '335540' salience 40890
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "GUAR ISSUED", issuedInd == "N", intInd == "N", (lseHlyRelId matches ".*SF4L" || lseHlyRelId matches ".*SF5L" || lseHlyRelId matches ".*TRADE" || lseHlyRelId == "9798" || lseHlyRelId == "0768" || lseHlyRelId == "9675" || lseHlyRelId == "0212" || lseHlyRelId == "9679" || lseHlyRelId == "9117" || lseHlyRelId == "9120" || lseHlyRelId == "9206"))
+        
+    then
+        $gda.setActCode("B0595000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5916");
+        
+end
+
+rule '1710681' extends '335540' salience 40880
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", intInd == "N", standbyInd == "N", confInd == "Y")
+        
+    then
+        $gda.setActCode("B0596000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5916");
+        
+end
+
+rule '1710687' extends '335540' salience 40870
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", issuedInd == "Y", intInd == "N", standbyInd == "Y")
+        
+    then
+        $gda.setActCode("B0596000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5916");
+        
+end
+
+rule '1710688' extends '335540' salience 40860
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", issuedInd == "Y", intInd == "N", standbyInd == "N")
+        
+    then
+        $gda.setActCode("B0596000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5916");
+        
+end
+
+rule '1741162' extends '335540' salience 40850
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", issuedInd == "Y", intInd == "N", acceptedInd == "Y")
+        
+    then
+        $gda.setActCode("A0027000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5916");
+        
+end
+
+rule '1749033' extends '335540' salience 40840
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "LC ISSUED", issuedInd == "N", intInd == "N", acceptedInd == "Y")
+        
+    then
+        $gda.setActCode("L0242000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5916");
+        
+end
+
+

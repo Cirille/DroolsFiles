@@ -1,0 +1,113 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '333911'
+	when
+		$gda : GrlDetAmounts(ratingIng != null && intInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1559270' extends '333911' salience 94010
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCredQualStepIss("6");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4670");
+        
+end
+
+rule '1559271' extends '333911' salience 94000
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIng in ("1", "2", "3", "4"))
+        
+    then
+        $gda.setCredQualStepIss("1");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4670");
+        
+end
+
+rule '1559272' extends '333911' salience 93990
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIng in ("5", "6", "7"))
+        
+    then
+        $gda.setCredQualStepIss("2");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4670");
+        
+end
+
+rule '1559273' extends '333911' salience 93980
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIng in ("8", "9", "10"))
+        
+    then
+        $gda.setCredQualStepIss("3");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4670");
+        
+end
+
+rule '1559274' extends '333911' salience 93970
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIng in ("11", "12", "13"))
+        
+    then
+        $gda.setCredQualStepIss("4");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4670");
+        
+end
+
+rule '1559275' extends '333911' salience 93960
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIng in ("14", "15", "16"))
+        
+    then
+        $gda.setCredQualStepIss("5");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4670");
+        
+end
+
+rule '1559276' extends '333911' salience 93950
+
+    when
+        
+        GrlDetAmounts(this == $gda, ratingIng not in ("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"))
+        
+    then
+        $gda.setCredQualStepIss("6");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4670");
+        
+end
+
+

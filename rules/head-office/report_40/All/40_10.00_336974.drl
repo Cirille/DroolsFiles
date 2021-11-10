@@ -1,0 +1,813 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlMdnReportLines;
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+global com.ing.gfrs.logical.apis.GplExchRatesLogicalApi gplExchRatesLogicalApi;
+global com.ing.gfrs.logical.apis.ChoExchangeRatesLogicalApi choExchangeRatesLogicalApi;
+
+
+dialect  "mvel"
+
+
+rule '336974_INIT'
+	when
+		$gda : GrlDetAmounts(( ( hpePdtType not in ( "CCY OPT" , "GOLD OPT" , "PREC METAL OPT" ) || hacAmtCl == "12" ) ) && ( ( prodSubSubTypeLoc not in ( "INTDP" , "INTDPS" , "INTDT" , "INTDTS" , "INTFX" , "INTFXS" , "REI" , "RID" ) || ( hacAmtCl != "10" ) || ( hpePdtType != "SPOT FX" ) || ( intInd != "Y" ) ) ))
+	then
+
+        GrlMdnReportLines gmrl = new GrlMdnReportLines();
+        gmrl.setLastHrdId(7049L);
+        gmrl.setLseHlyRelId($gda.getLseHlyRelId());
+        gmrl.setAjtId($gda.getAjtId());
+        gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+        gmrl.setAmountField1(gplExchRatesLogicalApi.getExchangeRate($gda.getHcuCcyCdChoDetTan(), $gda.getLseHlyRelId()));
+        gmrl.setAmountField2(gplExchRatesLogicalApi.getCrossRate("EUR", $gda.getHcuCcyCdChoDetTan(), 6, $gda.getLseHlyRelId()));
+        gmrl.setAmountField3(gplExchRatesLogicalApi.getCrossRate("EUR", $gda.getHcuRepCcyCd(), 6, $gda.getLseHlyRelId(),
+            choExchangeRatesLogicalApi.getUltimoRate($gda.getHcuRepCcyCd(),"EUR",$gda.getPrdId())));
+        gmrl.setAmountReporting($gda.getCase2_336974());
+        gmrl.setAmountReportingEur($gda.getCase3_336974());
+        gmrl.setAmountTransaction($gda.getCase4_336974());
+        gmrl.setCpyBeyNumber($gda.getCpyBeyNumber());
+        gmrl.setCpyReyCode($gda.getCpyReyCode());
+        gmrl.setDatId($gda.getId());
+        gmrl.setIndField5($gda.getIcInd());
+        gmrl.setLdrCode($gda.getLdrCode());
+        gmrl.setMneCode1($gda.getCase0_336974());
+        gmrl.setMneCode9($gda.getCase1_336974());
+        gmrl.setMrtName("FCCY.10");
+        gmrl.setPosId($gda.getPosId());
+        gmrl.setPrdId($gda.getPrdId());
+        gmrl.setReportingCryCode($gda.getHcuCcyCdChoDetRepCcy());
+        gmrl.setSmnBeyNumber($gda.getSmnBeyNumber());
+        gmrl.setSmnReyCode($gda.getSmnReyCode());
+        gmrl.setSource("DAT");
+        gmrl.setSourceId($gda.getId());
+        gmrl.setSourceTable("GRL_DET_AMOUNTS");
+        gmrl.setTextField5("ISIN_CD: "+($gda.getIsinCd()==null ? "": $gda.getIsinCd())+"/ GRID_ID: "+($gda.getGridId()==null ? "": $gda.getGridId()));
+        gmrl.setTransactionCryCode($gda.getHcuCcyCdChoDetTan());
+        insert(gmrl);
+end
+
+rule '336974' extends '336974_INIT'
+    when
+        $gmrl : GrlMdnReportLines(sourceId == $gda.getId(), lastHrdId == 7049L)
+    then
+end
+
+
+
+rule '1773475' extends '336974' salience 630
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y")
+
+    then
+        $gmrl.setMneCode10("NTBR");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773476' extends '336974' salience 620
+
+    when
+
+        /*WARNING: this rule will always be called, since it has no conditions*/
+
+    then
+        $gmrl.setMneCode10("NTBR");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773487' extends '336974' salience 610
+
+    when
+
+        GrlDetAmounts(this == $gda, (hscAcctSubcl == "2801" || hscAcctSubcl == "2802" || hscAcctSubcl == "2807" || hscAcctSubcl == "2808" || hscAcctSubcl == "2809" || hscAcctSubcl == "2810" || hscAcctSubcl == "2811" || hscAcctSubcl == "2812" || hscAcctSubcl == "2814" || hscAcctSubcl == "2815" || hscAcctSubcl matches "282.*" || hscAcctSubcl matches "283.*" || hscAcctSubcl matches "29.*" || hscAcctSubcl == "3001" || hscAcctSubcl == "3002" || hscAcctSubcl == "3003" || hscAcctSubcl == "3004" || hscAcctSubcl == "3007" || hscAcctSubcl == "3008" || hscAcctSubcl == "3009" || hscAcctSubcl matches "301.*" || hscAcctSubcl matches "302.*"))
+
+    then
+        $gmrl.setMneCode10("NTBR");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773467' extends '336974' salience 600
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", hpePdtType in ("UNUSED FAC AMT", "CFY", "NIF AND RUF", "FIDUCIARY DEP", "GUAR ISSUED", "LC ISSUED", "OWN ACCEPTANCE", "COMM DISC BILL", "LETTER OF INTENT"))
+
+    then
+        $gmrl.setMneCode10("NTBR");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773474' extends '336974' salience 590
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", hscAcctSubcl in ("1999", "2204"))
+
+    then
+        $gmrl.setMneCode10("NTBR");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773470' extends '336974' salience 580
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", hpePdtType in ("FRA", "INTR RATE FUT", "IRS", "OPT FUT", "COMMODITY FORW", "COMMODITY FUT", "COMMODITY SWAP", "EQUITY FORW", "EQUITY FUT", "CFD", "EQUITY SWAP", "EM DEBT FORW", "EM DEBT FUT", "EM DEBT SWAP", "OTHER UNDERL FORW", "OTHER UNDERL FUT", "OTHER UNDERL SWAP"), hacAmtCl == "10")
+
+    then
+        $gmrl.setMneCode10("NTBR");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773478' extends '336974' salience 570
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", repAssetInd == "N", hacAmtCl in ("12", "16", "21"))
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773479' extends '336974' salience 560
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", hpePdtType in ("INTR RATE OPT", "SWAPTION", "COMMODITY OPT", "EQUITY OPT", "BOND OPT", "EM DEBT OPT", "OTHER UNDERL OPT"), hacAmtCl == "10")
+
+    then
+        $gmrl.setMneCode10("NTBR");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773451' extends '336974' salience 550
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y", repAssetInd == "Y", hacAmtCl == "01", prodSubTypeLoc == "INCH")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773452' extends '336974' salience 540
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y", repAssetInd == "N", hpePdtType in ("IRS", "CCY SWAP"), hacAmtCl == "03")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773453' extends '336974' salience 530
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y", repAssetInd == "Y", hpePdtType in ("IRS", "CCY SWAP"), hacAmtCl == "03")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773458' extends '336974' salience 520
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y", hpePdtType == "CCY FORW", buyInd == "Y", hacAmtCl == "10")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_FORWARD_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773459' extends '336974' salience 510
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y", hpePdtType == "CCY FORW", buyInd == "N", hacAmtCl == "10")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_FORWARD_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773468' extends '336974' salience 500
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", hpePdtType in ("CCY FORW", "CCY FUT", "PREC METAL FORW", "PREC METAL FUT", "PREC METAL SWAP", "GOLD FORW", "GOLD FUT", "GOLD SWAP"), buyInd == "Y", hacAmtCl == "10")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_FORWARD_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773469' extends '336974' salience 490
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", hpePdtType in ("CCY FORW", "CCY FUT", "PREC METAL FORW", "PREC METAL FUT", "PREC METAL SWAP", "GOLD FORW", "GOLD FUT", "GOLD SWAP"), buyInd == "N", hacAmtCl == "10")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_FORWARD_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773472' extends '336974' salience 480
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y", repAssetInd == "N", hscAcctSubcl in ("1701", "2703"), hacAmtCl == "01")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773480' extends '336974' salience 470
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y", repAssetInd == "N", hpePdtType in ("CCY FORW", "CCY SWAP", "IRS"), hacAmtCl == "12")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773481' extends '336974' salience 460
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y", repAssetInd == "Y", hpePdtType in ("CCY FORW", "CCY SWAP", "IRS"), hacAmtCl == "12")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773490' extends '336974' salience 450
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", repAssetInd == "N", hpePdtType == "POS MOV", hacAmtCl == "01")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773491' extends '336974' salience 440
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", repAssetInd == "Y", icInd == "N", hacAmtCl in ("12", "16"))
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773493' extends '336974' salience 430
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", repAssetInd == "Y", icInd == "Y", hacAmtCl in ("12", "16"))
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773496' extends '336974' salience 420
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", repAssetInd == "N", hpePdtType in ("IRS", "CCY SWAP"), hacAmtCl == "03")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773498' extends '336974' salience 410
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y", repAssetInd == "N", hpePdtType == "CCY SWAP", hacAmtCl == "03")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773499' extends '336974' salience 400
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y", repAssetInd == "Y", hpePdtType == "CCY SWAP", hacAmtCl == "03")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773503' extends '336974' salience 390
+
+    when
+
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY SWAP", buyInd == "N", hacAmtCl == "10")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_FORWARD_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773504' extends '336974' salience 380
+
+    when
+
+        GrlDetAmounts(this == $gda, hpePdtType == "CCY SWAP", buyInd == "Y", hacAmtCl == "10")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_FORWARD_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773456' extends '336974' salience 370
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", icInd == "Y", hpePdtType == "SPOT FX", buyInd == "Y", hacAmtCl == "10")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773466' extends '336974' salience 360
+
+    when
+
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", icInd == "N", hscAcctSubcl == "2703", hacAmtCl == "01")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773482' extends '336974' salience 350
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", repAssetInd == "Y", icInd == "N", hpePdtType in ("IRS", "CCY SWAP"), hacAmtCl == "03")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773483' extends '336974' salience 340
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", repAssetInd == "Y", icInd == "Y", hpePdtType in ("IRS", "CCY SWAP"), hacAmtCl == "03")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773484' extends '336974' salience 330
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", icInd == "N", hpePdtType == "SPOT FX", buyInd == "Y", hacAmtCl == "10")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773488' extends '336974' salience 320
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", repAssetInd == "Y", icInd == "Y", hpePdtType == "POS MOV", hacAmtCl == "01")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773489' extends '336974' salience 310
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", repAssetInd == "Y", icInd == "N", hpePdtType == "POS MOV", hacAmtCl == "01")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773494' extends '336974' salience 300
+
+    when
+
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", icInd == "Y", hscAcctSubcl == "2703", hacAmtCl == "01")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773502' extends '336974' salience 290
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", (hpePdtType == "LOAN" || hpePdtType == "DEPOSIT" || hpePdtType matches "STOCK.*"), contingInd == "Y", hacAmtCl == "01", actCode matches "L.*")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773505' extends '336974' salience 280
+
+    when
+
+        GrlDetAmounts(this == $gda, hpePdtType == "FIDUCIARY DEP")
+
+    then
+        $gmrl.setMneCode10("NTBR");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773507' extends '336974' salience 270
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y", repAssetInd == "Y", hpePdtType in ("DEPOSIT", "LOAN", "REPO"), contingInd == "N", hacAmtCl in ("01", "02", "03", "12", "16"))
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773508' extends '336974' salience 260
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y", repAssetInd == "N", hpePdtType in ("DEPOSIT", "LOAN", "REPO"), contingInd == "N", hacAmtCl in ("01", "02", "03", "12", "16"))
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773454' extends '336974' salience 250
+no-loop
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y", repAssetInd == "Y", hpePdtType in ("DEPOSIT", "LOAN", "REPO"), contingInd == "N", hacAmtCl in ("01", "02", "03", "12", "16"), getCase0_1773455() == "REMO")
+
+    then
+        $gmrl.setMneCode10("NTBR");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773455' extends '336974' salience 240
+no-loop
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y", repAssetInd == "N", hpePdtType in ("DEPOSIT", "LOAN", "REPO"), contingInd == "N", hacAmtCl in ("01", "02", "03", "12", "16"), getCase0_1773455() == "REMO")
+
+    then
+        $gmrl.setMneCode10("NTBR");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773457' extends '336974' salience 230
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", repAssetInd == "Y", icInd == "Y", hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"), contingInd == "N", hacAmtCl in ("01", "02", "03", "04", "05"))
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773465' extends '336974' salience 220
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y", repAssetInd == "Y", hpePdtType == "SPOT FX", contingInd == "N", hacAmtCl == "10")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773471' extends '336974' salience 210
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", repAssetInd == "N", hpePdtType not in ("GUAR ISSUED", "LC ISSUED", "OWN ACCEPTANCE", "COMM DISC BILL", "LETTER OF INTENT"), contingInd == "N", (hscAcctSubcl != 1999 && hscAcctSubcl != 2204 && hscAcctSubcl not matches "28.*" && hscAcctSubcl not matches "29.*" && hscAcctSubcl != 3001 && hscAcctSubcl != 3002 && hscAcctSubcl != 3003 && hscAcctSubcl != 3004 && hscAcctSubcl != 3007 && hscAcctSubcl != 3008 && hscAcctSubcl != 3009 && hscAcctSubcl not matches "301.*" && hscAcctSubcl not matches "302.*"), hacAmtCl in ("01", "02", "03", "04", "05", "08"))
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773473' extends '336974' salience 200
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", hpePdtType == "SPOT FX", contingInd == "N", buyInd == "N", hacAmtCl == "10")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773477' extends '336974' salience 190
+
+    when
+
+        GrlDetAmounts(this == $gda, repAssetInd == "N", hpePdtType == "SPOT FX", contingInd == "N", hacAmtCl == "08")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773485' extends '336974' salience 180
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", repAssetInd == "Y", hscAcctSubcl in ("3005", "3006"), hacAmtCl == "01")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_FORWARD_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773486' extends '336974' salience 170
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", repAssetInd == "N", hscAcctSubcl in ("3005", "3006"), hacAmtCl == "01")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_FORWARD_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773492' extends '336974' salience 160
+
+    when
+
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", icInd == "Y", hpePdtType == "SPOT FX", contingInd == "N", hacAmtCl == "08")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773495' extends '336974' salience 150
+
+    when
+
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", icInd == "N", hpePdtType == "SPOT FX", contingInd == "N", hacAmtCl == "08")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773500' extends '336974' salience 140
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", icInd == "N", (hpePdtType == "LOAN" || hpePdtType == "DEPOSIT" || hpePdtType matches "STOCK.*"), contingInd == "Y", hacAmtCl == "01", actCode matches "A.*")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773501' extends '336974' salience 130
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", icInd == "Y", (hpePdtType == "LOAN" || hpePdtType == "DEPOSIT" || hpePdtType matches "STOCK.*"), contingInd == "Y", hacAmtCl == "01", actCode matches "A.*")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773506' extends '336974' salience 120
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", hpePdtType == "SPOT FX", contingInd == "N", buyInd == "Y", hacAmtCl == "10")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773509' extends '336974' salience 110
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y", repAssetInd == "N", hpePdtType == "SPOT FX", contingInd == "N", hacAmtCl == "10")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773463' extends '336974' salience 100
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", repAssetInd == "Y", icInd == "N", hpePdtType not in ("CCY FORW", "GUAR ISSUED", "LC ISSUED", "OWN ACCEPTANCE", "COMM DISC BILL", "LETTER OF INTENT"), contingInd == "N", (hscAcctSubcl != 1999 && hscAcctSubcl != 2703 && hscAcctSubcl not matches "28.*" && hscAcctSubcl not matches "29.*" && hscAcctSubcl != 3001 && hscAcctSubcl != 3002 && hscAcctSubcl != 3003 && hscAcctSubcl != 3004 && hscAcctSubcl != 3007 && hscAcctSubcl != 3008 && hscAcctSubcl != 3009 && hscAcctSubcl not matches "301.*" && hscAcctSubcl not matches "302.*"), hacAmtCl in ("01", "02", "03", "04", "05"))
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773464' extends '336974' salience 90
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "N", repAssetInd == "Y", icInd == "Y", hpePdtType not in ("CCY FORW", "GUAR ISSUED", "LC ISSUED", "OWN ACCEPTANCE", "COMM DISC BILL", "LETTER OF INTENT", "STOCK BOND", "STOCK CD AND CP", "STOCK CONV BOND", "STOCK FLOATING RATE NOTE", "STOCK MEDIUM TERM NOTE", "STOCK SAVING CERT", "STOCK SHARE", "STOCK TREASURY PAPER"), contingInd == "N", (hscAcctSubcl != 1999 && hscAcctSubcl != 2703 && hscAcctSubcl not matches "28.*" && hscAcctSubcl not matches "29.*" && hscAcctSubcl != 3001 && hscAcctSubcl != 3002 && hscAcctSubcl != 3003 && hscAcctSubcl != 3004 && hscAcctSubcl != 3007 && hscAcctSubcl != 3008 && hscAcctSubcl != 3009 && hscAcctSubcl not matches "301.*" && hscAcctSubcl not matches "302.*"), hacAmtCl in ("01", "02", "03", "04", "05"))
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773510' extends '336974' salience 80
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y", repAssetInd == "Y", hpePdtType in ("OTHER PAYABLES", "OTHER RECEIVABLES"), contingInd == "N", hscAcctSubcl != "1999", hacAmtCl == "01")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773511' extends '336974' salience 70
+
+    when
+
+        GrlDetAmounts(this == $gda, intInd == "Y", repAssetInd == "N", hpePdtType in ("OTHER PAYABLES", "OTHER RECEIVABLES"), contingInd == "N", hscAcctSubcl != "1999", hacAmtCl == "01")
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+rule '1773497' extends '336974' salience 60
+
+    when
+
+        GrlDetAmounts(this == $gda, hpePdtType in ("BOND OPT", "CCY OPT", "COMMODITY OPT", "EM DEBT OPT", "EQUITY OPT", "GOLD OPT", "INTR RATE OPT", "OTHER UNDERL OPT", "PREC METAL OPT", "SWAPTION"), hacAmtCl in ("04", "05"))
+
+    then
+        $gmrl.setMneCode10("NTBR");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7049");
+
+end
+
+

@@ -1,0 +1,270 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331800'
+	when
+		$gpy : GrlPlYtd(hpnPlCl != null && hpnPlCl not in ( "6000" , "7000" ))
+	then
+        
+end
+
+
+
+
+
+rule '1105010' extends '331800' salience 190
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine(massLine );
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+rule '1104995' extends '331800' salience 180
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine("Interest Received Loans");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+rule '1105007' extends '331800' salience 170
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Investment Income")
+        
+    then
+        $gpy.setLocMassLine("Investment Income");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+rule '1105009' extends '331800' salience 160
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Valuation Result Non-Trading Derivatives")
+        
+    then
+        $gpy.setLocMassLine("Other Valuation Result Non-Trading Derivatives");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+rule '1105011' extends '331800' salience 150
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine("Other (Income)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+rule '1105012' extends '331800' salience 140
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Other Result of Trading Portfolio")
+        
+    then
+        $gpy.setLocMassLine("FX Income");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+rule '1700853' extends '331800' salience 130
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Funds Transfer Fees received")
+        
+    then
+        $gpy.setLocMassLine("Other Funds Transfer fees Other");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+rule '1700855' extends '331800' salience 120
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine("Other commissions Other");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+rule '1700858' extends '331800' salience 110
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Funds Transfer Fees paid")
+        
+    then
+        $gpy.setLocMassLine("Interchange");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+rule '1700864' extends '331800' salience 100
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine("Other Commissions/Fees paid Other");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+rule '1703541' extends '331800' salience 90
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine("Interest External Paid Other");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+rule '1732834' extends '331800' salience 80
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine("Interest Internal Received (Reference) other");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+rule '1772533' extends '331800' salience 70
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine("Interest Internal Paid (Reference Rate) other");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+rule '1778994' extends '331800' salience 60
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Funds Transfer Fees received", ownUse05 == "CARD", ownUse06 == "FCRC")
+        
+    then
+        $gpy.setLocMassLine("Card Fees");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+rule '1778995' extends '331800' salience 50
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Funds Transfer Fees received", ownUse05 == "MONKEY", ownUse06 == "FCRC")
+        
+    then
+        $gpy.setLocMassLine(Warning: selecting from funds: data will not be available in source topic.
+ full statement: Commissions from funds transfer);
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+rule '1778996' extends '331800' salience 40
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Funds Transfer Fees received", ownUse05 == "ATM", ownUse06 == "FCRC")
+        
+    then
+        $gpy.setLocMassLine("ATMs (cash-out)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+rule '1778997' extends '331800' salience 30
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Funds Transfer Fees received", ownUse05 == "CASH-IN", ownUse06 == "FCRC")
+        
+    then
+        $gpy.setLocMassLine("Branch (cash in/out)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+rule '1778998' extends '331800' salience 20
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Funds Transfer Fees received", ownUse05 == "OTHER", ownUse06 == "FCRC")
+        
+    then
+        $gpy.setLocMassLine("Other Funds Transfer fees Other");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+rule '1778999' extends '331800' salience 10
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine == "Funds Transfer Fees received", ownUse05 == "POS", ownUse06 == "FCRC")
+        
+    then
+        $gpy.setLocMassLine("POS fees");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3248");
+        
+end
+
+

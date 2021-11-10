@@ -1,0 +1,665 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335752'
+	when
+		$gda : GrlDetAmounts()
+	then
+        
+end
+
+
+
+
+
+rule '1732728' extends '335752' salience 490
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLocMassLine(massLine );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732682' extends '335752' salience 480
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other assets")
+        
+    then
+        $gda.setLocMassLine("Other accrued income recvbl and premnt");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732691' extends '335752' salience 470
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLocMassLine("IC OTHER  LIABILITIES");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732703' extends '335752' salience 460
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLocMassLine(Warning: selecting from customers): data will not be available in source topic.
+ full statement: Balances of FX-transactions (due from customers));
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732704' extends '335752' salience 450
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other Amounts due to Banks")
+        
+    then
+        $gda.setLocMassLine("Balances of FX-transactions (due to banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732709' extends '335752' salience 440
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other liabilities", (actCode matches "L0229.*" || actCode matches "L3351.*" || actCode matches "L3909.*" || actCode matches "L3911.*" || actCode matches "L3915.*" || actCode matches "L3917.*"))
+        
+    then
+        $gda.setLocMassLine("Accrued interest payable");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732710' extends '335752' salience 430
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other liabilities", actCode in ("L0234000", "L0238000", "L4885000"))
+        
+    then
+        $gda.setLocMassLine("Corporate tax payable");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732711' extends '335752' salience 420
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other liabilities", actCode in ("L0245000", "L0257000", "L0273000", "L0277000", "L4258000", "L8940000"))
+        
+    then
+        $gda.setLocMassLine("OTHER TAXES PAYABLE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732712' extends '335752' salience 410
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other liabilities", actCode == "L0250000")
+        
+    then
+        $gda.setLocMassLine("LIAB EXCL SEC TRANS CRED INST < 6 DAYS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732713' extends '335752' salience 400
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other liabilities", (actCode matches "L0233.*" || actCode matches "L0239.*" || actCode matches "L0244.*" || actCode matches "L0246.*" || actCode matches "L0249.*" || actCode matches "L0253.*" || actCode matches "L0256.*" || actCode matches "L3873.*" || actCode matches "L3899.*" || actCode matches "L4146.*" || actCode matches "L4147.*" || actCode matches "L4150.*" || actCode == "L4597000" || actCode matches "L4888.*" || actCode == "L7510000" || actCode == "L8292000" || actCode == "L9004000"))
+        
+    then
+        $gda.setLocMassLine("OTHER PROVISIONS (EN)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732714' extends '335752' salience 390
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other liabilities", actCode == "L2571000")
+        
+    then
+        $gda.setLocMassLine("Bonus accruals");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732715' extends '335752' salience 380
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other liabilities", (actCode matches "L0243.*" || actCode matches "L0252.*" || actCode matches "L0254.*" || actCode matches "L0255.*" || actCode matches "L0267.*" || actCode matches "L0271.*" || actCode matches "L9771.*"))
+        
+    then
+        $gda.setLocMassLine("Sundry creditors");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732717' extends '335752' salience 370
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "Q0073000")
+        
+    then
+        $gda.setLocMassLine("SHARE CAPITAL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732718' extends '335752' salience 360
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("Q0066000", "Q0076000", "Q0077000"))
+        
+    then
+        $gda.setLocMassLine("CAPITAL RESERVES");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732719' extends '335752' salience 350
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L2531000", "L2532000", "L2533000"))
+        
+    then
+        $gda.setLocMassLine("CAPITAL RESERVES");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732722' extends '335752' salience 340
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other Amounts due from Banks")
+        
+    then
+        $gda.setLocMassLine(Warning: selecting from banks): data will not be available in source topic.
+ full statement: Balances of FX-transactions (due from banks));
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732727' extends '335752' salience 330
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0258000")
+        
+    then
+        $gda.setLocMassLine("Revaluation reserve investment portfolio");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1772511' extends '335752' salience 320
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other liabilities", actCode == "L9012000")
+        
+    then
+        $gda.setLocMassLine("Accrued interest payable");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1772513' extends '335752' salience 310
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other liabilities", actCode == "L0251000")
+        
+    then
+        $gda.setLocMassLine("LIAB EXCL SEC TRANS CRED INST < 6 DAYS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732683' extends '335752' salience 300
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode not matches "A0012.*")
+        
+    then
+        $gda.setLocMassLine("IC OTHER ASSETS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732684' extends '335752' salience 290
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode == "A0001000" || actCode == "A0003000" || actCode == "A0031000" || actCode == "A0033000" || actCode == "A0039000" || actCode matches "A391.*" || actCode == "A0040000"))
+        
+    then
+        $gda.setLocMassLine("IC OTHER ASSETS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732685' extends '335752' salience 280
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3282000")
+        
+    then
+        $gda.setLocMassLine("IC Trading Derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732688' extends '335752' salience 270
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A0007.*")
+        
+    then
+        $gda.setLocMassLine("IC Balances of FX-transactions");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732690' extends '335752' salience 260
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3178000")
+        
+    then
+        $gda.setLocMassLine("IC Non-trading derivatives");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732692' extends '335752' salience 250
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "L0229.*" || actCode matches "L3351.*" || actCode matches "L3915.*" || actCode matches "L3917.*" || actCode matches "L0252.*" || actCode matches "L0255.*"))
+        
+    then
+        $gda.setLocMassLine("IC OTHER  LIABILITIES");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732693' extends '335752' salience 240
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3182000")
+        
+    then
+        $gda.setLocMassLine("IC Non-trading derivatives (liab)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732694' extends '335752' salience 230
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3283000")
+        
+    then
+        $gda.setLocMassLine("IC Trading Derivatives (Liabilities)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732697' extends '335752' salience 220
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0250000")
+        
+    then
+        $gda.setLocMassLine("IC LIAB EXCL SEC TRANS CRED INST < 6 DAYS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732699' extends '335752' salience 210
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0251000")
+        
+    then
+        $gda.setLocMassLine("IC LIAB SEC TRANS CRED INST < 6 DAYS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732700' extends '335752' salience 200
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0230000")
+        
+    then
+        $gda.setLocMassLine("IC Balances of FX-transactions (liab)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732701' extends '335752' salience 190
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000")
+        
+    then
+        $gda.setLocMassLine("IC CLAIMS SEC TRANS CRED INST < 6 DAYS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732702' extends '335752' salience 180
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0024000")
+        
+    then
+        $gda.setLocMassLine("IC CLAIMS EXCL SEC TRANS CRED INST < 6 DAYS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732705' extends '335752' salience 170
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other Amounts due to Banks", actCode == "L0251000")
+        
+    then
+        $gda.setLocMassLine("LIAB SEC TRANS CRED INST < 6 DAYS (due to banks)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732706' extends '335752' salience 160
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other assets", (actCode == "A0003000" || actCode matches "A391.*"))
+        
+    then
+        $gda.setLocMassLine("Accrued interest recvble/int. prepayments");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732707' extends '335752' salience 150
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other assets", actCode in ("A0011000", "A0014000", "A0053000", "A0061000"))
+        
+    then
+        $gda.setLocMassLine("Taxes");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732708' extends '335752' salience 140
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other assets", actCode == "A0024000")
+        
+    then
+        $gda.setLocMassLine("CLAIMS EXCL SEC TRANS CRED INST < 6 DAYS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732716' extends '335752' salience 130
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other assets", actCode in ("A0031000", "A0039000", "A0040000"))
+        
+    then
+        $gda.setLocMassLine("Sundry debtors");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732720' extends '335752' salience 120
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other credit balances on customer accounts", actCode == "L0251000")
+        
+    then
+        $gda.setLocMassLine("LIAB SEC TRANS CRED INST < 6 DAYS (due to customers)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732725' extends '335752' salience 110
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other credit balances on customer accounts", actCode == "L0230000")
+        
+    then
+        $gda.setLocMassLine("Balances of FX-transactions (due to customers)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732686' extends '335752' salience 100
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014000", actCode == "A0027000")
+        
+    then
+        $gda.setLocMassLine("IC Nostro accounts");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732689' extends '335752' salience 90
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("027800", "027900"), actCode == "A0057000")
+        
+    then
+        $gda.setLocMassLine("IC Reverse repurchase agreements");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732696' extends '335752' salience 80
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("004300", "004400", "028000"), actCode == "L0242000")
+        
+    then
+        $gda.setLocMassLine("IC Deposits");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732721' extends '335752' salience 70
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Variable savings accounts individuals", actCode == "L2569000", posId matches "TD.*", ownUse06 == "AINP")
+        
+    then
+        $gda.setLocMassLine("Fixed term savings accounts individuals");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732723' extends '335752' salience 60
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other Amounts due from Banks", actCode == "A0046000")
+        
+    then
+        $gda.setLocMassLine(Warning: selecting from Banks): data will not be available in source topic.
+ full statement: IBNR (due from Banks));
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732724' extends '335752' salience 50
+
+    when
+        
+        GrlDetAmounts(this == $gda, massLine == "Other Amounts due from Banks", actCode == "A0025000")
+        
+    then
+        $gda.setLocMassLine(Warning: selecting from banks): data will not be available in source topic.
+ full statement: CLAIMS SEC TRANS CRED INST < 6 DAYS (due from banks));
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732726' extends '335752' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0025000")
+        
+    then
+        $gda.setLocMassLine(Warning: selecting from customers): data will not be available in source topic.
+ full statement: CLAIMS SEC TRANS CRED INST < 6 DAYS (due from customers));
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732687' extends '335752' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode not matches "A0012.*", cgpCode == "B0036")
+        
+    then
+        $gda.setLocMassLine(Warning: selecting from banks): data will not be available in source topic.
+ full statement: IC Deposits (due from banks));
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732695' extends '335752' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode == "014000", actCode == "L0242000", cgpCode in ("G0008", "G0009", "P0039", "P0045", "P0049"))
+        
+    then
+        $gda.setLocMassLine("IC Current accounts");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+rule '1732698' extends '335752' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("027800", "027900"), actCode in ("L1425000", "L0242000"))
+        
+    then
+        $gda.setLocMassLine("IC Repurchase agreements");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6076");
+        
+end
+
+

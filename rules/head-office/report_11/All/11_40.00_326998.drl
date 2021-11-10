@@ -1,0 +1,31 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '326998'
+	when
+		$gpy : GrlPlYtd(( smnBeyNumber == cpyBeyNumber ) && ( smnReyCode == cpyReyCode ))
+	then
+end
+
+
+rule '99022' extends '326998' salience 10
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setCpyReyCode(null);
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"1544");
+        
+end
+
+

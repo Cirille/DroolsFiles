@@ -1,0 +1,271 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336871'
+	when
+		$gda : GrlDetAmounts(actCode in ( "A0027000" , "A0057000" , "A3329000" , "A3330000" , "A3332000" , "A3931000" , "A8350000" , "A8805000" , "A8806000" , "A8807000" , "A926000" , "A9457000" , "A9458000" , "A9459000" , "A9460000" , "L0241000" , "L0242000" , "L0272000" , "L1425000" , "L3348000" , "L3334000" , "L3343000" , "L3348000" , "L3932000" , "L3933000" , "L3935000" , "L3936000" , "L9261000" , "L9262000" ) && hpePdtType not matches "STOCK.*" && seSectors3 matches ".*2201.*")
+	then
+        
+end
+
+
+
+
+
+rule '1770656' extends '336871' salience 12940
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxtHo09(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6978");
+        
+end
+
+rule '1770657' extends '336871' salience 12930
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("014000", "028000"), getCase1_1770663() == "N")
+        
+    then
+        $gda.setCustomTxtHo09("9001-HK1_24.100-0.000.0");
+        $gda.setCustomTxtHo12("9001-HK1_24.108-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6978");
+        
+end
+
+rule '1770658' extends '336871' salience 12920
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("014000", "028000"), getCase1_1770663() == "N")
+        
+    then
+        $gda.setCustomTxtHo09("9001-HK1_24.100-0.000.0");
+        $gda.setCustomTxtHo11("9001-HK1_24.100-1.000.0");
+        $gda.setCustomTxtHo12("9001-HK1_24.108-0.000.0");
+        $gda.setCustomTxtHo13("9001-HK1_24.108-1.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6978");
+        
+end
+
+rule '1770659' extends '336871' salience 12910
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("014000", "028000"), getCase1_1770663() == "Y")
+        
+    then
+        $gda.setCustomTxtHo09("9001-HK1_24.100-0.000.0");
+        $gda.setCustomTxtHo11("9001-HK1_24.100-1.000.0");
+        $gda.setCustomTxtHo12("9001-HK1_24.108-0.000.0");
+        $gda.setCustomTxtHo13("9001-HK1_24.108-1.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6978");
+        
+end
+
+rule '1770660' extends '336871' salience 12900
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("014000", "028000"), getCase1_1770663() == "Y")
+        
+    then
+        $gda.setCustomTxtHo09("9001-HK1_24.100-0.000.0");
+        $gda.setCustomTxtHo12("9001-HK1_24.108-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6978");
+        
+end
+
+rule '1770661' extends '336871' salience 12890
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode == "014000", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setCustomTxtHo09("9001-HK1_24.100-0.000.0");
+        $gda.setCustomTxtHo12("9001-HK1_24.108-0.000.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6978");
+        
+end
+
+rule '1770662' extends '336871' salience 12880
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "one_year_or_less", getCase1_1770663() == "N")
+        
+    then
+        $gda.setCustomTxtHo09("9001-HK1_24.210-0.010.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6978");
+        
+end
+
+rule '1770663' extends '336871' salience 12870
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "one_year_or_less", getCase1_1770663() == "N")
+        
+    then
+        $gda.setCustomTxtHo09("9001-HK1_24.210-0.010.0");
+        $gda.setCustomTxtHo11("9001-HK1_24.210-1.010.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6978");
+        
+end
+
+rule '1770664' extends '336871' salience 12860
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "one_year_or_less", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setCustomTxtHo09("9001-HK1_24.210-0.010.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6978");
+        
+end
+
+rule '1770665' extends '336871' salience 12850
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "one_year_or_less", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setCustomTxtHo09("9001-HK1_24.210-0.010.0");
+        $gda.setCustomTxtHo11("9001-HK1_24.210-1.010.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6978");
+        
+end
+
+rule '1770666' extends '336871' salience 12840
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "between_one_and_two_years", getCase1_1770663() == "N")
+        
+    then
+        $gda.setCustomTxtHo09("9001-HK1_24.210-0.030.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6978");
+        
+end
+
+rule '1770667' extends '336871' salience 12830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "between_one_and_two_years", getCase1_1770663() == "N")
+        
+    then
+        $gda.setCustomTxtHo09("9001-HK1_24.210-0.030.0");
+        $gda.setCustomTxtHo11("9001-HK1_24.210-1.030.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6978");
+        
+end
+
+rule '1770668' extends '336871' salience 12820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "between_one_and_two_years", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setCustomTxtHo09("9001-HK1_24.210-0.030.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6978");
+        
+end
+
+rule '1770669' extends '336871' salience 12810
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "between_one_and_two_years", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setCustomTxtHo09("9001-HK1_24.210-0.030.0");
+        $gda.setCustomTxtHo11("9001-HK1_24.210-1.030.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6978");
+        
+end
+
+rule '1770670' extends '336871' salience 12800
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "more_than_two_years", getCase1_1770663() == "N")
+        
+    then
+        $gda.setCustomTxtHo09("9001-HK1_24.210-0.060.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6978");
+        
+end
+
+rule '1770671' extends '336871' salience 12790
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("L0241000", "L0242000", "L0272000", "L1425000", "L3348000", "L3334000", "L3343000", "L3348000", "L3932000", "L3933000", "L3935000", "L3936000", "L9261000", "L9262000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "more_than_two_years", getCase1_1770663() == "N")
+        
+    then
+        $gda.setCustomTxtHo09("9001-HK1_24.210-0.060.0");
+        $gda.setCustomTxtHo11("9001-HK1_24.210-1.060.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6978");
+        
+end
+
+rule '1770672' extends '336871' salience 12780
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg != "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "more_than_two_years", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setCustomTxtHo09("9001-HK1_24.210-0.060.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6978");
+        
+end
+
+rule '1770673' extends '336871' salience 12770
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hcuCcyCdOrg == "EUR", actCode in ("A0027000", "A0057000", "A3329000", "A3330000", "A3332000", "A3931000", "A8350000", "A8805000", "A8806000", "A8807000", "A926000", "A9457000", "A9458000", "A9459000", "A9460000"), pdtCode in ("004200", "004300", "004400"), getCase0_1770663() == "more_than_two_years", getCase1_1770663() == "Y")
+        
+    then
+        $gda.setCustomTxtHo09("9001-HK1_24.210-0.060.0");
+        $gda.setCustomTxtHo11("9001-HK1_24.210-1.060.0");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6978");
+        
+end
+
+

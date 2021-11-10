@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '338199'
+	when
+		$gda : GrlDetAmounts(( hpePdtType == "LOAN" && repAssetInd == "Y" && creInd == "Y" && intInd == "N" && hacAmtCl in ( "01" , "02" , "03" , "04" , "05" , "12" , "16" ) ) || ( hpePdtType == "LOAN" && repAssetInd == "Y" && synLoanInd == "Y" && intInd == "N" && hacAmtCl in ( "01" , "02" , "03" , "04" , "05" , "12" , "16" ) && substr ( hreRelTypeCtpy , 1 , 1 ) in ( "C" , "F" , "K" , "R" ) && ownUse75 == "N" ) || ( hpePdtType == "LOAN" && repAssetInd == "Y" && synLoanPartSoldInd == "Y" && intInd == "N" && hacAmtCl in ( "01" , "02" , "03" , "04" , "05" , "12" , "16" ) && substr ( hreRelTypeCtpy , 1 , 1 ) in ( "C" , "F" , "K" , "R" ) && ownUse75 == "N" ) || ( hpePdtType == "LOAN" && repAssetInd == "Y" && synLoanPartBoughtInd == "Y" && intInd == "N" && hacAmtCl in ( "01" , "02" , "03" , "04" , "05" , "12" , "16" ) && substr ( hreRelTypeCtpy , 1 , 1 ) in ( "C" , "F" , "K" , "R" ) && ownUse75 == "N" ))
+	then
+        
+end
+
+
+
+
+
+rule '2007564' extends '338199' salience 39050
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setPdtCode("033400");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"8190");
+        
+end
+
+rule '1982794' extends '338199' salience 39040
+
+    when
+        
+        GrlDetAmounts(this == $gda, creInd == "Y", himIfrs9MeasCl != "FVPL")
+        
+    then
+        $gda.setPdtCode("033300");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"8190");
+        
+end
+
+

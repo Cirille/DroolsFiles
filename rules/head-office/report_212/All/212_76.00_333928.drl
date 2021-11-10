@@ -1,0 +1,503 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '333928'
+	when
+		$gda : GrlDetAmounts(substr ( actCode , 1 , 1 ) in ( "A" , "L" ) && ( lcrProduct matches "Own Issued.*" ) && intInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1619499' extends '333928' salience 900
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLcrCd("99");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619518' extends '333928' salience 890
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setLcrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619519' extends '333928' salience 880
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setLcrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619520' extends '333928' salience 870
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setLcrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619521' extends '333928' salience 860
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setLcrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619522' extends '333928' salience 850
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setLcrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619523' extends '333928' salience 840
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setLcrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619524' extends '333928' salience 830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "Y", actCode matches "A.*", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setLcrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619525' extends '333928' salience 820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "Y", actCode matches "A.*", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setLcrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619526' extends '333928' salience 810
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "Y", actCode matches "A.*", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setLcrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619527' extends '333928' salience 800
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "Y", actCode matches "A.*", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setLcrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619528' extends '333928' salience 790
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "Y", actCode matches "A.*", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setLcrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619529' extends '333928' salience 780
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "Y", actCode matches "A.*", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setLcrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619494' extends '333928' salience 770
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "L.*", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setLcrCd("C52.1130.001");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619495' extends '333928' salience 760
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "L.*", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setLcrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619496' extends '333928' salience 750
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "L.*", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setLcrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619497' extends '333928' salience 740
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "L.*", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setLcrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619498' extends '333928' salience 730
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "L.*", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setLcrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619500' extends '333928' salience 720
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", credQualStepIss == "1", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setLcrCd("C51.0650.010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619501' extends '333928' salience 710
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", credQualStepIss == "1", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setLcrCd("C51.0650.010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619502' extends '333928' salience 700
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", credQualStepIss == "1", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setLcrCd("C51.0650.010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619503' extends '333928' salience 690
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", credQualStepIss == "1", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setLcrCd("C51.0650.010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619504' extends '333928' salience 680
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", credQualStepIss == "1", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setLcrCd("C51.0650.010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619505' extends '333928' salience 670
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", credQualStepIss == "1", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setLcrCd("C51.0650.010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619506' extends '333928' salience 660
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", credQualStepIss == "2", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setLcrCd("C51.0660.010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619507' extends '333928' salience 650
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", credQualStepIss == "2", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setLcrCd("C51.0660.010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619508' extends '333928' salience 640
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", credQualStepIss == "2", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setLcrCd("C51.0660.010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619509' extends '333928' salience 630
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", credQualStepIss == "2", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setLcrCd("C51.0660.010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619510' extends '333928' salience 620
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", credQualStepIss == "2", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setLcrCd("C51.0660.010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619511' extends '333928' salience 610
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", credQualStepIss == "2", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setLcrCd("C51.0660.010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619512' extends '333928' salience 600
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", credQualStepIss == "3", getCase0_1558960() == "less_than_30_days")
+        
+    then
+        $gda.setLcrCd("C51.0670.010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619513' extends '333928' salience 590
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", credQualStepIss == "3", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setLcrCd("C51.0670.010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619514' extends '333928' salience 580
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", credQualStepIss == "3", getCase0_1558960() == "between_three_and_six_months")
+        
+    then
+        $gda.setLcrCd("C51.0670.010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619515' extends '333928' salience 570
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", credQualStepIss == "3", getCase0_1558960() == "between_six_and_nine_months")
+        
+    then
+        $gda.setLcrCd("C51.0670.010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619516' extends '333928' salience 560
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", credQualStepIss == "3", getCase0_1558960() == "between_nine_and_twelve_months")
+        
+    then
+        $gda.setLcrCd("C51.0670.010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619517' extends '333928' salience 550
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "A.*", credQualStepIss == "3", getCase0_1558960() == "more_than_one_year")
+        
+    then
+        $gda.setLcrCd("C51.0670.010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+rule '1619530' extends '333928' salience 540
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, eval(nvl(this.getencumberedind(), 'n')) == "N", actCode matches "L.*", getCase0_1558960() == "between_30 days_and_three_months")
+        
+    then
+        $gda.setLcrCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4687");
+        
+end
+
+

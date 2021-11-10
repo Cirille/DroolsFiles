@@ -1,0 +1,74 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332648'
+	when
+		$gda : GrlDetAmounts(actCode != null)
+	then
+        
+end
+
+
+
+
+
+rule '1182022' extends '332648' salience 640
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcyCtryCdRes == "NL")
+        
+    then
+        $gda.setDutchCtpyInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3700");
+        
+end
+
+rule '1184165' extends '332648' salience 630
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcyCtryCdRes != "NL")
+        
+    then
+        $gda.setDutchCtpyInd("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3700");
+        
+end
+
+rule '1182023' extends '332648' salience 620
+
+    when
+        
+        GrlDetAmounts(this == $gda, dutchCtpyInd == "Y")
+        
+    then
+        $gda.setDutchCtpyInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3700");
+        
+end
+
+rule '1184166' extends '332648' salience 610
+
+    when
+        
+        GrlDetAmounts(this == $gda, dutchCtpyInd == "N")
+        
+    then
+        $gda.setDutchCtpyInd("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3700");
+        
+end
+
+

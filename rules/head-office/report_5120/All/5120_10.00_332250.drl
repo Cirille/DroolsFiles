@@ -1,0 +1,139 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332250'
+	when
+		$gda : GrlDetAmounts(ownUse06 in ( "CASH" , "NOST" ))
+	then
+        
+end
+
+
+
+
+
+rule '1149187' extends '332250' salience 90
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt01("TO BE DETERMINED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3543");
+        
+end
+
+rule '1149180' extends '332250' salience 80
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse06 == "CASH")
+        
+    then
+        $gda.setCustomTxt01("11001_FCY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3543");
+        
+end
+
+rule '1149179' extends '332250' salience 70
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse06 == "CASH", hcuCcyCdOrg == "TWD")
+        
+    then
+        $gda.setCustomTxt01("11001_LCL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3543");
+        
+end
+
+rule '1149185' extends '332250' salience 60
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse06 == "NOST", hcuCcyCdOrg == "TWD", icInd == "Y")
+        
+    then
+        $gda.setCustomTxt01("19681_LCY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3543");
+        
+end
+
+rule '1149186' extends '332250' salience 50
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse06 == "NOST", hcuCcyCdOrg != "TWD", icInd == "Y")
+        
+    then
+        $gda.setCustomTxt01("19681_FCY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3543");
+        
+end
+
+rule '1149183' extends '332250' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse06 == "NOST", hcuCcyCdOrg == "TWD", icInd == "N", ownUse03 == "1")
+        
+    then
+        $gda.setCustomTxt01("11021_LCY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3543");
+        
+end
+
+rule '1149184' extends '332250' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse06 == "NOST", hcuCcyCdOrg != "TWD", icInd == "N", ownUse03 == "1")
+        
+    then
+        $gda.setCustomTxt01("11021_FCY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3543");
+        
+end
+
+rule '1149181' extends '332250' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse06 == "NOST", hcuCcyCdOrg == "TWD", ownUse01 == "CENBANCHITPE", icInd == "N", ownUse03 == "1")
+        
+    then
+        $gda.setCustomTxt01("11511_LCY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3543");
+        
+end
+
+rule '1149182' extends '332250' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, ownUse06 == "NOST", hcuCcyCdOrg != "TWD", ownUse01 == "CENBANCHITPE", icInd == "N", ownUse03 == "1")
+        
+    then
+        $gda.setCustomTxt01("11511_FCY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3543");
+        
+end
+
+

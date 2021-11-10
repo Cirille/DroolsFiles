@@ -1,0 +1,269 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335762'
+	when
+		$gda : GrlDetAmounts(hpePdtType == "DEPOSIT")
+	then
+        
+end
+
+
+
+
+
+rule '1736839' extends '335762' salience 910
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt01("not defined yet");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+rule '1736518' extends '335762' salience 900
+
+    when
+        
+        GrlDetAmounts(this == $gda, acctType != "RGPL", repAssetInd == "Y", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1401100");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+rule '1736653' extends '335762' salience 890
+
+    when
+        
+        GrlDetAmounts(this == $gda, hreRelTypeCtpy matches "B.*", repAssetInd == "N", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("2101030");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+rule '1736654' extends '335762' salience 880
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "12", repAssetInd == "N", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("2101030");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+rule '1736660' extends '335762' salience 870
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "12", icInd == "Y", acctType == "REMM")
+        
+    then
+        $gda.setCustomTxt01("2302900");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+rule '1736516' extends '335762' salience 860
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "12", icInd == "N", repAssetInd == "Y", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1003030");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+rule '1736517' extends '335762' salience 850
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("02", "03"), acctType == "RGPL", repAssetInd == "Y", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1401090");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+rule '1736658' extends '335762' salience 840
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("02", "03"), hreRelTypeCtpy matches "B.*", repAssetInd == "N", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("2301150");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+rule '1736708' extends '335762' salience 830
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("02", "03"), contSubtSrc == "DGS", repAssetInd == "Y", intInd == "Y")
+        
+    then
+        $gda.setCustomTxt01("2302900");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+rule '1736652' extends '335762' salience 820
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", icInd == "N", hreRelTypeCtpy matches "B.*", repAssetInd == "N", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("2101030");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+rule '1736656' extends '335762' salience 810
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("02", "03"), callInd == "N", pledgedInd == "Y", repAssetInd == "N", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("2301010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+rule '1736657' extends '335762' salience 800
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("02", "03"), callInd == "Y", pledgedInd == "N", repAssetInd == "N", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("2301050");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+rule '1736659' extends '335762' salience 790
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", icInd == "Y", contSubtSrc == "DTS", repAssetInd == "N", intInd == "Y")
+        
+    then
+        $gda.setCustomTxt01("2302900");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+rule '1736514' extends '335762' salience 780
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", icInd == "N", acctType == "RGPL", hreRelTypeCtpy matches "B.*", repAssetInd == "Y", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1003020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+rule '1736515' extends '335762' salience 770
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", icInd == "N", acctType != "RGPL", hreRelTypeCtpy matches "B.*", repAssetInd == "Y", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("1003030");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+rule '1736519' extends '335762' salience 760
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", callInd == "N", pledgedInd == "N", repAssetInd == "N", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("2012010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+rule '1736650' extends '335762' salience 750
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", hreRelTypeCtpy matches "B.*", callInd == "Y", pledgedInd == "N", repAssetInd == "N", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("2015010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+rule '1736651' extends '335762' salience 740
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "01", hreRelTypeCtpy not matches "B.*", callInd == "N", pledgedInd == "Y", repAssetInd == "N", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("2099020");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+rule '1736655' extends '335762' salience 730
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("02", "03"), hreRelTypeCtpy not matches "B.*", callInd == "N", pledgedInd == "N", repAssetInd == "N", intInd == "N")
+        
+    then
+        $gda.setCustomTxt01("2301010");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6081");
+        
+end
+
+

@@ -1,0 +1,81 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '329955'
+	when
+		$gda : GrlDetAmounts(hpePdtType in ( "DEPOSIT" , "FIDUCIARY DEP" ) && intInd == "N" && hacAmtCl in ( "02" , "03" ) && contingInd == "N")
+	then
+end
+
+
+rule '772360' extends '329955' salience 26870
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setScyActCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1832");
+        
+end
+
+rule '775752' extends '329955' salience 26860
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", htyTradCat in ("01", "02"))
+        
+    then
+        $gda.setScyActCode("L3351000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1832");
+        
+end
+
+rule '772363' extends '329955' salience 26850
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", htyTradCat == "03")
+        
+    then
+        $gda.setScyActCode("L0229000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1832");
+        
+end
+
+rule '772361' extends '329955' salience 26840
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y")
+        
+    then
+        $gda.setScyActCode("A0003000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1832");
+        
+end
+
+rule '1584700' extends '329955' salience 26830
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", retailInd == "Y")
+        
+    then
+        $gda.setScyActCode("L2569000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1832");
+        
+end
+
+

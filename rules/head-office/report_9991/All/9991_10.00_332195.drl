@@ -1,0 +1,36 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332195'
+	when
+		$gpy : GrlPlYtd(ajtId != null)
+	then
+        
+end
+
+
+
+
+
+rule '1145036' extends '332195' salience 10
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setMemoText(Warning: selecting from GRL_ADJUSTMENTS: data will not be available in source topic.
+ full statement: {(select AJT.MEMO_TEXT from GRL_ADJUSTMENTS AJT where AJT.ID = sel_tab.AJT_ID)});
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3497");
+        
+end
+
+

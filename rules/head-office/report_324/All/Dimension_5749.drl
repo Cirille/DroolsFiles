@@ -1,0 +1,140 @@
+package com.ing.gfrs.rules;
+
+// data models
+import com.ing.gfrs.avro.GrlDetAmounts;
+import com.ing.gfrs.avro.GrlMdnReportLines;
+
+// reference data APIs
+global com.ing.gfrs.logical.apis.GoeIsinFxrates1415AcmLogicalApi goeIsinFxrates1415AcmLogicalApi;
+global com.ing.gfrs.logical.apis.GreLrCustRefLogicalApi greLrCustRefLogicalApi;
+global com.ing.gfrs.logical.apis.GreHrGridRefLogicalApi greHrGridRefLogicalApi;
+
+dialect  "mvel"
+
+function String nvl(String value1, String value2) {
+    if(value1 == null || value1.length() == 0) {
+        return value2;
+    } else {
+       return value1;
+    }
+}
+
+// Note that global variables are not availabe in functions
+function GrlMdnReportLines createResult(GrlDetAmounts gda, Double fxRate, String mneCode10, String indField1, String ruleName) {
+	GrlMdnReportLines res = new GrlMdnReportLines();
+	res.setLastHrdId(5749L); // can be made dynamic, e.g. via agenda group
+	res.setLseHlyRelId(gda.getLseHlyRelId());
+	res.setAjtId(gda.getAjtId());
+	// Id is set via database sequence (hardcoded in avro model)
+	// CreatedBy, CreationDate, LastUpdatedBy, LastUpdateDate are set as default values via db writer
+	res.setLdlIdTrail(ruleName + ";");
+	res.setMneCode1("SIFI-A");
+	res.setMneCode4(nvl(gda.getHcyCtryCdCtpySec(), gda.getHcyCtryCdRes()));
+	res.setTextField2(nvl(gda.getRlnLeiCodeLupCtpy(),nvl(gda.getUltGridId(), nvl(gda.getRlnLeiCodeCtpy(), "UNKNOWN"))));
+	res.setTextField4(nvl(gda.getHpePdtType().startsWith("STOCK") ? gda.getRlnDescrIssuer() : gda.getRlnDescr(), "UNKNOWN"));
+	res.setIndField1(indField1); // TODO: execution of data base function CIA_OWNER.GOE_PCK_TFN.GOE_GET_LCE_CUST_CD ('STNDRD', 'SIFITOP50', ULT_GRID_ID)
+	res.setAmountField1(-1 * gda.getChoDetAmtTanEur() * fxRate);
+	res.setAmountField2(fxRate);
+	res.setAmountReporting(-1 * gda.getChoDetAmtRepCcy());
+	res.setAmountReportingEur(-1 * gda.getChoDetAmtEur());
+	res.setAmountTransaction(-1 * gda.getChoDetAmtTan());
+	res.setCpyBeyNumber(gda.getCpyBeyNumber());
+	res.setCpyReyCode(gda.getCpyReyCode());
+	res.setDatId(gda.getId());
+	res.setLdrCode(gda.getLdrCode());
+	res.setMneCode10(mneCode10);
+	res.setMneCode6(gda.getMap_15584());
+	res.setMneCode7(res.getMap_15585(gda.getHcuCcyCdOrg()));
+	res.setMneCode8(gda.getMap_15586());
+	res.setMrtName('SIFI_A1');
+	res.setPosId(gda.getPosId());
+	res.setPrdId(gda.getPrdId());
+	res.setReportingCryCode(gda.getHcuCcyCdChoDetRepCcy());
+	res.setSmnBeyNumber(gda.getSmnBeyNumber());
+	res.setSmnReyCode(gda.getSmnReyCode());
+	res.setSource('DAT');
+	res.setTransactionCryCode(gda.getHcuCcyCdOrg());
+	res.setSourceTable('GRL_DET_AMOUNTS');
+	res.setSourceId(gda.getId());
+    return res;
+}
+
+rule 'dim5749_WHERE'
+when
+	$gda : GrlDetAmounts(greLrCustRefLogicalApi.existsRecord(
+                         	nvl($gda.actCode, '') + '_' + nvl($gda.pdtCode, '') + '_' + nvl($gda.cgpCode, '') + '_' + nvl($gda.rteCode, ''),
+                         	    'STNDRD', 'SIFI_DDS', 'SIFI-A')
+							|| (lseHlyRelId == '0557' && hpePdtType == 'CUST ACCT' && choDetAmtEur != null &&choDetAmtEur < 0 && actCode == 'A0027000'),
+						 intInd == 'N',
+						 cpyBeyNumber == null,
+						 detAmtRepCcy != null && detAmtRepCcy != 0,
+						 errorInd == 'N');
+	not GrlDetAmounts(this == $gda, lseHlyRelId == '0557', hpePdtType == 'CUST ACCT', choDetAmtEur != null && choDetAmtEur < 0, actCode == 'L0242000');
+	not (GrlDetAmounts(this == $gda, status == 'RVL') && exists(GrlDetAmounts(lseHlyRelId == $gda.lseHlyRelId, id == $gda.rvdId, errorInd == 'Y')));
+then
+end
+
+rule '1699789'
+extends dim5749_WHERE
+when
+	GrlDetAmounts(this == $gda, hieInduType not in ('524113','524114','524126','524127','524128','524130','524210','524291','524292','524298','525110','525111','524131','524129'))
+	eval(greHrGridRefLogicalApi.getRecord($gda.getSIFIGridId()) != null &&
+	    greLrCustRefLogicalApi.getCustomCd(greHrGridRefLogicalApi.getRecord($gda.getSIFIGridId()).getIndustryNaicsCode(), 'STNDRD', 'SIFISECTOR') == 'BANKS')
+then
+	GrlMdnReportLines res = createResult($gda,
+	    goeIsinFxrates1415AcmLogicalApi.getFxRate('EUR', 'USD', '1415', $gda.getPrdId()),
+	    greLrCustRefLogicalApi.getCustomCd(greHrGridRefLogicalApi.getRecord($gda.getSIFIGridId()).getIndustryNaicsCode(), 'STNDRD', 'SIFISECTOR'),
+	    greLrCustRefLogicalApi.getCustomCd($gda.getUltGridId(), 'STNDRD', 'SIFISECTOR').contentEquals('Y') ? 'Y' : 'N',
+	    kcontext.rule.name);
+	res.setMneCode5('REGULATORY BANKING');
+	insert(res);
+end
+
+
+rule '1699790'
+extends dim5749_WHERE
+when
+	GrlDetAmounts(this == $gda, hieInduType in ('524113','524114','524126','524127','524128','524130','524210','524291','524292','524298','525110','525111','524131','524129'))
+	eval(greHrGridRefLogicalApi.getRecord($gda.getSIFIGridId()) != null &&
+	    greLrCustRefLogicalApi.getCustomCd(greHrGridRefLogicalApi.getRecord($gda.getSIFIGridId()).getIndustryNaicsCode(), 'STNDRD', 'SIFISECTOR') == 'BANKS')
+then
+	GrlMdnReportLines res = createResult($gda,
+	    goeIsinFxrates1415AcmLogicalApi.getFxRate('EUR', 'USD', '1415', $gda.getPrdId()),
+	    greLrCustRefLogicalApi.getCustomCd(greHrGridRefLogicalApi.getRecord($gda.getSIFIGridId()).getIndustryNaicsCode(), 'STNDRD', 'SIFISECTOR'),
+	    greLrCustRefLogicalApi.getCustomCd($gda.getUltGridId(), 'STNDRD', 'SIFISECTOR').contentEquals('Y') ? 'Y' : 'N',
+	    kcontext.rule.name);
+	res.setMneCode5('ACCOUNTING');
+	insert(res);
+end
+
+rule '1699791'
+extends dim5749_WHERE
+when
+	GrlDetAmounts(this == $gda, hieInduType in ('524113','524114','524126','524127','524128','524130','524210','524291','524292','524298','525110','525111','524131','524129'))
+	eval(greHrGridRefLogicalApi.getRecord($gda.getSIFIGridId()) != null &&
+	    greLrCustRefLogicalApi.getCustomCd(greHrGridRefLogicalApi.getRecord($gda.getSIFIGridId()).getIndustryNaicsCode(), 'STNDRD', 'SIFISECTOR') != 'BANKS')
+then
+	GrlMdnReportLines res = createResult($gda,
+	    goeIsinFxrates1415AcmLogicalApi.getFxRate('EUR', 'USD', '1415', $gda.getPrdId()),
+	    greLrCustRefLogicalApi.getCustomCd(greHrGridRefLogicalApi.getRecord($gda.getSIFIGridId()).getIndustryNaicsCode(), 'STNDRD', 'SIFISECTOR'),
+	    greLrCustRefLogicalApi.getCustomCd($gda.getUltGridId(), 'STNDRD', 'SIFISECTOR').contentEquals('Y') ? 'Y' : 'N',
+	    kcontext.rule.name);
+	res.setMneCode5('REGULATORY BANKING');
+	insert(res);
+end
+
+rule '1699792'
+extends dim5749_WHERE
+when
+	GrlDetAmounts(this == $gda, hieInduType not in ('524113','524114','524126','524127','524128','524130','524210','524291','524292','524298','525110','525111','524131','524129'))
+	eval(greHrGridRefLogicalApi.getRecord($gda.getSIFIGridId()) != null &&
+	    greLrCustRefLogicalApi.getCustomCd(greHrGridRefLogicalApi.getRecord($gda.getSIFIGridId()).getIndustryNaicsCode(), 'STNDRD', 'SIFISECTOR') != 'BANKS')
+then
+	GrlMdnReportLines res = createResult($gda,
+	    goeIsinFxrates1415AcmLogicalApi.getFxRate('EUR', 'USD', '1415', $gda.getPrdId()),
+	    greLrCustRefLogicalApi.getCustomCd(greHrGridRefLogicalApi.getRecord($gda.getSIFIGridId()).getIndustryNaicsCode(), 'STNDRD', 'SIFISECTOR'),
+	    greLrCustRefLogicalApi.getCustomCd($gda.getUltGridId(), 'STNDRD', 'SIFISECTOR').contentEquals('Y') ? 'Y' : 'N',
+	    kcontext.rule.name);
+	res.setMneCode5('ACCOUNTING');
+	insert(res);
+end

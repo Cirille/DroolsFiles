@@ -1,0 +1,100 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332649'
+	when
+		$gda : GrlDetAmounts(actCode != null)
+	then
+        
+end
+
+
+
+
+
+rule '1182024' extends '332649' salience 1530
+
+    when
+        
+        GrlDetAmounts(this == $gda, cgpCode in ("B0034", "B0035"))
+        
+    then
+        $gda.setIlaapCustGr("Central Bank");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3701");
+        
+end
+
+rule '1182025' extends '332649' salience 1520
+
+    when
+        
+        GrlDetAmounts(this == $gda, cgpCode in ("B0036", "B0037"))
+        
+    then
+        $gda.setIlaapCustGr("Bank");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3701");
+        
+end
+
+rule '1182026' extends '332649' salience 1510
+
+    when
+        
+        GrlDetAmounts(this == $gda, cgpCode in ("G0008", "G0009", "P0031", "P0039", "P0041", "P0042", "P0045"))
+        
+    then
+        $gda.setIlaapCustGr("Corporate");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3701");
+        
+end
+
+rule '1182027' extends '332649' salience 1500
+
+    when
+        
+        GrlDetAmounts(this == $gda, cgpCode == "P0049")
+        
+    then
+        $gda.setIlaapCustGr("Consumers");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3701");
+        
+end
+
+rule '1182028' extends '332649' salience 1490
+
+    when
+        
+        GrlDetAmounts(this == $gda, cgpCode == null)
+        
+    then
+        $gda.setIlaapCustGr("House");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3701");
+        
+end
+
+rule '1182029' extends '332649' salience 1480
+
+    when
+        
+        GrlDetAmounts(this == $gda, cgpCode matches "0.*")
+        
+    then
+        $gda.setIlaapCustGr("Issuers");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3701");
+        
+end
+
+

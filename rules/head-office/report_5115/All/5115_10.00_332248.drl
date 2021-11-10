@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332248'
+	when
+		$gda : GrlDetAmounts(actCode == "A3282000" && hpePdtType in ( "IRS" , "FRA" ))
+	then
+        
+end
+
+
+
+
+
+rule '1149168' extends '332248' salience 90
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt01("TO BE DETERMINED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3541");
+        
+end
+
+rule '1149004' extends '332248' salience 80
+
+    when
+        
+        GrlDetAmounts(this == $gda, residentInd == "Y")
+        
+    then
+        $gda.setCustomTxt01("1");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3541");
+        
+end
+
+rule '1149005' extends '332248' salience 70
+
+    when
+        
+        GrlDetAmounts(this == $gda, residentInd == "N")
+        
+    then
+        $gda.setCustomTxt01("2");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3541");
+        
+end
+
+

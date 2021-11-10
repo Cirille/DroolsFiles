@@ -1,0 +1,46 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+global com.ing.gfrs.logical.apis.GreVCpyBeyReyDrlLogicalApi greVCpyBeyReyDrlLogicalApi;
+
+dialect  "mvel"
+
+
+rule '335524'
+	when
+		$gda : GrlDetAmounts(icInd == "Y" && intInd == "N" && ( rlnRelId != null || rlnRelIdIssuedBy != null ))
+	then
+end
+
+
+rule '1710426' extends '335524' salience 50970
+no-loop
+    when
+
+        GrlDetAmounts(this == $gda, getCase0_1710427() == "ISSUER")
+        eval(greVCpyBeyReyDrlLogicalApi.existsRecord($gda.getRlnRelIdIssuedBy(),$gda.getLseHlyRelId()) == true)
+    then
+        $gda.setCpyBeyNumber(greVCpyBeyReyDrlLogicalApi.getBeyNumber($gda.getRlnRelIdIssuedBy(),$gda.getLseHlyRelId()));
+        $gda.setCpyReyCode(greVCpyBeyReyDrlLogicalApi.getReyCode($gda.getRlnRelIdIssuedBy(),$gda.getLseHlyRelId()));
+
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5900");
+
+end
+
+rule '1710427' extends '335524' salience 50960
+no-loop
+    when
+
+        GrlDetAmounts(this == $gda, getCase0_1710427() == "RELATION")
+        eval(greVCpyBeyReyDrlLogicalApi.existsRecord($gda.getRlnRelId(),$gda.getLseHlyRelId()) == true)
+    then
+        $gda.setCpyBeyNumber(greVCpyBeyReyDrlLogicalApi.getBeyNumber($gda.getRlnRelId(),$gda.getLseHlyRelId()));
+        $gda.setCpyReyCode(greVCpyBeyReyDrlLogicalApi.getReyCode($gda.getRlnRelId(),$gda.getLseHlyRelId()));
+
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5900");
+
+end
+
+

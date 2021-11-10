@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332189'
+	when
+		$gda : GrlDetAmounts(MANUALLY adjust this subselect: (HPE_PDT_TYPE = 'SPOT FX') and HAC_AMT_CL = '10' AND DELIVERED_IND = 'Y' AND INT_IND = 'N' and (contract_ref, lse_hly_rel_id) in (select dat.contract_ref , dat.lse_hly_rel_id from GRL_DET_AMOUNTS dat , GRL_DET_AMOUNTS dat2 where dat.buy_ind = 'N' and dat.hac_amt_cl = '10' and dat.lse_hly_rel_id = dat2.lse_hly_rel_id and dat.contract_ref = dat2.contract_ref and dat2.buy_ind = 'Y' and dat2.hac_amt_cl = '10' ) AND SMN_BEY_NUMBER <> NVL(CPY_BEY_NUMBER,'X'))
+	then
+        
+end
+
+
+
+
+
+rule '1144636' extends '332189' salience 170
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y")
+        
+    then
+        $gda.setLiquidityCdReg("07-FX Derivatives Notionals B");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3492");
+        
+end
+
+rule '1144637' extends '332189' salience 160
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("18-FX Derivatives Notionals S");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3492");
+        
+end
+
+

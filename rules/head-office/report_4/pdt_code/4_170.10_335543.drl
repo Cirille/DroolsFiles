@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335543'
+	when
+		$gda : GrlDetAmounts(hpePdtType == "SPOT FX" && hacAmtCl == "10" && intInd == "N" && actCode != null)
+	then
+        
+end
+
+
+
+
+
+rule '1710695' extends '335543' salience 37380
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setPdtCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5919");
+        
+end
+
+rule '1710694' extends '335543' salience 37370
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX")
+        
+    then
+        $gda.setPdtCode("025600");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5919");
+        
+end
+
+

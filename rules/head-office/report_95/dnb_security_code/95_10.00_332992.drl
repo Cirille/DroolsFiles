@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332992'
+	when
+		$gda : GrlDetAmounts(( actCode in ( "A0017000" , "A0058000" , "A3331000" , "A3333000" , "A8349000" , "A8609000" , "A9260000" , "A9458000" , "A9460000" ) && pdtCode in ( "004700" , "004800" ) && cpyBeyNumber == null || ( actCode in ( "A0022000" ) && cpyBeyNumber == null ) ))
+	then
+        
+end
+
+
+
+
+
+rule '1530526' extends '332992' salience 170
+
+    when
+        
+        GrlDetAmounts(this == $gda, nvl2(isinCd,  'Y',  'N' ) == "N")
+
+    then
+        $gda.setDnbSecurityCode("NOT-LISTED EQUITY SECURITIESu");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3874");
+        
+end
+
+rule '1342787' extends '332992' salience 160
+
+    when
+        
+        GrlDetAmounts(this == $gda, quotedInd == "Y")
+        
+    then
+        $gda.setDnbSecurityCode("LISTED EQUITY SECURITIES");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3874");
+        
+end
+
+rule '1342788' extends '332992' salience 150
+
+    when
+        
+        GrlDetAmounts(this == $gda, quotedInd == "N")
+        
+    then
+        $gda.setDnbSecurityCode("NOT-LISTED EQUITY SECURITIES");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3874");
+        
+end
+
+

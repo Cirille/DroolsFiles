@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '333912'
+	when
+		$gda : GrlDetAmounts(hcyCtryCdIssuer != null && intInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1559277' extends '333912' salience 93940
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_rep_ent does not have an entry within the refDataApi within the dbConfig file*/
+        
+    then
+        $gda.setIncLiqRiskIssInd("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4671");
+        
+end
+
+rule '1559278' extends '333912' salience 93930
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_rep_ent does not have an entry within the refDataApi within the dbConfig file*/
+        
+    then
+        $gda.setIncLiqRiskIssInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4671");
+        
+end
+
+

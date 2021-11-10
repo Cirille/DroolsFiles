@@ -1,0 +1,426 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332288'
+	when
+		$gda : GrlDetAmounts(hpePdtType in ( "CCY SWAP" , "CCY FORW" ) && hacAmtCl != "10" && intInd == "N" && htyTradCat in ( "01" , "02" ))
+		not GrlDetAmounts(this == $gda, ( hpePdtType in ( "CCY FORW" , "CCY SWAP" ) && hacAmtCl == "12" && substr ( posId , 29 , 3 ) in ( "SRV" , "NTL" ) ));
+	then
+        
+end
+
+
+
+
+
+rule '1150481' extends '332288' salience 1550
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxtHo06("99.999");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150480' extends '332288' salience 1540
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Long", getCase1_1150482() == "less than 1 month")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-LONG_lessthan1month");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150482' extends '332288' salience 1530
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Long", getCase1_1150482() == "1-3 months")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-LONG_1-3months");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150483' extends '332288' salience 1520
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Long", getCase1_1150482() == "3-6 months")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-LONG_3-6months");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150484' extends '332288' salience 1510
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Long", getCase1_1150482() == "6-12 months")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-LONG_6-12months");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150485' extends '332288' salience 1500
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Long")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-LONG_1.0-1.9yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150486' extends '332288' salience 1490
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Long")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-LONG_1.9-2.8yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150487' extends '332288' salience 1480
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Long")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-LONG_2.8-3.6yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150488' extends '332288' salience 1470
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Long")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-LONG_3.6-4.3yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150489' extends '332288' salience 1460
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Long")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-LONG_4.3-5.7yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150490' extends '332288' salience 1450
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Long")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-LONG_5.7-7.3yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150491' extends '332288' salience 1440
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Long")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-LONG_7.3-9.3yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150492' extends '332288' salience 1430
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Long")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-LONG_9.3-10.6yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150493' extends '332288' salience 1420
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Long")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-LONG_10.6-12yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150494' extends '332288' salience 1410
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Long", getCase1_1150482() == "12-20 yr")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-LONG_12-20yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150495' extends '332288' salience 1400
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Long", getCase1_1150482() == "more than 20 yr")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-LONG_morethan20yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150544' extends '332288' salience 1390
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Short", getCase1_1150482() == "1-3 months")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-SHORT_1-3months");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150545' extends '332288' salience 1380
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Short")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-SHORT_1.0-1.9yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150546' extends '332288' salience 1370
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Short")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-SHORT_1.9-2.8yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150547' extends '332288' salience 1360
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Short")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-SHORT_10.6-12yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150548' extends '332288' salience 1350
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Short", getCase1_1150482() == "12-20 yr")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-SHORT_12-20yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150549' extends '332288' salience 1340
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Short")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-SHORT_2.8-3.6yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150550' extends '332288' salience 1330
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Short", getCase1_1150482() == "3-6 months")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-SHORT_3-6months");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150551' extends '332288' salience 1320
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Short")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-SHORT_3.6-4.3yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150552' extends '332288' salience 1310
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Short")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-SHORT_4.3-5.7yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150553' extends '332288' salience 1300
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Short")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-SHORT_5.7-7.3yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150554' extends '332288' salience 1290
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Short", getCase1_1150482() == "6-12 months")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-SHORT_6-12months");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150555' extends '332288' salience 1280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Short")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-SHORT_7.3-9.3yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150556' extends '332288' salience 1270
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Short")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-SHORT_9.3-10.6yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150557' extends '332288' salience 1260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Short", getCase1_1150482() == "less than 1 month")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-SHORT_lessthan1month");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+rule '1150558' extends '332288' salience 1250
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("08", "10", "12"), getCase0_1150482() == "Short", getCase1_1150482() == "more than 20 yr")
+        
+    then
+        $gda.setCustomTxtHo06("MKRSATDI_SM3_C1_ALL-SHORT_morethan20yr");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3577");
+        
+end
+
+

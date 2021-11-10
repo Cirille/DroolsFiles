@@ -1,0 +1,35 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '333086'
+	when
+		$gda : GrlDetAmounts(actCode == "B0596000" && pdtCode in ( "014400" , "026900" , "027000" ) && intInd == "N" && icInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1364604' extends '333086' salience 200
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setHb2Bis2CombiCd("24");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3959");
+        
+end
+
+

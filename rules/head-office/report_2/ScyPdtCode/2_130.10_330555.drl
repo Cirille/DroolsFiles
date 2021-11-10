@@ -1,0 +1,420 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '330555'
+	when
+		$gda : GrlDetAmounts(hpePdtType in ( "LOAN" , "MARGIN FINANCE" , "FACTORING" ) && intInd == "N" && hacAmtCl in ( "01" , "05" , "12" , "16" ) && scyActCode != null)
+            not GrlDetAmounts(this == $gda, ( hpePdtType == "FACTORING" && scyActCode == "L0255000" ));
+	then
+end
+
+
+rule '892601' extends '330555' salience 16940
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setScyPdtCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '1029993' extends '330555' salience 16930
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "12")
+        
+    then
+        $gda.setScyPdtCode("012700");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '892595' extends '330555' salience 16920
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", hacAmtCl in ("01", "05", "16"), debentureInd == "Y", contingInd == "N")
+        
+    then
+        $gda.setScyPdtCode("007300");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '1029989' extends '330555' salience 16910
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N", hacAmtCl == "12", debentureInd == "Y")
+        
+    then
+        $gda.setScyPdtCode("007300");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '892599' extends '330555' salience 16900
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("01", "05", "16"), contingInd == "N")
+        
+    then
+        $gda.setScyPdtCode("012700");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '1029987' extends '330555' salience 16890
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "12", suborInd == "Y")
+        
+    then
+        $gda.setScyPdtCode("012200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '1029992' extends '330555' salience 16880
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "12", getCase0_1029992() == "long_term")
+        
+    then
+        $gda.setScyPdtCode("012200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '892598' extends '330555' salience 16870
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("01", "05", "16"), getCase0_1029992() == "long_term", contingInd == "N")
+        
+    then
+        $gda.setScyPdtCode("012200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '897701' extends '330555' salience 16860
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("01", "05", "16"), suborInd == "Y", contingInd == "N")
+        
+    then
+        $gda.setScyPdtCode("012200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '999550' extends '330555' salience 16850
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hacAmtCl in ("01", "05"), contingInd == "Y", getCase0_1711251() == "long_term")
+        
+    then
+        $gda.setScyPdtCode("014600");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '892596' extends '330555' salience 16840
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hacAmtCl in ("01", "05", "16"), getCase0_892596() == "INDIVIDUAL", getCase1_892596() == "INSURANCE POLICY", contingInd == "N")
+        
+    then
+        $gda.setScyPdtCode("008200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '1029991' extends '330555' salience 16830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hacAmtCl == "12", getCase0_892596() == "INDIVIDUAL", getCase1_892596() == "MORTGAGE")
+        
+    then
+        $gda.setScyPdtCode("009400");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '1029990' extends '330555' salience 16820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hacAmtCl == "12", getCase0_892596() == "INDIVIDUAL", getCase1_892596() == "INSURANCE POLICY")
+        
+    then
+        $gda.setScyPdtCode("008200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '1029988' extends '330555' salience 16810
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl == "12", (getCase0_892596() != "INDV" && getCase0_892596() not matches "IST.*" && getCase0_892596() != "IIPB" && getCase0_892596() != "IPBI"), getCase1_892596() == "MORTGAGE")
+        
+    then
+        $gda.setScyPdtCode("012200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '894770' extends '330555' salience 16800
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("01", "05", "16"), getCase0_892596() == "CORPORATE", getCase1_892596() == "MORTGAGE", contingInd == "N")
+        
+    then
+        $gda.setScyPdtCode("012200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '1133460' extends '330555' salience 16790
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hacAmtCl in ("01", "05"), contingInd == "Y", credFacInd == "Y", getCase0_1711251() == "short_term", commInd == "N")
+        
+    then
+        $gda.setScyPdtCode("014800");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '1029994' extends '330555' salience 16780
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hacAmtCl == "12", getCase0_892596() == "CORPORATE", finLeaseInd == "Y")
+        
+    then
+        $gda.setScyPdtCode("013600");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '892597' extends '330555' salience 16770
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hacAmtCl in ("01", "05", "16"), getCase0_892596() == "INDIVIDUAL", getCase1_892596() == "MORTGAGE", contingInd == "N", lseHlyRelId not in ("9094", "9094_ROY"))
+        
+    then
+        $gda.setScyPdtCode("009400");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '999551' extends '330555' salience 16760
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hacAmtCl in ("01", "05"), contingInd == "Y", credFacInd == "Y", getCase0_1711251() == "short_term", commInd == "Y")
+        
+    then
+        $gda.setScyPdtCode("026900");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '892600' extends '330555' salience 16750
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hacAmtCl in ("01", "05", "16"), getCase0_892596() == "CORPORATE", finLeaseInd == "Y", contingInd == "N")
+        
+    then
+        $gda.setScyPdtCode("013600");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '999556' extends '330555' salience 16740
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("01", "05", "16"), contingInd == "Y", credFacInd == "N", getCase0_1711251() == "short_term", htyTradCat in ("01", "02"))
+        
+    then
+        $gda.setScyPdtCode("012700");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '999555' extends '330555' salience 16730
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("01", "05", "16"), getCase0_1029992() == "long_term", contingInd == "Y", credFacInd == "N", getCase0_1711251() == "short_term", htyTradCat in ("01", "02"))
+        
+    then
+        $gda.setScyPdtCode("012200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '999553' extends '330555' salience 16720
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("01", "05", "16"), suborInd == "Y", contingInd == "Y", credFacInd == "N", getCase0_1711251() == "short_term", htyTradCat in ("01", "02"))
+        
+    then
+        $gda.setScyPdtCode("012200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '999552' extends '330555' salience 16710
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hacAmtCl in ("01", "05"), contingInd == "Y", credFacInd == "Y", getCase0_1711251() == "short_term", getCase0_999552() == "long_term", commInd == "Y")
+        
+    then
+        $gda.setScyPdtCode("027000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '1169598' extends '330555' salience 16700
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hacAmtCl in ("01", "05", "16"), getCase0_892596() == "INDIVIDUAL", mortgageInd == "Y", lseHlyRelId in ("0212", "0212_RET", "9614", "9690", "9703", "9706", "9708", "9679", " 9094", " 9094_ROY"))
+        
+    then
+        $gda.setScyPdtCode("009400");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '999554' extends '330555' salience 16690
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("01", "05", "16"), getCase0_892596() == "CORPORATE", getCase1_892596() == "MORTGAGE", contingInd == "Y", credFacInd == "N", getCase0_1711251() == "short_term", htyTradCat in ("01", "02"))
+        
+    then
+        $gda.setScyPdtCode("012200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '1181654' extends '330555' salience 16680
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hacAmtCl in ("01", "05", "16"), getCase0_892596() == "INDIVIDUAL", mortgageInd == "N", lseHlyRelId == "9703")
+        
+    then
+        $gda.setScyPdtCode("012200");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '1706857' extends '330555' salience 16670
+
+    when
+        
+        GrlDetAmounts(this == $gda, contingInd == "N", collInd == "Y", hfeFacType == "IPC")
+        
+    then
+        $gda.setScyPdtCode("031800");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '1706858' extends '330555' salience 16660
+
+    when
+        
+        GrlDetAmounts(this == $gda, contingInd == "Y", collInd == "Y", hfeFacType == "IPC")
+        
+    then
+        $gda.setScyPdtCode("031900");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '1231719' extends '330555' salience 16650
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", hacAmtCl in ("01", "05"), hpePdtType == "FACTORING")
+        
+    then
+        $gda.setScyPdtCode("031400");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+rule '1614260' extends '330555' salience 16640
+
+    when
+        
+        GrlDetAmounts(this == $gda, collInd == "Y", hfeFacType != "IPC")
+        
+    then
+        $gda.setScyPdtCode("031500");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2351");
+        
+end
+
+

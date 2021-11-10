@@ -1,0 +1,35 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332843'
+	when
+		$gpy : GrlPlYtd(lseHlyRelId in ( "0720_SF4L" , "9743_SF4L" , "9744_SF4L" , "9794_SF4L" , "9792_SF4L" , "9800_SF4L" ))
+	then
+        
+end
+
+
+
+
+
+rule '1231713' extends '332843' salience 10
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setCustomTxt01((coalesce (goe_pck_tfn . goe_get_lce_cust_cd (lse_hly_rel_id , "MASS_VR_LI" , SUBSTR (trim (upper (mass_line ) ) , 1 , 50 ) ) , "99.999" ) ) );
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3773");
+        
+end
+
+

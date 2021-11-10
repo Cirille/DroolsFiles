@@ -1,0 +1,35 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '338201'
+	when
+		$gda : GrlDetAmounts(actCode == "A0081000" && pdtCode == "033300" && rteCode == "095" && icInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1983218' extends '338201' salience 290
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setRteCode("197");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"8192");
+        
+end
+
+

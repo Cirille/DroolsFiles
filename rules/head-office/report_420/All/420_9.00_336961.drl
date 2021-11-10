@@ -1,0 +1,100 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336961'
+	when
+		$gda : GrlDetAmounts(ebaProduct matches "Derivatives.*" && gridId in ( "36070640" , "44746957" , "36265427" , "36398118" , "36076224" , "38551987" , "36004823" , "36011797" , "45089283" , "48038646" , "37435800" , "45565434" , "37435717" , "41712726" , "37435976" , "49240677" , "41781715" , "41781709" , "39354140" , "36025808" , "36364255" , "37013472" , "36392518" , "44092345" , "36400236" , "37445893" , "47173925" , "38468645" , "49246076" , "49246656" , "47469687" , "36441301" , "38556079" , "36017479" ) && hscAcctSubcl == 2322 && hacAmtCl == 10)
+	then
+        
+end
+
+
+
+
+
+rule '1773345' extends '336961' salience 60
+
+    when
+        
+        GrlDetAmounts(this == $gda, huyUnderlInstrCat == "05")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-EQUITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7036");
+        
+end
+
+rule '1773346' extends '336961' salience 50
+
+    when
+        
+        GrlDetAmounts(this == $gda, huyUnderlInstrCat in ("01", "08", "09"))
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-INTEREST RATE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7036");
+        
+end
+
+rule '1773347' extends '336961' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, huyUnderlInstrCat == "02")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-CCY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7036");
+        
+end
+
+rule '1773348' extends '336961' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, huyUnderlInstrCat == "10")
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-CREDIT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7036");
+        
+end
+
+rule '1773349' extends '336961' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, huyUnderlInstrCat in ("07", "04", "03"))
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7036");
+        
+end
+
+rule '1773350' extends '336961' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, huyUnderlInstrCat in ("06", "11", "12", "99"))
+        
+    then
+        $gda.setSifi3Instrument("FIN DERIV NOTIONAL-CLEAR-OTHER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7036");
+        
+end
+
+

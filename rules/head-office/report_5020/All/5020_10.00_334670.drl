@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334670'
+	when
+		$gpy : GrlPlYtd()
+	then
+        
+end
+
+
+
+
+
+rule '1655754' extends '334670' salience 30
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine("99.999");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2203");
+        
+end
+
+rule '1655755' extends '334670' salience 20
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setLocMassLine(massLine );
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2203");
+        
+end
+
+rule '1655756' extends '334670' salience 10
+
+    when
+        
+        GrlPlYtd(this == $gpy, massLine not in ("Funds Transfer Fees paid", "Other Commissions/Fees paid"), plAcctId in ("5______", "6______", "7______"))
+        
+    then
+        $gpy.setLocMassLine("S" + plAcctId );
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"2203");
+        
+end
+
+

@@ -1,0 +1,108 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332781'
+	when
+		$gda : GrlDetAmounts(ilaapCat1 != "EQUITY ASSETS" && ( ( actCode != null && cpyBeyNumber != null && ilaapCat1 != "EQUITY ASSETS" ) || ilaapCat1 == "EQUITY" || ( smeInd == "Y" && retailInd == "Y" ) ))
+	then
+        
+end
+
+
+
+
+
+rule '1194406' extends '332781' salience 1380
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A.*", cpyBeyNumber != null)
+        
+    then
+        $gda.setIlaapCat1("INTERCOMPANY ASSETS");
+        $gda.setIlaapCat2({this.getIlaapCat2()});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3751");
+        
+end
+
+rule '1194407' extends '332781' salience 1370
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", cpyBeyNumber != null)
+        
+    then
+        $gda.setIlaapCat1("INTERCOMPANY LIABILITIES");
+        $gda.setIlaapCat2({this.getIlaapCat2()});
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3751");
+        
+end
+
+rule '1362024' extends '332781' salience 1360
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", cpyBeyNumber == null, smeInd == "Y", retailInd == "Y")
+        
+    then
+        $gda.setIlaapCat1("SIGHT-DEPOSITS (SAVINGS)");
+        $gda.setIlaapCat2("FVO FUNDS ENTR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3751");
+        
+end
+
+rule '1362682' extends '332781' salience 1350
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A.*", cpyBeyNumber == null, smeInd == "Y", retailInd == "Y")
+        
+    then
+        $gda.setIlaapCat1("CONSUMER LOANS");
+        $gda.setIlaapCat2("FVO LOANS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3751");
+        
+end
+
+rule '1212431' extends '332781' salience 1340
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_bey_hey_mappings does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ilaapCat1 matches "EQ.*")
+        
+    then
+        $gda.setIlaapCat1("EQUITY");
+        $gda.setIlaapCat2("WORKING CAPITAL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3751");
+        
+end
+
+rule '1468397' extends '332781' salience 1330
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Table gre_hr_bey_hey_mappings does not have an entry within the refDataApi within the dbConfig file*/
+        GrlDetAmounts(this == $gda, ilaapCat1 matches "EQ.*")
+        
+    then
+        $gda.setIlaapCat1("EQUITY");
+        $gda.setIlaapCat2("EQ");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3751");
+        
+end
+
+

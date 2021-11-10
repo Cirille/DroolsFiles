@@ -1,0 +1,124 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlMdnReportLines;
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+global com.ing.gfrs.logical.apis.GplExchRatesLogicalApi gplExchRatesLogicalApi;
+global com.ing.gfrs.logical.apis.ChoExchangeRatesLogicalApi choExchangeRatesLogicalApi;
+
+
+dialect  "mvel"
+
+
+rule '336975_INIT'
+	when
+		$gda : GrlDetAmounts(prodSubSubTypeLoc in ( "INTDP" , "INTDPS" , "INTDT" , "INTDTS" , "INTFX" , "INTFXS" , "REI" , "RID" ) && hacAmtCl == "10" && hpePdtType == "SPOT FX" && intInd == "Y")
+	then
+
+        GrlMdnReportLines gmrl = new GrlMdnReportLines();
+        gmrl.setLastHrdId(7050L);
+        gmrl.setLseHlyRelId($gda.getLseHlyRelId());
+        gmrl.setAjtId($gda.getAjtId());
+        gmrl.updateLdlIdTrail(kcontext.rule.name,"7050");
+        gmrl.setAmountField1(gplExchRatesLogicalApi.getExchangeRate($gda.getHcuCcyCdChoDetTan(), $gda.getLseHlyRelId()));
+        gmrl.setAmountField2(gplExchRatesLogicalApi.getCrossRate("EUR", $gda.getHcuCcyCdChoDetTan(), 6, $gda.getLseHlyRelId()));
+        gmrl.setAmountField3(gplExchRatesLogicalApi.getCrossRate("EUR", $gda.getHcuRepCcyCd(), 6, $gda.getLseHlyRelId(),
+            choExchangeRatesLogicalApi.getUltimoRate($gda.getHcuRepCcyCd(),"EUR",$gda.getPrdId())));
+        gmrl.setAmountReporting($gda.getCase2_336974());
+        gmrl.setAmountReportingEur($gda.getCase3_336974());
+        gmrl.setAmountTransaction($gda.getCase4_336974());
+        gmrl.setCpyBeyNumber($gda.getCpyBeyNumber());
+        gmrl.setCpyReyCode($gda.getCpyReyCode());
+        gmrl.setDatId($gda.getId());
+        gmrl.setIndField5($gda.getIcInd());
+        gmrl.setLdrCode($gda.getLdrCode());
+        gmrl.setMneCode1($gda.getCase0_336974());
+        gmrl.setMneCode9($gda.getCase1_336974());
+        gmrl.setMrtName("FCCY.15");
+        gmrl.setPosId($gda.getPosId());
+        gmrl.setPrdId($gda.getPrdId());
+        gmrl.setReportingCryCode($gda.getHcuCcyCdChoDetRepCcy());
+        gmrl.setSmnBeyNumber($gda.getSmnBeyNumber());
+        gmrl.setSmnReyCode($gda.getSmnReyCode());
+        gmrl.setSource("DAT");
+        gmrl.setSourceId($gda.getId());
+        gmrl.setSourceTable("GRL_DET_AMOUNTS");
+        gmrl.setTextField5("ISIN_CD: "+($gda.getIsinCd()==null ? "": $gda.getIsinCd())+"/ GRID_ID: "+($gda.getGridId()==null ? "": $gda.getGridId()));
+        gmrl.setTransactionCryCode($gda.getHcuCcyCdChoDetTan());
+        insert(gmrl);
+end
+
+rule '336975' extends '336975_INIT'
+    when
+        $gmrl : GrlMdnReportLines(sourceId == $gda.getId(), lastHrdId == 7050L)
+    then
+end
+
+
+
+rule '1773516' extends '336975' salience 50
+
+    when
+
+        /*WARNING: this rule will always be called, since it has no conditions*/
+
+    then
+        $gmrl.setMneCode10("NTBR");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7050");
+
+end
+
+rule '1773514' extends '336975' salience 40
+
+    when
+
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", prodSubSubTypeLoc in ("INTFX", "INTFXS", "REI", "RID"))
+
+    then
+        $gmrl.setMneCode10("CRP_FX_FORWARD_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7050");
+
+end
+
+rule '1773515' extends '336975' salience 30
+
+    when
+
+        GrlDetAmounts(this == $gda, repAssetInd == "N", prodSubSubTypeLoc in ("INTFX", "INTFXS", "REI", "RID"))
+
+    then
+        $gmrl.setMneCode10("CRP_FX_FORWARD_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7050");
+
+end
+
+rule '1773512' extends '336975' salience 20
+
+    when
+
+        GrlDetAmounts(this == $gda, repAssetInd == "N", contingInd == "N", prodSubSubTypeLoc in ("INTDP", "INTDPS", "INTDT", "INTDTS"))
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_SHORT");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7050");
+
+end
+
+rule '1773513' extends '336975' salience 10
+
+    when
+
+        GrlDetAmounts(this == $gda, repAssetInd == "Y", contingInd == "N", prodSubSubTypeLoc in ("INTDP", "INTDPS", "INTDT", "INTDTS"))
+
+    then
+        $gmrl.setMneCode10("CRP_FX_SPOT_POSITIONS_LONG");
+
+        $gmrl.updateLdlIdTrail(kcontext.rule.name,"7050");
+
+end
+
+

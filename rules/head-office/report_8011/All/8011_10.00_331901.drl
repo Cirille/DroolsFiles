@@ -1,0 +1,35 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331901'
+	when
+		$gda : GrlDetAmounts(MANUALLY adjust this subselect: grid_id is not null and grid_id <> '0' and grid_id <> '24008367' and ((act_code like 'A%') or (act_code = 'B0596000')) and (lse_hly_rel_id, grid_id) in (with data as (select dat.lse_hly_rel_id , grid_id , sum(cho_det_amt_eur) amount , case when dat.hre_rel_type_ctpy like 'B%' then 'BANK' else 'OTHER' end rel_type from grl_det_amounts dat where dat.lse_hly_rel_id = '0557' and dat.act_code like 'A%' group by dat.grid_id , dat.lse_hly_rel_id , case when dat.hre_rel_type_ctpy like 'B%' then 'BANK' else 'OTHER' end) , limit as (select dat.lse_hly_rel_id , sum(cho_det_amt_eur) amount from grl_det_amounts dat where dat.lse_hly_rel_id = '0557' and dat.act_code in ('Q0064000','Q0065000','Q0066000','Q0068000','Q0070000','Q0071000','Q0073000','Q0075000','Q0076000','Q0077000','Q3167000','Q3168000','L1605000') group by dat.lse_hly_rel_id) select lse_hly_rel_id, grid_id from data where (rel_type = 'BANK' and abs(amount) >= (select 0.03 * abs(amount) from limit)) or (rel_type = 'OTHER' and abs(amount) >= (select 0.01 * abs(amount) from limit)) ))
+	then
+        
+end
+
+
+
+
+
+rule '1116582' extends '331901' salience 60
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt04("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3311");
+        
+end
+
+

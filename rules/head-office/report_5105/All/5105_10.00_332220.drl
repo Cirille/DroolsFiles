@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332220'
+	when
+		$gpy : GrlPlYtd()
+	then
+        
+end
+
+
+
+
+
+rule '1146854' extends '332220' salience 30
+
+    when
+        
+        GrlPlYtd(this == $gpy, lseHlyRelId == "0239")
+        
+    then
+        $gpy.setCustomTxt10(nvl(cia_owner . goe_pck_tfn . goe_get_lce_cust_cd ("0239" , "FRONTDESK" , lde_dept_cd ) , "FILL CUST REF FRONTDESK" ) );
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3521");
+        
+end
+
+rule '1146855' extends '332220' salience 20
+
+    when
+        
+        GrlPlYtd(this == $gpy, lseHlyRelId == "0239_US")
+        
+    then
+        $gpy.setCustomTxt10(nvl(cia_owner . goe_pck_tfn . goe_get_lce_cust_cd ("0239_US" , "FRONTDESK" , lde_dept_cd ) , "FILL CUST REF FRONTDESK" ) );
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3521");
+        
+end
+
+rule '1146856' extends '332220' salience 10
+
+    when
+        
+        GrlPlYtd(this == $gpy, lseHlyRelId == "0239_US_2")
+        
+    then
+        $gpy.setCustomTxt10(nvl(cia_owner . goe_pck_tfn . goe_get_lce_cust_cd ("0239_US_2" , "FRONTDESK" , lde_dept_cd ) , "FILL CUST REF FRONTDESK" ) );
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3521");
+        
+end
+
+

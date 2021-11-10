@@ -1,0 +1,204 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '335759'
+	when
+		$gda : GrlDetAmounts(substr ( actCode , 1 , 1 ) in ( "B" ) && intInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1735686' extends '335759' salience 1170
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "TBA14")
+        
+    then
+        $gda.setSifi3Instrument("UNDERWRITING ACTIVITY-EQUITY AND EQUITY LINKED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6078");
+        
+end
+
+rule '1735723' extends '335759' salience 1160
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "TBA13")
+        
+    then
+        $gda.setSifi3Instrument("UNDERWRITING ACTIVITY-DEBT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6078");
+        
+end
+
+rule '1735808' extends '335759' salience 1150
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "TBA05")
+        
+    then
+        $gda.setSifi3Instrument("INSURANCE ASSETS-UNDER REINSURANCE CEDED-NON LIFE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6078");
+        
+end
+
+rule '1735809' extends '335759' salience 1140
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "TBA06")
+        
+    then
+        $gda.setSifi3Instrument("INSURANCE ASSETS-UNDER REINSURANCE CEDED-LIFE-RISK BORNE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6078");
+        
+end
+
+rule '1735810' extends '335759' salience 1130
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "TBA07")
+        
+    then
+        $gda.setSifi3Instrument("INSURANCE ASSETS-UNDER REINSURANCE CEDED-LIFE-OTHER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6078");
+        
+end
+
+rule '1735811' extends '335759' salience 1120
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "TBA08")
+        
+    then
+        $gda.setSifi3Instrument("INSURANCE ASSETS-UNDER INSURANCE AND REINSURANCE OTHER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6078");
+        
+end
+
+rule '1735685' extends '335759' salience 1110
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "B.*")
+        
+    then
+        $gda.setSifi3Instrument(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6078");
+        
+end
+
+rule '1735722' extends '335759' salience 1100
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("B9998000", "B9999000"))
+        
+    then
+        $gda.setSifi3Instrument("OTHER COMMITMENTS GIVEN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6078");
+        
+end
+
+rule '1735716' extends '335759' salience 1090
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "TBA12", actCode == null, pdtCode == "Map via EBA_PRODUCT")
+        
+    then
+        $gda.setSifi3Instrument("CDS and OTHER CREDIT DERIVATIVES (protection sold)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6078");
+        
+end
+
+rule '1735717' extends '335759' salience 1080
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0596000", pdtCode == "014100")
+        
+    then
+        $gda.setSifi3Instrument("GUARANTEES EXTENDED");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6078");
+        
+end
+
+rule '1735718' extends '335759' salience 1070
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0596000", pdtCode in ("014800", "026900", "027000", "031300", "027800", "033000"))
+        
+    then
+        $gda.setSifi3Instrument("LOAN COMMITMENTS GIVEN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6078");
+        
+end
+
+rule '1735719' extends '335759' salience 1060
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0593000", pdtCode in ("014600", "014700", "015200"))
+        
+    then
+        $gda.setSifi3Instrument("OTHER COMMITMENTS GIVEN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6078");
+        
+end
+
+rule '1735720' extends '335759' salience 1050
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0596000", pdtCode in ("014200", "014300", "014400", "014500", "014900", "015000", "015100", "015500", "031900"))
+        
+    then
+        $gda.setSifi3Instrument("OTHER COMMITMENTS GIVEN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6078");
+        
+end
+
+rule '1735721' extends '335759' salience 1040
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0610000", pdtCode in ("015200", "015600"))
+        
+    then
+        $gda.setSifi3Instrument("OTHER COMMITMENTS GIVEN");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6078");
+        
+end
+
+

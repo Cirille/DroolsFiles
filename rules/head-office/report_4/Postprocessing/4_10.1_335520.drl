@@ -1,0 +1,46 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+global com.ing.gfrs.logical.apis.GreVBeyReyDrlLogicalApi greVBeyReyDrlLogicalApi;
+
+dialect  "mvel"
+
+
+rule '335520'
+	when
+		$gda : GrlDetAmounts( ldeDeptCd != null && nvl ( status , "X" ) not in ('RVD','RVL') )
+	then
+end
+
+
+rule '1710338-1' extends '335520' salience 9
+
+    when
+
+        /*WARNING: this rule will always be called, since it has no conditions*/
+
+    then
+        $gda.setErrorInd("Y");
+
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5896");
+
+end
+
+
+rule '1710338-2' extends '335520' salience 8
+
+    when
+
+        eval(greVBeyReyDrlLogicalApi.existsRecord($gda.getLdeDeptCd(),$gda.getLseHlyRelId()) == true)
+
+    then
+        $gda.setSmnBeyNumber(greVBeyReyDrlLogicalApi.getBeyNumber($gda.getLdeDeptCd(),$gda.getLseHlyRelId()));
+        $gda.setSmnReyCode(greVBeyReyDrlLogicalApi.getReyCode($gda.getLdeDeptCd(),$gda.getLseHlyRelId()));
+
+        $gda.setErrorInd("N");
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5896");
+
+end
+

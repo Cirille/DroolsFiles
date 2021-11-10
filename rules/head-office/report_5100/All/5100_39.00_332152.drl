@@ -1,0 +1,205 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332152'
+	when
+		$gda : GrlDetAmounts(liquidityCdReg != null)
+	then
+        
+end
+
+
+
+
+
+rule '1142337' extends '332152' salience 150
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLiquidityBucketReg("128_Indefinite");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3458");
+        
+end
+
+rule '1142328' extends '332152' salience 140
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1142331() == "1DAY")
+        
+    then
+        $gda.setLiquidityBucketReg("001_t+1");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3458");
+        
+end
+
+rule '1142330' extends '332152' salience 130
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1142331() == "NEGATIVE")
+        
+    then
+        $gda.setLiquidityBucketReg("128_Indefinite");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3458");
+        
+end
+
+rule '1142331' extends '332152' salience 120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1142331() == "DAYS")
+        
+    then
+        $gda.setLiquidityBucketReg(trim (toChar (remTerm , "009" ) + "_" + "t+" + toChar (remTerm ) ) );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3458");
+        
+end
+
+rule '1142332' extends '332152' salience 110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1142331() == "MONTHS")
+        
+    then
+        $gda.setLiquidityBucketReg(trim (toChar (ceil (monthsBetween (repDate + remTerm , repDate ) ) + 89 , "009" ) ) + "_" + "t+" + toChar (ceil (monthsBetween (repDate + remTerm , repDate ) ) ) + "m" );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3458");
+        
+end
+
+rule '1142333' extends '332152' salience 100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1142331() == "YEARS")
+        
+    then
+        $gda.setLiquidityBucketReg(trim (toChar (ceil (monthsBetween (repDate + remTerm , repDate ) / 12 ) + 111 , "009" ) ) + "_" + "t+" + toChar (ceil (monthsBetween (repDate + remTerm , repDate ) / 12 ) ) + "y" );
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3458");
+        
+end
+
+rule '1142334' extends '332152' salience 90
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1142331() == "TMORE15Y")
+        
+    then
+        $gda.setLiquidityBucketReg("127_t+>15y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3458");
+        
+end
+
+rule '1142329' extends '332152' salience 80
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1142331() == "NEGATIVE", hpePdtType == "POS MOV")
+        
+    then
+        $gda.setLiquidityBucketReg("002_t+2");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3458");
+        
+end
+
+rule '1142336' extends '332152' salience 70
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLiquidityBucketReg("002_t+2");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3458");
+        
+end
+
+rule '1142338' extends '332152' salience 60
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1142338() == "PROVISIONS")
+        
+    then
+        $gda.setLiquidityBucketReg("128_Indefinite");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3458");
+        
+end
+
+rule '1146924' extends '332152' salience 50
+
+    when
+        
+        GrlDetAmounts(this == $gda, nonPerfInd == "Y")
+        
+    then
+        $gda.setLiquidityBucketReg("128_Indefinite");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3458");
+        
+end
+
+rule '1146952' extends '332152' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0001000", "L0255000"))
+        
+    then
+        $gda.setLiquidityBucketReg("001_t+1");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3458");
+        
+end
+
+
+rule '1144992' extends '332152' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, lseHlyRelId == "0274")
+        
+    then
+        $gda.setLiquidityBucketReg("001_t+1");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3458");
+        
+end
+
+rule '1148940' extends '332152' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType matches "STOCK.*", lseHlyRelId == "0280", actCode == "L0269000", hpePdtType != "STOCK DISC BILL PRM NOTE")
+        
+    then
+        $gda.setLiquidityBucketReg("002_t+2");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3458");
+        
+end
+
+

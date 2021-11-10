@@ -1,0 +1,178 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336960'
+	when
+		$gda : GrlDetAmounts(actCode in ( "A0024000" , "L0250000" ) && gridId in ( "36070640" , "44746957" , "36265427" , "36398118" , "36076224" , "38551987" , "36004823" , "36011797" , "45089283" , "48038646" , "37435800" , "45565434" , "37435717" , "41712726" , "37435976" , "49240677" , "41781715" , "41781709" , "39354140" , "36025808" , "36364255" , "37013472" , "36392518" , "44092345" , "36400236" , "37445893" , "47173925" , "38468645" , "49246076" , "49246656" , "47469687" , "36441301" , "38556079" , "36017479" ) && hscAcctSubcl == 2322 && hacAmtCl == 24)
+	then
+        
+end
+
+
+
+
+
+rule '1773321' extends '336960' salience 180
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0024000", huyUnderlInstrCat == "05")
+        
+    then
+        $gda.setSifi3Instrument("CCP FIN DERIV ASSETS-FVTPL-CLEAR-EQUITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7035");
+        
+end
+
+rule '1773322' extends '336960' salience 170
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0024000", huyUnderlInstrCat in ("01", "08", "09"))
+        
+    then
+        $gda.setSifi3Instrument("CCP FIN DERIV ASSETS-FVTPL-CLEAR-INTEREST RATE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7035");
+        
+end
+
+rule '1773323' extends '336960' salience 160
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0024000", huyUnderlInstrCat == "02")
+        
+    then
+        $gda.setSifi3Instrument("CCP FIN DERIV ASSETS-FVTPL-CLEAR-CCY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7035");
+        
+end
+
+rule '1773324' extends '336960' salience 150
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0024000", huyUnderlInstrCat == "10")
+        
+    then
+        $gda.setSifi3Instrument("CCP FIN DERIV ASSETS-FVTPL-CLEAR-CREDIT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7035");
+        
+end
+
+rule '1773325' extends '336960' salience 140
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0024000", huyUnderlInstrCat in ("07", "04", "03"))
+        
+    then
+        $gda.setSifi3Instrument("CCP FIN DERIV ASSETS-FVTPL-CLEAR-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7035");
+        
+end
+
+rule '1773326' extends '336960' salience 130
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0024000", huyUnderlInstrCat in ("06", "11", "12", "99"))
+        
+    then
+        $gda.setSifi3Instrument("CCP FIN DERIV ASSETS-FVTPL-CLEAR-OTHER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7035");
+        
+end
+
+rule '1773327' extends '336960' salience 120
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0250000", huyUnderlInstrCat == "05")
+        
+    then
+        $gda.setSifi3Instrument("CCP FIN DERIV LIABIL-FVTPL-CLEAR-EQUITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7035");
+        
+end
+
+rule '1773328' extends '336960' salience 110
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0250000", huyUnderlInstrCat in ("01", "08", "09"))
+        
+    then
+        $gda.setSifi3Instrument("CCP FIN DERIV LIABIL-FVTPL-CLEAR-INTEREST RATE");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7035");
+        
+end
+
+rule '1773329' extends '336960' salience 100
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0250000", huyUnderlInstrCat == "02")
+        
+    then
+        $gda.setSifi3Instrument("CCP FIN DERIV LIABIL-FVTPL-CLEAR-CCY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7035");
+        
+end
+
+rule '1773330' extends '336960' salience 90
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0250000", huyUnderlInstrCat == "10")
+        
+    then
+        $gda.setSifi3Instrument("CCP FIN DERIV LIABIL-FVTPL-CLEAR-CREDIT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7035");
+        
+end
+
+rule '1773331' extends '336960' salience 80
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0250000", huyUnderlInstrCat in ("07", "04", "03"))
+        
+    then
+        $gda.setSifi3Instrument("CCP FIN DERIV LIABIL-FVTPL-CLEAR-COMMODITY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7035");
+        
+end
+
+rule '1773332' extends '336960' salience 70
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0250000", huyUnderlInstrCat in ("06", "11", "12", "99"))
+        
+    then
+        $gda.setSifi3Instrument("CCP FIN DERIV LIABIL-FVTPL-CLEAR-OTHER");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7035");
+        
+end
+
+

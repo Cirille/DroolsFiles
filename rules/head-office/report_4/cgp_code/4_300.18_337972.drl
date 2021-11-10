@@ -1,0 +1,5600 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+global com.ing.gfrs.logical.apis.GreLrCustRefLogicalApi greLrCustRefLogicalApi;
+
+
+dialect  "mvel"
+
+
+rule '337972'
+	when
+		$gda : GrlDetAmounts(( ( actCode in ( "A0007000" , "A0025000" , "A0027000" , "A0034000" , "A0057000" , "A0081000" , "A0082000" , "A0090000" , "A0093000" , "A0102000" , "A0103000" , "A0624000" , "A3329000" , "A3330000" , "A3332000" , "A3931000" , "A8005000" , "A8350000" , "A8805000" , "A8806000" , "A8939000" , "A9222000" , "A9223000" , "A9224000" , "A9225000" , "A9232000" , "A9233000" , "A9234000" , "A9458000" , "A9460000" , "A9750000" , "B0610000" , "L9751000" , "A9763000" , "A9764000" , "A9765000" , "A9835000" ) ) || ( actCode in ( "A0104000" , "A8294000" , "A8295000" , "A9260000" ) && hpePdtType != null && hpePdtType not in ( "STOCK BOND" , "STOCK CD AND CP" , "STOCK CONV BOND" , "STOCK FLOATING RATE NOTE" , "STOCK MEDIUM TERM NOTE" , "STOCK SAVING CERT" , "STOCK SHARE" , "STOCK TREASURY PAPER" ) ) || ( actCode == "A9260000" && pdtCode in ( "002900" , "004200" , "004300" , "004400" , "009400" , "012200" , "012700" , "013600" , "014000" , "015200" , "027800" , "027900" , "028000" , "031400" , "031500" , "033300" ) ) || ( actCode in ( "L0106000" , "L0110000" , "L0111000" , "L0113000" , "L0118000" , "L0119000" , "L0241000" , "L0242000" , "L1425000" , "L0230000" , "L2569000" , "L3334000" , "L3343000" , "L3932000" , "L3933000" , "L3935000" , "L3936000" , "L8068000" , "L9238000" , "L9239000" , "L9240000" , "L9838000" , "B0596000" , "B0595000" ) ) || ( actCode in ( "L0117000" , "L0272000" , "L3348000" ) && hpePdtType != null && hpePdtType not in ( "STOCK BOND" , "STOCK CD AND CP" , "STOCK CONV BOND" , "STOCK FLOATING RATE NOTE" , "STOCK MEDIUM TERM NOTE" , "STOCK SAVING CERT" , "STOCK SHARE" , "STOCK TREASURY PAPER" ) ) || ( actCode == "B0593000" ) ))
+	then
+        
+end
+
+
+
+
+
+rule '1930814' extends '337972' salience 25700
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930813' extends '337972' salience 25690
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", getCase0_1930813() == "K")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930549' extends '337972' salience 25680
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ACCT", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930554' extends '337972' salience 25670
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy matches "B.*", icInd == "Y")
+        
+    then
+        $gda.setCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930555' extends '337972' salience 25660
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy matches "C.*", icInd == "Y")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930556' extends '337972' salience 25650
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy matches "F.*", icInd == "Y")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930579' extends '337972' salience 25640
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "BCRI", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930580' extends '337972' salience 25630
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "BDIP", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930581' extends '337972' salience 25620
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "BEXC", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930582' extends '337972' salience 25610
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "BGOF", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930583' extends '337972' salience 25600
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "BGOG", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930584' extends '337972' salience 25590
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "BGPR", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930585' extends '337972' salience 25580
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "BGVO", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930586' extends '337972' salience 25570
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "BHOL", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930587' extends '337972' salience 25560
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "BJVT", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930588' extends '337972' salience 25550
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "BLEV", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930589' extends '337972' salience 25540
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "BLIM", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930590' extends '337972' salience 25530
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "BMLD", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0037");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930591' extends '337972' salience 25520
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "BPRO", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930592' extends '337972' salience 25510
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "BRPR", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930593' extends '337972' salience 25500
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "BSPM", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930594' extends '337972' salience 25490
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "BSPV", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930596' extends '337972' salience 25480
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CBEA", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930598' extends '337972' salience 25470
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CEXC", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930600' extends '337972' salience 25460
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CFIN", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930601' extends '337972' salience 25450
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CGOG", icInd == "N")
+        
+    then
+        $gda.setCgpCode("G0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930603' extends '337972' salience 25440
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CGVO", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930605' extends '337972' salience 25430
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CHOL", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930607' extends '337972' salience 25420
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CIPB", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930609' extends '337972' salience 25410
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CJVT", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930611' extends '337972' salience 25400
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CLEV", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930613' extends '337972' salience 25390
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CLIM", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930615' extends '337972' salience 25380
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CNPO", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930617' extends '337972' salience 25370
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "COMB", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930619' extends '337972' salience 25360
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "COMN", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930621' extends '337972' salience 25350
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CPOL", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930623' extends '337972' salience 25340
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CPRJ", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930625' extends '337972' salience 25330
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CPTR", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930627' extends '337972' salience 25320
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CREG", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930629' extends '337972' salience 25310
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CSPV", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930631' extends '337972' salience 25300
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CTCF", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930633' extends '337972' salience 25290
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CTMP", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930673' extends '337972' salience 25280
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "GAMT", icInd == "N")
+        
+    then
+        $gda.setCgpCode("G0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930674' extends '337972' salience 25270
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "GCEN", icInd == "N")
+        
+    then
+        $gda.setCgpCode("G0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930675' extends '337972' salience 25260
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "GCFI", icInd == "N")
+        
+    then
+        $gda.setCgpCode("G0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930676' extends '337972' salience 25250
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "GCPL", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930677' extends '337972' salience 25240
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "GLFI", icInd == "N")
+        
+    then
+        $gda.setCgpCode("G0009");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930678' extends '337972' salience 25230
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "GLOC", icInd == "N")
+        
+    then
+        $gda.setCgpCode("G0009");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930679' extends '337972' salience 25220
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "GLOL", icInd == "N")
+        
+    then
+        $gda.setCgpCode("G0009");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930680' extends '337972' salience 25210
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "GLPL", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930681' extends '337972' salience 25200
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "GNFP", icInd == "N")
+        
+    then
+        $gda.setCgpCode("G0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930682' extends '337972' salience 25190
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "GNFU", icInd == "N")
+        
+    then
+        $gda.setCgpCode("G0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930683' extends '337972' salience 25180
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "GOSN", icInd == "N")
+        
+    then
+        $gda.setCgpCode("G0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930684' extends '337972' salience 25170
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "GPSC", icInd == "N")
+        
+    then
+        $gda.setCgpCode("G0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930685' extends '337972' salience 25160
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "GPSL", icInd == "N")
+        
+    then
+        $gda.setCgpCode("G0009");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930686' extends '337972' salience 25150
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "GSNO", icInd == "N")
+        
+    then
+        $gda.setCgpCode("G0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930687' extends '337972' salience 25140
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "GSOC", icInd == "N")
+        
+    then
+        $gda.setCgpCode("G0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930688' extends '337972' salience 25130
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "IIPB", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930689' extends '337972' salience 25120
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "IMND", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930690' extends '337972' salience 25110
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "INDV", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930691' extends '337972' salience 25100
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "IREP", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930692' extends '337972' salience 25090
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ISTF", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930694' extends '337972' salience 25080
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KBEA", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930696' extends '337972' salience 25070
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KEXC", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930698' extends '337972' salience 25060
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KFIN", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930700' extends '337972' salience 25050
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KGVO", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930702' extends '337972' salience 25040
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KHOL", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930704' extends '337972' salience 25030
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KIPB", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930706' extends '337972' salience 25020
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KJVT", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930708' extends '337972' salience 25010
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KLEV", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930710' extends '337972' salience 25000
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KLIM", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930712' extends '337972' salience 24990
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KNPO", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930714' extends '337972' salience 24980
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KOMB", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930716' extends '337972' salience 24970
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KOMN", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930718' extends '337972' salience 24960
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KPOL", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930720' extends '337972' salience 24950
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KPTR", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930722' extends '337972' salience 24940
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KREG", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930724' extends '337972' salience 24930
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KSPV", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930726' extends '337972' salience 24920
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KTCF", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930728' extends '337972' salience 24910
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KTMP", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930730' extends '337972' salience 24900
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RBEA", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930733' extends '337972' salience 24890
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "REXC", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930735' extends '337972' salience 24880
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RGVO", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930737' extends '337972' salience 24870
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RJVT", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930739' extends '337972' salience 24860
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RLIM", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930741' extends '337972' salience 24850
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ROMB", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930743' extends '337972' salience 24840
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RPRJ", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930745' extends '337972' salience 24830
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RPTL", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930747' extends '337972' salience 24820
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RPTP", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930749' extends '337972' salience 24810
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RPTR", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930751' extends '337972' salience 24800
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RREG", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930753' extends '337972' salience 24790
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RSPV", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930755' extends '337972' salience 24780
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SBEA", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930757' extends '337972' salience 24770
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SEXC", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930759' extends '337972' salience 24760
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SFIN", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930761' extends '337972' salience 24750
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SGVO", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930763' extends '337972' salience 24740
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SHOL", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930765' extends '337972' salience 24730
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SIPB", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930767' extends '337972' salience 24720
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SJVT", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930769' extends '337972' salience 24710
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SLEV", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930771' extends '337972' salience 24700
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SLIM", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930773' extends '337972' salience 24690
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SNPO", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930775' extends '337972' salience 24680
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SOMB", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930777' extends '337972' salience 24670
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SOMN", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930779' extends '337972' salience 24660
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SPOL", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930781' extends '337972' salience 24650
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SPTR", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930783' extends '337972' salience 24640
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SREG", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930785' extends '337972' salience 24630
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SSPV", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930787' extends '337972' salience 24620
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "STCF", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930789' extends '337972' salience 24610
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "STMP", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930794' extends '337972' salience 24600
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZABG", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930796' extends '337972' salience 24590
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZABS", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930798' extends '337972' salience 24580
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZAIN", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930800' extends '337972' salience 24570
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZCMB", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930802' extends '337972' salience 24560
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZCMG", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930804' extends '337972' salience 24550
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZMBG", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930806' extends '337972' salience 24540
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZMBS", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930808' extends '337972' salience 24530
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZMIN", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930810' extends '337972' salience 24520
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZRMB", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930812' extends '337972' salience 24510
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZSEC", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1955568' extends '337972' salience 24500
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FREG", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1955569' extends '337972' salience 24490
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FFIN", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956030' extends '337972' salience 24480
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FAMT", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956031' extends '337972' salience 24470
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FBEA", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956032' extends '337972' salience 24460
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FBIC", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956033' extends '337972' salience 24450
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FBRO", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956034' extends '337972' salience 24440
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FCCP", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956035' extends '337972' salience 24430
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FCHO", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956036' extends '337972' salience 24420
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FCLF", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956037' extends '337972' salience 24410
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FCLH", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956038' extends '337972' salience 24400
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FDIP", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956039' extends '337972' salience 24390
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FECA", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956040' extends '337972' salience 24380
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FECO", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956041' extends '337972' salience 24370
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FETF", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956042' extends '337972' salience 24360
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FEXC", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956043' extends '337972' salience 24350
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FEXO", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956044' extends '337972' salience 24340
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FFUA", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956046' extends '337972' salience 24330
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FGVO", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956047' extends '337972' salience 24320
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FHOL", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956048' extends '337972' salience 24310
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FINS", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956049' extends '337972' salience 24300
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FIPB", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956050' extends '337972' salience 24290
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FJVT", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956051' extends '337972' salience 24280
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FLEV", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956052' extends '337972' salience 24270
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FLIF", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956053' extends '337972' salience 24260
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FLIM", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956054' extends '337972' salience 24250
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FOFM", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956055' extends '337972' salience 24240
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FOHF", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956056' extends '337972' salience 24230
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FOPF", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956057' extends '337972' salience 24220
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FPEF", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956058' extends '337972' salience 24210
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FPOO", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956059' extends '337972' salience 24200
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FSPM", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956060' extends '337972' salience 24190
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FSPO", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956061' extends '337972' salience 24180
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FSPV", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956062' extends '337972' salience 24170
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FTRU", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956063' extends '337972' salience 24160
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FUND", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956064' extends '337972' salience 24150
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FUSB", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956065' extends '337972' salience 24140
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FXCE", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1956066' extends '337972' salience 24130
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FXCH", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1998038' extends '337972' salience 24120
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "REIF", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930577' extends '337972' salience 24110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "BCEN", getCase0_1806394() == "Y", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0034");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930578' extends '337972' salience 24100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "BCEN", getCase0_1806394() == "N", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0035");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930595' extends '337972' salience 24090
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CBEA", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930597' extends '337972' salience 24080
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CEXC", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930599' extends '337972' salience 24070
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CFIN", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930602' extends '337972' salience 24060
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CGVO", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930604' extends '337972' salience 24050
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CHOL", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930606' extends '337972' salience 24040
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CIPB", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930608' extends '337972' salience 24030
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CJVT", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930610' extends '337972' salience 24020
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CLEV", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930612' extends '337972' salience 24010
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CLIM", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930614' extends '337972' salience 24000
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CNPO", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930622' extends '337972' salience 23990
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CPRJ", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930624' extends '337972' salience 23980
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CPTR", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930626' extends '337972' salience 23970
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CREG", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930628' extends '337972' salience 23960
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CSPV", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930630' extends '337972' salience 23950
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CTCF", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930632' extends '337972' salience 23940
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CTMP", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930634' extends '337972' salience 23930
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FAMT", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930635' extends '337972' salience 23920
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FBEA", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930636' extends '337972' salience 23910
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FBIC", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930637' extends '337972' salience 23900
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FBRO", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930639' extends '337972' salience 23890
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FCHO", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930640' extends '337972' salience 23880
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FCLF", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930641' extends '337972' salience 23870
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FCLH", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930642' extends '337972' salience 23860
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FDIP", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930643' extends '337972' salience 23850
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FECA", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930644' extends '337972' salience 23840
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FECO", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930645' extends '337972' salience 23830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FETF", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930646' extends '337972' salience 23820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FEXC", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930648' extends '337972' salience 23810
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FFIN", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930649' extends '337972' salience 23800
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FFUA", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930651' extends '337972' salience 23790
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FGVO", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930652' extends '337972' salience 23780
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FHOL", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930653' extends '337972' salience 23770
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FINS", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930654' extends '337972' salience 23760
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FIPB", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930655' extends '337972' salience 23750
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FJVT", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930656' extends '337972' salience 23740
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FLEV", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930657' extends '337972' salience 23730
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FLIF", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930658' extends '337972' salience 23720
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FLIM", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930659' extends '337972' salience 23710
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FOFM", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930660' extends '337972' salience 23700
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FOHF", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930661' extends '337972' salience 23690
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FOPF", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930662' extends '337972' salience 23680
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FPEF", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930663' extends '337972' salience 23670
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FPOO", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930664' extends '337972' salience 23660
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FREG", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930665' extends '337972' salience 23650
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FSPM", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930666' extends '337972' salience 23640
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FSPO", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930667' extends '337972' salience 23630
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FSPV", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930668' extends '337972' salience 23620
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FTRU", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930669' extends '337972' salience 23610
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FUND", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930670' extends '337972' salience 23600
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FUSB", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930693' extends '337972' salience 23590
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KBEA", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930695' extends '337972' salience 23580
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KEXC", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930697' extends '337972' salience 23570
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KFIN", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930699' extends '337972' salience 23560
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KGVO", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930701' extends '337972' salience 23550
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KHOL", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930703' extends '337972' salience 23540
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KIPB", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930705' extends '337972' salience 23530
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KJVT", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930707' extends '337972' salience 23520
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KLEV", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930709' extends '337972' salience 23510
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KLIM", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930711' extends '337972' salience 23500
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KNPO", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930719' extends '337972' salience 23490
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KPTR", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930721' extends '337972' salience 23480
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KREG", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930723' extends '337972' salience 23470
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KSPV", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930725' extends '337972' salience 23460
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KTCF", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930727' extends '337972' salience 23450
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KTMP", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930729' extends '337972' salience 23440
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RBEA", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930731' extends '337972' salience 23430
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "REIF", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930732' extends '337972' salience 23420
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "REXC", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930734' extends '337972' salience 23410
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RGVO", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930736' extends '337972' salience 23400
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RJVT", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930738' extends '337972' salience 23390
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RLIM", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930742' extends '337972' salience 23380
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RPRJ", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930744' extends '337972' salience 23370
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RPTL", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930748' extends '337972' salience 23360
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RPTR", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930750' extends '337972' salience 23350
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RREG", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930752' extends '337972' salience 23340
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RSPV", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930754' extends '337972' salience 23330
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SBEA", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930756' extends '337972' salience 23320
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SEXC", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930758' extends '337972' salience 23310
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SFIN", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930760' extends '337972' salience 23300
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SGVO", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930762' extends '337972' salience 23290
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SHOL", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930764' extends '337972' salience 23280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SIPB", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930766' extends '337972' salience 23270
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SJVT", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930768' extends '337972' salience 23260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SLEV", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930770' extends '337972' salience 23250
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SLIM", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930782' extends '337972' salience 23240
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SREG", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930784' extends '337972' salience 23230
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "SSPV", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930786' extends '337972' salience 23220
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "STCF", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930788' extends '337972' salience 23210
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "STMP", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930790' extends '337972' salience 23200
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy matches "Z.*", icInd == "Y", getCase0_1930790() == "OTHER")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930791' extends '337972' salience 23190
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy matches "Z.*", icInd == "Y", getCase0_1930790() == "BANK")
+        
+    then
+        $gda.setCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930792' extends '337972' salience 23180
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy matches "Z.*", icInd == "Y", getCase0_1930790() == "OFI")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930793' extends '337972' salience 23170
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZABG", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930795' extends '337972' salience 23160
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZABS", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930797' extends '337972' salience 23150
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZAIN", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930799' extends '337972' salience 23140
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZCMB", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930801' extends '337972' salience 23130
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZCMG", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930803' extends '337972' salience 23120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZMBG", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930805' extends '337972' salience 23110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZMBS", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930807' extends '337972' salience 23100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZMIN", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930809' extends '337972' salience 23090
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZRMB", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930811' extends '337972' salience 23080
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ZSEC", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930550' extends '337972' salience 23070
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ACCT", getCase0_1710732() == "522110", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930551' extends '337972' salience 23060
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ACCT", getCase0_1710732() != "522110", getCase0_1930813() == "K", icInd == "N")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930552' extends '337972' salience 23050
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ACCT", getCase0_1710732() == "921190", getCase0_1930813() == "O", icInd == "N")
+        
+    then
+        $gda.setCgpCode("G0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1930553' extends '337972' salience 23040
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "ACCT", getCase0_1710732() != "921190", getCase0_1930813() == "O", icInd == "N")
+        
+    then
+        $gda.setCgpCode("G0009");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1944506' extends '337972' salience 23030
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RSPV", icInd == "N", greLrCustRefLogicalApi.getCustomCd(gridId,"STNDRD","CPY-ISS","N") == "RSPV-OFI")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1944507' extends '337972' salience 23020
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RREG", icInd == "N", greLrCustRefLogicalApi.getCustomCd(gridId,"STNDRD","CPY-ISS","N") == "RREG-OFI")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1955558' extends '337972' salience 23010
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", icInd == "N", greLrCustRefLogicalApi.getCustomCd(gridId,"STNDRD","CPY-ISS","N") == "CORP-TO-OFI")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1957460' extends '337972' salience 23000
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", icInd == "N", greLrCustRefLogicalApi.getCustomCd(gridId,"STNDRD","CPY-ISS","N") == "BANK-TO-OFI")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1957461' extends '337972' salience 22990
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", icInd == "N", greLrCustRefLogicalApi.getCustomCd(gridId,"STNDRD","CPY-ISS","N") == "NACE-K-TO-CORP")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1957462' extends '337972' salience 22980
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", icInd == "N", greLrCustRefLogicalApi.getCustomCd(gridId,"STNDRD","CPY-ISS","N") == "GOVT-TO-CORP")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982346' extends '337972' salience 22970
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FAMT", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982347' extends '337972' salience 22960
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FBEA", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982348' extends '337972' salience 22950
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FBIC", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982349' extends '337972' salience 22940
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FBRO", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982351' extends '337972' salience 22930
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FCHO", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982352' extends '337972' salience 22920
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FCLF", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982353' extends '337972' salience 22910
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FCLH", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982354' extends '337972' salience 22900
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FDIP", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982355' extends '337972' salience 22890
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FECA", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982356' extends '337972' salience 22880
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FECO", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982357' extends '337972' salience 22870
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FETF", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982358' extends '337972' salience 22860
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FEXC", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982360' extends '337972' salience 22850
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FFIN", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982361' extends '337972' salience 22840
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FFUA", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982362' extends '337972' salience 22830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FGVO", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982363' extends '337972' salience 22820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FHOL", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982364' extends '337972' salience 22810
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FINS", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982365' extends '337972' salience 22800
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FIPB", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982366' extends '337972' salience 22790
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FJVT", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982367' extends '337972' salience 22780
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FLEV", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982368' extends '337972' salience 22770
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FLIF", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982369' extends '337972' salience 22760
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FLIM", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982370' extends '337972' salience 22750
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FOFM", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982371' extends '337972' salience 22740
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FOHF", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982372' extends '337972' salience 22730
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FOPF", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982373' extends '337972' salience 22720
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FPEF", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982374' extends '337972' salience 22710
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FPOO", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982375' extends '337972' salience 22700
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FREG", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982376' extends '337972' salience 22690
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FSPM", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982377' extends '337972' salience 22680
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FSPO", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982378' extends '337972' salience 22670
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FSPV", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982379' extends '337972' salience 22660
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FTRU", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982380' extends '337972' salience 22650
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FUND", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982381' extends '337972' salience 22640
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FUSB", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982422' extends '337972' salience 22630
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CBEA", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982423' extends '337972' salience 22620
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CEXC", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982424' extends '337972' salience 22610
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CFIN", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982425' extends '337972' salience 22600
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CGVO", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982427' extends '337972' salience 22590
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CIPB", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982428' extends '337972' salience 22580
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CJVT", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982429' extends '337972' salience 22570
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CLEV", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982430' extends '337972' salience 22560
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CLIM", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982431' extends '337972' salience 22550
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CNPO", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982432' extends '337972' salience 22540
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CPRJ", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982433' extends '337972' salience 22530
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CHOL", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982434' extends '337972' salience 22520
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CPTR", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982435' extends '337972' salience 22510
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CREG", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982436' extends '337972' salience 22500
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CSPV", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982437' extends '337972' salience 22490
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CTCF", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982438' extends '337972' salience 22480
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CTMP", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982440' extends '337972' salience 22470
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KBEA", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982441' extends '337972' salience 22460
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KEXC", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982442' extends '337972' salience 22450
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KFIN", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982443' extends '337972' salience 22440
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KGVO", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982444' extends '337972' salience 22430
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KHOL", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982445' extends '337972' salience 22420
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KIPB", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982446' extends '337972' salience 22410
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KJVT", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982447' extends '337972' salience 22400
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KLEV", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982448' extends '337972' salience 22390
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KLIM", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982449' extends '337972' salience 22380
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KNPO", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982450' extends '337972' salience 22370
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KPTR", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982451' extends '337972' salience 22360
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KREG", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982452' extends '337972' salience 22350
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KSPV", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982453' extends '337972' salience 22340
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KTCF", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982454' extends '337972' salience 22330
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KTMP", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982455' extends '337972' salience 22320
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RBEA", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982456' extends '337972' salience 22310
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "REXC", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982457' extends '337972' salience 22300
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RGVO", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982458' extends '337972' salience 22290
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RJVT", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982459' extends '337972' salience 22280
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RLIM", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982460' extends '337972' salience 22270
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RPRJ", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982461' extends '337972' salience 22260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RPTL", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982462' extends '337972' salience 22250
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RPTR", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982463' extends '337972' salience 22240
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RREG", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982464' extends '337972' salience 22230
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RSPV", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982592' extends '337972' salience 22220
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CBEA", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982593' extends '337972' salience 22210
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CEXC", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982594' extends '337972' salience 22200
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CFIN", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982595' extends '337972' salience 22190
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CGVO", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982597' extends '337972' salience 22180
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CIPB", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982598' extends '337972' salience 22170
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CJVT", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982599' extends '337972' salience 22160
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CLEV", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982600' extends '337972' salience 22150
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CLIM", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982601' extends '337972' salience 22140
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CNPO", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982602' extends '337972' salience 22130
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CPRJ", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982603' extends '337972' salience 22120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CHOL", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982604' extends '337972' salience 22110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CPTR", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982605' extends '337972' salience 22100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CREG", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982606' extends '337972' salience 22090
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CSPV", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982607' extends '337972' salience 22080
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CTCF", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982608' extends '337972' salience 22070
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "CTMP", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982609' extends '337972' salience 22060
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RBEA", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982610' extends '337972' salience 22050
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "REXC", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982611' extends '337972' salience 22040
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RGVO", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982612' extends '337972' salience 22030
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RJVT", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982613' extends '337972' salience 22020
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RLIM", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982614' extends '337972' salience 22010
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RPRJ", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982615' extends '337972' salience 22000
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RPTL", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982616' extends '337972' salience 21990
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RPTR", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982617' extends '337972' salience 21980
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RREG", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982618' extends '337972' salience 21970
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "RSPV", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982619' extends '337972' salience 21960
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KBEA", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982620' extends '337972' salience 21950
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KEXC", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982621' extends '337972' salience 21940
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KFIN", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982622' extends '337972' salience 21930
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KGVO", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982623' extends '337972' salience 21920
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KHOL", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982624' extends '337972' salience 21910
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KIPB", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982625' extends '337972' salience 21900
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KJVT", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982626' extends '337972' salience 21890
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KLEV", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982627' extends '337972' salience 21880
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KLIM", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982628' extends '337972' salience 21870
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KNPO", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982629' extends '337972' salience 21860
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KPTR", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982630' extends '337972' salience 21850
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KREG", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982631' extends '337972' salience 21840
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KSPV", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982632' extends '337972' salience 21830
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KTCF", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982633' extends '337972' salience 21820
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "KTMP", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982634' extends '337972' salience 21810
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FAMT", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982635' extends '337972' salience 21800
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FBEA", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982636' extends '337972' salience 21790
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FBIC", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982637' extends '337972' salience 21780
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FBRO", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982639' extends '337972' salience 21770
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FCHO", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982640' extends '337972' salience 21760
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FCLF", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982641' extends '337972' salience 21750
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FCLH", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982642' extends '337972' salience 21740
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FDIP", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982643' extends '337972' salience 21730
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FECA", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982644' extends '337972' salience 21720
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FECO", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982645' extends '337972' salience 21710
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FETF", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982646' extends '337972' salience 21700
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FEXC", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982648' extends '337972' salience 21690
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FFIN", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982649' extends '337972' salience 21680
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FFUA", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982650' extends '337972' salience 21670
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FGVO", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982651' extends '337972' salience 21660
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FHOL", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982652' extends '337972' salience 21650
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FINS", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982653' extends '337972' salience 21640
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FIPB", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982654' extends '337972' salience 21630
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FJVT", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982655' extends '337972' salience 21620
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FLEV", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982656' extends '337972' salience 21610
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FLIF", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982657' extends '337972' salience 21600
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FLIM", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982658' extends '337972' salience 21590
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FOFM", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982659' extends '337972' salience 21580
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FOHF", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982660' extends '337972' salience 21570
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FOPF", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982661' extends '337972' salience 21560
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FPEF", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982662' extends '337972' salience 21550
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FPOO", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982663' extends '337972' salience 21540
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FREG", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982664' extends '337972' salience 21530
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FSPM", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982665' extends '337972' salience 21520
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FSPO", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982666' extends '337972' salience 21510
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FSPV", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982667' extends '337972' salience 21500
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FTRU", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982668' extends '337972' salience 21490
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FUND", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1982669' extends '337972' salience 21480
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "FUSB", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1998036' extends '337972' salience 21470
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "REIF", getCase0_1930813() == "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0053");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '1998037' extends '337972' salience 21460
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", hreRelTypeCtpy == "REIF", getCase0_1930813() != "K", icInd == "N", ownUse75 == "Y")
+        
+    then
+        $gda.setCgpCode("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '2010074' extends '337972' salience 21450
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", icInd == "N", greLrCustRefLogicalApi.getCustomCd(gridId,"STNDRD","CPY-ISS","N") == "CORP")
+        
+    then
+        $gda.setCgpCode("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '2010075' extends '337972' salience 21440
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", icInd == "N", greLrCustRefLogicalApi.getCustomCd(gridId,"STNDRD","CPY-ISS","N") == "OFI")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '2010076' extends '337972' salience 21430
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", icInd == "N", greLrCustRefLogicalApi.getCustomCd(gridId,"STNDRD","CPY-ISS","N") == "GOVTLOC")
+        
+    then
+        $gda.setCgpCode("G0009");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+rule '2010233' extends '337972' salience 21420
+
+    when
+        
+        GrlDetAmounts(this == $gda, intInd == "N", icInd == "N", greLrCustRefLogicalApi.getCustomCd(gridId,"STNDRD","CPY-ISS","N") == "GOVT-TO-OFI")
+        
+    then
+        $gda.setCgpCode("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7980");
+        
+end
+
+

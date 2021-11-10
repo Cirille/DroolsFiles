@@ -1,0 +1,230 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332693'
+	when
+		$gda : GrlDetAmounts(( actCode != null && actCode not matches "B.*" ) || hacAmtCl in ( "11" , "19" ))
+	then
+        
+end
+
+
+
+
+
+rule '1184235' extends '332693' salience 160
+
+    when
+        
+        GrlDetAmounts(this == $gda, retailInd == null)
+        
+    then
+        $gda.setIlaapPostDetValRes("P7: RETAIL IND empty");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3723");
+        
+end
+
+rule '1184236' extends '332693' salience 150
+
+    when
+        
+        GrlDetAmounts(this == $gda, ilaapCustGr == null)
+        
+    then
+        $gda.setIlaapPostDetValRes("P8: ILAAP CUST_GR EMPTY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3723");
+        
+end
+
+rule '1184230' extends '332693' salience 140
+
+    when
+        
+        GrlDetAmounts(this == $gda, (pdtCode matches "03.*" || pdtCode == "002900" || pdtCode == "004700" || pdtCode == "004800" || pdtCode == "005100" || pdtCode == "005900" || pdtCode == "007300" || pdtCode == "015200" || pdtCode == "029000"), encumberedInd == null)
+        
+    then
+        $gda.setIlaapPostDetValRes("P2: ENCUMBERED EMPTY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3723");
+        
+end
+
+rule '1184231' extends '332693' salience 130
+
+    when
+        
+        GrlDetAmounts(this == $gda, (pdtCode matches "03.*" || pdtCode == "002900" || pdtCode == "004700" || pdtCode == "004800" || pdtCode == "005100" || pdtCode == "005900" || pdtCode == "007300" || pdtCode == "015200" || pdtCode == "029000"), ilaapEncumbranceType == null)
+        
+    then
+        $gda.setIlaapPostDetValRes("P3: ENCUMBRANCE TYPE EMPTY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3723");
+        
+end
+
+rule '1184233' extends '332693' salience 120
+
+    when
+        
+        GrlDetAmounts(this == $gda, cgpCode != null, dutchCtpyInd == null)
+        
+    then
+        $gda.setIlaapPostDetValRes("P5: DUTCH CPTY EMPTY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3723");
+        
+end
+
+rule '1184234' extends '332693' salience 110
+
+    when
+        
+        GrlDetAmounts(this == $gda, ilaapCustGr == "Consumers", retailInd == null)
+        
+    then
+        $gda.setIlaapPostDetValRes("P6: RETAIL_IND must be Y (consumers)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3723");
+        
+end
+
+rule '1184247' extends '332693' salience 100
+
+    when
+        
+        GrlDetAmounts(this == $gda, cgpCode in ("G0008", "G0009", "P0031", "P0039", "P0041", "P0042", "P0045"), smeInd == null)
+        
+    then
+        $gda.setIlaapPostDetValRes("P16: SME_IND EMPTY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3723");
+        
+end
+
+rule '1184229' extends '332693' salience 90
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A.*", (pdtCode matches "03.*" || pdtCode == "002900" || pdtCode == "004700" || pdtCode == "004800" || pdtCode == "005100" || pdtCode == "005900" || pdtCode == "007300" || pdtCode == "015200" || pdtCode == "029000"), ilaapCollType == null)
+        
+    then
+        $gda.setIlaapPostDetValRes("P1: COLL_TYPE EMPTY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3723");
+        
+end
+
+rule '1184232' extends '332693' salience 80
+
+    when
+        
+        GrlDetAmounts(this == $gda, hacAmtCl in ("11", "19"), encumberedInd == "Y", ilaapEncumbranceType == null)
+        
+    then
+        $gda.setIlaapPostDetValRes("P4: ENCUMBRANCE TYPE EMPTY (repo sec leg)");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3723");
+        
+end
+
+rule '1184237' extends '332693' salience 70
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", retailInd == "Y", dgsCd == null)
+        
+    then
+        $gda.setIlaapPostDetValRes("P9: DGS_CD EMPTY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3723");
+        
+end
+
+rule '1184238' extends '332693' salience 60
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", retailInd == "Y", monoInd == null)
+        
+    then
+        $gda.setIlaapPostDetValRes("P10: MONO_IND EMPTY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3723");
+        
+end
+
+rule '1184239' extends '332693' salience 50
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", retailInd == "Y", transactionalInd == null)
+        
+    then
+        $gda.setIlaapPostDetValRes("P11: TRANSACTIONAL_IND EMPTY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3723");
+        
+end
+
+rule '1184240' extends '332693' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", retailInd == "Y", stableInd == null)
+        
+    then
+        $gda.setIlaapPostDetValRes("P12: STABLE_IND EMPTY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3723");
+        
+end
+
+rule '1184241' extends '332693' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", ilaapCustGr == "Corporate", operationalInd == null)
+        
+    then
+        $gda.setIlaapPostDetValRes("P13: OPERATIONAL_IND EMPTY for corporate");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3723");
+        
+end
+
+rule '1184242' extends '332693' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", stableInd == "N", dgsCd == "Y", monoInd == "N")
+        
+    then
+        $gda.setIlaapPostDetValRes("P14: STABLE=N DGS=Y MONO=N COMBI invalid");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3723");
+        
+end
+
+rule '1184243' extends '332693' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", stableInd == "N", dgsCd == "Y", transactionalInd == "Y")
+        
+    then
+        $gda.setIlaapPostDetValRes("P15: STABLE=N DGS=Y TRANS=Y COMBI invalid");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3723");
+        
+end
+
+

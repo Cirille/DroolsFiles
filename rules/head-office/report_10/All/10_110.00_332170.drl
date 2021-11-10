@@ -1,0 +1,33 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+global com.ing.gfrs.logical.apis.ChoBeyReyMappingsLogicalApi choBeyReyMappingsLogicalApi;
+
+dialect  "mvel"
+
+
+rule '332170'
+	when
+		$gda : GrlDetAmounts(lseHlyRelId in ( "419A_FRD" , "0239_FRD" ) && cpyBeyNumber != null && (cpyReyCode == null || choBeyReyMappingsLogicalApi.existsRecord(cpyBeyNumber,cpyReyCode,prdId) == true))
+
+	then
+end
+
+
+rule '1142644' extends '332170' salience 20
+
+    when
+
+         /*WARNING: this rule will always be called, since it has no conditions*/
+
+    then
+
+        $gda.setCpyReyCode(choBeyReyMappingsLogicalApi.getReyCode($gda.getCpyBeyNumber(),$gda.getPrdId()));
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3474");
+        
+end
+
+

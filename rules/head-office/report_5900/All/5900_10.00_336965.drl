@@ -1,0 +1,61 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336965'
+	when
+		$gda : GrlDetAmounts(GOE_PCK_TFN . GOE_GET_LCE_CUST_CD ( "STNDRD" , "MASS_INTRA" , smn_rey_code ) != null && GOE_PCK_TFN . GOE_GET_LCE_CUST_CD ( "STNDRD" , "MASS_INTRA" , cpy_rey_code ) != null && GOE_PCK_TFN . GOE_GET_LCE_CUST_CD ( "STNDRD" , "MASS_INTRA" , smn_rey_code ) == GOE_PCK_TFN . GOE_GET_LCE_CUST_CD ( "STNDRD" , "MASS_INTRA" , cpy_rey_code ) && massLine in ( "Assets Intercompany excl. Intra" , "Liabilities Intercompany excl. Intra" ))
+	then
+        
+end
+
+
+
+
+
+rule '1773379' extends '336965' salience 30
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLocMassLine("NVL ( {LOC_MASS_LINE} , {MASS_LINE} )");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7040");
+        
+end
+
+rule '1773377' extends '336965' salience 20
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLocMassLine("Assets Intracompany");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7040");
+        
+end
+
+rule '1773378' extends '336965' salience 10
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLocMassLine("Liabilities Intracompany");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"7040");
+        
+end
+
+

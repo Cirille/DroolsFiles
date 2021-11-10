@@ -1,0 +1,48 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336834'
+	when
+		$gda : GrlDetAmounts(actCode in ( "L0106000" , "L0110000" , "L0111000" , "L0113000" , "L0117000" , "L0118000" , "L0119000" , "L0121000" , "L0132000" , "L0229000" , "L0230000" , "L0233000" , "L0234000" , "L0237000" , "L0238000" , "L0239000" , "L0242000" , "L0245000" , "L0249000" , "L0252000" , "L0253000" , "L0254000" , "L0255000" , "L0256000" , "L0257000" , "L0258000" , "L0267000" , "L0271000" , "L0272000" , "L0273000" , "L0277000" , "L1425000" , "L2569000" , "L2571000" , "L3334000" , "L3343000" , "L3348000" , "L3351000" , "L3933000" , "L3935000" , "L3936000" , "L4258000" , "L4467000" , "L4885000" , "L4888000" , "L8009000" , "L8292000" , "L8622000" , "L9012000" , "L9013000" , "L9014000" , "L9751000" ) && intInd == "N" && icInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1769577' extends '336834' salience 1140
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setHb2Bis2CombiCd(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6946");
+        
+end
+
+rule '1769576' extends '336834' salience 1130
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, getCase0_1769554() == "LOCAL CCY", residentInd == "Y")
+        
+    then
+        $gda.setHb2Bis2CombiCd("17");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6946");
+        
+end
+
+

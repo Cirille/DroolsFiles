@@ -1,0 +1,87 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334291'
+	when
+		$gda : GrlDetAmounts(lseHlyRelId == "9193" && seCode2 matches ".*9001-HK1_06.5.*" && seSectors in ( "9001-HK1_2241" , "9001-HK1_2242" , "9001-HK1_2251" , "9001-HK1_2252" ))
+	then
+        
+end
+
+
+
+
+
+rule '1608448' extends '334291' salience 11400
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxtHo18(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4989");
+        
+end
+
+rule '1608441' extends '334291' salience 11390
+
+    when
+        
+        GrlDetAmounts(this == $gda, seSectors == "9001-HK1_2241")
+        
+    then
+        $gda.setCustomTxtHo18("9001-HK3_2241");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4989");
+        
+end
+
+rule '1608445' extends '334291' salience 11380
+
+    when
+        
+        GrlDetAmounts(this == $gda, seSectors == "9001-HK1_2242")
+        
+    then
+        $gda.setCustomTxtHo18("9001-HK3_2242");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4989");
+        
+end
+
+rule '1608446' extends '334291' salience 11370
+
+    when
+        
+        GrlDetAmounts(this == $gda, seSectors == "9001-HK1_2251")
+        
+    then
+        $gda.setCustomTxtHo18("9001-HK3_2251");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4989");
+        
+end
+
+rule '1608447' extends '334291' salience 11360
+
+    when
+        
+        GrlDetAmounts(this == $gda, seSectors == "9001-HK1_2252")
+        
+    then
+        $gda.setCustomTxtHo18("9001-HK3_2252");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"4989");
+        
+end
+
+

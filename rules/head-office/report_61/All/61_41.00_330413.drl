@@ -1,0 +1,2518 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '330413'
+	when
+		$gda : GrlDetAmounts(( hscAcctSubcl in ( "3001" , "3002" , "3003" ) && icInd == "N" && derivativesCombiCd != null && ( quotedInd == "N" || quotedInd == null ) ))
+	then
+        
+end
+
+
+
+
+
+rule '859177' extends '330413' salience 12540
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3001", hcuCcyCdOrg not in ("USD", "EUR", "JPY", "GBP", "CHF", "CAD", "SEK", "AUD", "BRL", "PHP", "HKD"))
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_O19_IRS_REPDEALER_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859178' extends '330413' salience 12530
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3001", hcuCcyCdOrg == "AUD")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_K19_IRS_REPDEALER_AUD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859179' extends '330413' salience 12520
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3001", hcuCcyCdOrg == "BRL")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_L19_IRS_REPDEALER_BRL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859180' extends '330413' salience 12510
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3001", hcuCcyCdOrg == "CAD")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_I19_IRS_REPDEALER_CAD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859181' extends '330413' salience 12500
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3001", hcuCcyCdOrg == "CHF")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_H19_IRS_REPDEALER_CHF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859182' extends '330413' salience 12490
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3001", hcuCcyCdOrg == "EUR")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_E19_IRS_REPDEALER_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859183' extends '330413' salience 12480
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3001", hcuCcyCdOrg == "GBP")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_G19_IRS_REPDEALER_GBP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859184' extends '330413' salience 12470
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3001", hcuCcyCdOrg == "HKD")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_N19_IRS_REPDEALER_HKD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859185' extends '330413' salience 12460
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3001", hcuCcyCdOrg == "JPY")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_F19_IRS_REPDEALER_JPY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859186' extends '330413' salience 12450
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3001", hcuCcyCdOrg == "PHP")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_M19_IRS_REPDEALER_PHP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859187' extends '330413' salience 12440
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3001", hcuCcyCdOrg == "SEK")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_J19_IRS_REPDEALER_SEK");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859188' extends '330413' salience 12430
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3001", hcuCcyCdOrg == "USD")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_D19_IRS_REPDEALER_USD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859189' extends '330413' salience 12420
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3002", hcuCcyCdOrg not in ("USD", "EUR", "JPY", "GBP", "CHF", "CAD", "SEK", "AUD", "BRL", "PHP", "HKD"))
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_O13_FRA_REPDEALER_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859190' extends '330413' salience 12410
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3002", hcuCcyCdOrg == "AUD")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_K13_FRA_REPDEALER_AUD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859191' extends '330413' salience 12400
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3002", hcuCcyCdOrg == "BRL")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_L13_FRA_REPDEALER_BRL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859192' extends '330413' salience 12390
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3002", hcuCcyCdOrg == "CAD")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_I13_FRA_REPDEALER_CAD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859193' extends '330413' salience 12380
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3002", hcuCcyCdOrg == "CHF")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_H13_FRA_REPDEALER_CHF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859194' extends '330413' salience 12370
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3002", hcuCcyCdOrg == "EUR")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_E13_FRA_REPDEALER_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859195' extends '330413' salience 12360
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3002", hcuCcyCdOrg == "GBP")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_G13_FRA_REPDEALER_GBP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859196' extends '330413' salience 12350
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3002", hcuCcyCdOrg == "HKD")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_N13_FRA_REPDEALER_HKD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859197' extends '330413' salience 12340
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3002", hcuCcyCdOrg == "JPY")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_F13_FRA_REPDEALER_JPY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859198' extends '330413' salience 12330
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3002", hcuCcyCdOrg == "PHP")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_M13_FRA_REPDEALER_PHP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859199' extends '330413' salience 12320
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3002", hcuCcyCdOrg == "SEK")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_J13_FRA_REPDEALER_SEK");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859200' extends '330413' salience 12310
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3002", hcuCcyCdOrg == "USD")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_D13_FRA_REPDEALER_USD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859201' extends '330413' salience 12300
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg not in ("USD", "EUR", "JPY", "GBP", "CHF", "CAD", "SEK", "AUD", "BRL", "PHP", "HKD"), repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_O32_INTRRATEOPT_BOUGHT_REPDEALER_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859202' extends '330413' salience 12290
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "AUD", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_K32_INTRRATEOPT_BOUGHT_REPDEALER_AUD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859203' extends '330413' salience 12280
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "BRL", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_L32_INTRRATEOPT_BOUGHT_REPDEALER_BRL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859204' extends '330413' salience 12270
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "CAD", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_I32_INTRRATEOPT_BOUGHT_REPDEALER_CAD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859205' extends '330413' salience 12260
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "CHF", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_H32_INTRRATEOPT_BOUGHT_REPDEALER_CHF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859206' extends '330413' salience 12250
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "EUR", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_E32_INTRRATEOPT_BOUGHT_REPDEALER_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859207' extends '330413' salience 12240
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "GBP", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_G32_INTRRATEOPT_BOUGHT_REPDEALER_GBP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859208' extends '330413' salience 12230
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "HKD", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_N32_INTRRATEOPT_BOUGHT_REPDEALER_HKD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859209' extends '330413' salience 12220
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "JPY", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_F32_INTRRATEOPT_BOUGHT_REPDEALER_JPY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859210' extends '330413' salience 12210
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "PHP", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_M32_INTRRATEOPT_BOUGHT_REPDEALER_PHP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859211' extends '330413' salience 12200
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "SEK", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_J32_INTRRATEOPT_BOUGHT_REPDEALER_SEK");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859212' extends '330413' salience 12190
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "USD", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_D32_INTRRATEOPT_BOUGHT_REPDEALER_USD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859213' extends '330413' salience 12180
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg not in ("USD", "EUR", "JPY", "GBP", "CHF", "CAD", "SEK", "AUD", "BRL", "PHP", "HKD"), repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_O26_INTRRATEOPT_SOLD_REPDEALER_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859214' extends '330413' salience 12170
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "AUD", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_K26_INTRRATEOPT_SOLD_REPDEALER_AUD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859215' extends '330413' salience 12160
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "BRL", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_L26_INTRRATEOPT_SOLD_REPDEALER_BRL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859216' extends '330413' salience 12150
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "CAD", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_I26_INTRRATEOPT_SOLD_REPDEALER_CAD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859217' extends '330413' salience 12140
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "CHF", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_H26_INTRRATEOPT_SOLD_REPDEALER_CHF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859218' extends '330413' salience 12130
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "EUR", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_E26_INTRRATEOPT_SOLD_REPDEALER_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859219' extends '330413' salience 12120
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "GBP", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_G26_INTRRATEOPT_SOLD_REPDEALER_GBP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859220' extends '330413' salience 12110
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "HKD", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_N26_INTRRATEOPT_SOLD_REPDEALER_HKD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859221' extends '330413' salience 12100
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "JPY", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_F26_INTRRATEOPT_SOLD_REPDEALER_JPY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859222' extends '330413' salience 12090
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "PHP", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_M26_INTRRATEOPT_SOLD_REPDEALER_PHP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859223' extends '330413' salience 12080
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "SEK", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_J26_INTRRATEOPT_SOLD_REPDEALER_SEK");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '859224' extends '330413' salience 12070
+
+    when
+        
+        GrlDetAmounts(this == $gda, hscAcctSubcl == "3003", hcuCcyCdOrg == "USD", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_D26_INTRRATEOPT_SOLD_REPDEALER_USD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858338' extends '330413' salience 12060
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "CHF", finInstInd == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_H33_INTRRATEOPT_BOUGHT_OTHFIN_CHF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858339' extends '330413' salience 12050
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "CAD", finInstInd == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_I33_INTRRATEOPT_BOUGHT_OTHFIN_CAD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858340' extends '330413' salience 12040
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "SEK", finInstInd == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_J33_INTRRATEOPT_BOUGHT_OTHFIN_SEK");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858341' extends '330413' salience 12030
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "AUD", finInstInd == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_K33_INTRRATEOPT_BOUGHT_OTHFIN_AUD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858342' extends '330413' salience 12020
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "BRL", finInstInd == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_L33_INTRRATEOPT_BOUGHT_OTHFIN_BRL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858343' extends '330413' salience 12010
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "PHP", finInstInd == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_M33_INTRRATEOPT_BOUGHT_OTHFIN_PHP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858344' extends '330413' salience 12000
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "HKD", finInstInd == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_N33_INTRRATEOPT_BOUGHT_OTHFIN_HKD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858345' extends '330413' salience 11990
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg not in ("USD", "EUR", "JPY", "GBP", "CHF", "CAD", "SEK", "AUD", "BRL", "PHP", "HKD"), finInstInd == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_O33_INTRRATEOPT_BOUGHT_OTHFIN_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858346' extends '330413' salience 11980
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "USD", finInstInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_D34_INTRRATEOPT_BOUGHT_NONFIN_USD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858347' extends '330413' salience 11970
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "EUR", finInstInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_E34_INTRRATEOPT_BOUGHT_NONFIN_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858348' extends '330413' salience 11960
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "JPY", finInstInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_F34_INTRRATEOPT_BOUGHT_NONFIN_JPY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858349' extends '330413' salience 11950
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "GBP", finInstInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_G34_INTRRATEOPT_BOUGHT_NONFIN_GBP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858350' extends '330413' salience 11940
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "CHF", finInstInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_H34_INTRRATEOPT_BOUGHT_NONFIN_CHF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858351' extends '330413' salience 11930
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "CAD", finInstInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_I34_INTRRATEOPT_BOUGHT_NONFIN_CAD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858352' extends '330413' salience 11920
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "SEK", finInstInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_J34_INTRRATEOPT_BOUGHT_NONFIN_SEK");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858353' extends '330413' salience 11910
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "AUD", finInstInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_K34_INTRRATEOPT_BOUGHT_NONFIN_AUD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858354' extends '330413' salience 11900
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "BRL", finInstInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_L34_INTRRATEOPT_BOUGHT_NONFIN_BRL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858355' extends '330413' salience 11890
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "PHP", finInstInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_M34_INTRRATEOPT_BOUGHT_NONFIN_PHP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858356' extends '330413' salience 11880
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "HKD", finInstInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_N34_INTRRATEOPT_BOUGHT_NONFIN_HKD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858357' extends '330413' salience 11870
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg not in ("USD", "EUR", "JPY", "GBP", "CHF", "CAD", "SEK", "AUD", "BRL", "PHP", "HKD"), finInstInd == "N", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_O34_INTRRATEOPT_BOUGHT_NONFIN_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858358' extends '330413' salience 11860
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "PHP", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_M32_INTRRATEOPT_BOUGHT_REPDEALER_PHP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858359' extends '330413' salience 11850
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "HKD", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_N32_INTRRATEOPT_BOUGHT_REPDEALER_HKD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858360' extends '330413' salience 11840
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg not in ("USD", "EUR", "JPY", "GBP", "CHF", "CAD", "SEK", "AUD", "BRL", "PHP", "HKD"), repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_O32_INTRRATEOPT_BOUGHT_REPDEALER_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858361' extends '330413' salience 11830
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "USD", finInstInd == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_D33_INTRRATEOPT_BOUGHT_OTHFIN_USD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858362' extends '330413' salience 11820
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "EUR", finInstInd == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_E33_INTRRATEOPT_BOUGHT_OTHFIN_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858363' extends '330413' salience 11810
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "JPY", finInstInd == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_F33_INTRRATEOPT_BOUGHT_OTHFIN_JPY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858364' extends '330413' salience 11800
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "GBP", finInstInd == "Y", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_G33_INTRRATEOPT_BOUGHT_OTHFIN_GBP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858365' extends '330413' salience 11790
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "USD", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_D26_INTRRATEOPT_SOLD_REPDEALER_USD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858366' extends '330413' salience 11780
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "EUR", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_E26_INTRRATEOPT_SOLD_REPDEALER_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858367' extends '330413' salience 11770
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "JPY", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_F26_INTRRATEOPT_SOLD_REPDEALER_JPY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858368' extends '330413' salience 11760
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "GBP", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_G26_INTRRATEOPT_SOLD_REPDEALER_GBP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858369' extends '330413' salience 11750
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "CHF", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_H26_INTRRATEOPT_SOLD_REPDEALER_CHF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858370' extends '330413' salience 11740
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "CAD", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_I26_INTRRATEOPT_SOLD_REPDEALER_CAD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858371' extends '330413' salience 11730
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "SEK", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_J26_INTRRATEOPT_SOLD_REPDEALER_SEK");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858372' extends '330413' salience 11720
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "AUD", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_K26_INTRRATEOPT_SOLD_REPDEALER_AUD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858373' extends '330413' salience 11710
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "BRL", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_L26_INTRRATEOPT_SOLD_REPDEALER_BRL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858374' extends '330413' salience 11700
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "PHP", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_M26_INTRRATEOPT_SOLD_REPDEALER_PHP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858375' extends '330413' salience 11690
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "HKD", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_N26_INTRRATEOPT_SOLD_REPDEALER_HKD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858376' extends '330413' salience 11680
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg not in ("USD", "EUR", "JPY", "GBP", "CHF", "CAD", "SEK", "AUD", "BRL", "PHP", "HKD"), repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_O26_INTRRATEOPT_SOLD_REPDEALER_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858377' extends '330413' salience 11670
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "USD", finInstInd == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_D27_INTRRATEOPT_SOLD_OTHFIN_USD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858378' extends '330413' salience 11660
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "EUR", finInstInd == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_E27_INTRRATEOPT_SOLD_OTHFIN_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858379' extends '330413' salience 11650
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "JPY", finInstInd == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_F27_INTRRATEOPT_SOLD_OTHFIN_JPY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858380' extends '330413' salience 11640
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "GBP", finInstInd == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_G27_INTRRATEOPT_SOLD_OTHFIN_GBP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858381' extends '330413' salience 11630
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "CHF", finInstInd == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_H27_INTRRATEOPT_SOLD_OTHFIN_CHF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858382' extends '330413' salience 11620
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "CAD", finInstInd == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_I27_INTRRATEOPT_SOLD_OTHFIN_CAD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858383' extends '330413' salience 11610
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "SEK", finInstInd == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_J27_INTRRATEOPT_SOLD_OTHFIN_SEK");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858384' extends '330413' salience 11600
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "AUD", finInstInd == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_K27_INTRRATEOPT_SOLD_OTHFIN_AUD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858385' extends '330413' salience 11590
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "BRL", finInstInd == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_L27_INTRRATEOPT_SOLD_OTHFIN_BRL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858386' extends '330413' salience 11580
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "PHP", finInstInd == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_M27_INTRRATEOPT_SOLD_OTHFIN_PHP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858387' extends '330413' salience 11570
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "HKD", finInstInd == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_N27_INTRRATEOPT_SOLD_OTHFIN_HKD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858388' extends '330413' salience 11560
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg not in ("USD", "EUR", "JPY", "GBP", "CHF", "CAD", "SEK", "AUD", "BRL", "PHP", "HKD"), finInstInd == "Y", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_O27_INTRRATEOPT_SOLD_OTHFIN_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858389' extends '330413' salience 11550
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "USD", finInstInd == "N", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_D28_INTRRATEOPT_SOLD_NONFIN_USD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858390' extends '330413' salience 11540
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "EUR", finInstInd == "N", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_E28_INTRRATEOPT_SOLD_NONFIN_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858391' extends '330413' salience 11530
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "JPY", finInstInd == "N", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_F28_INTRRATEOPT_SOLD_NONFIN_JPY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858392' extends '330413' salience 11520
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "GBP", finInstInd == "N", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_G28_INTRRATEOPT_SOLD_NONFIN_GBP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858393' extends '330413' salience 11510
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "CHF", finInstInd == "N", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_H28_INTRRATEOPT_SOLD_NONFIN_CHF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858394' extends '330413' salience 11500
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "CAD", finInstInd == "N", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_I28_INTRRATEOPT_SOLD_NONFIN_CAD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858395' extends '330413' salience 11490
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "SEK", finInstInd == "N", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_J28_INTRRATEOPT_SOLD_NONFIN_SEK");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858396' extends '330413' salience 11480
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "AUD", finInstInd == "N", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_K28_INTRRATEOPT_SOLD_NONFIN_AUD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858397' extends '330413' salience 11470
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "BRL", finInstInd == "N", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_L28_INTRRATEOPT_SOLD_NONFIN_BRL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858398' extends '330413' salience 11460
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "PHP", finInstInd == "N", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_M28_INTRRATEOPT_SOLD_NONFIN_PHP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858399' extends '330413' salience 11450
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg == "HKD", finInstInd == "N", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_N28_INTRRATEOPT_SOLD_NONFIN_HKD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858400' extends '330413' salience 11440
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3003", hcuCcyCdOrg not in ("USD", "EUR", "JPY", "GBP", "CHF", "CAD", "SEK", "AUD", "BRL", "PHP", "HKD"), finInstInd == "N", repAssetInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_O28_INTRRATEOPT_SOLD_NONFIN_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858401' extends '330413' salience 11430
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "USD", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_D32_INTRRATEOPT_BOUGHT_REPDEALER_USD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858402' extends '330413' salience 11420
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "EUR", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_E32_INTRRATEOPT_BOUGHT_REPDEALER_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858403' extends '330413' salience 11410
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "JPY", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_F32_INTRRATEOPT_BOUGHT_REPDEALER_JPY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858404' extends '330413' salience 11400
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "GBP", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_G32_INTRRATEOPT_BOUGHT_REPDEALER_GBP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858405' extends '330413' salience 11390
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "CHF", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_H32_INTRRATEOPT_BOUGHT_REPDEALER_CHF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858406' extends '330413' salience 11380
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "CAD", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_I32_INTRRATEOPT_BOUGHT_REPDEALER_CAD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858407' extends '330413' salience 11370
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "SEK", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_J32_INTRRATEOPT_BOUGHT_REPDEALER_SEK");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858408' extends '330413' salience 11360
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "AUD", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_K32_INTRRATEOPT_BOUGHT_REPDEALER_AUD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858409' extends '330413' salience 11350
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3003", hcuCcyCdOrg == "BRL", repAssetInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_L32_INTRRATEOPT_BOUGHT_REPDEALER_BRL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858410' extends '330413' salience 11340
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg not in ("USD", "EUR", "JPY", "GBP", "CHF", "CAD", "SEK", "AUD", "BRL", "PHP", "HKD"), finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_O21_IRS_NONFIN_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858411' extends '330413' salience 11330
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "HKD", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_N21_IRS_NONFIN_HKD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858412' extends '330413' salience 11320
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3002", hcuCcyCdOrg == "BRL")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_L13_FRA_REPDEALER_BRL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858413' extends '330413' salience 11310
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3002", hcuCcyCdOrg == "PHP")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_M13_FRA_REPDEALER_PHP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858414' extends '330413' salience 11300
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3002", hcuCcyCdOrg == "HKD")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_N13_FRA_REPDEALER_HKD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858415' extends '330413' salience 11290
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3002", hcuCcyCdOrg not in ("USD", "EUR", "JPY", "GBP", "CHF", "CAD", "SEK", "AUD", "BRL", "PHP", "HKD"))
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_O13_FRA_REPDEALER_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858416' extends '330413' salience 11280
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "USD", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_D14_FRA_OTHFIN_USD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858417' extends '330413' salience 11270
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "EUR", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_E14_FRA_OTHFIN_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858418' extends '330413' salience 11260
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "JPY", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_F14_FRA_OTHFIN_JPY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858419' extends '330413' salience 11250
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "GBP", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_G14_FRA_OTHFIN_GBP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858420' extends '330413' salience 11240
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "CHF", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_H14_FRA_OTHFIN_CHF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858421' extends '330413' salience 11230
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "CAD", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_I14_FRA_OTHFIN_CAD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858422' extends '330413' salience 11220
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "SEK", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_J14_FRA_OTHFIN_SEK");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858423' extends '330413' salience 11210
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "AUD", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_K14_FRA_OTHFIN_AUD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858424' extends '330413' salience 11200
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "BRL", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_L14_FRA_OTHFIN_BRL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858425' extends '330413' salience 11190
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "PHP", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_M14_FRA_OTHFIN_PHP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858426' extends '330413' salience 11180
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "HKD", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_N14_FRA_OTHFIN_HKD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858427' extends '330413' salience 11170
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg not in ("USD", "EUR", "JPY", "GBP", "CHF", "CAD", "SEK", "AUD", "BRL", "PHP", "HKD"), finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_O14_FRA_OTHFIN_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858428' extends '330413' salience 11160
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "USD", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_D15_FRA_NONFIN_USD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858429' extends '330413' salience 11150
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "EUR", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_E15_FRA_NONFIN_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858430' extends '330413' salience 11140
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "JPY", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_F15_FRA_NONFIN_JPY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858431' extends '330413' salience 11130
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "GBP", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_G15_FRA_NONFIN_GBP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858432' extends '330413' salience 11120
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "CHF", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_H15_FRA_NONFIN_CHF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858433' extends '330413' salience 11110
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "CAD", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_I15_FRA_NONFIN_CAD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858434' extends '330413' salience 11100
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "SEK", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_J15_FRA_NONFIN_SEK");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858435' extends '330413' salience 11090
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "AUD", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_K15_FRA_NONFIN_AUD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858436' extends '330413' salience 11080
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "BRL", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_L15_FRA_NONFIN_BRL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858437' extends '330413' salience 11070
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "PHP", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_M15_FRA_NONFIN_PHP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858438' extends '330413' salience 11060
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg == "HKD", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_N15_FRA_NONFIN_HKD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858439' extends '330413' salience 11050
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3002", hcuCcyCdOrg not in ("USD", "EUR", "JPY", "GBP", "CHF", "CAD", "SEK", "AUD", "BRL", "PHP", "HKD"), finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_O15_FRA_NONFIN_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858440' extends '330413' salience 11040
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3001", hcuCcyCdOrg == "USD")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_D19_IRS_REPDEALER_USD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858441' extends '330413' salience 11030
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3001", hcuCcyCdOrg == "EUR")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_E19_IRS_REPDEALER_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858442' extends '330413' salience 11020
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3001", hcuCcyCdOrg == "JPY")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_F19_IRS_REPDEALER_JPY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858443' extends '330413' salience 11010
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3001", hcuCcyCdOrg == "GBP")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_G19_IRS_REPDEALER_GBP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858444' extends '330413' salience 11000
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3001", hcuCcyCdOrg == "CHF")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_H19_IRS_REPDEALER_CHF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858445' extends '330413' salience 10990
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3001", hcuCcyCdOrg == "CAD")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_I19_IRS_REPDEALER_CAD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858446' extends '330413' salience 10980
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3001", hcuCcyCdOrg == "SEK")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_J19_IRS_REPDEALER_SEK");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858447' extends '330413' salience 10970
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3001", hcuCcyCdOrg == "AUD")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_K19_IRS_REPDEALER_AUD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858448' extends '330413' salience 10960
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3001", hcuCcyCdOrg == "BRL")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_L19_IRS_REPDEALER_BRL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858449' extends '330413' salience 10950
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3001", hcuCcyCdOrg == "PHP")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_M19_IRS_REPDEALER_PHP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858450' extends '330413' salience 10940
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3001", hcuCcyCdOrg == "HKD")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_N19_IRS_REPDEALER_HKD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858451' extends '330413' salience 10930
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3001", hcuCcyCdOrg not in ("USD", "EUR", "JPY", "GBP", "CHF", "CAD", "SEK", "AUD", "BRL", "PHP", "HKD"))
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_O19_IRS_REPDEALER_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858452' extends '330413' salience 10920
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "USD", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_D20_IRS_OTHFIN_USD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858453' extends '330413' salience 10910
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "EUR", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_E20_IRS_OTHFIN_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858454' extends '330413' salience 10900
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "JPY", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_F20_IRS_OTHFIN_JPY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858455' extends '330413' salience 10890
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "GBP", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_G20_IRS_OTHFIN_GBP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858456' extends '330413' salience 10880
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "CHF", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_H20_IRS_OTHFIN_CHF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858457' extends '330413' salience 10870
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "CAD", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_I20_IRS_OTHFIN_CAD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858458' extends '330413' salience 10860
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "SEK", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_J20_IRS_OTHFIN_SEK");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858459' extends '330413' salience 10850
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "AUD", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_K20_IRS_OTHFIN_AUD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858460' extends '330413' salience 10840
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "BRL", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_L20_IRS_OTHFIN_BRL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858461' extends '330413' salience 10830
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "PHP", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_M20_IRS_OTHFIN_PHP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858462' extends '330413' salience 10820
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "HKD", finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_N20_IRS_OTHFIN_HKD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858463' extends '330413' salience 10810
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg not in ("USD", "EUR", "JPY", "GBP", "CHF", "CAD", "SEK", "AUD", "BRL", "PHP", "HKD"), finInstInd == "Y")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_O20_IRS_OTHFIN_OTH");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858464' extends '330413' salience 10800
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "USD", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_D21_IRS_NONFIN_USD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858465' extends '330413' salience 10790
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "EUR", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_E21_IRS_NONFIN_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858466' extends '330413' salience 10780
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "JPY", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_F21_IRS_NONFIN_JPY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858467' extends '330413' salience 10770
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "GBP", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_G21_IRS_NONFIN_GBP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858468' extends '330413' salience 10760
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "CHF", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_H21_IRS_NONFIN_CHF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858469' extends '330413' salience 10750
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "CAD", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_I21_IRS_NONFIN_CAD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858470' extends '330413' salience 10740
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "SEK", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_J21_IRS_NONFIN_SEK");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858471' extends '330413' salience 10730
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "AUD", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_K21_IRS_NONFIN_AUD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858472' extends '330413' salience 10720
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "BRL", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_L21_IRS_NONFIN_BRL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858473' extends '330413' salience 10710
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "N", hscAcctSubcl == "3001", hcuCcyCdOrg == "PHP", finInstInd == "N")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_M21_IRS_NONFIN_PHP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858474' extends '330413' salience 10700
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3002", hcuCcyCdOrg == "USD")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_D13_FRA_REPDEALER_USD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858475' extends '330413' salience 10690
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3002", hcuCcyCdOrg == "EUR")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_E13_FRA_REPDEALER_EUR");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858476' extends '330413' salience 10680
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3002", hcuCcyCdOrg == "JPY")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_F13_FRA_REPDEALER_JPY");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858477' extends '330413' salience 10670
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3002", hcuCcyCdOrg == "GBP")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_G13_FRA_REPDEALER_GBP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858478' extends '330413' salience 10660
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3002", hcuCcyCdOrg == "CHF")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_H13_FRA_REPDEALER_CHF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858479' extends '330413' salience 10650
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3002", hcuCcyCdOrg == "CAD")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_I13_FRA_REPDEALER_CAD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858480' extends '330413' salience 10640
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3002", hcuCcyCdOrg == "SEK")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_J13_FRA_REPDEALER_SEK");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+rule '858481' extends '330413' salience 10630
+
+    when
+        
+        GrlDetAmounts(this == $gda, repDealerInd == "Y", hscAcctSubcl == "3002", hcuCcyCdOrg == "AUD")
+        
+    then
+        $gda.setDvMarketstatCd("Table 2A_K13_FRA_REPDEALER_AUD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2262");
+        
+end
+
+

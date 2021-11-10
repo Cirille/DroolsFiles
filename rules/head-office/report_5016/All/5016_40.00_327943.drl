@@ -1,0 +1,113 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '327943'
+	when
+		$gda : GrlDetAmounts(actCode != null)
+	then
+        
+end
+
+
+
+
+
+rule '326782' extends '327943' salience 280
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt03("99.999");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1630");
+        
+end
+
+rule '326776' extends '327943' salience 270
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcyCtryCdRes == "IE", hcuCcyCdOrg == "EUR", customTxt01 == "Y")
+        
+    then
+        $gda.setCustomTxt03("IEREUO");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1630");
+        
+end
+
+rule '326777' extends '327943' salience 260
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcyCtryCdRes == "IE", hcuCcyCdOrg != "EUR", customTxt01 == "Y")
+        
+    then
+        $gda.setCustomTxt03("IERNEO");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1630");
+        
+end
+
+rule '326778' extends '327943' salience 250
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcyCtryCdRes != "IE", hcuCcyCdOrg == "EUR", customTxt01 == "Y")
+        
+    then
+        $gda.setCustomTxt03("OMUEUO");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1630");
+        
+end
+
+rule '326779' extends '327943' salience 240
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcyCtryCdRes != "IE", hcuCcyCdOrg != "EUR", customTxt01 == "Y")
+        
+    then
+        $gda.setCustomTxt03("OMUNUEO");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1630");
+        
+end
+
+rule '326780' extends '327943' salience 230
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcyCtryCdRes != "IE", hcuCcyCdOrg == "EUR", customTxt01 == "N")
+        
+    then
+        $gda.setCustomTxt03("ROWEUO");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1630");
+        
+end
+
+rule '326781' extends '327943' salience 220
+
+    when
+        
+        GrlDetAmounts(this == $gda, hcyCtryCdRes != "IE", hcuCcyCdOrg != "EUR", customTxt01 == "N")
+        
+    then
+        $gda.setCustomTxt03("ROWNEO");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1630");
+        
+end
+
+

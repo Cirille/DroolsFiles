@@ -1,0 +1,165 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '327952'
+	when
+		$gda : GrlDetAmounts(actCode matches "L.*" || actCode matches "Q.*")
+	then
+        
+end
+
+
+
+
+
+rule '327222' extends '327952' salience 210
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt04("99.999");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1642");
+        
+end
+
+rule '327211' extends '327952' salience 200
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0045000")
+        
+    then
+        $gda.setCustomTxt04("PBDSPP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1642");
+        
+end
+
+rule '327210' extends '327952' salience 190
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0596000", pdtCode in ("026900", "027000"), hreRelTypeCtpy matches "F.*")
+        
+    then
+        $gda.setCustomTxt04("CUFAOC");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1642");
+        
+end
+
+rule '327196' extends '327952' salience 180
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", pdtCode in ("004300", "004400", "003400", "003500"), hreRelTypeCtpy in ("FINS", "FLIF"), cpyBeyNumber == null)
+        
+    then
+        $gda.setCustomTxt04("BORIAC");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1642");
+        
+end
+
+rule '327197' extends '327952' salience 170
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", pdtCode in ("004300", "004400", "003400", "003500"), (hreRelTypeCtpy not matches "B.*" && hreRelTypeCtpy not matches "G.*" && hreRelTypeCtpy not matches "F.*"), cpyBeyNumber != null)
+        
+    then
+        $gda.setCustomTxt04("BARNBA");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1642");
+        
+end
+
+rule '327198' extends '327952' salience 160
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", pdtCode in ("004300", "004400", "003400", "003500"), hreRelTypeCtpy in ("FLEA", "CLEA"), cpyBeyNumber == null)
+        
+    then
+        $gda.setCustomTxt04("BORLEC");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1642");
+        
+end
+
+rule '327199' extends '327952' salience 150
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0229000", hreRelTypeCtpy in ("!G", "BCEN"), cpyBeyNumber == null, hpePdtType in ("CUST ACCT", "NOSTRO"))
+        
+    then
+        $gda.setCustomTxt04("AIPNGC");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1642");
+        
+end
+
+rule '327206' extends '327952' salience 140
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0229000", hreRelTypeCtpy in ("!G", "BCEN"), cpyBeyNumber == null, hpePdtType == "DEPOSIT", orgTerm < 366)
+        
+    then
+        $gda.setCustomTxt04("AIPUT1");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1642");
+        
+end
+
+rule '327207' extends '327952' salience 130
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0229000", hreRelTypeCtpy in ("!G", "BCEN"), cpyBeyNumber == null, hpePdtType == "DEPOSIT", (orgTerm >= 366 && orgTerm <= 730))
+        
+    then
+        $gda.setCustomTxt04("AIPUT2");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1642");
+        
+end
+
+rule '327208' extends '327952' salience 120
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0229000", hreRelTypeCtpy in ("!G", "BCEN"), cpyBeyNumber == null, hpePdtType == "DEPOSIT", orgTerm > 730)
+        
+    then
+        $gda.setCustomTxt04("AIPUT3");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1642");
+        
+end
+
+rule '327209' extends '327952' salience 110
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0229000", hreRelTypeCtpy in ("!G", "BCEN"), cpyBeyNumber == null, hpePdtType == "REPO")
+        
+    then
+        $gda.setCustomTxt04("AIPREP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1642");
+        
+end
+
+

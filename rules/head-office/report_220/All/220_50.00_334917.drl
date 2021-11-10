@@ -1,0 +1,126 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334917'
+	when
+		$gda : GrlDetAmounts(ebaProduct != null)
+	then
+        
+end
+
+
+
+
+
+rule '1682295' extends '334917' salience 3550
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setMgrInd("N");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5570");
+        
+end
+
+rule '1682296' extends '334917' salience 3540
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct matches "Debt securities.*")
+        
+    then
+        $gda.setMgrInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5570");
+        
+end
+
+rule '1682297' extends '334917' salience 3530
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct matches "Security legs.*")
+        
+    then
+        $gda.setMgrInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5570");
+        
+end
+
+rule '1682298' extends '334917' salience 3520
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct matches "Equity instruments.*")
+        
+    then
+        $gda.setMgrInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5570");
+        
+end
+
+rule '1687695' extends '334917' salience 3510
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setMgrInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5570");
+        
+end
+
+rule '1687696' extends '334917' salience 3500
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setMgrInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5570");
+        
+end
+
+rule '2007611' extends '334917' salience 3490
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "CIU")
+        
+    then
+        $gda.setMgrInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5570");
+        
+end
+
+rule '1695612' extends '334917' salience 3480
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "All assets other", hacAmtCl in ("02", "03"), hpePdtType in ("STOCK BOND", "STOCK CD AND CP", "STOCK TREASURY PAPER"))
+        
+    then
+        $gda.setMgrInd("Y");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5570");
+        
+end
+
+

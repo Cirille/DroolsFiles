@@ -1,0 +1,451 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332145'
+	when
+		$gda : GrlDetAmounts(actCode != null && cpyReyCode != null && actCode not matches "DG.*" && actCode not matches "M.*" && smnBeyNumber != nvl ( cpyBeyNumber , "X" ))
+	then
+        
+end
+
+
+
+
+
+rule '1142117' extends '332145' salience 1100
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setLiquidityCdReg(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142094' extends '332145' salience 1090
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0032000", "A0033000"))
+        
+    then
+        $gda.setLiquidityCdReg("03-Interco-Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142101' extends '332145' salience 1080
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L1605000", "Q0065000", "Q0066000", "Q0068000", "Q0069000", "Q0070000", "Q0071000", "Q0072000", "Q0073000", "Q0074000", "Q0075000", "Q0076000", "Q0077000", "Q2339000", "Q2341000", "Q3167000", "Q3168000", "Q3335000", "Q8332000"))
+        
+    then
+        $gda.setLiquidityCdReg("15-Capital/Equity");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142104' extends '332145' salience 1070
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0230000", "L0233000", "L0239000", "L0249000", "L0250000", "L0252000", "L0255000"))
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142105' extends '332145' salience 1060
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1425000")
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142106' extends '332145' salience 1050
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", cgpCode == "B0036")
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142107' extends '332145' salience 1040
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L2550000", "L2582000", "L4146000", "L4147000", "L4150000", "L4258000"))
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142108' extends '332145' salience 1030
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L4146000", "L4147000", "L4150000", "L4258000"))
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142110' extends '332145' salience 1020
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0251000", "L0272000", "L2730000", "L3348000"))
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142111' extends '332145' salience 1010
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0237000")
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142113' extends '332145' salience 1000
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0003000", "A2549000", "A3177000", "A3178000", "A3282000", "A3906000", "A3908000", "A3910000", "A3912000", "A3914000", "A3916000"))
+        
+    then
+        $gda.setLiquidityCdReg("03-Interco-Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142114' extends '332145' salience 990
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0229000", "L2569000", "L3181000", "L3182000", "L3283000", "L3351000", "L3907000", "L3909000", "L3911000", "L3913000", "L3915000", "L3917000"))
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142115' extends '332145' salience 980
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("B0334000", "B0593000", "B0594000", "B0595000", "B0596000", "B0597000", "B0607000", "B0608000", "B0609000", "B0610000", "B0611000", "B0612000"))
+        
+    then
+        $gda.setLiquidityCdReg(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142116' extends '332145' salience 970
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0258000", "L1615000", "L2528000", "L2529000", "L2530000", "L2531000", "L2532000", "L2533000", "L3340000", "L3892000", "L3893000", "L6687000", "L8333000"))
+        
+    then
+        $gda.setLiquidityCdReg("15-Capital/Equity");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142120' extends '332145' salience 960
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A2729000")
+        
+    then
+        $gda.setLiquidityCdReg("03-Interco-Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142121' extends '332145' salience 950
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0001000", "A0002000", "A0007000", "A0024000", "A0031000", "A0040000", "A1614000", "A2536000", "A2537000", "A2538000", "A2539000", "A2540000", "A2541000", "A2581000"))
+        
+    then
+        $gda.setLiquidityCdReg("03-Interco-Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142123' extends '332145' salience 940
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0025000", "A0050000", "A3890000", "A3891000"))
+        
+    then
+        $gda.setLiquidityCdReg("03-Interco-Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1772520' extends '332145' salience 930
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A.*")
+        
+    then
+        $gda.setLiquidityCdReg("03-Interco-Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1772521' extends '332145' salience 920
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*")
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1772522' extends '332145' salience 910
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "Q.*")
+        
+    then
+        $gda.setLiquidityCdReg("15-Capital/Equity");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142098' extends '332145' salience 900
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("027800", "027900"), repAssetInd == "N")
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142102' extends '332145' salience 890
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0242000", "L1425000", "L3343000"), pdtCode in ("004200", "014000", "028000", "031500"))
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142103' extends '332145' salience 880
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0242000", "L1425000", "L3334000", "L3343000", "L3932000", "L3933000"), pdtCode == "027100")
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142109' extends '332145' salience 870
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0242000", "L1425000", "L3343000", "L3935000", "L3936000"), pdtCode in ("004000", "004300", "004400", "012200", "012700", "015300", "031500"))
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142118' extends '332145' salience 860
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0017000", pdtCode == "004700")
+        
+    then
+        $gda.setLiquidityCdReg("03-Interco-Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142119' extends '332145' salience 850
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0057000", "A3329000"), pdtCode in ("004200", "014000", "028000", "031500"))
+        
+    then
+        $gda.setLiquidityCdReg("03-Interco-Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142122' extends '332145' salience 840
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0057000", "A3329000"), pdtCode in ("004300", "004400", "012200", "012700", "013300", "013600", "015200", "031500"))
+        
+    then
+        $gda.setLiquidityCdReg("03-Interco-Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142124' extends '332145' salience 830
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("027800", "027900"), repAssetInd == "Y")
+        
+    then
+        $gda.setLiquidityCdReg("03-Interco-Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142095' extends '332145' salience 820
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0593000", pdtCode == "014600", repAssetInd == "Y", hpePdtType in ("LOAN", "DEPOSIT"))
+        
+    then
+        $gda.setLiquidityCdReg("03-Interco-Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142096' extends '332145' salience 810
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "B0593000", pdtCode == "014600", repAssetInd == "N", hpePdtType in ("LOAN", "DEPOSIT"))
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142099' extends '332145' salience 800
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("027800", "027900"), repAssetInd == "N", hssSecuProdSubcl in ("0110", "0120", "0130"))
+        
+    then
+        $gda.setLiquidityCdReg("13-Interco-Liabs");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1142100' extends '332145' salience 790
+
+    when
+        
+        GrlDetAmounts(this == $gda, pdtCode in ("027800", "027900"), repAssetInd == "Y", hssSecuProdSubcl in ("0110", "0120", "0130"))
+        
+    then
+        $gda.setLiquidityCdReg("03-Interco-Assets");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+rule '1700857' extends '332145' salience 780
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0027000", "A0024000", "L0242000"), acctType == "LISA")
+        
+    then
+        $gda.setLiquidityCdReg(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3454");
+        
+end
+
+

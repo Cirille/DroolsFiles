@@ -1,0 +1,526 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '334673'
+	when
+		$gda : GrlDetAmounts(( substr ( actCode , 1 , 1 ) in ( "A" , "L" , "B" ) || hacAmtCl in ( "11" , "19" ) ) && intInd == "N")
+	then
+        
+end
+
+
+
+
+
+rule '1655787' extends '334673' salience 5390
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setEbaProductType(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1678317' extends '334673' salience 5380
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "A.*")
+        
+    then
+        $gda.setEbaProductType("OPT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655832' extends '334673' salience 5370
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct matches ".*Commercial paper", actCode matches "A.*")
+        
+    then
+        $gda.setEbaProductType("CP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655833' extends '334673' salience 5360
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct matches ".*Covered bonds", actCode matches "A.*")
+        
+    then
+        $gda.setEbaProductType("CB");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655835' extends '334673' salience 5350
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Debt securities issued. ABS", "Debt securities issued. RMBS", "Debt securities. ABS", "Debt securities. RMBS"), actCode matches "A.*")
+        
+    then
+        $gda.setEbaProductType("ABS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655837' extends '334673' salience 5340
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Equity instruments", "CIU"), actCode matches "A.*")
+        
+    then
+        $gda.setEbaProductType("Eq");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655839' extends '334673' salience 5330
+
+    when
+        
+        GrlDetAmounts(this == $gda, (ebaProduct matches "CB.*" || ebaProduct == "Cash on hand"), actCode matches "A.*")
+        
+    then
+        $gda.setEbaProductType("OPT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1707741' extends '334673' salience 5320
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Uncommitted facilities received", actCode matches "B.*")
+        
+    then
+        $gda.setEbaProductType("OPT");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1707742' extends '334673' salience 5310
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Guarantees received", actCode matches "B.*")
+        
+    then
+        $gda.setEbaProductType("LiqL");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655791' extends '334673' salience 5300
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaCtpyType not in ("Financial corporations other than credit instxx", "Credit institutions", "Multilateral Development Banks"), ebaCtpyType not in ("Households", "SME"), actCode matches "L.*")
+        
+    then
+        $gda.setEbaProductType("UWNF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655792' extends '334673' salience 5290
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaCtpyType in ("Financial corporations other than credit instxx", "Credit institutions", "Multilateral Development Banks"), ebaCtpyType not in ("Households", "SME"), actCode matches "L.*")
+        
+    then
+        $gda.setEbaProductType("UWF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655836' extends '334673' salience 5280
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{CREDIT_CLAIM_IND}*/
+        GrlDetAmounts(this == $gda, ebaProduct in ("Loans and advances. Overnight", "Loans and advances. On demand and short notice", "Loans and advances. Term deposits", "Loans and advances. Reverse repurchase loans", "Loans and advances. Other", "Loans and advances. Credit Cards", "Loans and advances. Collateral Derivatives", "Loans and advances. Leasing"), actCode matches "A.*")
+        
+    then
+        $gda.setEbaProductType("CrCl");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655843' extends '334673' salience 5270
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Equity instruments", "CIU"), actCode matches "A.*", ebaIssuerType == "Financial corporations other than credit instxx")
+        
+    then
+        $gda.setEbaProductType("OPTSEC");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655844' extends '334673' salience 5260
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Equity instruments", "CIU"), actCode matches "A.*", getCase0_1655844() in ("00017", "00018", "00019"))
+        
+    then
+        $gda.setEbaProductType("OPTSEC");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655830' extends '334673' salience 5250
+
+    when
+        
+        GrlDetAmounts(this == $gda, (ebaProduct != "Debt securities issued. ABS" && ebaProduct != "Debt securities issued. RMBS" && ebaProduct != "Debt securities. ABS" && ebaProduct != "Debt securities. RMBS" && ebaProduct not matches ".*Covered bonds" && ebaProduct not matches ".*Commercial paper"), ebaProduct matches "Debt securities.*", actCode matches "A.*", bondSrType matches "SENIOR.*")
+        
+    then
+        $gda.setEbaProductType("SrB");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655831' extends '334673' salience 5240
+
+    when
+        
+        GrlDetAmounts(this == $gda, (ebaProduct != "Debt securities issued. ABS" && ebaProduct != "Debt securities issued. RMBS" && ebaProduct != "Debt securities. ABS" && ebaProduct != "Debt securities. RMBS" && ebaProduct not matches ".*Covered bonds" && ebaProduct not matches ".*Commercial paper"), ebaProduct matches "Debt securities.*", actCode matches "A.*", bondSrType matches "SUBORDINATE.*")
+        
+    then
+        $gda.setEbaProductType("SubB");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655840' extends '334673' salience 5230
+
+    when
+        
+        GrlDetAmounts(this == $gda, (ebaProduct != "Debt securities issued. ABS" && ebaProduct != "Debt securities issued. RMBS" && ebaProduct != "Debt securities. ABS" && ebaProduct != "Debt securities. RMBS" && ebaProduct not matches ".*Covered bonds" && ebaProduct not matches ".*Commercial paper"), ebaProduct matches "Debt securities.*", actCode matches "A.*", (bondSrType not matches "SUBORDINATE.*" && bondSrType not matches "SENIOR.*"))
+        
+    then
+        $gda.setEbaProductType("OPTSEC");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1706875' extends '334673' salience 5220
+
+    when
+        
+        GrlDetAmounts(this == $gda, (ebaProduct matches "Debt securities.*" || ebaProduct matches "Equity instruments.*" || ebaProduct matches "Short positions.*" || ebaProduct == "CIU"), ebaProduct not in ("Debt securities issued. ABS", "Debt securities issued. RMBS", "Deposits. Repurchase agreements", "Loans and advances. Reverse repurchase loans", "Debt securities issued. Covered bonds", "Short positions. ABS", "Short positions. Covered bonds", "Short positions. Commercial Paper", "Short positions. Equities", "Short positions. Other"), actCode matches "L.*", ebaIssuerType not in ("Financial corporations other than credit instxx", "Credit institutions", "Multilateral Development Banks"))
+        
+    then
+        $gda.setEbaProductType("UWNF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1706876' extends '334673' salience 5210
+
+    when
+        
+        GrlDetAmounts(this == $gda, (ebaProduct matches "Debt securities.*" || ebaProduct matches "Equity instruments.*" || ebaProduct matches "Short positions.*" || ebaProduct == "CIU"), ebaProduct not in ("Debt securities issued. ABS", "Debt securities issued. RMBS", "Deposits. Repurchase agreements", "Loans and advances. Reverse repurchase loans", "Debt securities issued. Covered bonds", "Short positions. ABS", "Short positions. Covered bonds", "Short positions. Commercial Paper", "Short positions. Equities", "Short positions. Other"), actCode matches "L.*", ebaIssuerType in ("Financial corporations other than credit instxx", "Credit institutions", "Multilateral Development Banks"))
+        
+    then
+        $gda.setEbaProductType("UWF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1707001' extends '334673' salience 5200
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{decode ( ISIN_CD , null , 'N' , 'Y' )}*/
+        GrlDetAmounts(this == $gda, ebaProduct == "All assets other", actCode matches "A.*", hacAmtCl in ("02", "03"))
+        
+    then
+        $gda.setEbaProductType("OPTSEC");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655788' extends '334673' salience 5190
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Debt securities issued. ABS", "Debt securities issued. RMBS", "Short positions. ABS"), actCode matches "L.*")
+        
+    then
+        $gda.setEbaProductType("ABS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655789' extends '334673' salience 5180
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Deposits. Repurchase agreements", "Loans and advances. Reverse repurchase loans"), actCode matches "L.*")
+        
+    then
+        $gda.setEbaProductType("REPO");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655790' extends '334673' salience 5170
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct in ("Debt securities issued. Covered bonds", "Short positions. Covered bonds"), actCode matches "L.*")
+        
+    then
+        $gda.setEbaProductType("CB");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655834' extends '334673' salience 5160
+
+    when
+        
+        GrlDetAmounts(this == $gda, (ebaProduct matches "Debt securities.*" || ebaProduct == "Equity instruments" || ebaProduct == "CIU"), actCode matches "A.*", eval(nvl(this.getucitsind(), 'n')) == "Y")
+        
+    then
+        $gda.setEbaProductType("US");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1706873' extends '334673' salience 5150
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{decode ( ISIN_CD , null , 'N' , 'Y' )}*/
+        GrlDetAmounts(this == $gda, ebaProduct == "Other financial liabilities", actCode matches "L.*", hacAmtCl in ("02", "03"), ebaIssuerType not in ("Financial corporations other than credit instxx", "Credit institutions", "Multilateral Development Banks"))
+        
+    then
+        $gda.setEbaProductType("UWNF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1706874' extends '334673' salience 5140
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{decode ( ISIN_CD , null , 'N' , 'Y' )}*/
+        GrlDetAmounts(this == $gda, ebaProduct == "Other financial liabilities", actCode matches "L.*", hacAmtCl in ("02", "03"), ebaIssuerType in ("Financial corporations other than credit instxx", "Credit institutions", "Multilateral Development Banks"))
+        
+    then
+        $gda.setEbaProductType("UWF");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1706998' extends '334673' salience 5130
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{decode ( ISIN_CD , null , 'N' , 'Y' )}*/
+        GrlDetAmounts(this == $gda, ebaProduct == "All assets other", actCode matches "A.*", hacAmtCl in ("02", "03"), hssSecuProdSubcl == "0510")
+        
+    then
+        $gda.setEbaProductType("CP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1706999' extends '334673' salience 5120
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{decode ( ISIN_CD , null , 'N' , 'Y' )}*/
+        GrlDetAmounts(this == $gda, ebaProduct == "All assets other", actCode matches "A.*", hacAmtCl in ("02", "03"), hssSecuProdSubcl == "0290")
+        
+    then
+        $gda.setEbaProductType("CB");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1707000' extends '334673' salience 5110
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{decode ( ISIN_CD , null , 'N' , 'Y' )}*/
+        GrlDetAmounts(this == $gda, ebaProduct == "All assets other", actCode matches "A.*", hacAmtCl in ("02", "03"), hssSecuProdSubcl in ("0220", "0230", "0240", "0250", "0260", "0280", "0285"))
+        
+    then
+        $gda.setEbaProductType("ABS");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1707743' extends '334673' salience 5100
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Short positions. Other", actCode matches "L.*")
+        
+    then
+        $gda.setEbaProductType("SrB");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1707744' extends '334673' salience 5090
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Short positions. Equities", actCode matches "L.*")
+        
+    then
+        $gda.setEbaProductType("Eq");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1707745' extends '334673' salience 5080
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct == "Short positions. Commercial Paper", actCode matches "L.*")
+        
+    then
+        $gda.setEbaProductType("CP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655794' extends '334673' salience 5070
+
+    when
+        
+        GrlDetAmounts(this == $gda, icInd == "Y", actCode matches "L.*")
+        
+    then
+        $gda.setEbaProductType("IGCP");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1706996' extends '334673' salience 5060
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{decode ( ISIN_CD , null , 'N' , 'Y' )}*/
+        GrlDetAmounts(this == $gda, ebaProduct == "All assets other", actCode matches "A.*", hacAmtCl in ("02", "03"), bondSrType matches "SENIOR.*", hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285", "0290", "0510"))
+        
+    then
+        $gda.setEbaProductType("SrB");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1706997' extends '334673' salience 5050
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{decode ( ISIN_CD , null , 'N' , 'Y' )}*/
+        GrlDetAmounts(this == $gda, ebaProduct == "All assets other", actCode matches "A.*", hacAmtCl in ("02", "03"), bondSrType matches "SUBORDINATE.*", hssSecuProdSubcl not in ("0220", "0230", "0240", "0250", "0260", "0280", "0285", "0290", "0510"))
+        
+    then
+        $gda.setEbaProductType("SubB");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655793' extends '334673' salience 5040
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct not in ("Deposits. Repurchase agreements", "Loans and advances. Reverse repurchase loans"), hreRelTypeIssuer in ("VGRP", "ACCT"), actCode matches "L.*")
+        
+    then
+        $gda.setEbaProductType("IGCPSEC");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1706995' extends '334673' salience 5030
+
+    when
+        
+        /*MANUAL adjustment here, because of error: Not a case statement or nvl/nvl2 statement but some other special statement: write code to handle this!:{decode ( ISIN_CD , null , 'N' , 'Y' )}*/
+        GrlDetAmounts(this == $gda, ebaProduct == "All assets other", actCode matches "A.*", hacAmtCl in ("02", "03"), eval(nvl(this.getucitsind(), 'n')) == "Y")
+        
+    then
+        $gda.setEbaProductType("US");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+rule '1655841' extends '334673' salience 5020
+
+    when
+        
+        GrlDetAmounts(this == $gda, ebaProduct matches "Security legs.*", actCode == null, hacAmtCl in ("11", "19"))
+        
+    then
+        $gda.setEbaProductType("OPTSEC");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"5342");
+        
+end
+
+

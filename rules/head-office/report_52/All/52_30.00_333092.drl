@@ -1,0 +1,269 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '333092'
+	when
+		$gda : GrlDetAmounts(hb2Bis2CombiCd != null && covRelType != null)
+	then
+        
+end
+
+
+
+
+
+rule '1364726' extends '333092' salience 190
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxtHo05("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+rule '1364720' extends '333092' salience 180
+
+    when
+        
+        GrlDetAmounts(this == $gda, covRelType == "BMLD")
+        
+    then
+        $gda.setCustomTxtHo05("B0037");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+rule '1602508' extends '333092' salience 170
+
+    when
+        
+        GrlDetAmounts(this == $gda, covRelType in ("FINS", "FLIF", "FPEF"), covRelType in ("FINS", "FLIF", "FPEF"))
+        
+    then
+        $gda.setCustomTxtHo05("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+rule '2007545' extends '333092' salience 160
+
+    when
+        
+        GrlDetAmounts(this == $gda, covRelType in ("BDIP", "BSPM"))
+        
+    then
+        $gda.setCustomTxtHo05("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+rule '1364717' extends '333092' salience 150
+
+    when
+        
+        GrlDetAmounts(this == $gda, covRelType == "BCEN", residentInd == "Y")
+        
+    then
+        $gda.setCustomTxtHo05("B0034");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+rule '1364718' extends '333092' salience 140
+
+    when
+        
+        GrlDetAmounts(this == $gda, covRelType == "BCEN", residentInd == "N")
+        
+    then
+        $gda.setCustomTxtHo05("B0035");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+rule '1364721' extends '333092' salience 130
+
+    when
+        
+        GrlDetAmounts(this == $gda, covRelType in ("GAMT", "GCEN", "GSNO", "GPSC"))
+        
+    then
+        $gda.setCustomTxtHo05("G0008");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+rule '1364723' extends '333092' salience 120
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, (covRelType matches "F.*" || covRelType matches "V.*"), covRelType not in ("FINS", "FLIF", "FPEF"), (getCase0_1364723() not matches "524.*" && getCase0_1364723() not matches "525.*"))
+        
+    then
+        $gda.setCustomTxtHo05("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+rule '1364728' extends '333092' salience 110
+
+    when
+        
+        GrlDetAmounts(this == $gda, covRelType in ("IIPB", "IMND", "INDV", "IPBI", "IREP", "ISTF", "KOMB", "KOMN", "KPOL", "ROMN", "RPTP"))
+        
+    then
+        $gda.setCustomTxtHo05("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+rule '2007552' extends '333092' salience 100
+
+    when
+        
+        GrlDetAmounts(this == $gda, covRelType in ("GCPL", "GLPL"))
+        
+    then
+        $gda.setCustomTxtHo05("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+rule '2007568' extends '333092' salience 90
+
+    when
+        
+        GrlDetAmounts(this == $gda, covRelType in ("SNPO", "SOMB", "SOMN", "SPOL", "SPTR"))
+        
+    then
+        $gda.setCustomTxtHo05("P0049");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+rule '1364719' extends '333092' salience 80
+
+    when
+        
+        GrlDetAmounts(this == $gda, covRelType matches "B.*", covRelType not in ("BCEN", "BMLD", "BDIP", "BSPM"))
+        
+    then
+        $gda.setCustomTxtHo05("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+rule '1364722' extends '333092' salience 70
+
+    when
+        
+        GrlDetAmounts(this == $gda, covRelType matches "G.*", covRelType not in ("GAMT", "GCEN", "GSNO", "GPSC", "GCPL", "GLPL"))
+        
+    then
+        $gda.setCustomTxtHo05("G0009");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+rule '1364724' extends '333092' salience 60
+
+    when
+        
+        GrlDetAmounts(this == $gda, covRelType matches "F.*", icInd == "Y")
+        
+    then
+        $gda.setCustomTxtHo05("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+rule '1364725' extends '333092' salience 50
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, (covRelType matches "C.*" || covRelType == "REXC" || covRelType == "RLIM" || covRelType == "RPRJ" || covRelType == "RPTR" || covRelType == "RREG" || covRelType == "RSPV"), (getCase0_1364723() matches "5223.*" || getCase0_1364723() matches "523.*"), getCase0_1364730() != "unregulated")
+        
+    then
+        $gda.setCustomTxtHo05("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+rule '1364727' extends '333092' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, covRelType matches "C.*", icInd == "Y")
+        
+    then
+        $gda.setCustomTxtHo05("P0045");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+rule '1364729' extends '333092' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, covRelType matches "Z.*", icInd == "Y")
+        
+    then
+        $gda.setCustomTxtHo05("B0036");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+rule '1364730' extends '333092' salience 20
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, (covRelType matches "F.*" || covRelType matches "V.*"), covRelType not in ("FINS", "FLIF", "FPEF"), (getCase0_1364723() matches "524.*" || getCase0_1364723() matches "525.*"), getCase0_1364730() == "regulated")
+        
+    then
+        $gda.setCustomTxtHo05("P0039");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+rule '2007567' extends '333092' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, covRelType matches "S.*", covRelType not in ("SNPO", "SOMB", "SOMN", "SPOL", "SPTR"))
+        
+    then
+        $gda.setCustomTxtHo05("P0055");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3966");
+        
+end
+
+

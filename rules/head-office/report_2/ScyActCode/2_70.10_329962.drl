@@ -1,0 +1,237 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+dialect  "mvel"
+
+
+rule '329962'
+	when
+		$gda : GrlDetAmounts(hpePdtType == "SPOT FX" && ( prodSubSubTypeLoc != "REI" || prodSubSubTypeLoc == null ))
+	then
+end
+
+
+rule '772736' extends '329962' salience 18310
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setScyActCode(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1839");
+        
+end
+
+rule '772738' extends '329962' salience 18300
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", buyInd == "N", intInd == "N", hacAmtCl == "10")
+        
+    then
+        $gda.setScyActCode("B0612000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1839");
+        
+end
+
+rule '1032151' extends '329962' salience 18290
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", intInd == "N", hacAmtCl == "08", repAssetInd == "Y")
+        
+    then
+        $gda.setScyActCode("A0007000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1839");
+        
+end
+
+rule '772735' extends '329962' salience 18280
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", buyInd == "Y", intInd == "N", hacAmtCl == "10")
+        
+    then
+        $gda.setScyActCode("B0611000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1839");
+        
+end
+
+rule '772733' extends '329962' salience 18270
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", intInd == "N", hacAmtCl == "08", repAssetInd == "N")
+        
+    then
+        $gda.setScyActCode("L0230000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1839");
+        
+end
+
+rule '1032150' extends '329962' salience 18260
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", intInd == "Y", hacAmtCl == "08", repAssetInd == "N", lseHlyRelId == "9117")
+        
+    then
+        $gda.setScyActCode("L0230000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1839");
+        
+end
+
+rule '772737' extends '329962' salience 18250
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", intInd == "Y", hacAmtCl == "08", repAssetInd == "Y", lseHlyRelId == "9117")
+        
+    then
+        $gda.setScyActCode("A0007000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1839");
+        
+end
+
+rule '772732' extends '329962' salience 18240
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", intInd == "Y", hacAmtCl == "10", repAssetInd == "Y", contingInd == "N", lseHlyRelId == "9117")
+        
+    then
+        $gda.setScyActCode("A0007000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1839");
+        
+end
+
+rule '1486970' extends '329962' salience 18230
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", intInd == "Y", hacAmtCl == "08", htyTradCat in ("01", "02"), repAssetInd == "N", lseHlyRelId == "9120")
+        
+    then
+        $gda.setScyActCode("L3283000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1839");
+        
+end
+
+rule '1487034' extends '329962' salience 18220
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", intInd == "Y", hacAmtCl == "08", htyTradCat == "03", repAssetInd == "Y", lseHlyRelId == "9120")
+        
+    then
+        $gda.setScyActCode("A3178000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1839");
+        
+end
+
+rule '1487037' extends '329962' salience 18210
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", intInd == "Y", hacAmtCl == "08", htyTradCat == "03", repAssetInd == "N", lseHlyRelId == "9120")
+        
+    then
+        $gda.setScyActCode("L3182000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1839");
+        
+end
+
+rule '1486973' extends '329962' salience 18200
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", intInd == "Y", hacAmtCl == "08", htyTradCat in ("01", "02"), repAssetInd == "Y", lseHlyRelId == "9120")
+        
+    then
+        $gda.setScyActCode("A3282000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1839");
+        
+end
+
+rule '772731' extends '329962' salience 18190
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", intInd == "Y", hacAmtCl == "10", repAssetInd == "N", contingInd == "N", lseHlyRelId == "9117")
+        
+    then
+        $gda.setScyActCode("L0230000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1839");
+        
+end
+
+rule '1487033' extends '329962' salience 18180
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", intInd == "Y", hacAmtCl == "10", htyTradCat == "03", repAssetInd == "Y", contingInd == "N", lseHlyRelId == "9120")
+        
+    then
+        $gda.setScyActCode("A3178000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1839");
+        
+end
+
+rule '1487038' extends '329962' salience 18170
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", intInd == "Y", hacAmtCl == "10", htyTradCat == "03", repAssetInd == "N", contingInd == "N", lseHlyRelId == "9120")
+        
+    then
+        $gda.setScyActCode("L3182000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1839");
+        
+end
+
+rule '1486972' extends '329962' salience 18160
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", intInd == "Y", hacAmtCl == "10", htyTradCat in ("01", "02"), repAssetInd == "Y", contingInd == "N", lseHlyRelId == "9120")
+        
+    then
+        $gda.setScyActCode("A3282000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1839");
+        
+end
+
+rule '1486971' extends '329962' salience 18150
+
+    when
+        
+        GrlDetAmounts(this == $gda, hpePdtType == "SPOT FX", intInd == "Y", hacAmtCl == "10", htyTradCat in ("01", "02"), repAssetInd == "N", contingInd == "N", lseHlyRelId == "9120")
+        
+    then
+        $gda.setScyActCode("L3283000");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"1839");
+        
+end
+
+

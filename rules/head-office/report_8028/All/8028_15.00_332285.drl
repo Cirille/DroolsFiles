@@ -1,0 +1,269 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332285'
+	when
+		$gda : GrlDetAmounts(cpyReyCode != null && smnBeyNumber != nvl ( cpyBeyNumber , "X" ))
+	then
+        
+end
+
+
+
+
+
+rule '1150010' extends '332285' salience 250
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt01(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+rule '1150006' extends '332285' salience 240
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setCustomTxt01("17.02");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+rule '1150013' extends '332285' salience 230
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0229000")
+        
+    then
+        $gda.setCustomTxt01("19.03");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+rule '1150014' extends '332285' salience 220
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L3182000")
+        
+    then
+        $gda.setCustomTxt01("19.03");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+rule '1150017' extends '332285' salience 210
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0003000")
+        
+    then
+        $gda.setCustomTxt01("9.14");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+rule '1150019' extends '332285' salience 200
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A3178000")
+        
+    then
+        $gda.setCustomTxt01("9.14");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+rule '1150021' extends '332285' salience 190
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "N")
+        
+    then
+        $gda.setCustomTxt01("17.01_P");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+rule '1150022' extends '332285' salience 180
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "Q.*")
+        
+    then
+        $gda.setCustomTxt01("19.01");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+rule '1152464' extends '332285' salience 170
+
+    when
+        
+        GrlDetAmounts(this == $gda, repAssetInd == "Y")
+        
+    then
+        $gda.setCustomTxt01("9.01_P");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+rule '1150007' extends '332285' salience 160
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0027000", pdtCode == "004400", cgpCode matches "P.*")
+        
+    then
+        $gda.setCustomTxt01("5.33_P");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+rule '1150008' extends '332285' salience 150
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", pdtCode == "028000", cgpCode matches "P.*")
+        
+    then
+        $gda.setCustomTxt01("15.21");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+rule '1150009' extends '332285' salience 140
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", pdtCode == "004400", cgpCode matches "P.*")
+        
+    then
+        $gda.setCustomTxt01("13.22_P");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+rule '1150015' extends '332285' salience 130
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", pdtCode in ("014000", "028000"), cgpCode == "B0036")
+        
+    then
+        $gda.setCustomTxt01("15.12");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+rule '1150016' extends '332285' salience 120
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", pdtCode == "004400", cgpCode == "B0036")
+        
+    then
+        $gda.setCustomTxt01("13.12_P");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+rule '1150018' extends '332285' salience 110
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0027000", pdtCode in ("014000", "028000"), cgpCode == "B0036")
+        
+    then
+        $gda.setCustomTxt01("5.11");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+rule '1150020' extends '332285' salience 100
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0027000", pdtCode == "004400", cgpCode == "B0036")
+        
+    then
+        $gda.setCustomTxt01("5.13_P");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+rule '1150005' extends '332285' salience 90
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0027000", pdtCode == "004400", cgpCode == "B0036", getCase0_1150005() == "on_demand")
+        
+    then
+        $gda.setCustomTxt01("5.11");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+rule '1150011' extends '332285' salience 80
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", pdtCode == "004400", cgpCode == "B0036", getCase0_1150005() == "on_demand")
+        
+    then
+        $gda.setCustomTxt01("15.12");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+rule '1150012' extends '332285' salience 70
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0242000", pdtCode == "004400", cgpCode matches "P.*", getCase0_1150005() == "on_demand")
+        
+    then
+        $gda.setCustomTxt01("15.21");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3576");
+        
+end
+
+

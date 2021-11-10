@@ -1,0 +1,87 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlPlYtd;
+
+
+
+
+dialect  "mvel"
+
+
+rule '331713'
+	when
+		$gpy : GrlPlYtd()
+	then
+        
+end
+
+
+
+
+
+rule '1102102' extends '331713' salience 50
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gpy.setCustomTxt02("TO BE DETERMINED");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3201");
+        
+end
+
+rule '1102098' extends '331713' salience 40
+
+    when
+        
+        GrlPlYtd(this == $gpy, lseHlyRelId == "0204", source == "GRL", customTxt01 == "ROHOR")
+        
+    then
+        $gpy.setCustomTxt02("ROHOR ADJ");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3201");
+        
+end
+
+rule '1102099' extends '331713' salience 30
+
+    when
+        
+        GrlPlYtd(this == $gpy, lseHlyRelId == "0204", source in ("ODS", "GPL"), customTxt01 != "ROHOR")
+        
+    then
+        $gpy.setCustomTxt02("SOURCE (EXCL ROHOR)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3201");
+        
+end
+
+rule '1102100' extends '331713' salience 20
+
+    when
+        
+        GrlPlYtd(this == $gpy, lseHlyRelId == "0204", source in ("ODS", "GPL"), customTxt01 == "ROHOR")
+        
+    then
+        $gpy.setCustomTxt02("ROHOR SOURCE");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3201");
+        
+end
+
+rule '1102101' extends '331713' salience 10
+
+    when
+        
+        GrlPlYtd(this == $gpy, lseHlyRelId == "0204", source == "GRL", customTxt01 != "ROHOR")
+        
+    then
+        $gpy.setCustomTxt02("ADJ (EXCL ROHOR)");
+        
+        $gpy.updateLdlIdTrail(kcontext.rule.name,"3201");
+        
+end
+
+

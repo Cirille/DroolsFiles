@@ -1,0 +1,44 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '332169'
+	when
+		$gda : GrlDetAmounts(lseHlyRelId in ( "419A_FRD" , "0239_FRD" ))
+	then
+end
+
+
+rule '1142635' extends '332169' salience 30
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+
+
+        $gda.setCustomTxtHo21($gda.getActCode() );
+        $gda.setCustomTxtHo22($gda.getPdtCode()  );
+        $gda.setCustomTxtHo23($gda.getCgpCode() );
+        $gda.setCustomTxtHo24($gda.getRteCode()  );
+        $gda.setCustomTxtHo25($gda.getCpyBeyNumber() );
+
+        $gda.setActCode( $gda.getOwnUse01() );
+        $gda.setPdtCode($gda.getOwnUse02());
+        $gda.setCgpCode($gda.getOwnUse03() );
+        $gda.setRteCode($gda.getOwnUse04() );
+        $gda.setCpyBeyNumber($gda.getOwnUse05() );
+
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"3473");
+        
+end
+
+

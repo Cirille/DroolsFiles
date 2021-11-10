@@ -1,0 +1,87 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '336876'
+	when
+		$gda : GrlDetAmounts(actCode in ( "A0027000" , "A0057000" , "A3329000" , "A3330000" , "A3332000" , "A3931000" , "A8350000" , "A8805000" , "A8806000" , "A8807000" , "A926000" , "A9457000" , "A9458000" , "A9459000" , "A9460000" , "L0241000" , "L0242000" , "L0272000" , "L1425000" , "L3348000" , "L3334000" , "L3343000" , "L3348000" , "L3932000" , "L3933000" , "L3935000" , "L3936000" ) && hpePdtType not matches "STOCK.*" && orgTerm > 365 && seSectors in ( "9001-HK1_2241" , "9001-HK1_2242" , "9001-HK1_2251" , "9001-HK1_2252" ))
+	then
+        
+end
+
+
+
+
+
+rule '1770272' extends '336876' salience 11120
+
+    when
+        
+        /*WARNING: this rule will always be called, since it has no conditions*/
+        
+    then
+        $gda.setSeCode7(null);
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6983");
+        
+end
+
+rule '1770269' extends '336876' salience 11110
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, seSectors == "9001-HK1_2252", getCase0_1770270() in ("between_one_and_two_years", "more_than_two_years"))
+        
+    then
+        $gda.setSeCode7("9001-HK4_2252");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6983");
+        
+end
+
+rule '1770270' extends '336876' salience 11100
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, seSectors == "9001-HK1_2241", getCase0_1770270() in ("between_one_and_two_years", "more_than_two_years"))
+        
+    then
+        $gda.setSeCode7("9001-HK4_2241");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6983");
+        
+end
+
+rule '1770271' extends '336876' salience 11090
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, seSectors == "9001-HK1_2251", getCase0_1770270() in ("between_one_and_two_years", "more_than_two_years"))
+        
+    then
+        $gda.setSeCode7("9001-HK4_2251");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6983");
+        
+end
+
+rule '1770273' extends '336876' salience 11080
+no-loop
+    when
+        
+        GrlDetAmounts(this == $gda, seSectors == "9001-HK1_2242", getCase0_1770270() in ("between_one_and_two_years", "more_than_two_years"))
+        
+    then
+        $gda.setSeCode7("9001-HK4_2242");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"6983");
+        
+end
+
+

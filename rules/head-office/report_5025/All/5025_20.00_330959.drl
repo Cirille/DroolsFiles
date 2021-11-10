@@ -1,0 +1,308 @@
+package com.ing.gfrs.rules;
+
+import com.ing.gfrs.avro.GrlDetAmounts;
+
+
+
+
+dialect  "mvel"
+
+
+rule '330959'
+	when
+		$gda : GrlDetAmounts(actCode matches "L.*" || actCode matches "Q.*" || actCode in ( "A0045000" , "A0046000" , "A3943000" ))
+	then
+        
+end
+
+
+
+
+
+rule '999274' extends '330959' salience 220
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*")
+        
+    then
+        $gda.setOwnUse15("9_f_ii");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999252' extends '330959' salience 210
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "Q0073000")
+        
+    then
+        $gda.setOwnUse15("1");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999253' extends '330959' salience 200
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("Q0065000", "Q0066000", "Q0076000"))
+        
+    then
+        $gda.setOwnUse15("2");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999254' extends '330959' salience 190
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L1605000")
+        
+    then
+        $gda.setOwnUse15("3");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999259' extends '330959' salience 180
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", pdtCode == "006100")
+        
+    then
+        $gda.setOwnUse15("5");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999260' extends '330959' salience 170
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", pdtCode in ("005100", "005400", "005900", "007300", "007500", "026500"))
+        
+    then
+        $gda.setOwnUse15("6");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999267' extends '330959' salience 160
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0234000", "l0238000", "L0273000"))
+        
+    then
+        $gda.setOwnUse15("9_a");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999268' extends '330959' salience 150
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("A0045000", "A3943000"))
+        
+    then
+        $gda.setOwnUse15("9_b");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999269' extends '330959' salience 140
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "A0046000")
+        
+    then
+        $gda.setOwnUse15("9_c");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999270' extends '330959' salience 130
+
+    when
+        
+        GrlDetAmounts(this == $gda, (actCode matches "L0229.*" || actCode matches "L0249.*" || actCode == "L02569000" || actCode matches "L3351.*" || actCode matches "L3909.*" || actCode matches "L3911.*" || actCode matches "L3913.*" || actCode matches "L3915.*" || actCode matches "L3917.*"))
+        
+    then
+        $gda.setOwnUse15("9_d");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999271' extends '330959' salience 120
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode == "L0252000")
+        
+    then
+        $gda.setOwnUse15("9_e");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999272' extends '330959' salience 110
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0230000", "L0243000", "L0255000", "L0256000", "L2571000", "L3182000"), hcyCtryCdRes == "SG")
+        
+    then
+        $gda.setOwnUse15("9_f_i");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999273' extends '330959' salience 100
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode in ("L0230000", "L0243000", "L0255000", "L0256000", "L2571000", "L3182000"), hcyCtryCdRes != "SG")
+        
+    then
+        $gda.setOwnUse15("9_f_ii");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999261' extends '330959' salience 90
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", pdtCode in ("003400", "003500", "004200", "004300", "004400", "014000"), cgpCode matches "B.*", hcyCtryCdRes == "SG")
+        
+    then
+        $gda.setOwnUse15("7_a");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999263' extends '330959' salience 80
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", pdtCode in ("003400", "003500", "004200", "004300", "004400", "014000"), cgpCode matches "B.*", hcyCtryCdRes != "SG")
+        
+    then
+        $gda.setOwnUse15("7_c_ii");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999265' extends '330959' salience 70
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", pdtCode in ("015100", "015300"), hcyCtryCdRes == "SG", hcuCcyCdOrg == "SGD")
+        
+    then
+        $gda.setOwnUse15("8_a");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999266' extends '330959' salience 60
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", pdtCode in ("015100", "015300"), hcyCtryCdRes != "SG", hcuCcyCdOrg == "SGD")
+        
+    then
+        $gda.setOwnUse15("8_b");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999255' extends '330959' salience 50
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", pdtCode in ("003400", "003500", "004200", "004300", "004400", "014000"), cgpCode not matches "B.*", residentInd == "Y", hcuCcyCdOrg != "SGD")
+        
+    then
+        $gda.setOwnUse15("4_a_unencumbered");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999256' extends '330959' salience 40
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", pdtCode in ("003400", "003500", "004200", "004300", "004400", "014000"), cgpCode not matches "B.*", residentInd == "Y", hcuCcyCdOrg == "SGD")
+        
+    then
+        $gda.setOwnUse15("4_a_SGD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999257' extends '330959' salience 30
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", pdtCode in ("003400", "003500", "004200", "004300", "004400", "014000"), cgpCode not matches "B.*", residentInd == "N", hcuCcyCdOrg != "SGD")
+        
+    then
+        $gda.setOwnUse15("4_b_unencumbered");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999258' extends '330959' salience 20
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", pdtCode in ("003400", "003500", "004200", "004300", "004400", "014000"), cgpCode not matches "B.*", residentInd == "N", hcuCcyCdOrg == "SGD")
+        
+    then
+        $gda.setOwnUse15("4_b_SGD");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+rule '999262' extends '330959' salience 10
+
+    when
+        
+        GrlDetAmounts(this == $gda, actCode matches "L.*", pdtCode in ("003400", "003500", "004200", "004300", "004400", "014000"), cgpCode matches "B.*", cpyBeyNumber in ("U0039", "U0618"), hcyCtryCdRes != "SG")
+        
+    then
+        $gda.setOwnUse15("7_c_i");
+        
+        $gda.updateLdlIdTrail(kcontext.rule.name,"2615");
+        
+end
+
+
